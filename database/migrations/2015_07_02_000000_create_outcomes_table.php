@@ -18,6 +18,7 @@ class CreateOutcomesTable extends Migration
             $table->string('name');
             $table->decimal('amount', 7, 2);
             $table->timestamp('date');
+            $table->boolean('effective');
             $table->timestamps();
         });
     }
