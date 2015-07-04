@@ -16,7 +16,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('entity_id');
-            $table->enum('entity', ['account','envelope','income','outcome']);
+            $table->enum('entity', ['account','envelope','revenue','income','outcome']);
             $table->enum('action', ['create','update','delete','close','open']);
             $table->timestamp('date');
             $table->timestamps();
