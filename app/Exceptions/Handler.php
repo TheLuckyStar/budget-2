@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use App;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -39,6 +41,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // Catch 404 HTTP errors for smart redirecting in production environment
+        if (App::environment('production') && $e instanceof NotFoundHttpException) {
+
+            // Return JSON error message for Ajax request
+            if ($request->ajax()) {
+                // @TODO 404 error message
+                return response()->json(['status' => false, trans('app.error.404')]);
+            }
+
+            // Redirect to / with error message for non Ajax request
+            // @TODO 404 error message
+            return redirect('/')->with('error', trans('app.error.404'));
+        }
+
         return parent::render($request, $e);
     }
 }

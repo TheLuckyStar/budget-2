@@ -1,5 +1,43 @@
 <?php
 
+use Psr\Http\Message\ServerRequestInterface;
+
+/**
+ * Set locale from request.
+ * @param  Psr\Http\Message\ServerRequestInterface $request Request to consider
+ * @return string ISO code of the current language
+ */
+function findLocale($request) {
+
+    // Routes supported by the application
+    $available = ['en', 'fr'];
+
+    // ISO code from URL
+    $providedByClient = $request->segment(1);
+
+    // ISO list from HTTP header
+    $supportedByClient = explode(',', $request->server('HTTP_ACCEPT_LANGUAGE'));
+    array_walk($supportedByClient, function($v) {
+        return substr($v, 0, 2);
+    });
+
+    // If compatible ISO code if provided in URL
+    if (in_array($providedByClient, $available)) {
+        App::setLocale($providedByClient);
+        return App::getLocale();
+    }
+
+    // Search for compatible ISO code in HTTP header
+    foreach ($supportedByClient as $iso) {
+        if (in_array($iso, $available)) {
+            App::setLocale($iso);
+            break;
+        }
+    }
+
+    return false;
+}
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,6 +49,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Place any route under ISO language code if provided
+Route::group(['prefix' => findLocale(Request::instance())], function () {
+
+    // Root URL, used to render HTML document layout
+    Route::get('/', function () {
+        return view('index');
+    });
+
 });
