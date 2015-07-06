@@ -35,7 +35,7 @@ function findLocale($request) {
         }
     }
 
-    return false;
+    return App::getLocale();
 }
 
 /*
@@ -49,8 +49,14 @@ function findLocale($request) {
 |
 */
 
+// @TODO Remove after implementing login
+Auth::loginUsingId(1);
+
 // Place any route under ISO language code if provided
 Route::group(['prefix' => findLocale(Request::instance())], function () {
+
+    // Home URL, used to render homepage
+    Route::controller('home', 'HomeController');
 
     // Root URL, used to render HTML document layout
     Route::get('/', function () {

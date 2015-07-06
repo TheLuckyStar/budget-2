@@ -19,11 +19,15 @@
 
     <div id="wrapper">
         @include('navbar')
-        <div id="page-wrapper"></div>
+        <div id="page-wrapper" data-url="{{ URL::action('HomeController@getIndex') }}"></div>
     </div>
 
     <script data-main="require.config.js" src="vendor/require.js"></script>
-    <script>requirejs(['bootstrap'])</script>
+    <script>
+        requirejs(['bootstrap'], function() {
+            require(['assets/js/index.js'])
+        })
+    </script>
 
 </body>
 
