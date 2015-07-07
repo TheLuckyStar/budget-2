@@ -42,7 +42,7 @@ class RevenueTableSeeder extends Seeder
             'account_id' => 1,
             'name' => 'Prestations CAF',
             'amount' => 446.10,
-            'date' => mktime(0, 0, 0, 7, 5, 2015),
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
         ]);
         EventTableSeeder::seedFromEntity('revenue');
     }

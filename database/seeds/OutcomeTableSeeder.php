@@ -36,7 +36,16 @@ class OutcomeTableSeeder extends Seeder
             'envelope_id' => 1,
             'name' => "Loyer",
             'amount' => 700,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
+
+        DB::table('outcomes')->insert([
+            'envelope_id' => 1,
+            'name' => "Assurance habitation",
+            'amount' => 25.66,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
             'effective' => 1,
         ]);
         EventTableSeeder::seedFromEntity('outcome');
@@ -65,6 +74,24 @@ class OutcomeTableSeeder extends Seeder
             'effective' => 1,
         ]);
         EventTableSeeder::seedFromEntity('outcome');
+
+        DB::table('outcomes')->insert([
+            'envelope_id' => 2,
+            'name' => "Essence",
+            'amount' => 15.02,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
+
+        DB::table('outcomes')->insert([
+            'envelope_id' => 2,
+            'name' => "Assurance voiture",
+            'amount' => 25.66,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
     }
 
     /**
@@ -74,7 +101,7 @@ class OutcomeTableSeeder extends Seeder
      */
     public function runEnvelope3() {
         DB::table('outcomes')->insert([
-            'envelope_id' => 2,
+            'envelope_id' => 3,
             'name' => "Bio Coop",
             'amount' => 16.60,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
@@ -83,7 +110,7 @@ class OutcomeTableSeeder extends Seeder
         EventTableSeeder::seedFromEntity('outcome');
 
         DB::table('outcomes')->insert([
-            'envelope_id' => 2,
+            'envelope_id' => 3,
             'name' => "Carrefour",
             'amount' => 41.89,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
@@ -92,7 +119,7 @@ class OutcomeTableSeeder extends Seeder
         EventTableSeeder::seedFromEntity('outcome');
 
         DB::table('outcomes')->insert([
-            'envelope_id' => 2,
+            'envelope_id' => 3,
             'name' => "Bio Coop",
             'amount' => 24.76,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
@@ -101,10 +128,28 @@ class OutcomeTableSeeder extends Seeder
         EventTableSeeder::seedFromEntity('outcome');
 
         DB::table('outcomes')->insert([
-            'envelope_id' => 2,
+            'envelope_id' => 3,
             'name' => "Intermarché",
             'amount' => 55.82,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
+
+        DB::table('outcomes')->insert([
+            'envelope_id' => 3,
+            'name' => "Bio Coop",
+            'amount' => 6.50,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
+
+        DB::table('outcomes')->insert([
+            'envelope_id' => 3,
+            'name' => "Intermarché",
+            'amount' => 18.12,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
             'effective' => 1,
         ]);
         EventTableSeeder::seedFromEntity('outcome');
@@ -116,7 +161,23 @@ class OutcomeTableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope4() {
+        DB::table('outcomes')->insert([
+            'envelope_id' => 3,
+            'name' => "Mutuelle Simon & Élie",
+            'amount' => 65.91,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
 
+        DB::table('outcomes')->insert([
+            'envelope_id' => 3,
+            'name' => "Mutuelle Delphine",
+            'amount' => 51.31,
+            'date' => mktime(0, 0, 0, 7, 6, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
     }
 
     /**
@@ -176,6 +237,14 @@ class OutcomeTableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope9() {
+        DB::table('outcomes')->insert([
+            'envelope_id' => 9,
+            'name' => "Virement vers le CEL",
+            'amount' => 1000,
+            'date' => mktime(0, 0, 0, 7, 3, 2015),
+            'effective' => 1,
+        ]);
+        EventTableSeeder::seedFromEntity('outcome');
     }
 
     /**
