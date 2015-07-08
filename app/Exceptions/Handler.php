@@ -47,7 +47,7 @@ class Handler extends ExceptionHandler
             // Return JSON error message for Ajax request
             if ($request->ajax()) {
                 // @TODO 404 error message
-                return response()->json(['status' => false, trans('app.error.404')]);
+                return response()->json(['status' => false, 'message' => trans('app.error.404')]);
             }
 
             // Redirect to / with error message for non Ajax request
