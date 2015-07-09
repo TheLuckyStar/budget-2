@@ -10,7 +10,8 @@
         "laravelcollective/html": "5.1.*",
         "robloach/component-installer": "^0.2.1",
         "components/bootstrap": "^3.3",
-        "components/font-awesome": "^4.3"
+        "components/font-awesome": "^4.3",
+        "thomaspark/bootswatch": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -62,7 +63,7 @@
                 "public/theme/js/morris/morris-data.js"
             ],
             "styles": [
-                "public/vendor/bootstrap/css/bootstrap.min.css",
+                "public/vendor/bootswatch/paper/bootstrap.css",
                 "public/theme/css/sb-admin.css",
                 "public/theme/css/morris.css"
             ],
