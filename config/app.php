@@ -145,9 +145,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * Packages Service Providers...
+         * App Service Providers...
          */
-        Collective\Html\HtmlServiceProvider::class,
+        App\Services\Html\HtmlServiceProvider::class,
 
     ],
 
