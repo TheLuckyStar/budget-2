@@ -1,0 +1,28 @@
+
+/*
+ * HTML layout
+*/
+
+html {height: 100%;}
+body {height: calc(100% - 137px); margin-top: 114px; background-color: #2196f3;}
+
+@media(min-width:768px) {
+    body {height: calc(100% - 87px); margin-top: 64px;}
+}
+
+#wrapper {height: 100%;}
+#page-wrapper {min-height: 100%; padding-bottom: 33px;}
+
+.navbar-fixed-bottom {min-height: 23px; height: 23px;}
+.navbar-fixed-bottom .container-fluid {overflow: hidden;}
+.navbar-fixed-bottom a {color: inherit;}
+
+
+
+/*
+ * Page wrapper content
+*/
+
+#home-guest .panel-info h3 {color: white;}
+
+#auth-authenticate .control-checkbox {padding-top: 14px;}
