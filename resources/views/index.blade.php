@@ -13,13 +13,24 @@
 
     <link href="vendor/require.css" rel="stylesheet" type="text/css">
 
+    {{-- @TODO Include below CSS file in require.css --}}
+    <link href="assets/css/index.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
 
     <div id="wrapper">
         @include('navbar')
-        <div id="page-wrapper" data-url="{{ URL::action('HomeController@getIndex') }}"></div>
+        <div id="page-wrapper" class="container-fluid" data-url="{{ URL::action('HomeController@getIndex') }}"></div>
+        <nav class="navbar navbar-inverse navbar-fixed-bottom text-right" role="navigation">
+            <div class="container-fluid text-left">
+                {!! trans('app.layout.leftFooter') !!}
+                <span class='pull-right'>
+                    {!! trans('app.layout.rightFooter') !!}
+                </span>
+            </div>
+        </nav>
     </div>
 
     <script data-main="require.config.js" src="vendor/require.js"></script>

@@ -18,7 +18,7 @@
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{ Auth::user()->name }} <b class="caret"></b>
+                {{ /*Auth::user()->name*/'' }} <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
                 <li>
@@ -29,7 +29,7 @@
                 <li class="divider"></li>
                 <li>
                     <a href="#">
-                        <i class="fa fa-fw fa-power-off"></i> {{ trans('auth.logout.title') }}
+                        <i class="fa fa-fw fa-power-off"></i> {{ trans('user.logout.title') }}
                     </a>
                 </li>
             </ul>

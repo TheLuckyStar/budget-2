@@ -1,13 +1,13 @@
 <?php
 
-use Psr\Http\Message\ServerRequestInterface;
+use Illuminate\Http\Request;
 
 /**
  * Set locale from request.
- * @param  Psr\Http\Message\ServerRequestInterface $request Request to consider
+ * @param  Illuminate\Http\Request $request Request to consider
  * @return string ISO code of the current language
  */
-function findLocale($request) {
+function findLocale(Request $request) {
 
     // Routes supported by the application
     $available = ['en', 'fr'];
@@ -50,16 +50,37 @@ function findLocale($request) {
 */
 
 // @TODO Remove after implementing login
-Auth::loginUsingId(1);
+//Auth::loginUsingId(1);
 
 // Place any route under ISO language code if provided
-Route::group(['prefix' => findLocale(Request::instance())], function () {
+Route::group(['prefix' => findLocale(Request::capture())], function () {
 
-    // Home URL, used to render homepage
-    Route::controller('home', 'HomeController');
+    // Ajax URLs only
+    Route::group(['middleware' => 'ajax'], function () {
+
+        Route::get('auth/authenticate', 'Auth\AuthController@getLogin'); // Login page content
+        Route::post('auth/login', 'Auth\AuthController@postLogin'); // Login form processing
+        Route::post('auth/register', 'Auth\AuthController@postRegister');  // Registration form processing
+        Route::get('auth/lostPassword', 'Auth\PasswordController@getEmail'); // Lost password page content
+        Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail');  // Lost password form processing
+        Route::get('auth/resetPassword', 'Auth\AuthController@getReset'); // Reset password content
+        Route::post('auth/resetPassword', 'Auth\PasswordController@postReset');  // Reset password form processing
+
+        Route::controller('home', 'HomeController'); // Render homepage content
+
+        // Authenticated user only
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
+        });
+
+    });
 
     // Root URL, used to render HTML document layout
-    Route::get('/', function () {
+    Route::get('/', function (Request $request) {
+        if ($request->ajax()) {
+            abort(404);
+        }
+
         return view('index');
     });
 
