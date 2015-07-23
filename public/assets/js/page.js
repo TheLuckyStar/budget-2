@@ -15,6 +15,11 @@ var PageModule = (function() {
 
 
 
+    // Remove base url from string
+    var getPathFromUrl = function (url) {
+        return url.replace(new RegExp('^('+locale+'/)|('+baseUrl+')'), '');
+    };
+
     // Fragment accessor
     var getUrlFromFragment = function () {
         var fragment = window.location.hash.substr(1);
@@ -28,8 +33,7 @@ var PageModule = (function() {
 
     // Fragment mutator
     var setUrlToFragment = function (url) {
-        url = url.replace(new RegExp('$('+baseUrl+')|('+locale+'/)'), '');
-        window.location.hash = url;
+        window.location.hash = getPathFromUrl(url);
     };
 
 
@@ -49,6 +53,10 @@ var PageModule = (function() {
     // Render page with string content. Set url in fragment if provided
     var renderPage = function (content, url) {
         if (typeof url === 'string') {
+            if (getPathFromUrl(url) != getPathFromUrl(getUrlFromFragment())) {
+                $(window).scrollTop(0);
+            }
+
             setUrlToFragment(url);
         }
 
