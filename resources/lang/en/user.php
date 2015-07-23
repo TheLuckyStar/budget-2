@@ -37,6 +37,14 @@ return [
             .'You will then receive an email containing a recovery link. '
             .'Click on it to open a form where you will be able to set a new password.',
         'submit' => 'Recover now',
+        'emailSubject' => 'Your password reset link',
+        'emailDirections' => 'Have you lost your password?<br>Click on the link below to set a new one!',
+        'emailButton' => 'New password',
+    ],
+
+    // Resetpassword action
+    'resetpassword' => [
+        'title' => 'New password',
     ],
 
     // Logout action

@@ -24,9 +24,9 @@ return [
         ),
     ],
 
-    // Button content
+    // Button texts
     'button' => [
-        'back' => "<i class='fa fa-fw fa-arrow-left'></i> Go back",
+        'save' => 'Save',
     ],
 
     // Error messages

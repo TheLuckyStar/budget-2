@@ -9,43 +9,52 @@
         'active' => trans('user.lostpassword.title')
     ])
 
-    @include('blocks.alerts')
+    <div class="col-md-10 col-md-offset-1">
+        <div class='row'>
 
-    <div class="alert alert-info col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-      {!! trans('user.lostpassword.message') !!}
-    </div>
+            @include('blocks.alerts')
 
-    {!! Form::open([
-        'action' => 'Auth\AuthController@postLogin',
-        'class' => 'form-horizontal col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8'
-    ]) !!}
-        <div class="panel panel-primary">
-
-            <div class="panel-heading">
-                <h3 class="panel-title text-right">
-                    <i class="fa fa-fw fa-key pull-left"></i>
-                    {!! trans('user.lostpassword.title') !!}
-                </h3>
+            <div class="alert alert-info">
+              {!! trans('user.lostpassword.message') !!}
             </div>
 
-            <div class="panel-body">
-                <div class="col-sm-12">
-                    {!! Form::email(
-                        'email',
-                        Request::input('email'),
-                        ['class' => 'form-control', 'id' => 'input-email', 'placeholder' => trans('user.fields.email')]
-                    ) !!}
+            {!! Form::open([
+                'action' => 'Auth\PasswordController@postEmail',
+                'class' => 'form-horizontal col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8'
+            ]) !!}
+                <div class="panel panel-primary">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-right">
+                            <i class="fa fa-fw fa-key pull-left"></i>
+                            {!! trans('user.lostpassword.title') !!}
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="col-sm-12 form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                            {!! Form::email(
+                                'email',
+                                null,
+                                ['class' => 'form-control', 'id' => 'input-email', 'placeholder' => trans('user.fields.email')]
+                            ) !!}
+                            @if ($errors->has('email'))
+                                {!! Html::ul($errors->get('email'), ['class' => 'help-block text-right']) !!}
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        {!! Form::button(
+                            trans('user.lostpassword.submit'),
+                            ['type' => 'submit', 'class' => 'btn btn-xs btn-success']
+                        ) !!}
+                    </div>
+
                 </div>
-            </div>
-
-            <div class="panel-footer text-right">
-                {!! Form::button(
-                    trans('user.lostpassword.submit'),
-                    ['type' => 'submit', 'class' => 'btn btn-xs btn-success']
-                ) !!}
-            </div>
+            {!! Form::close() !!}
 
         </div>
-    {!! Form::close() !!}
+    </div>
 
 </div>

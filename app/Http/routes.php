@@ -63,8 +63,8 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
         Route::post('auth/register', 'Auth\AuthController@postRegister');  // Registration form processing
         Route::get('auth/lostPassword', 'Auth\PasswordController@getEmail'); // Lost password page content
         Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail');  // Lost password form processing
-        Route::get('auth/resetPassword', 'Auth\AuthController@getReset'); // Reset password content
-        Route::post('auth/resetPassword', 'Auth\PasswordController@postReset');  // Reset password form processing
+        Route::get('auth/resetPassword/{segment}', 'Auth\PasswordController@getReset'); // Reset password content
+        Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset');  // Reset password form processing
 
         Route::controller('home', 'HomeController'); // Render homepage content
 

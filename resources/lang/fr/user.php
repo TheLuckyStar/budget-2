@@ -37,6 +37,14 @@ return [
             .'Vous recevrez ensuite un email contenant un lien de récupération. '
             .'Cliquez sur ce lien pour ouvrir le formulaire où vous pourrez définir un nouveau mot de passe.',
         'submit' => 'Récupérer maintenant',
+        'emailSubject' => 'Réinitialisation de votre mot de passe',
+        'emailDirections' => 'Avez-vous perdu votre mot de passe ?<br>Cliquez sur le lien ci-dessous pour un définir un nouveau !',
+        'emailButton' => 'Nouveau mot de passe',
+    ],
+
+    // Resetpassword action
+    'resetpassword' => [
+        'title' => 'Nouveau mot de passe',
     ],
 
     // Logout action
