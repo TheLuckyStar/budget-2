@@ -27,7 +27,7 @@
                     <div class="col-sm-12 form-group {{ session('from') === 'fr/auth/login' && $errors->has('email') ? 'has-error' : '' }}">
                         {!! Form::email(
                             'email',
-                            Request::input('email'),
+                            null,
                             ['class' => 'form-control', 'id' => 'input-email', 'placeholder' => trans('user.fields.email')]
                         ) !!}
                         @if (session('from') === 'fr/auth/login' && $errors->has('email'))
@@ -51,7 +51,7 @@
                         {!! Form::checkbox(
                             'remember',
                             1,
-                            Request::input('remember') === '1',
+                            null,
                             ['id' => 'checkbox-remember']
                         ) !!}
                         {{ trans('user.fields.remember') }}
@@ -89,12 +89,22 @@
                         {!! trans('user.register.title') !!}
                     </h3>
                 </div>
-
+{{session('from')}}
                 <div class="panel-body">
+                    <div class="col-sm-12 form-group {{ session('from') === 'fr/auth/register' && $errors->has('name') ? 'has-error' : '' }}">
+                        {!! Form::text(
+                            'name',
+                            null,
+                            ['class' => 'form-control', 'id' => 'input-name', 'placeholder' => trans('user.fields.name')]
+                        ) !!}
+                        @if (session('from') === 'fr/auth/register' && $errors->has('name'))
+                            {!! Html::ul($errors->get('name'), ['class' => 'help-block text-right']) !!}
+                        @endif
+                    </div>
                     <div class="col-sm-12 form-group {{ session('from') === 'fr/auth/register' && $errors->has('email') ? 'has-error' : '' }}">
                         {!! Form::email(
                             'email',
-                            Request::input('email'),
+                            null,
                             ['class' => 'form-control', 'id' => 'input-email', 'placeholder' => trans('user.fields.email')]
                         ) !!}
                         @if (session('from') === 'fr/auth/register' && $errors->has('email'))

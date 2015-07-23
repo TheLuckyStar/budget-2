@@ -7,6 +7,7 @@ return [
 
     // Model fields
     'fields' => [
+        'name' => 'Name',
         'email' => 'Email',
         'password' => 'Password',
         'password_confirmation' => 'Confirm password',
@@ -25,6 +26,7 @@ return [
     'register' => [
         'title' => 'Register',
         'submit' => 'Register now',
+        'successMessage' => 'Hello :username. Welcome to your budget application.',
     ],
 
     // Lostpassword action

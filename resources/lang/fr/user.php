@@ -7,6 +7,7 @@ return [
 
     // Model fields
     'fields' => [
+        'name' => 'Nom',
         'email' => 'E-mail',
         'password' => 'Mot de passe',
         'password_confirmation' => 'Confirmer le mot de passe',
@@ -25,6 +26,7 @@ return [
     'register' => [
         'title' => 'Inscription',
         'submit' => 'S\'inscrire',
+        'successMessage' => 'Bonjour :username. Bienvenue dans votre application comptable.',
     ],
 
     // Lostpassword action

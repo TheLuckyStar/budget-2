@@ -26,6 +26,7 @@ class AuthController extends Controller
     use ThrottlesLogins;
     use AuthenticatesAndRegistersUsers {
         postLogin as postLoginIlluminate;
+        postRegister as postRegisterIlluminate;
         getLogout as getLogoutIlluminate;
     }
 
@@ -74,6 +75,18 @@ class AuthController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        return $this->postRegisterIlluminate($request)
+            ->withSuccess(trans('user.register.successMessage', ['username' => Auth::user()->name]));
     }
 
     /**

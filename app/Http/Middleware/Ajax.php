@@ -49,7 +49,7 @@ class Ajax
                 $errors[$key] = $val;
             }
 
-            $response = redirect($path)->withErrors($errors)->with('from', $request->path());
+            $response = redirect($path)->withErrors($errors)->with('from', $request->path())->withInput();
         }
 
         // Follow redirections
