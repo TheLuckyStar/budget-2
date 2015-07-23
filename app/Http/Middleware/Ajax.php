@@ -9,7 +9,7 @@ class Ajax
 {
     /**
      * Specific redirection to actions, used on 422 errors
-     * @var [type]
+     * @var array
      */
     private $pathToAction = [
         'fr/auth/login' => 'Auth\AuthController@getLogin',
