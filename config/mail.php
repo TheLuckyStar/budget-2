@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'budget@dubandubois.com', 'name' => 'Budget by Simon Dubois'],
 
     /*
     |--------------------------------------------------------------------------

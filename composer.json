@@ -11,7 +11,8 @@
         "robloach/component-installer": "^0.2.1",
         "components/bootstrap": "^3.3",
         "components/font-awesome": "^4.3",
-        "thomaspark/bootswatch": "^3.3"
+        "thomaspark/bootswatch": "^3.3",
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
