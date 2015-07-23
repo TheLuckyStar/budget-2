@@ -17,6 +17,8 @@ return [
     'login' => [
         'title' => 'Log in',
         'submit' => 'Log in now',
+        'errorMessage' => 'Incorrect credentials.',
+        'successMessage' => 'Hello :username. Welcome to your budget application.',
     ],
 
     // Register action
@@ -38,6 +40,7 @@ return [
     // Logout action
     'logout' => [
         'title' => 'Log out',
+        'successMessage' => 'You have been disconnected.',
     ],
 
 ];

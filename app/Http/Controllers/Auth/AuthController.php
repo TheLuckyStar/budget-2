@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -21,7 +23,23 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers {
+        postLogin as postLoginIlluminate;
+        getLogout as getLogoutIlluminate;
+    }
+
+    /**
+     * Path to redirect user when login failed
+     * @var string
+     */
+    protected $loginPath;
+
+    /**
+     * Path to redirect user after logout
+     * @var string
+     */
+    protected $redirectAfterLogout;
 
     /**
      * Create a new authentication controller instance.
@@ -31,6 +49,52 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+
+        // Set user redirection to login page
+        $this->loginPath = action('Auth\AuthController@getLogin');
+
+        // Set user redirection after logout
+        $this->redirectAfterLogout = action('HomeController@getIndex');
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postLogin(Request $request)
+    {
+        $response = $this->postLoginIlluminate($request);
+
+        if (Auth::check()) {
+            $response->withSuccess(trans('user.login.successMessage', ['username' => Auth::user()->name]));
+        } else {
+            $response->withErrors([trans('user.login.errorMessage')]);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogout()
+    {
+        $response = $this->getLogoutIlluminate();
+        return $response->withSuccess(trans('user.logout.successMessage'));
+    }
+
+    /**
+     * Get the failed login message.
+     *
+     * @return string
+     */
+    protected function getFailedLoginMessage()
+    {
+        return trans('user.login.errorMessage');
     }
 
     /**

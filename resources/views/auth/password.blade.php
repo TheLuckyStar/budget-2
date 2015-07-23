@@ -1,5 +1,5 @@
 
-<div class="clearfix" id="auth-authenticate">
+<div id="auth-password" class="row">
 
     @include('blocks.breadcrumb', [
         'elements' => [
@@ -8,6 +8,8 @@
         ],
         'active' => trans('user.lostpassword.title')
     ])
+
+    @include('blocks.alerts')
 
     <div class="alert alert-info col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
       {!! trans('user.lostpassword.message') !!}
@@ -37,7 +39,10 @@
             </div>
 
             <div class="panel-footer text-right">
-                {!! Form::button(trans('user.lostpassword.submit'), ['class' => 'btn btn-xs btn-success']) !!}
+                {!! Form::button(
+                    trans('user.lostpassword.submit'),
+                    ['type' => 'submit', 'class' => 'btn btn-xs btn-success']
+                ) !!}
             </div>
 
         </div>

@@ -22,8 +22,8 @@
 
     <div id="wrapper">
         @include('navbar')
-        <div id="page-wrapper" class="container-fluid" data-url="{{ URL::action('HomeController@getIndex') }}"></div>
-        <nav class="navbar navbar-inverse navbar-fixed-bottom text-right" role="navigation">
+        <div id="page-wrapper" class="container-fluid" data-url="{{ action('HomeController@getIndex') }}" data-locale="{{ App::getLocale() }}"></div>
+        <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid text-left">
                 {!! trans('app.layout.leftFooter') !!}
                 <span class='pull-right'>
@@ -36,7 +36,8 @@
     <script data-main="require.config.js" src="vendor/require.js"></script>
     <script>
         requirejs(['bootstrap'], function() {
-            require(['assets/js/index.js'])
+            require(['assets/js/page.js'])
+            require(['assets/js/navbar.js'])
         })
     </script>
 

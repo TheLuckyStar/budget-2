@@ -36,7 +36,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if ($this->auth->guest()) {
-            return redirect()->guest(App::getLocale().'/auth/login');
+            return redirect()->action('Auth\AuthController@getLogin')->withErrors(trans('app.error.guest'));
         }
 
         return $next($request);

@@ -17,6 +17,8 @@ return [
     'login' => [
         'title' => 'Connexion',
         'submit' => 'Se connecter',
+        'errorMessage' => 'Identifiants incorrects.',
+        'successMessage' => 'Bonjour :username. Bienvenue dans votre application comptable.',
     ],
 
     // Register action
@@ -38,6 +40,7 @@ return [
     // Logout action
     'logout' => [
         'title' => 'Déconnexion',
+        'successMessage' => 'Vous êtes maintenant déconnecté.',
     ],
 
 ];

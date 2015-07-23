@@ -41,20 +41,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        // Catch 404 HTTP errors for smart redirecting
-        if ($e instanceof NotFoundHttpException) {
-
-            // Return JSON error message for Ajax request
-            if ($request->ajax()) {
-                // @TODO 404 error message
-                return response()->json(['status' => false, 'message' => trans('app.error.404')]);
-            }
-
-            // Redirect to / with error message for non Ajax request
-            // @TODO 404 error message
-            return redirect(App::getLocale())->with('error', trans('app.error.404'));
+        // Render error in local environment for easier debugging
+        if (App::environment('local')) {
+            return parent::render($request, $e);
         }
 
-        return parent::render($request, $e);
+        // Catch 404 HTTP errors for smart redirecting
+        if ($e instanceof NotFoundHttpException) {
+            // @TODO 404 error message
+            return redirect()->action('HomeController@getIndex')->withErrors([trans('app.error.404')]);
+        }
+
+        return redirect()->action('HomeController@getIndex')->withErrors([$e->getMessage()]);
     }
 }

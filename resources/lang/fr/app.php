@@ -31,7 +31,8 @@ return [
 
     // Error messages
     'error' => [
-        '404' => "Page introuvable.",
+        '404' => 'Page introuvable.',
+        'guest' => 'Veuillez vous identifier pour accéder à cette page.',
     ],
 
 ];

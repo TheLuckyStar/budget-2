@@ -31,7 +31,8 @@ return [
 
     // Error messages
     'error' => [
-        '404' => "Page nout found.",
+        '404' => 'Page not found.',
+        'guest' => 'Please authenticate to be granted.',
     ],
 
 ];

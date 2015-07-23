@@ -63,7 +63,7 @@
                 "public/theme/js/morris/morris-data.js"
             ],
             "styles": [
-                "public/vendor/bootswatch/paper/bootstrap.css",
+                "public/vendor/bootswatch/cosmo/bootstrap.css",
                 "public/theme/css/sb-admin.css",
                 "public/theme/css/morris.css"
             ],

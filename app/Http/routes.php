@@ -15,17 +15,17 @@ function findLocale(Request $request) {
     // ISO code from URL
     $providedByClient = $request->segment(1);
 
-    // ISO list from HTTP header
-    $supportedByClient = explode(',', $request->server('HTTP_ACCEPT_LANGUAGE'));
-    array_walk($supportedByClient, function($v) {
-        return substr($v, 0, 2);
-    });
-
     // If compatible ISO code if provided in URL
     if (in_array($providedByClient, $available)) {
         App::setLocale($providedByClient);
         return App::getLocale();
     }
+
+    // ISO list from HTTP header
+    $supportedByClient = explode(',', $request->server('HTTP_ACCEPT_LANGUAGE'));
+    array_walk($supportedByClient, function($v) {
+        return substr($v, 0, 2);
+    });
 
     // Search for compatible ISO code in HTTP header
     foreach ($supportedByClient as $iso) {
@@ -35,7 +35,7 @@ function findLocale(Request $request) {
         }
     }
 
-    return App::getLocale();
+    return false;
 }
 
 /*
@@ -85,3 +85,9 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
     });
 
 });
+
+// Root URL, used to render HTML document layout
+Route::get('/', function (Request $request) {
+    return redirect(App::getLocale());
+});
+

@@ -1,17 +1,21 @@
-<div id="home-guest">
+<div id="home-guest" class='row'>
 
-    <div class="jumbotron">
-        <h1>{{ trans('home.guest.jumbotron.title') }}</h1>
-        <p>{{ trans('app.layout.description') }}</p>
-        <p class='text-right'>
-            {!! Html::linkAction(
-                'Auth\AuthController@getLogin',
-                trans('user.register.title').' & '.trans('user.login.title'),
-                [],
-                ['class' => 'btn btn-primary btn-lg link-to-page']
-            ) !!}
-            {!! trans('home.guest.jumbotron.demoLink') !!}
-        </p>
+    @include('blocks.alerts')
+
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1>{{ trans('home.guest.jumbotron.title') }}</h1>
+            <p>{{ trans('app.layout.description') }}</p>
+            <p class='text-right'>
+                {!! Html::linkAction(
+                    'Auth\AuthController@getLogin',
+                    trans('user.register.title').' & '.trans('user.login.title'),
+                    [],
+                    ['class' => 'btn btn-primary btn-lg link-to-page']
+                ) !!}
+                {!! trans('home.guest.jumbotron.demoLink') !!}
+            </p>
+        </div>
     </div>
 
     <div class="col-md-6">
