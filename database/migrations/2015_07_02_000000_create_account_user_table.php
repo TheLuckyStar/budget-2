@@ -12,7 +12,7 @@ class CreateAccountUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_user', function (Blueprint $table) {
+        Schema::create('account_users', function (Blueprint $table) {
             $table->integer('account_id')->index();
             $table->integer('user_id')->index();
             $table->boolean('owner');
@@ -27,6 +27,6 @@ class CreateAccountUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop('account_user');
+        Schema::drop('account_users');
     }
 }
