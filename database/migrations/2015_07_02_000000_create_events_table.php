@@ -15,10 +15,9 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('entity_id')->index();
-            $table->enum('entity', ['account','envelope','revenue','income','outcome'])->index();
+            $table->integer('entity_id')->index();
+            $table->string('entity_type')->index();
             $table->enum('action', ['create','update','delete','close','open']);
-            $table->timestamp('datetime')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }

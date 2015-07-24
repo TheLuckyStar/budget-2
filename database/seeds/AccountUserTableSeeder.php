@@ -1,5 +1,6 @@
 <?php
 
+use App\AccountUser;
 use Illuminate\Database\Seeder;
 
 class AccountUserTableSeeder extends Seeder
@@ -22,13 +23,13 @@ class AccountUserTableSeeder extends Seeder
      */
     public function runUser1()
     {
-        DB::table('account_user')->insert([
+        AccountUser::create([
             'account_id' => 1,
             'user_id' => 1,
             'owner' => 1,
         ]);
 
-        DB::table('account_user')->insert([
+        AccountUser::create([
             'account_id' => 2,
             'user_id' => 1,
             'owner' => 1,
@@ -42,7 +43,7 @@ class AccountUserTableSeeder extends Seeder
      */
     public function runUser2()
     {
-        DB::table('account_user')->insert([
+        AccountUser::create([
             'account_id' => 2,
             'user_id' => 2,
             'owner' => 0,

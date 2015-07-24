@@ -1,5 +1,6 @@
 <?php
 
+use App\Income;
 use Illuminate\Database\Seeder;
 
 class IncomeTableSeeder extends Seeder
@@ -22,68 +23,59 @@ class IncomeTableSeeder extends Seeder
      */
     public function runAccount1()
     {
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 1,
             'amount' => 800,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 2,
             'amount' => 300,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 3,
             'amount' => 800,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 4,
             'amount' => 150,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 5,
             'amount' => 100,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 6,
             'amount' => 100,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 7,
             'amount' => 100,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 8,
             'amount' => 150,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
 
-        DB::table('incomes')->insert([
+        Income::create([
             'envelope_id' => 9,
             'amount' => 0,
             'date' => mktime(0, 0, 0, 7, 1, 2015),
         ]);
-        EventTableSeeder::seedFromEntity('income');
     }
 
     /**

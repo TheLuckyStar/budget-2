@@ -1,5 +1,6 @@
 <?php
 
+use App\Account;
 use Illuminate\Database\Seeder;
 
 class AccountTableSeeder extends Seeder
@@ -22,11 +23,10 @@ class AccountTableSeeder extends Seeder
      */
     public function runAccount1()
     {
-        DB::table('accounts')->insert([
+        Account::create([
             'name' => 'Compte joint',
             'open' => 1,
         ]);
-        EventTableSeeder::seedFromEntity('account');
     }
 
     /**
@@ -36,10 +36,9 @@ class AccountTableSeeder extends Seeder
      */
     public function runAccount2()
     {
-        DB::table('accounts')->insert([
+        Account::create([
             'name' => 'Vacances en Écosse',
             'open' => 0,
         ]);
-        EventTableSeeder::seedFromEntity('account');
     }
 }
