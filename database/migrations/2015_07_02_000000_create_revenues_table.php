@@ -14,10 +14,10 @@ class CreateRevenuesTable extends Migration
     {
         Schema::create('revenues', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('account_id');
+            $table->integer('account_id')->index();
             $table->string('name');
             $table->decimal('amount', 7, 2);
-            $table->timestamp('date');
+            $table->timestamp('date')->index();
             $table->timestamps();
         });
     }

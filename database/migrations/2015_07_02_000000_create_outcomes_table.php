@@ -14,10 +14,10 @@ class CreateOutcomesTable extends Migration
     {
         Schema::create('outcomes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('envelope_id');
+            $table->integer('envelope_id')->index();
             $table->string('name');
             $table->decimal('amount', 7, 2);
-            $table->timestamp('date');
+            $table->timestamp('date')->index();
             $table->boolean('effective');
             $table->timestamps();
         });

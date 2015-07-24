@@ -14,9 +14,9 @@ class CreateIncomesTable extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('envelope_id');
+            $table->integer('envelope_id')->index();
             $table->decimal('amount', 7, 2);
-            $table->timestamp('date');
+            $table->timestamp('date')->index();
             $table->timestamps();
         });
     }

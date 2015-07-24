@@ -14,7 +14,7 @@ class CreateEnvelopesTable extends Migration
     {
         Schema::create('envelopes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('account_id');
+            $table->integer('account_id')->index();
             $table->string('name');
             $table->string('icon');
             $table->boolean('open');
