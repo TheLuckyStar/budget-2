@@ -16,7 +16,7 @@ class CreateOutcomesTable extends Migration
             $table->increments('id');
             $table->integer('envelope_id')->index();
             $table->string('name');
-            $table->decimal('amount', 7, 2);
+            $table->decimal('amount', 9, 2);
             $table->timestamp('date')->index();
             $table->boolean('effective');
             $table->timestamps();
