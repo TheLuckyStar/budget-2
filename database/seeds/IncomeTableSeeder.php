@@ -1,6 +1,7 @@
 <?php
 
 use App\Income;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class IncomeTableSeeder extends Seeder
@@ -26,55 +27,55 @@ class IncomeTableSeeder extends Seeder
         Income::create([
             'envelope_id' => 1,
             'amount' => 800,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 2,
             'amount' => 300,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 3,
             'amount' => 800,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 4,
             'amount' => 150,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 5,
             'amount' => 100,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 6,
             'amount' => 100,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 7,
             'amount' => 100,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 8,
             'amount' => 150,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
 
         Income::create([
             'envelope_id' => 9,
             'amount' => 0,
-            'date' => mktime(0, 0, 0, 7, 1, 2015),
+            'date' => Carbon::create(2015, 7, 1, 0),
         ]);
     }
 
