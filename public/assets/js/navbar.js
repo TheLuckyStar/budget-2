@@ -14,8 +14,9 @@ var NavbarModule = (function() {
 
     // Refresh navbar with ajax call
     var refresh = function (callback) {
-        console.log('Refresh navbar from '+url);
-        $.get(url).always(function (data) {
+        var currentUrl = url + '/index/' + PageModule.getAccountId();
+        console.log('Refresh navbar from '+currentUrl);
+        $.get(currentUrl).always(function (data) {
             render(data.content, callback);
         });
     };
@@ -31,23 +32,22 @@ var NavbarModule = (function() {
     };
 
     // Set active classes
-    var activeLinks = function (horizontalUrl, verticalUrl, allowRefresh) {
-        console.log('activeLinks');
+    var activeLinks = function (allowRefresh) {
         if (typeof allowRefresh === 'undefined') {
             allowRefresh = true;
         }
 
-        var horizontalLink = $(navbar).find('.link-to-page[href="'+horizontalUrl+'"]');
-        var verticalLink = $(navbar).find('.link-to-page[href="'+verticalUrl+'"]');
+        var horizontalMenu = navbar.find('.navbar-nav.top-nav');
+        var horizontalUrl = PageModule.getHorizontalUrl();
+        var horizontalLink = horizontalMenu.find('.link-to-page[href="'+horizontalUrl+'"]');
 
-        console.log(horizontalUrl);
-        console.log(verticalUrl);
-        console.log(horizontalLink);
-        console.log(verticalLink);
+        var verticalMenu = navbar.find('.navbar-nav.side-nav');
+        var verticalUrl = PageModule.getVerticalUrl();
+        var verticalLink = verticalMenu.find('.link-to-page[href="'+verticalUrl+'"]');
 
         if (allowRefresh === true && (horizontalLink.length === 0 || verticalLink.length === 0)) {
             refresh(function () {
-                activeLinks(horizontalUrl, verticalUrl, false);
+                activeLinks(false);
             });
         }
 

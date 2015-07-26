@@ -6,7 +6,6 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
 
     /**
      * Generate a HTML link without escaping HTML tags.
-     *
      * @param  string  $url
      * @param  string  $title
      * @param  array   $attributes
@@ -24,7 +23,6 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
 
     /**
      * Create the HTML for a listing element.
-     *
      * @param  mixed    $key
      * @param  string  $type
      * @param  string  $value
@@ -40,5 +38,15 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         {
             return '<li>'.$value.'</li>';
         }
+    }
+
+    /**
+     * Format a price with two decimal digits
+     * @param  string  $value
+     * @return string
+     */
+    public function formatPrice($value)
+    {
+        return number_format($value, 2).'€';
     }
 }

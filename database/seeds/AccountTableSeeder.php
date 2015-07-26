@@ -27,8 +27,8 @@ class AccountTableSeeder extends Seeder
             'name' => 'Compte joint',
         ]);
 
-        $account->users()->attach(1, ['owner' => 1]);
-        $account->users()->attach(2, ['owner' => 0]);
+        $account->owner()->attach(1, ['owner' => 1]);
+        $account->guests()->attach(2, ['owner' => 0]);
     }
 
     /**
@@ -42,7 +42,7 @@ class AccountTableSeeder extends Seeder
             'name' => 'Vacances en Écosse',
         ]);
 
-        $account->users()->attach(1, ['owner' => 1]);
+        $account->owner()->attach(1, ['owner' => 1]);
 
         $account->delete();
     }

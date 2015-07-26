@@ -38,6 +38,23 @@ var PageModule = (function() {
 
 
 
+    // Return URL to find active horizontal menu link
+    var getHorizontalUrl = function () {
+        return page.children(":first").data('horizontal-url');
+    };
+
+    // Return URL to find active vertical menu link
+    var getVerticalUrl = function () {
+        return page.children(":first").data('vertical-url');
+    };
+
+    // Return current account ID to request vertical menu
+    var getAccountId = function () {
+        return page.children(":first").data('account-id');
+    };
+
+
+
     // Refresh page with ajax call from url set in container attribute
     var refresh = function (url) {
         if (url === undefined) {
@@ -63,10 +80,7 @@ var PageModule = (function() {
         console.log('Render page');
         page.html(content);
 
-        NavbarModule.activeLinks(
-            page.children(":first").data('horizontal-url'),
-            page.children(":first").data('vertical-url')
-        );
+        NavbarModule.activeLinks();
     };
 
 
@@ -118,10 +132,10 @@ var PageModule = (function() {
     // Define public methods
     return {
         init: init,
-        refresh: refresh,
-        submitForm: submitForm,
         linkToPage: linkToPage,
-        getCurrentUrl: getUrlFromFragment,
+        getHorizontalUrl: getHorizontalUrl,
+        getVerticalUrl: getVerticalUrl,
+        getAccountId: getAccountId,
     };
 
 

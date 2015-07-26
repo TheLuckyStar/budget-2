@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
         </button>
 
-        <div class='navbar-nav'>
+        <div class='navbar-nav top-nav small'>
             @foreach ($horizontalMenu as $link)
                 {!! $link !!}
             @endforeach
@@ -46,7 +46,7 @@
         @endif
 
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        {!! Html::ul($verticalMenu, ['class' => 'nav navbar-nav side-nav']) !!}
+        {!! Html::ul($verticalMenu, ['class' => 'nav navbar-nav side-nav small']) !!}
 
     </div>
 

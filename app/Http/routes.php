@@ -69,11 +69,11 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
         Route::controller('navbar', 'NavbarController'); // Render navbar content
         Route::controller('home', 'HomeController'); // Render homepage content
 
-        Route::controller('account', 'AccountController'); // Render account pages
-
         // Authenticated user only
         Route::group(['middleware' => 'auth'], function () {
             Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
+            Route::controller('account', 'AccountController'); // Render account pages
+            Route::controller('envelope', 'EnvelopeController'); // Render envelope pages
         });
 
     });

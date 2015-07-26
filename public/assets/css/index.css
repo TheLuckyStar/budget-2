@@ -15,6 +15,12 @@ body {height: calc(100% - 50px); margin-top: 50px;}
 #wrapper {height: 100%;}
 #page-wrapper {min-height: 100%; padding-bottom: 33px;}
 
+@media (min-width: 768px) {
+    .side-nav > li > a {
+      width: 210px;
+    }
+}
+
 .navbar-fixed-bottom {min-height: 23px; height: 23px;}
 .navbar-fixed-bottom .container-fluid {overflow: hidden;}
 .navbar-fixed-bottom a {color: inherit;}
@@ -25,6 +31,11 @@ body {height: calc(100% - 50px); margin-top: 50px;}
   color: #fff;
   background-color: #080808;
 }
+
+.side-nav .badge {color: #222; background-color: #fff; font-size: inherit;}
+.side-nav .badge-danger {background-color: #ff0039;}
+.side-nav .badge-warning {background-color: #ff7518;}
+.side-nav .badge-success {background-color: #3fb618;}
 
 ul.help-block {list-style-type: none;}
 
