@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -17,12 +16,17 @@
     <link href="assets/css/index.css" rel="stylesheet" type="text/css">
 
 </head>
-
 <body>
 
     <div id="wrapper">
-        @include('navbar')
-        <div id="page-wrapper" class="container-fluid" data-url="{{ action('HomeController@getIndex') }}" data-locale="{{ App::getLocale() }}"></div>
+
+        <div id="navbar-wrapper" data-url="{{ action('NavbarController@getIndex') }}"></div>
+
+        <div id="page-wrapper"
+            class="container-fluid"
+            data-url="{{ action('HomeController@getIndex') }}"
+            data-locale="{{ App::getLocale() }}"></div>
+
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid text-left">
                 {!! trans('app.layout.leftFooter') !!}
@@ -31,6 +35,7 @@
                 </span>
             </div>
         </nav>
+
     </div>
 
     <script data-main="require.config.js" src="vendor/require.js"></script>
@@ -42,5 +47,4 @@
     </script>
 
 </body>
-
 </html>

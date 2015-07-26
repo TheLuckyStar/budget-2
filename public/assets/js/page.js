@@ -17,7 +17,7 @@ var PageModule = (function() {
 
     // Remove base url from string
     var getPathFromUrl = function (url) {
-        return url.replace(new RegExp('^('+locale+'/)|('+baseUrl+')'), '');
+        return url.replace(new RegExp('^(' + locale + '/)|(' + baseUrl + ')'), '');
     };
 
     // Fragment accessor
@@ -38,20 +38,20 @@ var PageModule = (function() {
 
 
 
-    // Refresh page with ajax call to url set in container attribute
-    var refreshPage = function (url) {
+    // Refresh page with ajax call from url set in container attribute
+    var refresh = function (url) {
         if (url === undefined) {
             var url = getUrlFromFragment(url) ? getUrlFromFragment(url) : page.data('url');
         }
 
-        console.log('Refresh page to '+url);
+        console.log('Refresh page from ' + url);
         $.get(url).always(function (data) {
-            renderPage(data.content, data.from);
+            render(data.content, data.from);
         });
     };
 
     // Render page with string content. Set url in fragment if provided
-    var renderPage = function (content, url) {
+    var render = function (content, url) {
         if (typeof url === 'string') {
             if (getPathFromUrl(url) != getPathFromUrl(getUrlFromFragment())) {
                 $(window).scrollTop(0);
@@ -62,6 +62,11 @@ var PageModule = (function() {
 
         console.log('Render page');
         page.html(content);
+
+        NavbarModule.activeLinks(
+            page.children(":first").data('horizontal-url'),
+            page.children(":first").data('vertical-url')
+        );
     };
 
 
@@ -71,21 +76,30 @@ var PageModule = (function() {
         var url = form.attr('action');
         var data = form.serializeArray();
 
-        console.log('Submit form to '+url);
+        console.log('Submit form to ' + url);
         $.post(url, data).always(function (data) {
-            renderPage(data.content, data.from);
+            render(data.content, data.from);
         });
     };
 
 
+
+    // Click on some links should reload page asynchronously
+    var linkToPage = function (link) {
+        var url = $(link).attr('href');
+        refresh(url);
+
+        $(link).parents('.dropdown').children('.dropdown-toggle').dropdown("toggle");
+
+        return false;
+    }
 
     // Called on module loading
     var init = function () {
 
         // Click on some links should reload page asynchronously
         $(page).on('click', '.link-to-page', function () {
-            var url = $(this).attr('href');
-            refreshPage(url);
+            linkToPage($(this));
             return false;
         });
 
@@ -96,7 +110,7 @@ var PageModule = (function() {
         });
 
         // First page content loading
-        refreshPage();
+        refresh();
     };
 
 
@@ -104,7 +118,10 @@ var PageModule = (function() {
     // Define public methods
     return {
         init: init,
-        refreshPage: refreshPage
+        refresh: refresh,
+        submitForm: submitForm,
+        linkToPage: linkToPage,
+        getCurrentUrl: getUrlFromFragment,
     };
 
 

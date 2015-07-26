@@ -1,4 +1,4 @@
-<div id="home-authenticated" class='row'>
+<div id="home-authenticated" class='row' data-horizontal-url="{{ action('HomeController@getIndex') }}">
 
     @include('blocks.alerts')
 

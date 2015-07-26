@@ -22,5 +22,23 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return '<a href="'.$url.'"'.$this->attributes($attributes).'>'.$title.'</a>';
     }
 
-
+    /**
+     * Create the HTML for a listing element.
+     *
+     * @param  mixed    $key
+     * @param  string  $type
+     * @param  string  $value
+     * @return string
+     */
+    protected function listingElement($key, $type, $value)
+    {
+        if (is_array($value))
+        {
+            return $this->nestedListing($key, $type, $value);
+        }
+        else
+        {
+            return '<li>'.$value.'</li>';
+        }
+    }
 }

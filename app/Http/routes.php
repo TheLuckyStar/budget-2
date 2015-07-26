@@ -66,7 +66,10 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
         Route::get('auth/resetPassword/{segment}', 'Auth\PasswordController@getReset'); // Reset password content
         Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset');  // Reset password form processing
 
+        Route::controller('navbar', 'NavbarController'); // Render navbar content
         Route::controller('home', 'HomeController'); // Render homepage content
+
+        Route::controller('account', 'AccountController'); // Render account pages
 
         // Authenticated user only
         Route::group(['middleware' => 'auth'], function () {

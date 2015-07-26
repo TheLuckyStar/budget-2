@@ -13,12 +13,7 @@ return [
         // Header
         'jumbotron' => [
             'title' => 'Enveloppez votre budget !',
-            'demoLink' => Html::linkAction(
-                'Auth\AuthController@getLogin', // @TODO Link to demo page
-                'Version de démonstration',
-                [],
-                ['class' => 'link-to-page btn btn-lg btn-warning']
-            ),
+            'demoButton' => 'Version de démonstration',
         ],
 
         // 1st block : benefits

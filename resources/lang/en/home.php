@@ -12,7 +12,8 @@ return [
 
         // Header
         'jumbotron' => [
-            'title' => 'Envelope your budget!'
+            'title' => 'Envelope your budget!',
+            'demoButton' => 'Try it out!',
         ],
 
         // 1st block : benefits

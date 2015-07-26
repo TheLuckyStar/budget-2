@@ -1,4 +1,4 @@
-<div id="home-guest" class='row'>
+<div id="home-guest" class='row' data-vertical-url="{{ action('HomeController@getIndex') }}">
 
     @include('blocks.alerts')
 
@@ -13,7 +13,12 @@
                     [],
                     ['class' => 'btn btn-primary btn-lg link-to-page']
                 ) !!}
-                {!! trans('home.guest.jumbotron.demoLink') !!}
+                {!! Html::linkAction(
+                    'Auth\AuthController@getLogin', // @TODO Link to demo page
+                    trans('home.guest.jumbotron.demoButton'),
+                    [],
+                    ['class' => 'link-to-page btn btn-lg btn-warning']
+                ) !!}
             </p>
         </div>
     </div>

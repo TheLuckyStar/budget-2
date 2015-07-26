@@ -6,12 +6,25 @@
 html {height: 100%;}
 body {height: calc(100% - 50px); margin-top: 50px;}
 
+@media (min-width: 768px) {
+    #page-wrapper {
+        padding: 15px;
+    }
+}
+
 #wrapper {height: 100%;}
 #page-wrapper {min-height: 100%; padding-bottom: 33px;}
 
 .navbar-fixed-bottom {min-height: 23px; height: 23px;}
 .navbar-fixed-bottom .container-fluid {overflow: hidden;}
 .navbar-fixed-bottom a {color: inherit;}
+
+.navbar-default .navbar-nav>.active,
+.navbar-default .navbar-nav>.active:focus,
+.navbar-default .navbar-nav>.active:hover {
+  color: #fff;
+  background-color: #080808;
+}
 
 ul.help-block {list-style-type: none;}
 

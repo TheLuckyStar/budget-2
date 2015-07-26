@@ -37,6 +37,12 @@ class AuthController extends Controller
     protected $loginPath;
 
     /**
+     * Path to redirect user after login
+     * @var string
+     */
+    protected $redirectPath;
+
+    /**
      * Path to redirect user after logout
      * @var string
      */
@@ -53,6 +59,9 @@ class AuthController extends Controller
 
         // Set user redirection to login page
         $this->loginPath = action('Auth\AuthController@getLogin');
+
+        // Set user redirection after login
+        $this->redirectPath = action('HomeController@getIndex');
 
         // Set user redirection after logout
         $this->redirectAfterLogout = action('HomeController@getIndex');

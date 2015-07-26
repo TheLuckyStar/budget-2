@@ -1,5 +1,5 @@
 
-<div id="auth-authenticate" class="row">
+<div id="auth-authenticate" class="row" data-vertical-url="{{ action('Auth\AuthController@getLogin') }}">
 
     @include('blocks.breadcrumb', [
         'elements' => ['HomeController@getIndex' => trans('home.guest.title')],
