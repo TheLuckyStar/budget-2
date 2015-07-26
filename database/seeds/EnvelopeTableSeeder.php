@@ -86,25 +86,25 @@ class EnvelopeTableSeeder extends Seeder
     public function runAccount2()
     {
         Envelope::create([
-            'account_id' => 1,
+            'account_id' => 2,
             'name' => 'Logement',
             'icon' => 'home',
         ]);
 
         Envelope::create([
-            'account_id' => 1,
+            'account_id' => 2,
             'name' => 'Transport',
             'icon' => 'car',
         ]);
 
         Envelope::create([
-            'account_id' => 1,
+            'account_id' => 2,
             'name' => 'Nourriture',
             'icon' => 'cutlery',
         ]);
 
         Envelope::create([
-            'account_id' => 1,
+            'account_id' => 2,
             'name' => 'Sorties',
             'icon' => 'book',
         ]);
