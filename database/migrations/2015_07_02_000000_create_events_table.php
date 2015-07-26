@@ -17,7 +17,7 @@ class CreateEventsTable extends Migration
             $table->integer('user_id');
             $table->integer('entity_id')->index();
             $table->string('entity_type')->index();
-            $table->enum('action', ['create','update','trash','restore','delete']);
+            $table->enum('action', ['create','update','delete','restore']);
             $table->string('field_name');
             $table->string('field_value_from');
             $table->string('field_value_to');

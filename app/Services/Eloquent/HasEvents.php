@@ -24,7 +24,14 @@ trait HasEvents {
     protected static function boot()
     {
         self::created([__CLASS__, 'insertCreateEvent']);
+
         self::updated([__CLASS__, 'insertUpdateEvent']);
+
+        self::deleted([__CLASS__, 'insertDeleteEvent']);
+
+        if (in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses(__CLASS__))) {
+            self::restored([__CLASS__, 'insertRestoreEvent']);
+        }
     }
 
     /**
@@ -65,5 +72,35 @@ trait HasEvents {
                 $entity->events()->save($event);
             }
         }
+    }
+
+    /**
+     * Insert new record to events table. Called after a model related to App\Event has been deleted.
+     * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
+     * @return void
+     */
+    protected static function insertDeleteEvent($entity)
+    {
+        $event = new Event([
+            'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
+            'action' => 'delete',
+        ]);
+
+        $entity->events()->save($event);
+    }
+
+    /**
+     * Insert new record to events table. Called after a model related to App\Event has been restored.
+     * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
+     * @return void
+     */
+    protected static function insertRestoreEvent($entity)
+    {
+        $event = new Event([
+            'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
+            'action' => 'restore',
+        ]);
+
+        $entity->events()->save($event);
     }
 }
