@@ -25,7 +25,6 @@ class AccountTableSeeder extends Seeder
     {
         Account::create([
             'name' => 'Compte joint',
-            'open' => 1,
         ]);
     }
 
@@ -38,7 +37,6 @@ class AccountTableSeeder extends Seeder
     {
         Account::create([
             'name' => 'Vacances en Écosse',
-            'open' => 0,
-        ]);
+        ])->delete();
     }
 }

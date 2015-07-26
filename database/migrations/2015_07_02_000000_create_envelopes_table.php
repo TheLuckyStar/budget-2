@@ -17,8 +17,8 @@ class CreateEnvelopesTable extends Migration
             $table->integer('account_id')->index();
             $table->string('name');
             $table->string('icon');
-            $table->boolean('open');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -19,6 +19,7 @@ class CreateRevenuesTable extends Migration
             $table->decimal('amount', 9, 2);
             $table->timestamp('date')->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

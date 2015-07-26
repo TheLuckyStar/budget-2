@@ -27,64 +27,55 @@ class EnvelopeTableSeeder extends Seeder
             'account_id' => 1,
             'name' => 'Logement',
             'icon' => 'home',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Transport',
             'icon' => 'car',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Nourriture',
             'icon' => 'cutlery',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Soins & santé',
             'icon' => 'stethoscope',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Vêtements',
             'icon' => 'umbrella',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Culture & Loisirs',
             'icon' => 'book',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Cadeaux',
             'icon' => 'gift',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Vacances',
             'icon' => 'sun',
-            'open' => 0,
-        ]);
+        ])->delete();
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Épargne',
             'icon' => 'gift',
-            'open' => 0,
-        ]);
+        ])->delete();
     }
 
     /**
@@ -98,28 +89,24 @@ class EnvelopeTableSeeder extends Seeder
             'account_id' => 1,
             'name' => 'Logement',
             'icon' => 'home',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Transport',
             'icon' => 'car',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Nourriture',
             'icon' => 'cutlery',
-            'open' => 1,
         ]);
 
         Envelope::create([
             'account_id' => 1,
             'name' => 'Sorties',
             'icon' => 'book',
-            'open' => 1,
         ]);
     }
 }

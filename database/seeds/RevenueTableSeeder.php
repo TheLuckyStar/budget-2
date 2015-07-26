@@ -40,6 +40,13 @@ class RevenueTableSeeder extends Seeder
 
         Revenue::create([
             'account_id' => 1,
+            'name' => 'Facturation Concordia',
+            'amount' => 300,
+            'date' => Carbon::create(2015, 7, 5, 0),
+        ])->delete();
+
+        Revenue::create([
+            'account_id' => 1,
             'name' => 'Prestations CAF',
             'amount' => 446.10,
             'date' => Carbon::create(2015, 7, 6, 0),

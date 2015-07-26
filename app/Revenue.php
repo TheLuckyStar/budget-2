@@ -4,16 +4,17 @@ namespace App;
 
 use App\Services\Eloquent\HasEvents;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Revenue extends Model
 {
-    use HasEvents;
+    use HasEvents, SoftDeletes;
 
     /**
      * The attributes that should be mutated to dates.
      * @var array
      */
-    protected $dates = ['date', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes that should be casted to native types.

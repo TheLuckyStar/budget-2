@@ -269,7 +269,7 @@ class OutcomeTableSeeder extends Seeder
             'amount' => 19.95,
             'date' => Carbon::create(2015, 7, 9, 0),
             'effective' => 1,
-        ]);
+        ])->delete();
 
         Outcome::create([
             'envelope_id' => 3,

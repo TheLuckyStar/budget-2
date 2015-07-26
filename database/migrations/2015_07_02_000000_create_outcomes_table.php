@@ -20,6 +20,7 @@ class CreateOutcomesTable extends Migration
             $table->timestamp('date')->index();
             $table->boolean('effective');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
