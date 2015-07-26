@@ -23,9 +23,12 @@ class AccountTableSeeder extends Seeder
      */
     public function runAccount1()
     {
-        Account::create([
+        $account = Account::create([
             'name' => 'Compte joint',
         ]);
+
+        $account->users()->attach(1, ['owner' => 1]);
+        $account->users()->attach(2, ['owner' => 0]);
     }
 
     /**
@@ -35,8 +38,12 @@ class AccountTableSeeder extends Seeder
      */
     public function runAccount2()
     {
-        Account::create([
+        $account = Account::create([
             'name' => 'Vacances en Écosse',
-        ])->delete();
+        ]);
+
+        $account->users()->attach(1, ['owner' => 1]);
+
+        $account->delete();
     }
 }

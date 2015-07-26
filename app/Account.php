@@ -23,4 +23,18 @@ class Account extends Model
     protected $watchedFieldInEvent = [
         'name'
     ];
+
+    /**
+     * Convert the model to its string representation.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function users() {
+        return $this->belongsToMany('App\User')->withTimestamps()->orderBy('name');
+    }
 }
