@@ -4,6 +4,7 @@ namespace App;
 
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,17 +35,34 @@ class Account extends Model
         return $this->name;
     }
 
-    public function owner() {
+    public function link() {
+        return Html::linkAction('AccountController@getSummary', $this, $this, ['class' => 'link-to-page']);
+    }
+
+    public function relatedEvents()
+    {
+        return Event::where(function ($query) {
+            $query->where('entity_type', 'App\Account')->where('entity_id', $this->id);
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('envelopes')->where('account_id', $this->id);
+            });
+        })->orderBy('created_at', 'desc');
+    }
+
+    public function users() {
         return $this->belongsToMany('App\User')
             ->withPivot('owner')
-            ->withTimestamps()
+            ->withTimestamps();
+    }
+
+    public function owner() {
+        return $this->users()
             ->where('owner', 1);
     }
 
     public function guests() {
-        return $this->belongsToMany('App\User')
-            ->withPivot('owner')
-            ->withTimestamps()
+        return $this->users()
             ->where('owner', 0)
             ->orderBy('name');
     }

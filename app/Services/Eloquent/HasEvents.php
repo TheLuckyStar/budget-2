@@ -1,24 +1,23 @@
 <?php namespace App\Services\Eloquent;
 
-use App\Event;
 use App;
+use App\Event;
 use Auth;
 
 trait HasEvents {
 
     /**
      * Define relation to App\Event
-     *
-     * @return void
+     * @return Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function events()
     {
-        return $this->morphMany('App\Event', 'entity');
+        return $this->morphMany('App\Event', 'entity')
+            ->orderBy('created_at', 'desc');
     }
 
     /**
      * The "booting" method of the trait.
-     *
      * @return void
      */
     protected static function boot()

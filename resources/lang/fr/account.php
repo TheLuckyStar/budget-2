@@ -26,10 +26,9 @@ return [
 
     'users' => [
         'title' => "Participants",
-    ],
-
-    'events' => [
-        'title' => "Historique",
+        'owner' => "Créateur",
+        'attachUserMessage' => ":user a été rattaché à ce compte.",
+        'detachUserMessage' => ":user a été détaché de ce compte.",
     ],
 
     'revenues' => [

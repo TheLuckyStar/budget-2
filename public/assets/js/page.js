@@ -112,7 +112,7 @@ var PageModule = (function() {
     var init = function () {
 
         // Click on some links should reload page asynchronously
-        $(page).on('click', '.link-to-page', function () {
+        $(page).on('click', '.link-to-page, .pagination a', function () {
             linkToPage($(this));
             return false;
         });

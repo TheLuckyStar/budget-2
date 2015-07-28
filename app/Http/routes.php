@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -17,6 +18,7 @@ function findLocale(Request $request) {
 
     // If compatible ISO code if provided in URL
     if (in_array($providedByClient, $available)) {
+        Carbon::setLocale($providedByClient);
         App::setLocale($providedByClient);
         return App::getLocale();
     }
@@ -30,6 +32,7 @@ function findLocale(Request $request) {
     // Search for compatible ISO code in HTTP header
     foreach ($supportedByClient as $iso) {
         if (in_array($iso, $available)) {
+            Carbon::setLocale($iso);
             App::setLocale($iso);
             break;
         }

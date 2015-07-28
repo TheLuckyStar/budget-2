@@ -8,7 +8,7 @@
                 <i class="fa fa-fw fa-pie-chart pull-left"></i>
                 @lang('account.snapshot.title')
             </div>
-            <div class="panel-footer">
+            <div class="panel-body">
                 <div class='row'>
                     <div class='col-md-6'>
                         <h3 class='text-center'>
@@ -34,14 +34,44 @@
                 @lang('account.users.title')
             </div>
             <ul class="list-group">
-{{--
-                @foreach($account->users as $user)
-                    <li class="list-group-item">{{ $user }}</li>
+                <li class="list-group-item">
+                    {!! $account->owner()->first()->link() !!}
+                    <i class="fa fa-fw fa-star pull-right" title="@lang('account.users.owner')"></i>
+                </li>
+                @foreach($account->guests as $user)
+                    <li class="list-group-item">
+                        {!! Form::open(['action' => ['AccountController@postDetachUser', $account->id]]) !!}
+                            {!! Form::hidden('user_id', $user->id) !!}
+                            {!! $user->link() !!}
+                            {!! Form::button(
+                                '<i class="fa fa-fw fa-trash"></i>',
+                                ['type' => 'submit', 'class' => 'btn btn-danger btn-xs pull-right']
+                            ) !!}
+                        {!! Form::close() !!}
+                    </li>
                 @endforeach
---}}
             </ul>
-            <div class="panel-footer">
-            </div>
+            {!! Form::open([
+                'action' => ['AccountController@postAttachUser', $account->id],
+                'class' => 'panel-footer'.($errors->has('email') ? ' has-error' : '')
+            ]) !!}
+                <div class="input-group">
+                    {!! Form::email(
+                        'email',
+                        null,
+                        ['class' => 'form-control', 'id' => 'input-email', 'placeholder' => trans('user.fields.email')]
+                    ) !!}
+                    <span class="input-group-btn">
+                        {!! Form::button(
+                            '<i class="fa fa-fw fa-plus"></i>',
+                            ['type' => 'submit', 'class' => 'btn btn-success pull-right']
+                        ) !!}
+                    </span>
+                </div>
+                @if ($errors->has('email'))
+                    {!! Html::ul($errors->get('email'), ['class' => 'help-block text-right']) !!}
+                @endif
+            {!! Form::close() !!}
         </div>
     </div>
 
@@ -49,17 +79,20 @@
         <div class="panel panel-default">
             <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-history pull-left"></i>
-                @lang('account.events.title')
+                @lang('event.title')
             </div>
             <ul class="list-group">
-{{--
-                @foreach($account->users as $user)
-                    <li class="list-group-item">{{ $user }}</li>
+                @foreach($events as $event)
+                    <li class="list-group-item small">
+                        {!! $event !!}
+                    </li>
                 @endforeach
---}}
             </ul>
-            <div class="panel-footer">
-            </div>
+            @if ($events->hasPages())
+                <div class="panel-footer text-right">
+                    {!! $events->render() !!}
+                </div>
+            @endif
         </div>
     </div>
 

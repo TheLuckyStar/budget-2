@@ -68,7 +68,6 @@ class EnvelopeTableSeeder extends Seeder
         Envelope::create([
             'account_id' => 1,
             'name' => 'Vacances',
-            'icon' => 'sun',
         ])->delete();
 
         Envelope::create([

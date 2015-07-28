@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Html;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -23,6 +24,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Convert the model to its string representation.
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function link() {
+        return Html::mailto($this->email, $this);
+    }
 
     public function accounts() {
         return $this->belongsToMany('App\Account')

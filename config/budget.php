@@ -2,6 +2,8 @@
 
 return [
 
+    'paginate' => 10,
+
     'statusColors' => [
         'success' => '#3fb618',
         'primary' => '#2780e3',

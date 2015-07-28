@@ -4,6 +4,7 @@ namespace App;
 
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,6 +34,15 @@ class Envelope extends Model
     public function __toString()
     {
         return '<i class="fa fa-fw fa-'.$this->icon.'" title="'.$this->name.'"></i> '.$this->name;
+    }
+
+    public function link() {
+        return Html::linkAction(
+            'EnvelopeController@getView',
+            ($this->icon ? '<i class="fa fa-'.$this->icon.'" title="'.$this->name.'"></i> ' : '').$this->name,
+            $this,
+            ['class' => 'link-to-page']
+        );
     }
 
     public function account() {

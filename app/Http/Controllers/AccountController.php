@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\User;
 use Auth;
 use Config;
 use Illuminate\Http\Request;
+use Session;
 
 class AccountController extends Controller
 {
@@ -74,11 +76,54 @@ class AccountController extends Controller
             'envelopesData' => json_encode($envelopesData),
             'envelopesColors' => json_encode($envelopesColors),
             'balanceData' => json_encode($balanceData),
-            'balanceColors' => json_encode($balanceColors)
+            'balanceColors' => json_encode($balanceColors),
+            'events' => $account->relatedEvents()->paginate(Config::get('budget.paginate')),
         ];
 
         return view('account.summary', $data);
     }
+
+    public function getAttachUser(Request $request, $account_id) {
+        Session::reflash();
+        return redirect()->action('AccountController@getSummary', $account_id);
+    }
+
+    public function postAttachUser(Request $request, $account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $this->validate($request, [
+            'email' => 'required|email|exists:users',
+        ]);
+
+        $user = User::where('email', $request->input('email'))->first();
+        if ($user->id != $account->owner()->first()->id
+            && $account->guests()->where('user_id', $user->id)->count() === 0) {
+            $account->users()->attach($user->id);
+        }
+
+        return redirect()->action('AccountController@getSummary', $account)
+                ->withSuccess(trans('account.users.attachUserMessage', ['user' => $user]));
+    }
+
+    public function postDetachUser(Request $request, $account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $user = User::find($request->input('user_id'));
+        $account->guests()->detach($user->id);
+
+        return redirect()->action('AccountController@getSummary', $account)
+                ->withSuccess(trans('account.users.detachUserMessage', ['user' => $user]));
+   }
 
     public function getRevenues($account_id) {
         $account = Auth::user()->accounts()->find($account_id);

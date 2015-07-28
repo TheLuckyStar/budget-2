@@ -15,7 +15,7 @@ class CreateAccountUserTable extends Migration
         Schema::create('account_user', function (Blueprint $table) {
             $table->integer('account_id')->index();
             $table->integer('user_id')->index();
-            $table->boolean('owner');
+            $table->boolean('owner')->default(0);
             $table->timestamps();
         });
     }

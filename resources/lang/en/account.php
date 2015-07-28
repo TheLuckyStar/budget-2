@@ -26,10 +26,9 @@ return [
 
     'users' => [
         'title' => "Participants",
-    ],
-
-    'events' => [
-        'title' => "History",
+        'owner' => "Owner",
+        'attachUserMessage' => ":user has been attached to this account.",
+        'detachUserMessage' => ":user has been detached from this account.",
     ],
 
     'revenues' => [
