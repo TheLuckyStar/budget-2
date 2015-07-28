@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use Auth;
+use Config;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -14,24 +15,116 @@ class AccountController extends Controller
         // Redirect to first account if exists
         if ($account instanceof Account) {
             $request->session()->reflash();
-            return redirect()->action('AccountController@getView', $account);
+            return redirect()->action('AccountController@getSummary', $account);
         }
 
         // Redirect to add form if no account exist for user
     }
 
-    public function getView($account_id) {
+    public function getSummary($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
 
         if (is_null($account)) {
             return redirect()->action('AccountController@getIndex')
-                ->withErrors(trans('account.view.notfoundMessage'));
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $balanceData = [
+            [
+                'label' => trans('account.snapshot.allocatedRevenue'),
+                'value' => $account->allocated_revenue,
+            ],
+            [
+                'label' => trans('account.snapshot.unallocatedRevenue'),
+                'value' => $account->unallocated_revenue,
+            ],
+            [
+                'label' => trans('account.snapshot.intendedOutcome'),
+                'value' => $account->intended_outcome,
+            ],
+            [
+                'label' => trans('account.snapshot.effectiveOutcome'),
+                'value' => $account->effective_outcome,
+            ],
+        ];
+        $balanceColors = [
+            Config::get('budget.statusColors.success'),
+            Config::get('budget.statusColors.primary'),
+            Config::get('budget.statusColors.warning'),
+            Config::get('budget.statusColors.danger')
+        ];
+
+        $envelopesData = [];
+        $envelopesColors = [];
+        foreach ($account->envelopes as $envelope) {
+            $balance = $envelope->balance;
+
+            $envelopesData[] = [
+                'label' => $envelope->name,
+                'value' => abs($balance),
+                'negative' => $balance < 0,
+            ];
+
+            $envelopesColors[] = Config::get('budget.statusColors.'.$envelope->status);
         }
 
         $data = [
             'account' => $account,
+            'activeTab' => 'summary',
+            'envelopesData' => json_encode($envelopesData),
+            'envelopesColors' => json_encode($envelopesColors),
+            'balanceData' => json_encode($balanceData),
+            'balanceColors' => json_encode($balanceColors)
         ];
 
-        return view('account.view', $data);
+        return view('account.summary', $data);
+    }
+
+    public function getRevenues($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+            'activeTab' => 'revenues',
+        ];
+
+        return view('account.revenues', $data);
+    }
+
+    public function getOutcomes($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+            'activeTab' => 'outcomes',
+        ];
+
+        return view('account.outcomes', $data);
+    }
+
+    public function getDevelopment($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+            'activeTab' => 'development',
+        ];
+
+        return view('account.development', $data);
     }
 }

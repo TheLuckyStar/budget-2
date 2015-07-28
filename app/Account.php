@@ -60,30 +60,100 @@ class Account extends Model
             ->orderBy('envelopes.name');
     }
 
+    public function incomes() {
+        return $this->hasManyThrough('App\Income', 'App\Envelope')
+            ->orderBy('incomes.date')
+            ->orderBy('envelopes.name');
+    }
+
+    public function intendedOutcomes() {
+        return $this->outcomes()->where('effective', 0);
+    }
+
+    public function effectiveOutcomes() {
+        return $this->outcomes()->where('effective', 1);
+    }
+
     public function revenues() {
         return $this->hasMany('App\Revenue')
             ->orderBy('date');
     }
 
+    public function getRevenueAttribute($at = null) {
+        $revenue = $this->revenues();
 
-    public function getBalance($at = null) {
-        if (is_null($at)) {
-            $at = Carbon::create();
+        if ($at instanceof Carbon) {
+            $revenue->where('date', '<=', $at);
         }
 
-        $revenue = floatval($this->revenues()->where('date', '<', $at)->sum('amount'));
-        $outcome = floatval($this->outcomes()->where('date', '<', $at)->sum('amount'));
-
-        return $revenue - $outcome;
+        return floatval($revenue->sum('amount'));
     }
 
-    public function getStatus($at = null) {
-        if (is_null($at)) {
-            $at = Carbon::create();
+    public function getAllocatedRevenueAttribute($at = null) {
+        $allocatedRevenue = $this->incomes();
+
+        if ($at instanceof Carbon) {
+            $allocatedRevenue->where('date', '<=', $at);
         }
 
-        $revenue = floatval($this->revenues()->where('date', '<', $at)->sum('amount')) ?: 0.01;
-        $outcome = floatval($this->outcomes()->where('date', '<', $at)->sum('amount'));
+        return floatval($allocatedRevenue->sum('amount'));
+    }
+
+    public function getUnallocatedRevenueAttribute($at = null) {
+        $revenue = $this->getRevenueAttribute($at);
+        $allocatedRevenue = $this->getAllocatedRevenueAttribute($at);
+
+        $unallocatedRevenue = $revenue - $allocatedRevenue;
+
+        return floatval($unallocatedRevenue);
+    }
+
+    public function getOutcomeAttribute($at = null) {
+        $outcome = $this->outcomes();
+
+        if ($at instanceof Carbon) {
+            $outcome->where('date', '<=', $at);
+        }
+
+        return floatval($outcome->sum('amount'));
+    }
+
+    public function getIntendedOutcomeAttribute($at = null) {
+        $intendedOutcome = $this->intendedOutcomes();
+
+        if ($at instanceof Carbon) {
+            $intendedOutcome->where('date', '<=', $at);
+        }
+
+        return floatval($intendedOutcome->sum('amount'));
+    }
+
+    public function getEffectiveOutcomeAttribute($at = null) {
+        $effectiveOutcome = $this->effectiveOutcomes();
+
+        if ($at instanceof Carbon) {
+            $effectiveOutcome->where('date', '<=', $at);
+        }
+
+        return floatval($effectiveOutcome->sum('amount'));
+    }
+
+    public function getBalanceAttribute($at = null) {
+        $revenue = $this->getRevenueAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        $balance = $revenue - $outcome;
+
+        return floatval($balance);
+    }
+
+    public function getStatusAttribute($at = null) {
+        $revenue = $this->getRevenueAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        if ($revenue == 0) {
+            return $outcome ? 'danger' : 'warning';
+        }
 
         $ratio = $outcome / $revenue * 100;
 

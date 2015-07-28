@@ -49,24 +49,42 @@ class Envelope extends Model
             ->orderBy('date');
     }
 
-    public function getBalance($at = null) {
-        if (is_null($at)) {
-            $at = Carbon::create();
+    public function getIncomeAttribute($at = null) {
+        $income = $this->incomes();
+
+        if ($at instanceof Carbon) {
+            $income->where('date', '<=', $at);
         }
 
-        $income = floatval($this->incomes()->where('date', '<', $at)->sum('amount'));
-        $outcome = floatval($this->outcomes()->where('date', '<', $at)->sum('amount'));
-
-        return $income - $outcome;
+        return floatval($income->sum('amount'));
     }
 
-    public function getStatus($at = null) {
-        if (is_null($at)) {
-            $at = Carbon::create();
+    public function getOutcomeAttribute($at = null) {
+        $outcome = $this->outcomes();
+
+        if ($at instanceof Carbon) {
+            $outcome->where('date', '<=', $at);
         }
 
-        $income = floatval($this->incomes()->where('date', '<', $at)->sum('amount')) ?: 0.01;
-        $outcome = floatval($this->outcomes()->where('date', '<', $at)->sum('amount'));
+        return floatval($outcome->sum('amount'));
+    }
+
+    public function getBalanceAttribute($at = null) {
+        $income = $this->getIncomeAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        $balance = $income - $outcome;
+
+        return floatval($balance);
+    }
+
+    public function getStatusAttribute($at = null) {
+        $income = $this->getIncomeAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        if ($income == 0) {
+            return $outcome ? 'danger' : 'warning';
+        }
 
         $ratio = $outcome / $income * 100;
 
@@ -80,5 +98,4 @@ class Envelope extends Model
 
         return 'success';
     }
-
 }

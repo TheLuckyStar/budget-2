@@ -26,7 +26,7 @@ class NavbarController extends Controller
 
         foreach (Auth::user()->accounts as $account) {
             $links[] = Html::linkAction(
-                'AccountController@getView',
+                'AccountController@getSummary',
                 (string)$account,
                 $account,
                 ['class' => 'link-to-page navbar-brand']
@@ -49,11 +49,11 @@ class NavbarController extends Controller
 
         $links = [
             Html::linkAction(
-                'AccountController@getView',
+                'AccountController@getSummary',
                 '<i class="fa fa-fw fa-th-large" title="'.trans('home.layout.title').'"></i> '
-                    .trans('account.view.title')
-                    .'<span class="pull-right badge badge-'.$account->getStatus().'">'
-                    .Html::formatPrice($account->getBalance())
+                    .trans('account.index.title')
+                    .'<span class="pull-right badge badge-'.$account->status.'">'
+                    .Html::formatPrice($account->balance)
                     .'</span>',
                 $account,
                 ['class' => 'link-to-page']
@@ -64,8 +64,8 @@ class NavbarController extends Controller
             $links[] = Html::linkAction(
                 'EnvelopeController@getView',
                 $envelope
-                    .'<span class="pull-right badge badge-'.$envelope->getStatus().'">'
-                    .Html::formatPrice($envelope->getBalance())
+                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
+                    .Html::formatPrice($envelope->balance)
                     .'</span>',
                 $envelope,
                 ['class' => 'link-to-page']
