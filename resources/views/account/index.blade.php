@@ -30,7 +30,7 @@
             <li role="presentation" class="{{ $activeTab == 'revenues' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'AccountController@getRevenues',
-                    trans('account.revenues.title'),
+                    trans('revenue.title'),
                     [$account],
                     ['class' => 'link-to-page', 'aria-controls' => 'revenues', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -38,7 +38,7 @@
             <li role="presentation" class="{{ $activeTab == 'outcomes' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'AccountController@getOutcomes',
-                    trans('account.outcomes.title'),
+                    trans('outcome.title'),
                     [$account],
                     ['class' => 'link-to-page', 'aria-controls' => 'outcomes', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}

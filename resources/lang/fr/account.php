@@ -31,14 +31,6 @@ return [
         'detachUserMessage' => ":user a été détaché de ce compte.",
     ],
 
-    'revenues' => [
-        'title' => 'Revenus',
-    ],
-
-    'outcomes' => [
-        'title' => 'Dépenses',
-    ],
-
     'development' => [
         'title' => 'Évolution',
     ],
