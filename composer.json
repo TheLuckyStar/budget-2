@@ -59,9 +59,6 @@
     "extra": {
         "component": {
             "scripts": [
-                "public/theme/js/morris/raphael.min.js",
-                "public/theme/js/morris/morris.min.js",
-                "public/theme/js/morris/morris-data.js"
             ],
             "styles": [
                 "public/vendor/bootswatch/cosmo/bootstrap.css",

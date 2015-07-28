@@ -38,9 +38,11 @@
 
     </div>
 
-    <script data-main="require.config.js" src="vendor/require.js"></script>
+    <script src="vendor/require.js"></script>
     <script>
         requirejs(['bootstrap'], function() {
+            require(['theme/js/morris/morris.min.js']);
+            require(['theme/js/morris/raphael.min.js']);
             require(['assets/js/page.js'])
             require(['assets/js/navbar.js'])
         })
