@@ -52,7 +52,7 @@
             element: 'balance-chart',
             data: {!! $chartData !!},
             colors: {!! $chartColors !!},
-            formatter: function (val, data) { return val + '€' },
+            formatter: function (val, data) { return PageModule.formatPrice(val); },
             resize: true
         });
 

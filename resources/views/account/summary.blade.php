@@ -12,7 +12,7 @@
                 <div class='row'>
                     <div class='col-md-6'>
                         <h3 class='text-center'>
-                            @lang('account.snapshot.balanceTitle')
+                            @lang('account.snapshot.balanceTitle', ['balance' => Html::formatPrice($account->balance)])
                         </h3>
                         <div id="balance-chart"></div>
                     </div>
@@ -102,7 +102,7 @@
             element: 'balance-chart',
             data: {!! $balanceData !!},
             colors: {!! $balanceColors !!},
-            formatter: function (val, data) { return val + '€' },
+            formatter: function (val, data) { return PageModule.formatPrice(val); },
             resize: true
         });
 
@@ -110,7 +110,7 @@
             element: 'envelopes-chart',
             data: {!! $envelopesData !!},
             colors: {!! $envelopesColors !!},
-            formatter: function (val, data) { return (data.negative ? -val : val) + '€' },
+            formatter: function (val, data) { return PageModule.formatPrice(data.negative ? -val : val); },
             resize: true
         });
 
