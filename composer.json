@@ -62,6 +62,7 @@
             ],
             "styles": [
                 "public/vendor/bootswatch/cosmo/bootstrap.css",
+                "public/assets/css/fontawesome-iconpicker.min.css",
                 "public/theme/css/sb-admin.css",
                 "public/theme/css/morris.css"
             ],
