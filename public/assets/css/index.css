@@ -1,3 +1,11 @@
+/*
+ * fontawesome-iconpicker
+*/
+
+.iconpicker-popover.popover {width: 100%;}
+.iconpicker-popover.popover .popover-title input[type=search].iconpicker-search {margin: 0px;}
+
+
 
 /*
  * HTML layout

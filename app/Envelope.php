@@ -13,6 +13,12 @@ class Envelope extends Model
     use HasEvents, SoftDeletes;
 
     /**
+     * The attributes that are mass assignable.
+     * @var array
+     */
+    protected $fillable = ['name', 'icon'];
+
+    /**
      * The attributes that should be mutated to dates.
      * @var array
      */
@@ -33,13 +39,17 @@ class Envelope extends Model
      */
     public function __toString()
     {
-        return '<i class="fa fa-fw fa-'.$this->icon.'" title="'.$this->name.'"></i> '.$this->name;
+        if ($this->icon) {
+            return '<i class="fa fa-fw '.$this->icon.'" title="'.$this->name.'"></i> '.$this->name;
+        }
+
+        return $this->name;
     }
 
     public function link() {
         return Html::linkAction(
             'EnvelopeController@getSummary',
-            ($this->icon ? '<i class="fa fa-'.$this->icon.'" title="'.$this->name.'"></i> ' : '').$this->name,
+            $this,
             $this,
             ['class' => 'link-to-page']
         );

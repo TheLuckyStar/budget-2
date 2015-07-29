@@ -23,7 +23,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title text-right">
                             <i class="fa fa-fw fa-key pull-left"></i>
-                            {!! trans('user.resetpassword.title') !!}
+                            @lang('user.resetpassword.title')
                         </h3>
                     </div>
 

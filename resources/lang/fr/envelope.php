@@ -5,8 +5,18 @@
  */
 return [
 
+    'fields' => [
+        'name' => "Nom",
+        'filterIcon' => "Rechercher une icône",
+    ],
+
     'view' => [
-        'notfoundMessage' => "L'envelope recherchée n'a pas été trouvée.",
+        'notfoundMessage' => "L'enveloppe recherchée n'a pas été trouvée.",
+    ],
+
+    'add' => [
+        'title' => 'Nouvelle enveloppe',
+        'successMessage' => 'L\'envelope :envelope a bien été créée.',
     ],
 
     'summary' => [
@@ -14,7 +24,7 @@ return [
     ],
 
     'snapshot' => [
-        'title' => "Solde de l'envelope",
+        'title' => "Solde de l'enveloppe",
     ],
 
     'lastoperations' => [

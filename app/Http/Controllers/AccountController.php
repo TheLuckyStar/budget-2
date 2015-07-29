@@ -11,6 +11,11 @@ use Session;
 
 class AccountController extends Controller
 {
+    /**
+     * Default account routing
+     * @param  Illuminate\Http\Request $request Current request
+     * @return Illuminate/Http/Response Redirection
+     */
     public function getIndex(Request $request) {
         $account = Auth::user()->accounts()->first();
 
@@ -23,6 +28,34 @@ class AccountController extends Controller
         // Redirect to add form if no account exist for user
     }
 
+
+    /**
+     * Render add account form
+     * @return Illuminate/Http/Response View to render
+     */
+    public function getAdd() {
+        return view('account.add');
+    }
+
+    public function postAdd(Request $request) {
+        $this->validate($request, [
+            'name' => 'string|required',
+        ]);
+
+        $account = Account::create($request->only(['name']));
+        Auth::user()->accounts()->save($account, ['owner' => 1]);
+
+        return redirect()->action('AccountController@getSummary', $account)
+            ->withSuccess(trans('account.add.successMessage', ['account' => $account]));
+    }
+
+
+
+    /**
+     * Gather information about account for account home page (first tab)
+     * @param  string $account_id Account ID
+     * @return Illuminate/Http/Response View to render
+     */
     public function getSummary($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
 
@@ -78,7 +111,7 @@ class AccountController extends Controller
     }
 
     public function getAttachUser(Request $request, $account_id) {
-        Session::reflash();
+        $request->session()->reflash();
         return redirect()->action('AccountController@getSummary', $account_id);
     }
 
@@ -135,6 +168,13 @@ class AccountController extends Controller
         return view('account.revenues', $data);
     }
 
+
+
+    /**
+     * List operations related to one account (second tab)
+     * @param  string $account_id Account ID
+     * @return Illuminate/Http/Response View to render
+     */
     public function getOutcomes($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
 
@@ -151,6 +191,13 @@ class AccountController extends Controller
         return view('account.outcomes', $data);
     }
 
+
+
+    /**
+     * Show charts about account development (third tab)
+     * @param  string $account_id Account ID
+     * @return Illuminate/Http/Response View to render
+     */
     public function getDevelopment($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
 

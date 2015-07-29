@@ -4,8 +4,8 @@
 
     <div class="col-md-12">
         <div class="jumbotron">
-            <h1>{{ trans('home.guest.jumbotron.title') }}</h1>
-            <p>{{ trans('app.layout.description') }}</p>
+            <h1>@lang('home.guest.jumbotron.title')</h1>
+            <p>@lang('app.layout.description')</p>
             <p class='text-right'>
                 {!! Html::linkAction(
                     'Auth\AuthController@getLogin',
@@ -27,8 +27,8 @@
         <div class="panel panel-info">
             <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-envelope fa-5x pull-left"></i>
-                <i>{{ trans('home.guest.benefits.subtitle') }}</i>
-                <h3>{{ trans('home.guest.benefits.title') }}</h3>
+                <i>@lang('home.guest.benefits.subtitle')</i>
+                <h3>@lang('home.guest.benefits.title')</h3>
             </div>
             <ul class="list-group">
                 @foreach(trans('home.guest.benefits.content') as $content)
@@ -36,7 +36,7 @@
                 @endforeach
             </ul>
             <div class="panel-footer">
-                {!! trans('home.guest.benefits.footer') !!}
+                @lang('home.guest.benefits.footer')
             </div>
         </div>
     </div>
@@ -45,8 +45,8 @@
         <div class="panel panel-info">
             <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-desktop fa-5x pull-left"></i>
-                <i>{{ trans('home.guest.usages.subtitle') }}</i>
-                <h3>{{ trans('home.guest.usages.title') }}</h3>
+                <i>@lang('home.guest.usages.subtitle')</i>
+                <h3>@lang('home.guest.usages.title')</h3>
             </div>
             <ul class="list-group">
                 @foreach(trans('home.guest.usages.content') as $content)
@@ -54,7 +54,7 @@
                 @endforeach
             </ul>
             <div class="panel-footer">
-                {!! trans('home.guest.usages.footer') !!}
+                @lang('home.guest.usages.footer')
             </div>
         </div>
     </div>
@@ -63,8 +63,8 @@
         <div class="panel panel-info">
             <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-star fa-5x pull-left"></i>
-                <i>{{ trans('home.guest.features.subtitle') }}</i>
-                <h3>{{ trans('home.guest.features.title') }}</h3>
+                <i>@lang('home.guest.features.subtitle')</i>
+                <h3>@lang('home.guest.features.title')</h3>
             </div>
             <ul class="list-group">
                 @foreach(trans('home.guest.features.content') as $content)
@@ -72,7 +72,7 @@
                 @endforeach
             </ul>
             <div class="panel-footer">
-                {!! trans('home.guest.features.footer') !!}
+                @lang('home.guest.features.footer')
             </div>
         </div>
     </div>
@@ -81,8 +81,8 @@
         <div class="panel panel-info">
             <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-user-secret fa-5x pull-left"></i>
-                <i>{{ trans('home.guest.trust.subtitle') }}</i>
-                <h3>{{ trans('home.guest.trust.title') }}</h3>
+                <i>@lang('home.guest.trust.subtitle')</i>
+                <h3>@lang('home.guest.trust.title')</h3>
             </div>
             <ul class="list-group">
                 @foreach(trans('home.guest.trust.content') as $content)
@@ -90,7 +90,7 @@
                 @endforeach
             </ul>
             <div class="panel-footer">
-                {!! trans('home.guest.trust.footer') !!}
+                @lang('home.guest.trust.footer')
             </div>
         </div>
     </div>

@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ trans('app.layout.description') }}">
-    <meta name="author" content="{{ trans('app.layout.author') }}">
+    <meta name="description" content="@lang('app.layout.description')">
+    <meta name="author" content="@lang('app.layout.author')">
 
-    <title>{{ trans('app.layout.title') }}</title>
+    <title>@lang('app.layout.title')</title>
 
     <link href="vendor/require.css" rel="stylesheet" type="text/css">
 
@@ -29,9 +29,9 @@
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid text-left">
-                {!! trans('app.layout.leftFooter') !!}
+                {@lang('app.layout.leftFooter')}
                 <span class='pull-right'>
-                    {!! trans('app.layout.rightFooter') !!}
+                    {@lang('app.layout.rightFooter')}
                 </span>
             </div>
         </nav>
@@ -41,10 +41,11 @@
     <script src="vendor/require.js"></script>
     <script>
         requirejs(['bootstrap'], function() {
+            require(['assets/js/fontawesome-iconpicker.min.js']);
             require(['theme/js/morris/morris.min.js']);
             require(['theme/js/morris/raphael.min.js']);
-            require(['assets/js/page.js'])
-            require(['assets/js/navbar.js'])
+            require(['assets/js/navbar.js']);
+            require(['assets/js/page.js']);
         })
     </script>
 

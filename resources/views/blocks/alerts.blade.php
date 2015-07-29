@@ -3,7 +3,7 @@
 
     @if (session('success'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            {!! session('success') !!}
         </div>
     @endif
 
@@ -11,7 +11,7 @@
         @if (is_int($key) && is_array($messages))
             @foreach ($messages as $message)
                 <div class="alert alert-danger">
-                    {{ $message }}
+                    {!! $message !!}
                 </div>
             @endforeach
         @endif

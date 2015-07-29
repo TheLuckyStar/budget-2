@@ -20,7 +20,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title text-right">
                             <i class="fa fa-fw fa-sign-in pull-left"></i>
-                            {!! trans('user.login.title') !!}
+                            @lang('user.login.title')
                         </h3>
                     </div>
 
@@ -58,7 +58,7 @@
                                 null,
                                 ['id' => 'checkbox-remember']
                             ) !!}
-                            {{ trans('user.fields.remember') }}
+                            @lang('user.fields.remember')
                             @if (session('from') === 'fr/auth/login' && $errors->has('remember'))
                                 {!! Html::ul($errors->get('remember'), ['class' => 'help-block text-right']) !!}
                             @endif
@@ -91,7 +91,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title text-right">
                             <i class="fa fa-fw fa-user-plus pull-left"></i>
-                            {!! trans('user.register.title') !!}
+                            @lang('user.register.title')
                         </h3>
                     </div>
 

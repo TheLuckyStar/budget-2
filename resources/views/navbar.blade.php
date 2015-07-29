@@ -5,7 +5,7 @@
     <div class="navbar-header">
 
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-            <span class="sr-only">{{ trans('app.layout.toggle') }}</span>
+            <span class="sr-only">@lang('app.layout.toggle')</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -31,13 +31,13 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#">
-                                <i class="fa fa-fw fa-user"></i> {{ trans('profile.layout.title') }}
+                                <i class="fa fa-fw fa-user"></i> @lang('profile.layout.title')
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
                             <a href="{{ action('Auth\AuthController@getLogout') }}" class='link-to-page' id='logout-link'>
-                                <i class="fa fa-fw fa-power-off"></i> {{ trans('user.logout.title') }}
+                                <i class="fa fa-fw fa-power-off"></i> @lang('user.logout.title')
                             </a>
                         </li>
                     </ul>

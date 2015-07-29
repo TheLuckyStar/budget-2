@@ -1,13 +1,22 @@
 <?php
 
 /**
- * English account language lines
+ * French account language lines
  */
 return [
+
+    'fields' => [
+        'name' => "Nom",
+    ],
 
     'index' => [
         'title' => "Vue d'ensemble",
         'notfoundMessage' => "Le compte recherché n'a pas été trouvé.",
+    ],
+
+    'add' => [
+        'title' => 'Nouveau compte',
+        'successMessage' => 'Le compte :account a bien été créé.',
     ],
 
     'summary' => [

@@ -9,6 +9,47 @@ use Illuminate\Http\Request;
 
 class EnvelopeController extends Controller
 {
+    /**
+     * Render add envelope form
+     * @return Illuminate/Http/Response View to render
+     */
+    public function getAdd($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('envelope.add', $data);
+    }
+
+    public function postAdd(Request $request, $account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $this->validate($request, [
+            'name' => 'string|required|unique:envelopes,name,NULL,id,account_id,'.$account->id,
+            'icon' => 'string',
+        ]);
+
+        $envelope = Envelope::create($request->only(['name', 'icon']));
+        $account->envelopes()->save($envelope);
+
+        return redirect()->action('EnvelopeController@getSummary', $envelope)
+            ->withSuccess(trans('envelope.add.successMessage', ['envelope' => $envelope]));
+    }
+
+
+
     public function getSummary($envelope_id) {
         $envelope = Envelope::find($envelope_id);
 

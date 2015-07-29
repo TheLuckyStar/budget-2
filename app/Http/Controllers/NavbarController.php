@@ -33,6 +33,13 @@ class NavbarController extends Controller
             );
         }
 
+        $links[] = Html::linkAction(
+            'AccountController@getAdd',
+            '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
+            [],
+            ['class' => 'link-to-page navbar-brand']
+        );
+
         return $links;
     }
 
@@ -71,6 +78,13 @@ class NavbarController extends Controller
                 ['class' => 'link-to-page']
             );
         }
+
+        $links[] = Html::linkAction(
+            'EnvelopeController@getAdd',
+            '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
+            $account,
+            ['class' => 'link-to-page']
+        );
 
         return $links;
     }

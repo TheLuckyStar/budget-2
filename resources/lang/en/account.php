@@ -5,9 +5,18 @@
  */
 return [
 
+    'fields' => [
+        'name' => "Name",
+    ],
+
     'index' => [
         'title' => 'Overview',
         'notfoundMessage' => 'Requested account has not been found.',
+    ],
+
+    'add' => [
+        'title' => 'New account',
+        'successMessage' => 'The account :account has been created.',
     ],
 
     'summary' => [
