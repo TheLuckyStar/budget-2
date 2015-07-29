@@ -17,10 +17,6 @@ return [
     'snapshot' => [
         'title' => 'Account snapshot',
         'balanceTitle' => 'Account balance',
-        'allocatedRevenue' => 'Allocated revenues',
-        'unallocatedRevenue' => 'Unallocated revenues',
-        'intendedOutcome' => 'Intended outcomes',
-        'effectiveOutcome' => 'Effective outcomes',
         'envelopesTitle' => 'Envelope balances',
     ],
 

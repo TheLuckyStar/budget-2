@@ -5,6 +5,6 @@
  */
 return [
 
-    'title' => 'Incomes',
+    'title' => 'Revenues',
 
 ];

@@ -6,5 +6,7 @@
 return [
 
     'title' => 'Outcomes',
+    'intendedTitle' => 'Intended outcomes',
+    'effectiveTitle' => 'Effective outcomes',
 
 ];

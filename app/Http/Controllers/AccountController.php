@@ -33,27 +33,21 @@ class AccountController extends Controller
 
         $balanceData = [
             [
-                'label' => trans('account.snapshot.allocatedRevenue'),
-                'value' => $account->allocated_revenue,
-            ],
-            [
-                'label' => trans('account.snapshot.unallocatedRevenue'),
+                'label' => trans('revenue.unallocatedTitle'),
                 'value' => $account->unallocated_revenue,
             ],
             [
-                'label' => trans('account.snapshot.intendedOutcome'),
+                'label' => trans('revenue.allocatedTitle'),
+                'value' => $account->allocated_revenue,
+            ],
+            [
+                'label' => trans('outcome.intendedTitle'),
                 'value' => $account->intended_outcome,
             ],
             [
-                'label' => trans('account.snapshot.effectiveOutcome'),
+                'label' => trans('outcome.effectiveTitle'),
                 'value' => $account->effective_outcome,
             ],
-        ];
-        $balanceColors = [
-            Config::get('budget.statusColors.success'),
-            Config::get('budget.statusColors.primary'),
-            Config::get('budget.statusColors.warning'),
-            Config::get('budget.statusColors.danger')
         ];
 
         $envelopesData = [];
@@ -73,10 +67,10 @@ class AccountController extends Controller
         $data = [
             'account' => $account,
             'activeTab' => 'summary',
+            'balanceData' => json_encode($balanceData),
+            'balanceColors' => json_encode(array_values(Config::get('budget.statusColors'))),
             'envelopesData' => json_encode($envelopesData),
             'envelopesColors' => json_encode($envelopesColors),
-            'balanceData' => json_encode($balanceData),
-            'balanceColors' => json_encode($balanceColors),
             'events' => $account->relatedEvents()->paginate(Config::get('budget.paginate')),
         ];
 

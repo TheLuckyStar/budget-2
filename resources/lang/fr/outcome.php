@@ -6,5 +6,7 @@
 return [
 
     'title' => 'Dépenses',
+    'intendedTitle' => 'Dépenses prévues',
+    'effectiveTitle' => 'Dépenses effectuées',
 
 ];

@@ -23,7 +23,7 @@
                 {!! Html::linkAction(
                     'AccountController@getSummary',
                     trans('account.summary.title'),
-                    [$account],
+                    $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
@@ -31,7 +31,7 @@
                 {!! Html::linkAction(
                     'AccountController@getRevenues',
                     trans('revenue.title'),
-                    [$account],
+                    $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'revenues', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
@@ -39,7 +39,7 @@
                 {!! Html::linkAction(
                     'AccountController@getOutcomes',
                     trans('outcome.title'),
-                    [$account],
+                    $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'outcomes', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
@@ -47,7 +47,7 @@
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     trans('account.development.title'),
-                    [$account],
+                    $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>

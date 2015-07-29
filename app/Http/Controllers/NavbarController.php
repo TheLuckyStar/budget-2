@@ -62,7 +62,7 @@ class NavbarController extends Controller
 
         foreach ($account->envelopes as $envelope) {
             $links[] = Html::linkAction(
-                'EnvelopeController@getView',
+                'EnvelopeController@getSummary',
                 $envelope
                     .'<span class="pull-right badge badge-'.$envelope->status.'">'
                     .Html::formatPrice($envelope->balance)

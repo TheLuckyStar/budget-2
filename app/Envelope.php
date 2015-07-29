@@ -38,7 +38,7 @@ class Envelope extends Model
 
     public function link() {
         return Html::linkAction(
-            'EnvelopeController@getView',
+            'EnvelopeController@getSummary',
             ($this->icon ? '<i class="fa fa-'.$this->icon.'" title="'.$this->name.'"></i> ' : '').$this->name,
             $this,
             ['class' => 'link-to-page']
@@ -59,6 +59,14 @@ class Envelope extends Model
             ->orderBy('date');
     }
 
+    public function intendedOutcomes() {
+        return $this->outcomes()->where('effective', 0);
+    }
+
+    public function effectiveOutcomes() {
+        return $this->outcomes()->where('effective', 1);
+    }
+
     public function getIncomeAttribute($at = null) {
         $income = $this->incomes();
 
@@ -77,6 +85,26 @@ class Envelope extends Model
         }
 
         return floatval($outcome->sum('amount'));
+    }
+
+    public function getIntendedOutcomeAttribute($at = null) {
+        $intendedOutcome = $this->intendedOutcomes();
+
+        if ($at instanceof Carbon) {
+            $intendedOutcome->where('date', '<=', $at);
+        }
+
+        return floatval($intendedOutcome->sum('amount'));
+    }
+
+    public function getEffectiveOutcomeAttribute($at = null) {
+        $effectiveOutcome = $this->effectiveOutcomes();
+
+        if ($at instanceof Carbon) {
+            $effectiveOutcome->where('date', '<=', $at);
+        }
+
+        return floatval($effectiveOutcome->sum('amount'));
     }
 
     public function getBalanceAttribute($at = null) {

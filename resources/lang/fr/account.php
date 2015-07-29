@@ -17,10 +17,6 @@ return [
     'snapshot' => [
         'title' => 'État du compte',
         'balanceTitle' => 'Solde du compte',
-        'allocatedRevenue' => 'Revenues alloués',
-        'unallocatedRevenue' => 'Revenus non alloués',
-        'intendedOutcome' => 'Dépenses prévues',
-        'effectiveOutcome' => 'Dépenses effectuées',
         'envelopesTitle' => 'Solde des enveloppes',
     ],
 
