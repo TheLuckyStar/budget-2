@@ -18,6 +18,7 @@ function findLocale(Request $request) {
 
     // If compatible ISO code if provided in URL
     if (in_array($providedByClient, $available)) {
+        setlocale(LC_TIME, $providedByClient.'_FR.utf8');
         Carbon::setLocale($providedByClient);
         App::setLocale($providedByClient);
         return App::getLocale();
@@ -32,6 +33,7 @@ function findLocale(Request $request) {
     // Search for compatible ISO code in HTTP header
     foreach ($supportedByClient as $iso) {
         if (in_array($iso, $available)) {
+            setlocale(LC_TIME, $iso.'_FR.utf8');
             Carbon::setLocale($iso);
             App::setLocale($iso);
             break;
