@@ -27,6 +27,7 @@ return [
     // Button texts
     'button' => [
         'add' => 'Add',
+        'update' => 'Update',
         'save' => 'Save',
     ],
 

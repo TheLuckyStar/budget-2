@@ -16,7 +16,12 @@ return [
 
     'add' => [
         'title' => 'Nouvelle enveloppe',
-        'successMessage' => 'L\'envelope :envelope a bien été créée.',
+        'successMessage' => 'L\'enveloppe :envelope a bien été créée.',
+    ],
+
+    'update' => [
+        'title' => 'Modification de l\'enveloppe',
+        'successMessage' => 'L\'enveloppe :envelope a bien été modifiée.',
     ],
 
     'summary' => [

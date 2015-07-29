@@ -1,17 +1,16 @@
-<div id="envelope-add"
+<div id="envelope-update"
     class='row'
-    data-horizontal-url="{{ action('AccountController@getSummary', $account) }}"
-    data-vertical-url="{{ action('EnvelopeController@getAdd') }}"
-    data-account-id="{{ $account->id }}">
+    data-horizontal-url="{{ action('AccountController@getSummary', $envelope->account) }}"
+    data-vertical-url="{{ action('EnvelopeController@getSummary', $envelope) }}"
+    data-account-id="{{ $envelope->account->id }}">
 
     @include('blocks.alerts')
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            {{ $account }}
+            {{ $envelope->account }}
             <small>
-                <i class="fa fa-fw fa-plus" title="@lang('envelope.add.title')"></i>
-                @lang('envelope.add.title')
+                {!! $envelope !!}
             </small>
         </h1>
     </div>
@@ -20,15 +19,15 @@
         <div class='row'>
 
             {!! Form::open([
-                'action' => ['EnvelopeController@postAdd', $account],
+                'action' => ['EnvelopeController@postUpdate', $envelope],
                 'class' => 'form-horizontal col-md-12'
             ]) !!}
                 <div class="panel panel-default">
 
                     <div class="panel-heading">
                         <h3 class="panel-title text-right">
-                            <i class="fa fa-fw fa-plus pull-left"></i>
-                            @lang('envelope.add.title')
+                            <i class="fa fa-fw fa-pencil pull-left"></i>
+                            @lang('envelope.update.title')
                         </h3>
                     </div>
 
@@ -37,7 +36,7 @@
                         <div class="col-sm-12 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::text(
                                 'name',
-                                null,
+                                $envelope->name,
                                 ['class' => 'form-control', 'id' => 'input-name', 'placeholder' => trans('envelope.fields.name')]
                             ) !!}
                             @if ($errors->has('name'))
@@ -47,9 +46,9 @@
 
                         <div class="col-sm-12 form-group {{ $errors->has('icon') ? 'has-error' : '' }}"
                             data-placement="inline"
-                            data-selected="{{ Input::old('icon') }}"
+                            data-selected="{{ Input::old('icon', $envelope->icon) }}"
                             id="container-icon">
-                            {!! Form::hidden('icon', null, ['id' => 'input-icon']) !!}
+                            {!! Form::hidden('icon', $envelope->icon, ['id' => 'input-icon']) !!}
                             @if ($errors->has('icon'))
                                 {!! Html::ul($errors->get('icon'), ['class' => 'help-block text-right']) !!}
                             @endif
@@ -59,7 +58,7 @@
 
                     <div class="panel-footer text-right">
                         {!! Form::button(
-                            trans('app.button.add'),
+                            trans('app.button.update'),
                             ['type' => 'submit', 'class' => 'btn btn-xs btn-success']
                         ) !!}
                     </div>
@@ -73,7 +72,7 @@
     <script type="text/javascript">
         $('#container-icon').iconpicker({
             templates: {
-                search: '<div class="input-group"><span class="input-group-addon"><i class="fa {{ Input::old('icon') }}"></i></span><input type="search" class="form-control iconpicker-search" placeholder="@lang('envelope.fields.filterIcon')" /></div>',
+                search: '<div class="input-group"><span class="input-group-addon"><i class="fa {{ Input::old('icon', $envelope->icon) }}"></i></span><input type="search" class="form-control iconpicker-search" placeholder="@lang('envelope.fields.filterIcon')" /></div>',
             }
         }).on('iconpickerSetValue', function (e) {
             $('#input-icon').val(e.iconpickerValue);

@@ -50,6 +50,47 @@ class EnvelopeController extends Controller
 
 
 
+    /**
+     * Render update envelope form
+     * @return Illuminate/Http/Response View to render
+     */
+    public function getUpdate($envelope_id) {
+        $envelope = Envelope::find($envelope_id);
+
+        if (is_null($envelope) || $envelope->account->owner->first()->id != Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('envelope.view.notfoundMessage'));
+        }
+
+        $data = [
+            'envelope' => $envelope,
+        ];
+
+        return view('envelope.update', $data);
+    }
+
+    public function postUpdate(Request $request, $envelope_id) {
+        $envelope = Envelope::find($envelope_id);
+
+        if (is_null($envelope) || $envelope->account->owner->first()->id != Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('envelope.view.notfoundMessage'));
+        }
+
+        $this->validate($request, [
+            'name' => 'string|required|unique:envelopes,name,'.$envelope->id.',id,account_id,'.$envelope->account->id,
+            'icon' => 'string',
+        ]);
+
+        $envelope->fill($request->only(['name', 'icon']));
+        $envelope->save();
+
+        return redirect()->action('EnvelopeController@getSummary', $envelope)
+            ->withSuccess(trans('envelope.update.successMessage', ['envelope' => $envelope]));
+    }
+
+
+
     public function getSummary($envelope_id) {
         $envelope = Envelope::find($envelope_id);
 

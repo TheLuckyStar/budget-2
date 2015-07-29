@@ -19,6 +19,11 @@ return [
         'successMessage' => 'The envelope :envelope has been created.',
     ],
 
+    'update' => [
+        'title' => 'Envelope update',
+        'successMessage' => 'The envelope :envelope has been updated.',
+    ],
+
     'summary' => [
         'title' => 'Summary',
     ],
