@@ -21,8 +21,17 @@ return [
     ],
 
     'update' => [
-        'title' => 'Modification de l\'enveloppe',
         'successMessage' => 'L\'enveloppe :envelope a bien été modifiée.',
+    ],
+
+    'delete' => [
+        'title' => 'Enveloppes archivées',
+        'successMessage' => "L'enveloppe :envelope a bien été archivée.<br>"
+            ."Elle reste accessible tout en bas de la liste des enveloppes dans le menu de gauche.",
+    ],
+
+    'restore' => [
+        'successMessage' => 'L\'enveloppe :envelope a bien été restaurée.',
     ],
 
     'summary' => [

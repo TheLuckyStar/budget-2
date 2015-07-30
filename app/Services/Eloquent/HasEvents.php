@@ -20,7 +20,7 @@ trait HasEvents {
      * The "booting" method of the trait.
      * @return void
      */
-    protected static function boot()
+    protected static function bootHasEvents()
     {
         self::created([__CLASS__, 'insertCreateEvent']);
 

@@ -12,8 +12,9 @@ return [
         'set' => ':entity a été modifié par :user : le champ :field_name a été défini comme :field_value_to :period.',
         'update' => ':entity a été modifié par :user : le champ :field_name :field_value_from a été changé en :field_value_to :period.',
         'clear' => ':entity a été modifié par :user : le champ :field_name :field_value_from a été effacé :period.',
-        'delete' => ':entity a été supprimé par :user :period.',
+        'archive' => ':entity a été archivé par :user :period.',
         'restore' => ':entity a été restauré par :user :period.',
+        'delete' => ':entity a été supprimé par :user :period.',
     ],
 
 ];

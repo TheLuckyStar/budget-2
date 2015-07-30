@@ -55,7 +55,7 @@ class EnvelopeController extends Controller
      * @return Illuminate/Http/Response View to render
      */
     public function getUpdate($envelope_id) {
-        $envelope = Envelope::find($envelope_id);
+        $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -70,7 +70,7 @@ class EnvelopeController extends Controller
     }
 
     public function postUpdate(Request $request, $envelope_id) {
-        $envelope = Envelope::find($envelope_id);
+        $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -91,8 +91,40 @@ class EnvelopeController extends Controller
 
 
 
-    public function getSummary($envelope_id) {
+    public function getDelete($envelope_id) {
         $envelope = Envelope::find($envelope_id);
+
+        if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('envelope.view.notfoundMessage'));
+        }
+
+        $envelope->delete();
+
+        return redirect()->action('EnvelopeController@getSummary', $envelope)
+            ->withSuccess(trans('envelope.delete.successMessage', ['envelope' => $envelope]));
+    }
+
+
+
+    public function getRestore($envelope_id) {
+        $envelope = Envelope::onlyTrashed()->find($envelope_id);
+
+        if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('envelope.view.notfoundMessage'));
+        }
+
+        $envelope->restore();
+
+        return redirect()->action('EnvelopeController@getSummary', $envelope)
+            ->withSuccess(trans('envelope.restore.successMessage', ['envelope' => $envelope]));
+    }
+
+
+
+    public function getSummary($envelope_id) {
+        $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -131,7 +163,7 @@ class EnvelopeController extends Controller
     }
 
     public function getOperations($envelope_id) {
-        $envelope = Envelope::find($envelope_id);
+        $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -147,7 +179,7 @@ class EnvelopeController extends Controller
     }
 
     public function getDevelopment($envelope_id) {
-        $envelope = Envelope::find($envelope_id);
+        $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')

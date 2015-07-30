@@ -29,6 +29,9 @@ return [
         'add' => 'Add',
         'update' => 'Update',
         'save' => 'Save',
+        'archive' => 'Archive',
+        'restore' => 'Restore',
+        'delete' => 'Delete',
     ],
 
     // Error messages

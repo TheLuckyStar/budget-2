@@ -66,12 +66,14 @@ var NavbarModule = (function() {
         }
 
         $(navbar).find('.link-to-page').removeClass('active');
-        $(navbar).find('.link-to-page').parent('li').removeClass('active');
+        $(navbar).find('.link-to-page').closest('li').removeClass('active');
+        $(navbar).find('.link-to-page').closest('ul.collapse').removeClass('in');
 
         horizontalLink.addClass('active');
-        horizontalLink.parent('li').addClass('active');
+        horizontalLink.closest('li').addClass('active');
         verticalLink.addClass('active');
-        verticalLink.parent('li').addClass('active');
+        verticalLink.closest('li').addClass('active');
+        verticalLink.closest('ul.collapse').addClass('in');
     }
 
     // Called on module loading

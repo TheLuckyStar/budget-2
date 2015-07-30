@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Envelope extends Model
 {
-    use HasEvents, SoftDeletes;
+    use SoftDeletes;
+    use HasEvents;
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +57,8 @@ class Envelope extends Model
     }
 
     public function account() {
-        return $this->belongsTo('App\Account');
+        return $this->belongsTo('App\Account')
+            ->withTrashed();
     }
 
     public function incomes() {

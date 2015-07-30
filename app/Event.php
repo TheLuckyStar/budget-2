@@ -33,6 +33,8 @@ class Event extends Model
             $action = 'set';
         } else if ($this->action == 'update' && $this->field_value_to == '') {
             $action = 'clear';
+        } elseif ($this->action == 'delete' && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
+            $action = 'archive';
         }
 
         return trans('event.action.'.$action, [
@@ -50,7 +52,8 @@ class Event extends Model
     }
 
     public function entity() {
-        return $this->morphTo();
+        return $this->morphTo()
+            ->withTrashed();
     }
 
     public function formatValue($fieldName, $value) {

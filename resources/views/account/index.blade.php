@@ -16,7 +16,7 @@
             @if ($account->owner->first()->id === Auth::user()->id)
                 {!! Html::linkAction(
                     'AccountController@getUpdate',
-                    '<i class="fa fa-fw fa-pencil" title="'.trans('account.update.title').'"></i> '.trans('account.update.title'),
+                    '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
                     $account,
                     ['class' => 'link-to-page btn btn-primary pull-right']
                 ) !!}

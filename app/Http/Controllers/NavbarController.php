@@ -67,7 +67,7 @@ class NavbarController extends Controller
             ),
         ];
 
-        foreach ($account->envelopes as $envelope) {
+        foreach ($account->nontrashedEnvelopes as $envelope) {
             $links[] = Html::linkAction(
                 'EnvelopeController@getSummary',
                 $envelope
@@ -85,6 +85,27 @@ class NavbarController extends Controller
             $account,
             ['class' => 'link-to-page']
         );
+
+        if ($account->trashedEnvelopes()->count()) {
+            $subLinks = [];
+            foreach ($account->trashedEnvelopes as $envelope) {
+                $subLinks[] = Html::linkAction(
+                    'EnvelopeController@getSummary',
+                    $envelope
+                        .'<span class="pull-right badge badge-'.$envelope->status.'">'
+                        .Html::formatPrice($envelope->balance)
+                        .'</span>',
+                    $envelope,
+                    ['class' => 'link-to-page']
+                );
+            }
+            $links[] = Html::link(
+                    '#',
+                    '<i class="fa fa-fw fa-archive"></i> '.trans('envelope.delete.title').' <i class="fa fa-fw fa-caret-down"></i></a>',
+                    ['data-toggle' => 'collapse', 'data-target' => '#trashed-envelopes']
+                )
+                .Html::ul($subLinks, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
+        }
 
         return $links;
     }

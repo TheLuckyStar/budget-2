@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
 {
-    use HasEvents, SoftDeletes;
+    use SoftDeletes;
+    use HasEvents;
 
     /**
      * The attributes that are mass assignable.
@@ -74,6 +75,18 @@ class Account extends Model
     }
 
     public function envelopes() {
+        return $this->hasMany('App\Envelope')
+            ->withTrashed()
+            ->orderBy('name');
+    }
+
+    public function trashedEnvelopes() {
+        return $this->hasMany('App\Envelope')
+            ->onlyTrashed()
+            ->orderBy('name');
+    }
+
+    public function nontrashedEnvelopes() {
         return $this->hasMany('App\Envelope')
             ->orderBy('name');
     }

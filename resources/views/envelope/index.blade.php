@@ -12,9 +12,24 @@
             <small>
                 {!! $envelope !!}
             </small>
+            @if ($envelope->trashed())
+                {!! Html::linkAction(
+                    'EnvelopeController@getRestore',
+                    '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
+                    $envelope,
+                    ['class' => 'link-to-page btn btn-success pull-right']
+                ) !!}
+            @else
+            {!! Html::linkAction(
+                    'EnvelopeController@getDelete',
+                    '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
+                    $envelope,
+                    ['class' => 'link-to-page btn btn-danger pull-right']
+                ) !!}
+            @endif
             {!! Html::linkAction(
                 'EnvelopeController@getUpdate',
-                '<i class="fa fa-fw fa-pencil" title="'.trans('envelope.update.title').'"></i> '.trans('envelope.update.title'),
+                '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
                 $envelope,
                 ['class' => 'link-to-page btn btn-primary pull-right']
             ) !!}
@@ -57,5 +72,11 @@
         </div>
 
     </div>
+
+    <script type="text/javascript">
+        $('.page-header .btn-danger, .page-header .btn-success').click(function () {
+            NavbarModule.emptyVerticalMenu();
+        });
+    </script>
 
 </div>
