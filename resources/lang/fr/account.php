@@ -19,6 +19,11 @@ return [
         'successMessage' => 'Le compte :account a bien été créé.',
     ],
 
+    'update' => [
+        'title' => 'Modifier les informations',
+        'successMessage' => 'Le compte :account a bien été modifié.',
+    ],
+
     'summary' => [
         'title' => 'Résumé',
     ],

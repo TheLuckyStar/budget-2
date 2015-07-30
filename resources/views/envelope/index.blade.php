@@ -12,14 +12,12 @@
             <small>
                 {!! $envelope !!}
             </small>
-            @if ($envelope->account->owner->first()->id == Auth::user()->id)
-                {!! Html::linkAction(
-                    'EnvelopeController@getUpdate',
-                    '<i class="fa fa-fw fa-pencil" title="'.trans('envelope.update.title').'"></i> '.trans('envelope.update.title'),
-                    $envelope,
-                    ['class' => 'link-to-page btn btn-primary pull-right']
-                ) !!}
-                @endif
+            {!! Html::linkAction(
+                'EnvelopeController@getUpdate',
+                '<i class="fa fa-fw fa-pencil" title="'.trans('envelope.update.title').'"></i> '.trans('envelope.update.title'),
+                $envelope,
+                ['class' => 'link-to-page btn btn-primary pull-right']
+            ) !!}
         </h1>
     </div>
 

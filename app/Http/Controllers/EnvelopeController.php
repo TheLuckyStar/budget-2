@@ -57,7 +57,7 @@ class EnvelopeController extends Controller
     public function getUpdate($envelope_id) {
         $envelope = Envelope::find($envelope_id);
 
-        if (is_null($envelope) || $envelope->account->owner->first()->id != Auth::user()->id) {
+        if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
@@ -72,7 +72,7 @@ class EnvelopeController extends Controller
     public function postUpdate(Request $request, $envelope_id) {
         $envelope = Envelope::find($envelope_id);
 
-        if (is_null($envelope) || $envelope->account->owner->first()->id != Auth::user()->id) {
+        if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }

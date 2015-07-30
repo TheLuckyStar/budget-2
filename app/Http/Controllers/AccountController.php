@@ -52,6 +52,46 @@ class AccountController extends Controller
 
 
     /**
+     * Render update account form
+     * @return Illuminate/Http/Response View to render
+     */
+    public function getUpdate($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account) || $account->owner->first()->id !== Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('account.update', $data);
+    }
+
+    public function postUpdate(Request $request, $account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account) || $account->owner->first()->id !== Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $this->validate($request, [
+            'name' => 'string|required',
+        ]);
+
+        $account->fill($request->only(['name']));
+        $account->save();
+
+        return redirect()->action('AccountController@getSummary', $account)
+            ->withSuccess(trans('account.update.successMessage', ['account' => $account]));
+    }
+
+
+
+    /**
      * Gather information about account for account home page (first tab)
      * @param  string $account_id Account ID
      * @return Illuminate/Http/Response View to render
@@ -66,12 +106,12 @@ class AccountController extends Controller
 
         $balanceData = [
             [
-                'label' => trans('revenue.unallocatedTitle'),
-                'value' => $account->unallocated_revenue,
-            ],
-            [
                 'label' => trans('revenue.allocatedTitle'),
                 'value' => $account->allocated_revenue,
+            ],
+            [
+                'label' => trans('revenue.unallocatedTitle'),
+                'value' => $account->unallocated_revenue,
             ],
             [
                 'label' => trans('outcome.intendedTitle'),

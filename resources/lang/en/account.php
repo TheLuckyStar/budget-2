@@ -19,6 +19,11 @@ return [
         'successMessage' => 'The account :account has been created.',
     ],
 
+    'update' => [
+        'title' => 'Update details',
+        'successMessage' => 'The account :account has been updated.',
+    ],
+
     'summary' => [
         'title' => 'Summary',
     ],

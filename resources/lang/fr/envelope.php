@@ -29,7 +29,7 @@ return [
     ],
 
     'snapshot' => [
-        'title' => "Solde de l'enveloppe",
+        'title' => "Solde de l'enveloppe : :balance",
     ],
 
     'lastoperations' => [

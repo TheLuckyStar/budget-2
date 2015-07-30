@@ -12,6 +12,20 @@ var NavbarModule = (function() {
 
 
 
+    // Empty horizontal menu to force refresh on next activeLinks
+    var emptyHorizontalMenu = function (callback) {
+        var horizontalMenu = navbar.find('.navbar-nav.top-nav');
+
+        horizontalMenu.empty();
+    };
+
+    // Empty vertical menu to force refresh on next activeLinks
+    var emptyVerticalMenu = function (callback) {
+        var verticalMenu = navbar.find('.navbar-nav.side-nav');
+
+        verticalMenu.empty();
+    };
+
     // Refresh navbar with ajax call
     var refresh = function (callback) {
         var currentUrl = url + '/index/' + PageModule.getAccountId();
@@ -76,6 +90,8 @@ var NavbarModule = (function() {
     return {
         init: init,
         activeLinks: activeLinks,
+        emptyHorizontalMenu: emptyHorizontalMenu,
+        emptyVerticalMenu: emptyVerticalMenu,
     };
 
 

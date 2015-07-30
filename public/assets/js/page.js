@@ -138,7 +138,7 @@ var PageModule = (function() {
 
     // Return formated price with currency
     var formatPrice = function (price) {
-        return number_format(price, 2)+'€';
+        return number_format(price, 2)+' €';
     };
 
 

@@ -47,6 +47,6 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
      */
     public function formatPrice($value)
     {
-        return number_format($value, 2).'€';
+        return number_format($value, 2).' €';
     }
 }

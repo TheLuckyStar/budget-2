@@ -70,6 +70,7 @@
     </div>
 
     <script type="text/javascript">
+
         $('#container-icon').iconpicker({
             templates: {
                 search: '<div class="input-group"><span class="input-group-addon"><i class="fa {{ Input::old('icon', $envelope->icon) }}"></i></span><input type="search" class="form-control iconpicker-search" placeholder="@lang('envelope.fields.filterIcon')" /></div>',
@@ -78,6 +79,11 @@
             $('#input-icon').val(e.iconpickerValue);
             $('#container-icon .input-group-addon i').attr('class', '').attr('class', 'fa '+e.iconpickerValue);
         });
+
+        $('#envelope-update form').submit(function () {
+            NavbarModule.emptyVerticalMenu();
+        });
+
     </script>
 
 </div>

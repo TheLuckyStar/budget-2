@@ -13,6 +13,14 @@
                 <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
                 @lang('account.index.title')
             </small>
+            @if ($account->owner->first()->id === Auth::user()->id)
+                {!! Html::linkAction(
+                    'AccountController@getUpdate',
+                    '<i class="fa fa-fw fa-pencil" title="'.trans('account.update.title').'"></i> '.trans('account.update.title'),
+                    $account,
+                    ['class' => 'link-to-page btn btn-primary pull-right']
+                ) !!}
+            @endif
         </h1>
     </div>
 
