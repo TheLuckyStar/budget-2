@@ -124,7 +124,7 @@ class EnvelopeController extends Controller
             'activeTab' => 'summary',
             'chartData' => json_encode($chartData),
             'chartColors' => json_encode(array_values($chartColors)),
-            'events' => $envelope->events()->paginate(Config::get('budget.paginate')),
+            'events' => $envelope->events()->paginate(5),
         ];
 
         return view('envelope.summary', $data);

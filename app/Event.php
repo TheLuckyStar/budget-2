@@ -26,12 +26,21 @@ class Event extends Model
      */
     public function __toString()
     {
-        return trans('event.action.'.$this->action, [
+        $fieldName = trans(strtolower(class_basename($this->entity)).'.fields.'.$this->field_name);
+
+        $action = $this->action;
+        if ($this->action == 'update' && $this->field_value_from == '') {
+            $action = 'set';
+        } else if ($this->action == 'update' && $this->field_value_to == '') {
+            $action = 'clear';
+        }
+
+        return trans('event.action.'.$action, [
             'user' => $this->user->link(),
             'entity' => $this->entity->link(),
-            'field_name' => $this->field_name,
-            'field_value_from' => $this->field_value_from,
-            'field_value_to' => $this->field_value_to,
+            'field_name' => strtolower($fieldName),
+            'field_value_from' => $this->formatValue($this->field_name, $this->field_value_from),
+            'field_value_to' => $this->formatValue($this->field_name, $this->field_value_to),
             'period' => $this->created_at->diffForHumans(),
         ]);
     }
@@ -42,5 +51,14 @@ class Event extends Model
 
     public function entity() {
         return $this->morphTo();
+    }
+
+    public function formatValue($fieldName, $value) {
+
+        if ($fieldName === 'icon') {
+            $value = "<i class='fa fa-fw ".$value."'></i>";
+        }
+
+        return $value;
     }
 }

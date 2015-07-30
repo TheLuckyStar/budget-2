@@ -7,6 +7,7 @@ return [
 
     'fields' => [
         'name' => "Name",
+        'icon' => "Icon",
         'filterIcon' => "Search for an icon",
     ],
 

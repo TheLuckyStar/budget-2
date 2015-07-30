@@ -41,12 +41,19 @@ body {height: calc(100% - 50px); margin-top: 50px;}
 .side-nav .badge-warning {background-color: #ff7518;}
 .side-nav .badge-success {background-color: #3fb618;}
 
-ul.help-block {list-style-type: none;}
-
 
 
 /*
  * Page wrapper content
+*/
+
+ul.help-block {list-style-type: none;}
+
+.panel-footer .pagination {margin: 0px;}
+
+
+/*
+ * Specific page content
 */
 
 #home-guest .panel-info h3 {color: white;}

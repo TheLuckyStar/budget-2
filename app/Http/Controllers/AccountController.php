@@ -144,7 +144,7 @@ class AccountController extends Controller
             'balanceColors' => json_encode(array_values(Config::get('budget.statusColors'))),
             'envelopesData' => json_encode($envelopesData),
             'envelopesColors' => json_encode($envelopesColors),
-            'events' => $account->relatedEvents()->paginate(Config::get('budget.paginate')),
+            'events' => $account->relatedEvents()->paginate(5),
         ];
 
         return view('account.summary', $data);

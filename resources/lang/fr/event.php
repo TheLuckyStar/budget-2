@@ -8,10 +8,12 @@ return [
     'title' => "Historique",
 
     'action' => [
-        'create' => ':entity créé par :user :period.',
-        'update' => ':entity modifié par :user du champ :field_name de :field_value_from en :field_value_to :period.',
-        'delete' => ':entity supprimé par :user :period.',
-        'restore' => ':entity restauré par :user :period.',
+        'create' => ':entity a été créé par :user :period.',
+        'set' => ':entity a été modifié par :user : le champ :field_name a été défini comme :field_value_to :period.',
+        'update' => ':entity a été modifié par :user : le champ :field_name :field_value_from a été changé en :field_value_to :period.',
+        'clear' => ':entity a été modifié par :user : le champ :field_name :field_value_from a été effacé :period.',
+        'delete' => ':entity a été supprimé par :user :period.',
+        'restore' => ':entity a été restauré par :user :period.',
     ],
 
 ];
