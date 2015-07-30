@@ -79,13 +79,6 @@ class NavbarController extends Controller
             );
         }
 
-        $links[] = Html::linkAction(
-            'EnvelopeController@getAdd',
-            '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
-            $account,
-            ['class' => 'link-to-page']
-        );
-
         if ($account->trashedEnvelopes()->count()) {
             $subLinks = [];
             foreach ($account->trashedEnvelopes as $envelope) {
@@ -106,6 +99,13 @@ class NavbarController extends Controller
                 )
                 .Html::ul($subLinks, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
         }
+
+        $links[] = Html::linkAction(
+            'EnvelopeController@getAdd',
+            '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
+            $account,
+            ['class' => 'link-to-page']
+        );
 
         return $links;
     }
