@@ -24,6 +24,16 @@ return [
         'successMessage' => 'Le compte :account a bien été modifié.',
     ],
 
+    'delete' => [
+        'title' => 'Comptes archivés',
+        'successMessage' => "Le compte :account a bien été archivé.<br>"
+            ."Il reste accessible dans le menu <i class='fa fa-fw fa-archive'></i> à droite de la liste des comptes dans le menu en haut.",
+    ],
+
+    'restore' => [
+        'successMessage' => 'Le compte :account a bien été restauré.',
+    ],
+
     'summary' => [
         'title' => 'Résumé',
     ],

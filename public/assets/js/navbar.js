@@ -14,7 +14,7 @@ var NavbarModule = (function() {
 
     // Empty horizontal menu to force refresh on next activeLinks
     var emptyHorizontalMenu = function (callback) {
-        var horizontalMenu = navbar.find('.navbar-nav.top-nav');
+        var horizontalMenu = navbar.find('.nav.top-nav');
 
         horizontalMenu.empty();
     };
@@ -51,7 +51,7 @@ var NavbarModule = (function() {
             allowRefresh = true;
         }
 
-        var horizontalMenu = navbar.find('.navbar-nav.top-nav');
+        var horizontalMenu = navbar.find('.nav.top-nav');
         var horizontalUrl = PageModule.getHorizontalUrl();
         var horizontalLink = horizontalMenu.find('.link-to-page[href="'+horizontalUrl+'"]');
 

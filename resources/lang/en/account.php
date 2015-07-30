@@ -24,6 +24,16 @@ return [
         'successMessage' => 'The account :account has been updated.',
     ],
 
+    'delete' => [
+        'title' => 'Archived accounts',
+        'successMessage' => "The account :account has been archived.<br>"
+            ."It is still accessible inside the menu <i class='fa fa-fw fa-archive'></i> on the right of the account list in top menu.",
+    ],
+
+    'restore' => [
+        'successMessage' => 'Le compte :account a bien été restauré.',
+    ],
+
     'summary' => [
         'title' => 'Summary',
     ],

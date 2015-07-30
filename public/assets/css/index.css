@@ -29,9 +29,9 @@ body {height: calc(100% - 50px); margin-top: 50px;}
 
 .top-nav {padding-left: 0px;}
 
-.navbar-default .navbar-nav .active,
-.navbar-default .navbar-nav .active:focus,
-.navbar-default .navbar-nav .active:hover {
+.navbar-default .nav .active,
+.navbar-default .nav .active:focus,
+.navbar-default .nav .active:hover {
     color: #fff;
     background-color: #080808;
 }

@@ -40,6 +40,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function accounts() {
         return $this->belongsToMany('App\Account')
+            ->withTrashed()
+            ->withPivot('owner')
+            ->withTimestamps()
+            ->orderBy('owner', 'desc')
+            ->orderBy('name');
+    }
+
+    public function trashedAccounts() {
+        return $this->belongsToMany('App\Account')
+            ->onlyTrashed()
+            ->withPivot('owner')
+            ->withTimestamps()
+            ->orderBy('owner', 'desc')
+            ->orderBy('name');
+    }
+
+    public function nontrashedAccounts() {
+        return $this->accounts()
             ->withPivot('owner')
             ->withTimestamps()
             ->orderBy('owner', 'desc')

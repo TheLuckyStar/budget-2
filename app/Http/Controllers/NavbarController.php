@@ -24,13 +24,33 @@ class NavbarController extends Controller
 
         $links = [];
 
-        foreach (Auth::user()->accounts as $account) {
-            $links[] = Html::linkAction(
-                'AccountController@getSummary',
-                (string)$account,
-                $account,
-                ['class' => 'link-to-page navbar-brand']
-            );
+        foreach (Auth::user()->nontrashedAccounts as $account) {
+            if ($account->trashed() === false) {
+                $links[] = Html::linkAction(
+                    'AccountController@getSummary',
+                    $account,
+                    $account,
+                    ['class' => 'link-to-page navbar-brand']
+                );
+            }
+        }
+
+        if (Auth::user()->trashedAccounts()->count()) {
+            $subLinks = [];
+            foreach (Auth::user()->trashedAccounts as $account) {
+                $subLinks[] = Html::linkAction(
+                    'AccountController@getSummary',
+                    $account,
+                    $account,
+                    ['class' => 'link-to-page']
+                );
+            }
+            $links[] = Html::link(
+                    '#',
+                    '<i class="fa fa-fw fa-archive" title="'.trans('account.delete.title').'"></i>',
+                    ['class' => 'navbar-brand dropdown-toggle', 'data-toggle' => 'dropdown']
+                )
+                .Html::ul($subLinks, ['class' => 'dropdown-menu']);
         }
 
         $links[] = Html::linkAction(

@@ -27,7 +27,7 @@ return [
     'delete' => [
         'title' => 'Archived envelopes',
         'successMessage' => "The envelope :envelope has been archived.<br>"
-            ."It is still accessible at the bottom of the envelope list in the left menu.",
+            ."It is still accessible below the envelope list in the left menu.",
     ],
 
     'restore' => [

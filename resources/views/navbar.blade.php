@@ -11,11 +11,7 @@
             <span class="icon-bar"></span>
         </button>
 
-        <div class='navbar-nav top-nav small'>
-            @foreach ($horizontalMenu as $link)
-                {!! $link !!}
-            @endforeach
-        </div>
+        {!! Html::ul($horizontalMenu, ['class' => 'nav navbar-left top-nav small']) !!}
 
     </div>
 

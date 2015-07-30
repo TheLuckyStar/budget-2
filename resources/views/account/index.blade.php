@@ -13,6 +13,21 @@
                 <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
                 @lang('account.index.title')
             </small>
+            @if ($account->trashed())
+                {!! Html::linkAction(
+                    'AccountController@getRestore',
+                    '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
+                    $account,
+                    ['class' => 'link-to-page btn btn-success pull-right']
+                ) !!}
+            @else
+            {!! Html::linkAction(
+                    'AccountController@getDelete',
+                    '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
+                    $account,
+                    ['class' => 'link-to-page btn btn-danger pull-right']
+                ) !!}
+            @endif
             @if ($account->owner->first()->id === Auth::user()->id)
                 {!! Html::linkAction(
                     'AccountController@getUpdate',
@@ -68,5 +83,11 @@
         </div>
 
     </div>
+
+    <script type="text/javascript">
+        $('.page-header .btn-danger, .page-header .btn-success').click(function () {
+            NavbarModule.emptyHorizontalMenu();
+        });
+    </script>
 
 </div>

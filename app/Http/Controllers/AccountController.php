@@ -91,6 +91,38 @@ class AccountController extends Controller
 
 
 
+    public function getDelete($account_id) {
+        $account = Auth::user()->nontrashedAccounts()->find($account_id);
+
+        if (is_null($account) || $account->owner->first()->id !== Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $account->delete();
+
+        return redirect()->action('AccountController@getSummary', $account)
+            ->withSuccess(trans('account.delete.successMessage', ['account' => $account]));
+    }
+
+
+
+    public function getRestore($account_id) {
+        $account = Auth::user()->trashedAccounts()->find($account_id);
+
+        if (is_null($account) || $account->owner->first()->id !== Auth::user()->id) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $account->restore();
+
+        return redirect()->action('AccountController@getSummary', $account)
+            ->withSuccess(trans('account.restore.successMessage', ['account' => $account]));
+    }
+
+
+
     /**
      * Gather information about account for account home page (first tab)
      * @param  string $account_id Account ID
