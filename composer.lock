@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "77b7c0d47e9071ed5f6b113d544faa77",
+    "hash": "f9ab2f92c54f5948efecd6719e9daffd",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -130,22 +130,22 @@
         },
         {
             "name": "components/font-awesome",
-            "version": "4.3.0",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/font-awesome.git",
-                "reference": "73acf4d65eadd8d127bafc7bd510240ea3979e83"
+                "reference": "7dffacc72e566e5db6272244effc06f64fe9f185"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/font-awesome/zipball/73acf4d65eadd8d127bafc7bd510240ea3979e83",
-                "reference": "73acf4d65eadd8d127bafc7bd510240ea3979e83",
+                "url": "https://api.github.com/repos/components/font-awesome/zipball/7dffacc72e566e5db6272244effc06f64fe9f185",
+                "reference": "7dffacc72e566e5db6272244effc06f64fe9f185",
                 "shasum": ""
             },
             "type": "component",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3.x-dev"
+                    "dev-master": "4.4.x-dev"
                 },
                 "component": {
                     "styles": [
@@ -163,7 +163,7 @@
                 "OFL-1.1"
             ],
             "description": "The iconic font designed for use with Twitter Bootstrap.",
-            "time": "2015-01-26 11:26:16"
+            "time": "2015-07-30 02:38:45"
         },
         {
             "name": "components/jquery",
