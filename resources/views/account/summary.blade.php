@@ -14,12 +14,18 @@
                         <h3 class='text-center'>
                             @lang('account.snapshot.balanceTitle', ['balance' => Html::formatPrice($account->balance)])
                         </h3>
-                        <div id="balance-chart"></div>
                     </div>
                     <div class='col-md-6'>
                         <h3 class='text-center'>
                             @lang('account.snapshot.envelopesTitle')
                         </h3>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div id="balance-chart"></div>
+                    </div>
+                    <div class='col-md-6'>
                         <div id="envelopes-chart"></div>
                     </div>
                 </div>
