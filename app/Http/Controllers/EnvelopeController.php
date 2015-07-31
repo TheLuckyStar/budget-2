@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Envelope;
 use Auth;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 
@@ -178,7 +179,7 @@ class EnvelopeController extends Controller
         return view('envelope.operations', $data);
     }
 
-    public function getDevelopment($envelope_id) {
+    public function getDevelopment($envelope_id, $month = null, $year = null) {
         $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
@@ -186,9 +187,52 @@ class EnvelopeController extends Controller
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 
+        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $month->startOfMonth();
+
+        $monthData = [];
+        for ($date = $month->copy(); $date->month === $month->month; $date->addDay()) {
+            $monthData[] = [
+                'date' => $date->toDateString(),
+                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($date),
+                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($date),
+                'balance' => $envelope->getBalanceAttribute($date),
+            ];
+        }
+
+        $year = is_null($year) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $year);
+        $year->startOfYear();
+
+        $yearData = [];
+        for ($date = $year->copy(); $date->year === $year->year; $date->addMonth()) {
+            $yearData[] = [
+                'date' => $date->format('Y-m'),
+                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($date),
+                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($date),
+                'balance' => $envelope->getBalanceAttribute($date),
+            ];
+        }
+
+        $colors = [
+            Config::get('budget.statusColors.danger'),
+            Config::get('budget.statusColors.warning'),
+            Config::get('budget.statusColors.success'),
+        ];
+
         $data = [
             'envelope' => $envelope,
             'activeTab' => 'development',
+            'month' => $month,
+            'prevMonth' => $month->copy()->subMonth(),
+            'nextMonth' => $month->copy()->addMonth(),
+            'monthData' => json_encode($monthData),
+            'monthColors' => json_encode($colors),
+            'year' => $year,
+            'prevYear' => $year->copy()->subYear(),
+            'nextYear' => $year->copy()->addYear(),
+            'yearData' => json_encode($yearData),
+            'yearColors' => json_encode($colors),
+            'events' => $envelope->events()->paginate(5),
         ];
 
         return view('envelope.development', $data);

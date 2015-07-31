@@ -5,6 +5,8 @@
  */
 return [
 
+    'availableTitle' => 'Available money',
+
     'fields' => [
         'name' => "Name",
         'icon' => "Icon",
@@ -52,6 +54,8 @@ return [
 
     'development' => [
         'title' => 'Development',
+        'monthTitle' => 'Month view (cumulative total)',
+        'yearTitle' => 'Annual view (cumulative total)',
     ],
 
 ];

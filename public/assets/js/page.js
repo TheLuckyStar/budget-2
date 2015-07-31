@@ -141,6 +141,22 @@ var PageModule = (function() {
         return number_format(price, 2)+' €';
     };
 
+    // Return formated date to dd/mm/YYYY
+    var formatDate = function (d) {
+        var date = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+        var month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
+        var year = d.getFullYear();
+        return date + "/" + month + "/" + year;
+    };
+
+
+    // Return formated date to mm/YYYY
+    var formatMonth = function (d) {
+        var month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
+        var year = d.getFullYear();
+        return month + "/" + year;
+    };
+
 
     // Called on module loading
     var init = function () {
@@ -171,6 +187,8 @@ var PageModule = (function() {
         getVerticalUrl: getVerticalUrl,
         getAccountId: getAccountId,
         formatPrice: formatPrice,
+        formatDate: formatDate,
+        formatMonth: formatMonth,
     };
 
 
