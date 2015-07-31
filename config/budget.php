@@ -5,10 +5,10 @@ return [
     'paginate' => 10,
 
     'statusColors' => [
-        'success' => '#3fb618',
-        'primary' => '#2780e3',
-        'warning' => '#ff7518',
         'danger' => '#ff0039',
+        'warning' => '#ff7518',
+        'primary' => '#2780e3',
+        'success' => '#3fb618',
     ],
 
 ];

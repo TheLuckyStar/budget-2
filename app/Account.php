@@ -140,7 +140,7 @@ class Account extends Model
         $revenue = $this->getRevenueAttribute($at);
         $allocatedRevenue = $this->getAllocatedRevenueAttribute($at);
 
-        $unallocatedRevenue = $revenue - $allocatedRevenue;
+        $unallocatedRevenue = max(0, $revenue - $allocatedRevenue);
 
         return floatval($unallocatedRevenue);
     }
@@ -180,6 +180,24 @@ class Account extends Model
         $outcome = $this->getOutcomeAttribute($at);
 
         $balance = $revenue - $outcome;
+
+        return floatval($balance);
+    }
+
+    public function getAllocatedBalanceAttribute($at = null) {
+        $revenue = $this->getAllocatedRevenueAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        $balance = $revenue - $outcome;
+
+        return floatval($balance);
+    }
+
+    public function getUnallocatedBalanceAttribute($at = null) {
+        $revenue = $this->getUnallocatedRevenueAttribute($at);
+        $outcome = $this->getOutcomeAttribute($at);
+
+        $balance = max(0, $revenue - $outcome);
 
         return floatval($balance);
     }

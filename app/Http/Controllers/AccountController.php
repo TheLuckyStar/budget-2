@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Account;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 use Session;
@@ -138,20 +139,20 @@ class AccountController extends Controller
 
         $balanceData = [
             [
-                'label' => trans('revenue.allocatedTitle'),
-                'value' => $account->allocated_revenue,
-            ],
-            [
-                'label' => trans('revenue.unallocatedTitle'),
-                'value' => $account->unallocated_revenue,
+                'label' => trans('outcome.effectiveTitle'),
+                'value' => $account->effective_outcome,
             ],
             [
                 'label' => trans('outcome.intendedTitle'),
                 'value' => $account->intended_outcome,
             ],
             [
-                'label' => trans('outcome.effectiveTitle'),
-                'value' => $account->effective_outcome,
+                'label' => trans('revenue.unallocatedTitle'),
+                'value' => $account->unallocated_revenue,
+            ],
+            [
+                'label' => trans('revenue.allocatedTitle'),
+                'value' => $account->allocated_revenue,
             ],
         ];
 
@@ -270,7 +271,7 @@ class AccountController extends Controller
      * @param  string $account_id Account ID
      * @return Illuminate/Http/Response View to render
      */
-    public function getDevelopment($account_id) {
+    public function getDevelopment($account_id, $month = null, $year = null) {
         $account = Auth::user()->accounts()->find($account_id);
 
         if (is_null($account)) {
@@ -278,9 +279,51 @@ class AccountController extends Controller
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
+        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $month->startOfMonth();
+
+        $monthData = [];
+        for ($date = $month->copy(); $date->month === $month->month; $date->addDay()) {
+            $monthData[] = [
+                'date' => $date->toDateString(),
+                'effective_outcome' => $account->getEffectiveOutcomeAttribute($date),
+                'intended_outcome' => $account->getIntendedOutcomeAttribute($date),
+                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($date),
+                'allocated_balance' => $account->getAllocatedBalanceAttribute($date),
+            ];
+        }
+
+        $year = is_null($year) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $year);
+        $year->startOfYear();
+
+        $monthLabels = [];
+        $yearData = [];
+        for ($date = $year->copy(); $date->year === $year->year; $date->addMonth()) {
+            $montLabels[] = $date->formatLocalized('%B');
+
+            $yearData[] = [
+                'date' => $date->format('Y-m'),
+                'effective_outcome' => $account->getEffectiveOutcomeAttribute($date),
+                'intended_outcome' => $account->getIntendedOutcomeAttribute($date),
+                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($date),
+                'allocated_balance' => $account->getAllocatedBalanceAttribute($date),
+            ];
+        }
+
         $data = [
             'account' => $account,
             'activeTab' => 'development',
+            'month' => $month,
+            'prevMonth' => $month->copy()->subMonth(),
+            'nextMonth' => $month->copy()->addMonth(),
+            'monthData' => json_encode($monthData),
+            'monthColors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'year' => $year,
+            'prevYear' => $year->copy()->subYear(),
+            'nextYear' => $year->copy()->addYear(),
+            'montLabels' => json_encode($montLabels),
+            'yearData' => json_encode($yearData),
+            'yearColors' => json_encode(array_values(Config::get('budget.statusColors'))),
         ];
 
         return view('account.development', $data);

@@ -236,7 +236,6 @@ class EnvelopeController extends Controller
             'montLabels' => json_encode($montLabels),
             'yearData' => json_encode($yearData),
             'yearColors' => json_encode($colors),
-            'events' => $envelope->events()->paginate(5),
         ];
 
         return view('envelope.development', $data);
