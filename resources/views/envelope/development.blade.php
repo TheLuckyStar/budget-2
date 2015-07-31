@@ -79,6 +79,8 @@
             resize: true,
         });
 
+        var monthLabels = {!! $montLabels !!}
+
         Morris.Area({
             element: 'year-chart',
             data: {!! $yearData !!},
@@ -94,8 +96,8 @@
                 "@lang('envelope.availableTitle')",
             ],
             lineColors: {!! $yearColors !!},
-            dateFormat: function (date) { return PageModule.formatMonth(new Date(date)); },
-            xLabelFormat: function (date) { return date.getMonth() + 1; },
+            dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
+            xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
             yLabelFormat: function (val) { return PageModule.formatPrice(val); },
             resize: true,
         });

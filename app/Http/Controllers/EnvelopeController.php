@@ -203,8 +203,11 @@ class EnvelopeController extends Controller
         $year = is_null($year) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $year);
         $year->startOfYear();
 
+        $monthLabels = [];
         $yearData = [];
         for ($date = $year->copy(); $date->year === $year->year; $date->addMonth()) {
+            $montLabels[] = $date->formatLocalized('%B');
+
             $yearData[] = [
                 'date' => $date->format('Y-m'),
                 'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($date),
@@ -230,6 +233,7 @@ class EnvelopeController extends Controller
             'year' => $year,
             'prevYear' => $year->copy()->subYear(),
             'nextYear' => $year->copy()->addYear(),
+            'montLabels' => json_encode($montLabels),
             'yearData' => json_encode($yearData),
             'yearColors' => json_encode($colors),
             'events' => $envelope->events()->paginate(5),
