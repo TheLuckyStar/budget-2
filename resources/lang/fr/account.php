@@ -55,6 +55,7 @@ return [
         'title' => 'Évolution',
         'monthTitle' => 'Vue mensuelle (total cumulé)',
         'yearTitle' => 'Vue annuelle (total cumulé)',
+        'envelopesTitle' => 'Répartition des revenus par enveloppe',
         'unallocatedBalanceTitle' => 'Argent disponible alloué',
         'allocatedBalanceTitle' => 'Argent disponible non alloué',
     ],

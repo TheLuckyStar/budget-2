@@ -15,14 +15,14 @@
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevMonth->formatLocalized('%B %Y'),
-                    [$account, $prevMonth->toDateString(), $year->toDateString()],
+                    [$account, $prevMonth->toDateString(), $year->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $month->formatLocalized('%B %Y') }}
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-                    [$account, $nextMonth->toDateString(), $year->toDateString()],
+                    [$account, $nextMonth->toDateString(), $year->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
                 ) !!}
             </div>
@@ -42,14 +42,41 @@
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevYear->formatLocalized('%Y'),
-                    [$account, $month->toDateString(), $prevYear->toDateString()],
+                    [$account, $month->toDateString(), $prevYear->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $year->formatLocalized('%Y') }}
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-                    [$account, $month->toDateString(), $nextYear->toDateString()],
+                    [$account, $month->toDateString(), $nextYear->toDateString(), $envelopeYear->toDateString()],
+                    ['class' => 'link-to-page btn btn-xs btn-default pull-right']
+                ) !!}
+            </div>
+        </div>
+    </div>
+
+    <div class='col-md-12'>
+        <div class="panel panel-default">
+            <div class="panel-heading text-right">
+                <i class="fa fa-fw fa-bar-chart pull-left"></i>
+                @lang('account.development.envelopesTitle')
+            </div>
+            <div class="panel-body">
+                <div id="envelope-chart"></div>
+            </div>
+            <div class="panel-footer text-center">
+                {!! Html::linkAction(
+                    'AccountController@getDevelopment',
+                    '<i class="fa fa-fw fa-arrow-left"></i> '.$prevEnvelopeYear->formatLocalized('%Y'),
+                    [$account, $month->toDateString(), $year->toDateString(), $prevEnvelopeYear->toDateString()],
+                    ['class' => 'link-to-page btn btn-xs btn-default pull-left']
+                ) !!}
+                {{ $envelopeYear->formatLocalized('%Y') }}
+                {!! Html::linkAction(
+                    'AccountController@getDevelopment',
+                    $nextEnvelopeYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                    [$account, $month->toDateString(), $year->toDateString(), $nextEnvelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
                 ) !!}
             </div>
@@ -102,6 +129,17 @@
             dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
             xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
             yLabelFormat: function (val) { return PageModule.formatPrice(val); },
+            resize: true,
+        });
+
+        Morris.Bar({
+            element: 'envelope-chart',
+            data: {!! $envelopeData !!},
+            xkey: 'date',
+            ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
+            labels: {!! json_encode($account->envelopes->lists('name')) !!},
+            stacked: true,
+            // yLabelFormat: function (val) { return PageModule.formatPrice(val); },
             resize: true,
         });
 
