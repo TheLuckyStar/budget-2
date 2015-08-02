@@ -248,7 +248,7 @@ class AccountController extends Controller
      * @param  string $account_id Account ID
      * @return Illuminate/Http/Response View to render
      */
-    public function getOutcomes($account_id) {
+    public function getOutcomes($account_id, $month = null) {
         $account = Auth::user()->accounts()->find($account_id);
 
         if (is_null($account)) {
@@ -256,9 +256,20 @@ class AccountController extends Controller
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
+        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $month->startOfMonth();
+
+        $outcomes = $account->outcomes()
+            ->whereBetween('date', [$month, $month->copy()->endOfMonth()])
+            ->get();
+
         $data = [
-            'account' => $account,
             'activeTab' => 'outcomes',
+            'account' => $account,
+            'outcomes' => $outcomes,
+            'month' => $month,
+            'prevMonth' => $month->copy()->subMonth(),
+            'nextMonth' => $month->copy()->addMonth(),
         ];
 
         return view('account.outcomes', $data);

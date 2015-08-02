@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Services\Eloquent\HasEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,6 +23,7 @@ class Outcome extends Model
      */
     protected $casts = [
         'amount' => 'float',
+        'effective' => 'integer',
     ];
 
     /**
@@ -35,4 +37,25 @@ class Outcome extends Model
         'date',
         'effective',
     ];
+
+    public function envelope() {
+        return $this->belongsTo('App\Envelope')
+            ->withTrashed();
+    }
+
+    public function getEffectiveStatusAttribute($at = null) {
+        if ($this->effective === 1) {
+            return 'default';
+        }
+
+        if (is_null($at)) {
+            $at = Carbon::today();
+        }
+
+        if ($this->date < $at) {
+            return 'danger';
+        }
+
+        return 'info';
+    }
 }
