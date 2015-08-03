@@ -163,7 +163,7 @@ class EnvelopeController extends Controller
         return view('envelope.summary', $data);
     }
 
-    public function getOperations($envelope_id) {
+    public function getOperations($envelope_id, $month = null) {
         $envelope = Envelope::withTrashed()->find($envelope_id);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
@@ -171,9 +171,20 @@ class EnvelopeController extends Controller
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 
+        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $month->startOfMonth();
+
+        $outcomes = $envelope->outcomes()
+            ->whereBetween('date', [$month, $month->copy()->endOfMonth()])
+            ->get();
+
         $data = [
             'envelope' => $envelope,
             'activeTab' => 'operations',
+            'outcomes' => $outcomes,
+            'month' => $month,
+            'prevMonth' => $month->copy()->subMonth(),
+            'nextMonth' => $month->copy()->addMonth(),
         ];
 
         return view('envelope.operations', $data);
