@@ -6,7 +6,7 @@
 return [
 
     'title' => 'Revenus',
-    'allocatedTitle' => 'Revenues alloués',
+    'allocatedTitle' => 'Revenus alloués',
     'unallocatedTitle' => 'Revenus non alloués',
 
 ];
