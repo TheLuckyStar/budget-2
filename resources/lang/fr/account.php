@@ -39,9 +39,8 @@ return [
     ],
 
     'snapshot' => [
-        'title' => 'État du compte le '.Carbon\Carbon::create()->formatLocalized('%A %d %B %Y'),
-        'balanceTitle' => 'Solde du compte : :balance',
-        'envelopesTitle' => 'Solde des enveloppes',
+        'balanceTitle' => 'Solde du compte : <b>:balance</b>',
+        'envelopeTitle' => 'Solde des enveloppes',
     ],
 
     'users' => [

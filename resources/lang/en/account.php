@@ -39,9 +39,8 @@ return [
     ],
 
     'snapshot' => [
-        'title' => 'Account snapshot the '.Carbon\Carbon::create()->formatLocalized('%A %d %B %Y'),
         'balanceTitle' => 'Account balance : :balance',
-        'envelopesTitle' => 'Envelope balances',
+        'envelopeTitle' => 'Envelope balances',
     ],
 
     'users' => [
