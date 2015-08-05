@@ -53,11 +53,6 @@ return [
 
     'development' => [
         'title' => 'Development',
-        'monthTitle' => 'Month view (cumulative total)',
-        'yearTitle' => 'Annual view (cumulative total)',
-        'envelopesTitle' => 'Income spreading per envelope',
-        'unallocatedBalanceTitle' => 'Allocated available money',
-        'allocatedBalanceTitle' => 'Unallocated available money',
     ],
 
 ];

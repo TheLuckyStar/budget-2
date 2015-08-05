@@ -54,8 +54,6 @@ return [
 
     'development' => [
         'title' => 'Development',
-        'monthTitle' => 'Month view (cumulative total)',
-        'yearTitle' => 'Annual view (cumulative total)',
     ],
 
 ];

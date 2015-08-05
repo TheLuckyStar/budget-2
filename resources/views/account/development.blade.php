@@ -4,14 +4,7 @@
 
     <div class='col-md-12'>
         <div class="panel panel-default">
-            <div class="panel-heading text-right">
-                <i class="fa fa-fw fa-area-chart pull-left"></i>
-                @lang('account.development.monthTitle')
-            </div>
-            <div class="panel-body">
-                <div id="monthly-chart"></div>
-            </div>
-            <div class="panel-footer text-center">
+            <div class="panel-heading text-center">
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevMonth->formatLocalized('%B %Y'),
@@ -26,19 +19,15 @@
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
                 ) !!}
             </div>
+            <div class="panel-body">
+                <div id="monthly-chart"></div>
+            </div>
         </div>
     </div>
 
     <div class='col-md-12'>
         <div class="panel panel-default">
-            <div class="panel-heading text-right">
-                <i class="fa fa-fw fa-area-chart pull-left"></i>
-                @lang('account.development.yearTitle')
-            </div>
-            <div class="panel-body">
-                <div id="year-chart"></div>
-            </div>
-            <div class="panel-footer text-center">
+            <div class="panel-heading text-center">
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevYear->formatLocalized('%Y'),
@@ -53,19 +42,15 @@
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
                 ) !!}
             </div>
+            <div class="panel-body">
+                <div id="year-chart"></div>
+            </div>
         </div>
     </div>
 
     <div class='col-md-12'>
         <div class="panel panel-default">
-            <div class="panel-heading text-right">
-                <i class="fa fa-fw fa-bar-chart pull-left"></i>
-                @lang('account.development.envelopesTitle')
-            </div>
-            <div class="panel-body">
-                <div id="envelope-chart"></div>
-            </div>
-            <div class="panel-footer text-center">
+            <div class="panel-heading text-center">
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevEnvelopeYear->formatLocalized('%Y'),
@@ -79,6 +64,9 @@
                     [$account, $month->toDateString(), $year->toDateString(), $nextEnvelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
                 ) !!}
+            </div>
+            <div class="panel-body">
+                <div id="envelope-chart"></div>
             </div>
         </div>
     </div>
