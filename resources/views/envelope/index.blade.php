@@ -12,27 +12,29 @@
             <small>
                 {!! $envelope !!}
             </small>
-            @if ($envelope->trashed())
+            <div class='pull-right'>
                 {!! Html::linkAction(
-                    'EnvelopeController@getRestore',
-                    '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
+                    'EnvelopeController@getUpdate',
+                    '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
                     $envelope,
-                    ['class' => 'link-to-page btn btn-success pull-right']
+                    ['class' => 'link-to-page btn btn-primary']
                 ) !!}
-            @else
-            {!! Html::linkAction(
-                    'EnvelopeController@getDelete',
-                    '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
-                    $envelope,
-                    ['class' => 'link-to-page btn btn-danger pull-right']
-                ) !!}
-            @endif
-            {!! Html::linkAction(
-                'EnvelopeController@getUpdate',
-                '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
-                $envelope,
-                ['class' => 'link-to-page btn btn-primary pull-right']
-            ) !!}
+                @if ($envelope->trashed())
+                    {!! Html::linkAction(
+                        'EnvelopeController@getRestore',
+                        '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
+                        $envelope,
+                        ['class' => 'link-to-page btn btn-success']
+                    ) !!}
+                @else
+                {!! Html::linkAction(
+                        'EnvelopeController@getDelete',
+                        '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
+                        $envelope,
+                        ['class' => 'link-to-page btn btn-danger']
+                    ) !!}
+                @endif
+            </div>
         </h1>
     </div>
 

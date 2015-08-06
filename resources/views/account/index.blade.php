@@ -13,28 +13,30 @@
                 <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
                 @lang('account.index.title')
             </small>
-            @if ($account->trashed())
-                {!! Html::linkAction(
-                    'AccountController@getRestore',
-                    '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
-                    $account,
-                    ['class' => 'link-to-page btn btn-success pull-right']
-                ) !!}
-            @else
-            {!! Html::linkAction(
-                    'AccountController@getDelete',
-                    '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
-                    $account,
-                    ['class' => 'link-to-page btn btn-danger pull-right']
-                ) !!}
-            @endif
             @if ($account->owner->first()->id === Auth::user()->id)
-                {!! Html::linkAction(
-                    'AccountController@getUpdate',
-                    '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
-                    $account,
-                    ['class' => 'link-to-page btn btn-primary pull-right']
-                ) !!}
+                <div class='pull-right'>
+                    {!! Html::linkAction(
+                        'AccountController@getUpdate',
+                        '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
+                        $account,
+                        ['class' => 'link-to-page btn btn-primary']
+                    ) !!}
+                    @if ($account->trashed())
+                        {!! Html::linkAction(
+                            'AccountController@getRestore',
+                            '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
+                            $account,
+                            ['class' => 'link-to-page btn btn-success']
+                        ) !!}
+                    @else
+                        {!! Html::linkAction(
+                            'AccountController@getDelete',
+                            '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
+                            $account,
+                            ['class' => 'link-to-page btn btn-danger']
+                        ) !!}
+                    @endif
+                </div>
             @endif
         </h1>
     </div>
