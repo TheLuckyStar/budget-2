@@ -28,7 +28,7 @@
             data-locale="{{ App::getLocale() }}"></div>
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
-            <div class="container-fluid text-left">
+            <div class="container-fluid small text-left">
                 @lang('app.layout.leftFooter')
                 <span class='pull-right'>
                     @lang('app.layout.rightFooter')
