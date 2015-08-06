@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,16 @@ class Income extends Model
     protected $casts = [
         'amount' => 'float',
     ];
+
+    /**
+     * Create a new Eloquent Collection instance.
+     * @param  array  $models
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new OperationCollection($models);
+    }
 
     /**
      * Array of field name to watch for changed on updated event
