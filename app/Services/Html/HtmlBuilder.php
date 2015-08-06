@@ -43,10 +43,21 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
     /**
      * Format a price with two decimal digits
      * @param  string  $value
+     * @param  true  $symbol Symbol to prefix the price with, or true for auto detect
      * @return string
      */
-    public function formatPrice($value)
+    public function formatPrice($value, $symbol = '')
     {
-        return number_format($value, 2).' €';
+        $price = number_format($value, 2).' €';
+
+        if ($symbol === true && $price >= 0) {
+            return '+'.$price;
+        }
+
+        if (is_string($symbol)) {
+            return $symbol.$price;
+        }
+
+        return $price;
     }
 }

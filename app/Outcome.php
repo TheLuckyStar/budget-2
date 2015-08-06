@@ -69,4 +69,24 @@ class Outcome extends Model
 
         return 'info';
     }
+
+    public function getAmountSymbolAttribute() {
+        return '-';
+    }
+
+    public function getContextAttribute() {
+        if ($this->effective) {
+            return 'danger';
+        }
+
+        return 'warning';
+    }
+
+    public function getTypeAttribute() {
+        if ($this->effective) {
+            return 'effectiveOutcome';
+        }
+
+        return 'intendedOutcome';
+    }
 }

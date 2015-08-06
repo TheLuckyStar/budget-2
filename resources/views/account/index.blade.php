@@ -52,20 +52,12 @@
                     ['class' => 'link-to-page', 'aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation" class="{{ $activeTab == 'revenues' ? 'active' : '' }}">
+            <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
                 {!! Html::linkAction(
-                    'AccountController@getRevenues',
-                    trans('revenue.title'),
+                    'AccountController@getOperations',
+                    trans('operation.title'),
                     $account,
-                    ['class' => 'link-to-page', 'aria-controls' => 'revenues', 'role' => 'tab', 'data-toggle' => 'tab']
-                ) !!}
-            </li>
-            <li role="presentation" class="{{ $activeTab == 'outcomes' ? 'active' : '' }}">
-                {!! Html::linkAction(
-                    'AccountController@getOutcomes',
-                    trans('outcome.title'),
-                    $account,
-                    ['class' => 'link-to-page', 'aria-controls' => 'outcomes', 'role' => 'tab', 'data-toggle' => 'tab']
+                    ['class' => 'link-to-page', 'aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
             <li role="presentation" class="{{ $activeTab == 'development' ? 'active' : '' }}">

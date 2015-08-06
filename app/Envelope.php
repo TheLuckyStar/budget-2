@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
 use Html;
@@ -69,6 +70,22 @@ class Envelope extends Model
     public function outcomes() {
         return $this->hasMany('App\Outcome')
             ->orderBy('date');
+    }
+
+    public function operationsInPeriod($start, $end) {
+        $operations = new OperationCollection();
+
+        $incomes = $this->incomes()->whereBetween('date', [$start, $end])->get();
+        foreach ($incomes as $income) {
+            $operations->push($income);
+        }
+
+        $outcomes = $this->outcomes()->whereBetween('date', [$start, $end])->get();
+        foreach ($outcomes as $outcome) {
+            $operations->push($outcome);
+        }
+
+        return $operations;
     }
 
     public function intendedOutcomes() {

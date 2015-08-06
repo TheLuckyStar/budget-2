@@ -17,17 +17,6 @@
     <div class='col-md-4'>
         <div class="panel panel-default">
             <div class="panel-heading text-right">
-                <i class="fa fa-fw fa-exchange pull-left"></i>
-                @lang('envelope.lastoperations.title')
-            </div>
-            <div class="panel-body">
-            </div>
-        </div>
-    </div>
-
-    <div class='col-md-4'>
-        <div class="panel panel-default">
-            <div class="panel-heading text-right">
                 <i class="fa fa-fw fa-history pull-left"></i>
                 @lang('event.title')
             </div>

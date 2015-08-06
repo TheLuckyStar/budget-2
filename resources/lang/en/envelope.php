@@ -45,14 +45,6 @@ return [
         'title' => 'Envelope balance : :balance',
     ],
 
-    'lastoperations' => [
-        'title' => "Last operations",
-    ],
-
-    'operations' => [
-        'title' => 'Operations',
-    ],
-
     'development' => [
         'title' => 'Development',
     ],

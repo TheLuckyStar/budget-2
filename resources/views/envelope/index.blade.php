@@ -52,7 +52,7 @@
             <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'EnvelopeController@getOperations',
-                    trans('envelope.operations.title'),
+                    trans('operation.title'),
                     $envelope,
                     ['class' => 'link-to-page', 'aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}

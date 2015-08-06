@@ -45,14 +45,6 @@ return [
         'title' => "Solde de l'enveloppe : :balance",
     ],
 
-    'lastoperations' => [
-        'title' => "Dernières opérations",
-    ],
-
-    'operations' => [
-        'title' => 'Opérations',
-    ],
-
     'development' => [
         'title' => 'Évolution',
     ],

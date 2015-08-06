@@ -134,15 +134,15 @@ class EnvelopeController extends Controller
 
         $chartData = [
             [
-                'label' => trans('income.title'),
+                'label' => trans('operation.type.income'),
                 'value' => $envelope->income,
             ],
             [
-                'label' => trans('outcome.intendedTitle'),
+                'label' => trans('operation.type.intendedOutcome', ['date' => '']),
                 'value' => $envelope->intended_outcome,
             ],
             [
-                'label' => trans('outcome.effectiveTitle'),
+                'label' => trans('operation.type.effectiveOutcome'),
                 'value' => $envelope->effective_outcome,
             ],
         ];
@@ -174,14 +174,12 @@ class EnvelopeController extends Controller
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
-        $outcomes = $envelope->outcomes()
-            ->whereBetween('date', [$month, $month->copy()->endOfMonth()])
-            ->get();
+        $operations = $envelope->operationsInPeriod($month, $month->copy()->endOfMonth());
 
         $data = [
             'envelope' => $envelope,
             'activeTab' => 'operations',
-            'outcomes' => $outcomes,
+            'operations' => $operations,
             'month' => $month,
             'prevMonth' => $month->copy()->subMonth(),
             'nextMonth' => $month->copy()->addMonth(),

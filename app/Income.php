@@ -41,4 +41,16 @@ class Income extends Model
     protected $watchedFieldInEvent = [
         'amount',
     ];
+
+    public function getAmountSymbolAttribute() {
+        return '+';
+    }
+
+    public function getContextAttribute() {
+        return 'success';
+    }
+
+    public function getTypeAttribute() {
+        return 'revenue';
+    }
 }

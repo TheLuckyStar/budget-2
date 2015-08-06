@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
 use Html;
@@ -92,15 +93,14 @@ class Account extends Model
     }
 
     public function outcomes() {
-        return $this->hasManyThrough('App\Outcome', 'App\Envelope')
-            ->orderBy('outcomes.date')
-            ->orderBy('envelopes.name');
+        return Outcome::whereIn('envelope_id', function ($query) {
+            $query->select('id')->from('envelopes')->where('account_id', $this->id);
+        })->orderBy('outcomes.date');
     }
 
     public function incomes() {
         return $this->hasManyThrough('App\Income', 'App\Envelope')
-            ->orderBy('incomes.date')
-            ->orderBy('envelopes.name');
+            ->orderBy('incomes.date');
     }
 
     public function intendedOutcomes() {
@@ -114,6 +114,22 @@ class Account extends Model
     public function revenues() {
         return $this->hasMany('App\Revenue')
             ->orderBy('date');
+    }
+
+    public function operationsInPeriod($start, $end) {
+        $operations = new OperationCollection();
+
+        $revenues = $this->revenues()->whereBetween('date', [$start, $end])->get();
+        foreach ($revenues as $revenue) {
+            $operations->push($revenue);
+        }
+
+        $outcomes = $this->outcomes()->whereBetween('date', [$start, $end])->get();
+        foreach ($outcomes as $outcome) {
+            $operations->push($outcome);
+        }
+
+        return $operations;
     }
 
     public function getRevenueAttribute($at = null) {

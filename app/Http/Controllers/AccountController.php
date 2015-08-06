@@ -139,19 +139,19 @@ class AccountController extends Controller
 
         $balanceData = [
             [
-                'label' => trans('outcome.effectiveTitle'),
+                'label' => trans('operation.type.effectiveOutcome'),
                 'value' => $account->effective_outcome,
             ],
             [
-                'label' => trans('outcome.intendedTitle'),
+                'label' => trans('operation.type.intendedOutcome', ['date' => '']),
                 'value' => $account->intended_outcome,
             ],
             [
-                'label' => trans('revenue.unallocatedTitle'),
+                'label' => trans('operation.type.unallocatedRevenue'),
                 'value' => $account->unallocated_revenue,
             ],
             [
-                'label' => trans('revenue.allocatedTitle'),
+                'label' => trans('operation.type.allocatedRevenue'),
                 'value' => $account->allocated_revenue,
             ],
         ];
@@ -225,22 +225,6 @@ class AccountController extends Controller
                 ->withSuccess(trans('account.users.detachUserMessage', ['user' => $user]));
    }
 
-    public function getRevenues($account_id) {
-        $account = Auth::user()->accounts()->find($account_id);
-
-        if (is_null($account)) {
-            return redirect()->action('AccountController@getIndex')
-                ->withErrors(trans('account.index.notfoundMessage'));
-        }
-
-        $data = [
-            'account' => $account,
-            'activeTab' => 'revenues',
-        ];
-
-        return view('account.revenues', $data);
-    }
-
 
 
     /**
@@ -248,7 +232,7 @@ class AccountController extends Controller
      * @param  string $account_id Account ID
      * @return Illuminate/Http/Response View to render
      */
-    public function getOutcomes($account_id, $month = null) {
+    public function getOperations($account_id, $month = null) {
         $account = Auth::user()->accounts()->find($account_id);
 
         if (is_null($account)) {
@@ -259,20 +243,18 @@ class AccountController extends Controller
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
-        $outcomes = $account->outcomes()
-            ->whereBetween('date', [$month, $month->copy()->endOfMonth()])
-            ->get();
+        $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
 
         $data = [
-            'activeTab' => 'outcomes',
+            'activeTab' => 'operations',
             'account' => $account,
-            'outcomes' => $outcomes,
+            'operations' => $operations,
             'month' => $month,
             'prevMonth' => $month->copy()->subMonth(),
             'nextMonth' => $month->copy()->addMonth(),
         ];
 
-        return view('account.outcomes', $data);
+        return view('account.operations', $data);
     }
 
 
