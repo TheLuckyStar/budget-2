@@ -243,7 +243,7 @@ class AccountController extends Controller
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
-        $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
+        $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth())->sortBy('date');
 
         $data = [
             'activeTab' => 'operations',

@@ -174,7 +174,7 @@ class EnvelopeController extends Controller
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
-        $operations = $envelope->operationsInPeriod($month, $month->copy()->endOfMonth());
+        $operations = $envelope->operationsInPeriod($month, $month->copy()->endOfMonth())->sortBy('date');
 
         $data = [
             'envelope' => $envelope,
