@@ -8,9 +8,9 @@
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            {{ $envelope->account }}
+            {!! $envelope !!}
             <small>
-                {!! $envelope !!}
+                {{ $envelope->account }}
             </small>
         </h1>
     </div>

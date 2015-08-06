@@ -20,7 +20,7 @@ return [
     ],
 
     'update' => [
-        'title' => 'Update details',
+        'title' => 'Update account',
         'successMessage' => 'The account :account has been updated.',
     ],
 

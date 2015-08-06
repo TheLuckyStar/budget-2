@@ -1,17 +1,17 @@
 <div id="envelope-add"
     class='row'
     data-horizontal-url="{{ action('AccountController@getSummary', $account) }}"
-    data-vertical-url="{{ action('EnvelopeController@getAdd') }}"
+    data-vertical-url="{{ action('EnvelopeController@getAdd', $account) }}"
     data-account-id="{{ $account->id }}">
 
     @include('blocks.alerts')
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            {{ $account }}
+            <i class="fa fa-fw fa-plus" title="@lang('envelope.add.title')"></i>
+            @lang('envelope.add.title')
             <small>
-                <i class="fa fa-fw fa-plus" title="@lang('envelope.add.title')"></i>
-                @lang('envelope.add.title')
+                {{ $account }}
             </small>
         </h1>
     </div>

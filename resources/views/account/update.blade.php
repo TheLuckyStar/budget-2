@@ -8,10 +8,10 @@
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            {{ $account }}
+            <i class="fa fa-fw fa-pencil"></i>
+            @lang('account.update.title')
             <small>
-                <i class="fa fa-fw fa-pencil"></i>
-                @lang('account.update.title')
+                {{ $account }}
             </small>
         </h1>
     </div>

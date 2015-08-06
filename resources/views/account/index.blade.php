@@ -8,10 +8,10 @@
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            {{ $account }}
+            <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
+            @lang('account.index.title')
             <small>
-                <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
-                @lang('account.index.title')
+                {{ $account }}
             </small>
             @if ($account->owner->first()->id === Auth::user()->id)
                 <div class='pull-right'>

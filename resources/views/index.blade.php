@@ -29,9 +29,9 @@
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid text-left">
-                {@lang('app.layout.leftFooter')}
+                @lang('app.layout.leftFooter')
                 <span class='pull-right'>
-                    {@lang('app.layout.rightFooter')}
+                    @lang('app.layout.rightFooter')
                 </span>
             </div>
         </nav>

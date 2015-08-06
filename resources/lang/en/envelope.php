@@ -23,6 +23,7 @@ return [
     ],
 
     'update' => [
+        'title' => "Update envelope",
         'successMessage' => 'The envelope :envelope has been updated.',
     ],
 

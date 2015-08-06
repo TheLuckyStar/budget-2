@@ -23,6 +23,7 @@ return [
     ],
 
     'update' => [
+        'title' => "Modifier l'enveloppe",
         'successMessage' => 'L\'enveloppe :envelope a bien été modifiée.',
     ],
 
