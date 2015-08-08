@@ -12,7 +12,9 @@
         "components/bootstrap": "^3.3",
         "components/font-awesome": "^4.3",
         "thomaspark/bootswatch": "^3.3",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "select2/select2": "^4.0",
+        "eonasdan/bootstrap-datetimepicker": "^4.15"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -61,7 +63,8 @@
             "scripts": [
             ],
             "styles": [
-                "public/vendor/bootswatch/flatly/bootstrap.css",
+                "public/vendor/bootswatch/flatly/bootstrap.min.css",
+                "public/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
                 "public/assets/css/fontawesome-iconpicker.min.css",
                 "public/theme/css/sb-admin.css",
                 "public/theme/css/morris.css"
