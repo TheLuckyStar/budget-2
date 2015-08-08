@@ -47,7 +47,8 @@
             <li role="presentation" class="{{ $activeTab == 'summary' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'AccountController@getSummary',
-                    trans('account.summary.title'),
+                    '<i class="fa fa-fw fa-th-large"></i> '
+                        .trans('account.summary.title'),
                     $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -55,7 +56,8 @@
             <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'AccountController@getOperations',
-                    trans('operation.title'),
+                    '<i class="fa fa-fw fa-exchange"></i> '
+                        .trans('operation.title'),
                     $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -63,7 +65,8 @@
             <li role="presentation" class="{{ $activeTab == 'development' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'AccountController@getDevelopment',
-                    trans('account.development.title'),
+                    '<i class="fa fa-fw fa-area-chart"></i> '
+                        .trans('account.development.title'),
                     $account,
                     ['class' => 'link-to-page', 'aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}

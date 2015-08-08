@@ -44,7 +44,8 @@
             <li role="presentation" class="{{ $activeTab == 'summary' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'EnvelopeController@getSummary',
-                    trans('envelope.summary.title'),
+                    '<i class="fa fa-fw fa-th-large"></i> '
+                        .trans('envelope.summary.title'),
                     $envelope,
                     ['class' => 'link-to-page', 'aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -52,7 +53,8 @@
             <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'EnvelopeController@getOperations',
-                    trans('operation.title'),
+                    '<i class="fa fa-fw fa-exchange"></i> '
+                        .trans('operation.title'),
                     $envelope,
                     ['class' => 'link-to-page', 'aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -60,7 +62,8 @@
             <li role="presentation" class="{{ $activeTab == 'development' ? 'active' : '' }}">
                 {!! Html::linkAction(
                     'EnvelopeController@getDevelopment',
-                    trans('envelope.development.title'),
+                    '<i class="fa fa-fw fa-area-chart"></i> '
+                        .trans('envelope.development.title'),
                     $envelope,
                     ['class' => 'link-to-page', 'aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}

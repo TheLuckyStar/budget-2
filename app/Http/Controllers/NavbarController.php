@@ -77,7 +77,7 @@ class NavbarController extends Controller
         $links = [
             Html::linkAction(
                 'AccountController@getSummary',
-                '<i class="fa fa-fw fa-th-large" title="'.trans('home.layout.title').'"></i> '
+                '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
                     .trans('account.index.title')
                     .'<span class="pull-right badge badge-'.$account->status.'">'
                     .Html::formatPrice($account->balance)
