@@ -257,6 +257,36 @@ class AccountController extends Controller
         return view('account.operations', $data);
     }
 
+    public function getAddOperation($account_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('account.add-operation', $data);
+    }
+
+    public function getUpdateOperation($account_id, $operation_type, $operation_id) {
+        $account = Auth::user()->accounts()->find($account_id);
+
+        if (is_null($account)) {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('account.add-operation', $data);
+    }
+
 
 
     /**

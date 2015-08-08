@@ -181,6 +181,7 @@ var PageModule = (function() {
 
     // Define public methods
     return {
+        locale: locale,
         init: init,
         linkToPage: linkToPage,
         getHorizontalUrl: getHorizontalUrl,
@@ -194,8 +195,3 @@ var PageModule = (function() {
 
 
 })();
-
-
-
-// Trigger module initilization
-PageModule.init();

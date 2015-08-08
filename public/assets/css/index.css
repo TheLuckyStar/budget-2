@@ -52,7 +52,7 @@ body {background-color: #2c3e50; margin-top: 60px; height: calc(100% - 60px);}
 .side-nav .badge-warning {background-color: #f39c12;}
 .side-nav .badge-success {background-color: #18bc9c;}
 
-
+.table .input-group-addon {width:auto;}
 
 /*
  * Page wrapper content

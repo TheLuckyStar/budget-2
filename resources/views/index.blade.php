@@ -40,13 +40,30 @@
 
     <script src="vendor/require.js"></script>
     <script>
-        requirejs(['bootstrap'], function() {
-            require(['assets/js/fontawesome-iconpicker.min.js']);
-            require(['theme/js/morris/morris.min.js']);
-            require(['theme/js/morris/raphael.min.js']);
-            require(['assets/js/navbar.js']);
-            require(['assets/js/page.js']);
-        })
+        requirejs([
+            'jquery',
+            'bootstrap',
+            'moment',
+            'vendor/moment/locale/{{ App::getLocale() }}.js',
+        ], function() {
+            requirejs([
+                'bootstrap-datetimepicker',
+                'assets/js/fontawesome-iconpicker.min.js',
+                'theme/js/morris/morris.min.js',
+                'theme/js/morris/raphael.min.js',
+            ], function () {
+                requirejs([
+                    'assets/js/page.js',
+                    'assets/js/navbar.js',
+                    'assets/js/operation.js',
+                ], function () {
+                    PageModule.init();
+                    NavbarModule.init();
+                    OperationModule.init();
+                });
+            });
+        });
+
     </script>
 
 </body>

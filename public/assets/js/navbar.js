@@ -99,8 +99,3 @@ var NavbarModule = (function() {
 
 
 })();
-
-
-
-// Trigger module initilization
-NavbarModule.init();

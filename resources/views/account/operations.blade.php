@@ -27,6 +27,7 @@
                         <th>@lang('operation.fields.date')</th>
                         <th>@lang('operation.fields.name')</th>
                         <th class="text-right">@lang('operation.fields.amount')</th>
+                        <th></th>
                     </tr>
                 </thead>
                 @foreach ($operations as $operation)
@@ -46,6 +47,14 @@
                                 $operation->amount_symbol
                             ) }}
                         </td>
+                        <td class="text-right">
+                            {!! Html::linkAction(
+                                'AccountController@getUpdateOperation',
+                                '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
+                                [$account, get_class($operation), $operation],
+                                ['class' => 'link-to-page btn btn-xs btn-primary']
+                            ) !!}
+                        </td>
                     </tr>
                 @endforeach
                 <tfoot>
@@ -60,6 +69,10 @@
                                 {{ Html::formatPrice($operations->balance(), true) }}
                             </b>
                         </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        @include('account.operations.add')
                     </tr>
                 </tfoot>
             </table>
