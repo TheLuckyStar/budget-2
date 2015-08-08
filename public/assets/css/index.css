@@ -48,9 +48,9 @@ body {background-color: #2c3e50; margin-top: 60px; height: calc(100% - 60px);}
 }
 
 .side-nav .badge {color: black; background-color: #fff; font-size: 11px; margin-top: 3px;}
-.side-nav .badge-danger {background-color: #ff0039;}
-.side-nav .badge-warning {background-color: #ff7518;}
-.side-nav .badge-success {background-color: #3fb618;}
+.side-nav .badge-danger {background-color: #e74c3c;}
+.side-nav .badge-warning {background-color: #f39c12;}
+.side-nav .badge-success {background-color: #18bc9c;}
 
 
 
