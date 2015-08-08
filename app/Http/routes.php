@@ -99,3 +99,7 @@ Route::get('/', function (Request $request) {
     return redirect(App::getLocale());
 });
 
+// @TODO Routes to non existent files
+Route::get('vendor/laravel/public/vendor/bootswatch/fonts/{segment} ', function() {
+    return '';
+});
