@@ -44,7 +44,7 @@ class Account extends Model
     }
 
     public function link() {
-        return Html::linkAction('AccountController@getSummary', $this, $this, ['class' => 'link-to-page']);
+        return Html::linkAction('AccountController@getIndex', $this, $this, ['class' => 'link-to-page']);
     }
 
     public function relatedEvents()

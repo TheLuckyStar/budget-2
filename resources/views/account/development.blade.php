@@ -6,14 +6,14 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center">
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevMonth->formatLocalized('%B %Y'),
                     [$account, $prevMonth->toDateString(), $year->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $month->formatLocalized('%B %Y') }}
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
                     [$account, $nextMonth->toDateString(), $year->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
@@ -29,14 +29,14 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center">
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevYear->formatLocalized('%Y'),
                     [$account, $month->toDateString(), $prevYear->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $year->formatLocalized('%Y') }}
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
                     [$account, $month->toDateString(), $nextYear->toDateString(), $envelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
@@ -52,14 +52,14 @@
         <div class="panel panel-default">
             <div class="panel-heading text-center">
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevEnvelopeYear->formatLocalized('%Y'),
                     [$account, $month->toDateString(), $year->toDateString(), $prevEnvelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $envelopeYear->formatLocalized('%Y') }}
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     $nextEnvelopeYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
                     [$account, $month->toDateString(), $year->toDateString(), $nextEnvelopeYear->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']

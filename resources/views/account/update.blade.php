@@ -1,7 +1,7 @@
 <div id="account-update"
     class='row'
-    data-horizontal-url="{{ action('AccountController@getSummary', $account) }}"
-    data-vertical-url="{{ action('AccountController@getSummary', $account) }}"
+    data-horizontal-url="{{ action('AccountController@getIndex', $account) }}"
+    data-vertical-url="{{ action('AccountController@getIndex', $account) }}"
     data-account-id="{{ $account->id }}">
 
     @include('blocks.alerts')

@@ -6,6 +6,7 @@ use Exception;
 use App;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -41,6 +42,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        // Redirect when Account model not found
+        if ($e instanceof ModelNotFoundException && $e->getModel() === 'App\Account') {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        // Redirect when Envelope model not found
+        if ($e instanceof ModelNotFoundException && $e->getModel() === 'App\Envelope') {
+            return redirect()->action('EnvelopeController@getIndex')
+                ->withErrors(trans('envelope.index.notfoundMessage'));
+        }
+
         // Render error in local environment for easier debugging
         if (App::environment('local')) {
             return parent::render($request, $e);

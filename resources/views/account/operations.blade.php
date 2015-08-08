@@ -6,14 +6,14 @@
         <div class="panel panel-default table-responsive">
             <div class="panel-heading text-center">
                 {!! Html::linkAction(
-                    'AccountController@getOperations',
+                    'Account\OperationController@getIndex',
                     '<i class="fa fa-fw fa-arrow-left"></i> '.$prevMonth->formatLocalized('%B %Y'),
                     [$account, $prevMonth->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-left']
                 ) !!}
                 {{ $month->formatLocalized('%B %Y') }}
                 {!! Html::linkAction(
-                    'AccountController@getOperations',
+                    'Account\OperationController@getIndex',
                     $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
                     [$account, $nextMonth->toDateString()],
                     ['class' => 'link-to-page btn btn-xs btn-default pull-right']
@@ -49,7 +49,7 @@
                         </td>
                         <td class="text-right">
                             {!! Html::linkAction(
-                                'AccountController@getUpdateOperation',
+                                'Account\OperationController@getUpdate',
                                 '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
                                 [$account, get_class($operation), $operation],
                                 ['class' => 'link-to-page btn btn-xs btn-primary']

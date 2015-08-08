@@ -1,7 +1,7 @@
 <div id="account-index"
     class='row'
-    data-horizontal-url="{{ action('AccountController@getSummary', $account) }}"
-    data-vertical-url="{{ action('AccountController@getSummary', $account) }}"
+    data-horizontal-url="{{ action('AccountController@getIndex', $account) }}"
+    data-vertical-url="{{ action('AccountController@getIndex', $account) }}"
     data-account-id="{{ $account->id }}">
 
     @include('blocks.alerts')
@@ -13,7 +13,7 @@
             <small>
                 {{ $account }}
             </small>
-            @if ($account->owner->first()->id === Auth::user()->id)
+            @if ($account->owner()->first()->id === Auth::user()->id)
                 <div class='pull-right'>
                     {!! Html::linkAction(
                         'AccountController@getUpdate',
@@ -46,7 +46,7 @@
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="{{ $activeTab == 'summary' ? 'active' : '' }}">
                 {!! Html::linkAction(
-                    'AccountController@getSummary',
+                    'Account\SummaryController@getIndex',
                     '<i class="fa fa-fw fa-th-large"></i> '
                         .trans('account.summary.title'),
                     $account,
@@ -55,7 +55,7 @@
             </li>
             <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
                 {!! Html::linkAction(
-                    'AccountController@getOperations',
+                    'Account\OperationController@getIndex',
                     '<i class="fa fa-fw fa-exchange"></i> '
                         .trans('operation.title'),
                     $account,
@@ -64,7 +64,7 @@
             </li>
             <li role="presentation" class="{{ $activeTab == 'development' ? 'active' : '' }}">
                 {!! Html::linkAction(
-                    'AccountController@getDevelopment',
+                    'Account\DevelopmentController@getIndex',
                     '<i class="fa fa-fw fa-area-chart"></i> '
                         .trans('account.development.title'),
                     $account,

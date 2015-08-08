@@ -39,7 +39,7 @@
                 </li>
                 @foreach($account->guests as $user)
                     <li class="list-group-item">
-                        {!! Form::open(['action' => ['AccountController@postDetachUser', $account->id]]) !!}
+                        {!! Form::open(['action' => ['Account\SummaryController@postDetachUser', $account->id]]) !!}
                             {!! Form::hidden('user_id', $user->id) !!}
                             {!! $user->link() !!}
                             {!! Form::button(
@@ -51,7 +51,7 @@
                 @endforeach
             </ul>
             {!! Form::open([
-                'action' => ['AccountController@postAttachUser', $account->id],
+                'action' => ['Account\SummaryController@postAttachUser', $account->id],
                 'class' => 'panel-footer'.($errors->has('email') ? ' has-error' : '')
             ]) !!}
                 <div class="input-group">

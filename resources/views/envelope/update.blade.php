@@ -1,6 +1,6 @@
 <div id="envelope-update"
     class='row'
-    data-horizontal-url="{{ action('AccountController@getSummary', $envelope->account) }}"
+    data-horizontal-url="{{ action('AccountController@getIndex', $envelope->account) }}"
     data-vertical-url="{{ action('EnvelopeController@getSummary', $envelope) }}"
     data-account-id="{{ $envelope->account->id }}">
 

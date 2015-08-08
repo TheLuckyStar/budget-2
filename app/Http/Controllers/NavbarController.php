@@ -27,7 +27,7 @@ class NavbarController extends Controller
         foreach (Auth::user()->nontrashedAccounts as $account) {
             if ($account->trashed() === false) {
                 $links[] = Html::linkAction(
-                    'AccountController@getSummary',
+                    'AccountController@getIndex',
                     $account,
                     $account,
                     ['class' => 'link-to-page navbar-brand']
@@ -39,7 +39,7 @@ class NavbarController extends Controller
             $subLinks = [];
             foreach (Auth::user()->trashedAccounts as $account) {
                 $subLinks[] = Html::linkAction(
-                    'AccountController@getSummary',
+                    'AccountController@getIndex',
                     $account,
                     $account,
                     ['class' => 'link-to-page']
@@ -76,7 +76,7 @@ class NavbarController extends Controller
 
         $links = [
             Html::linkAction(
-                'AccountController@getSummary',
+                'AccountController@getIndex',
                 '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
                     .trans('account.index.title')
                     .'<span class="pull-right badge badge-'.$account->status.'">'
