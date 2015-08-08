@@ -24,6 +24,7 @@ return [
         'allocatedRevenue' => 'Allocated revenue',
         'unallocatedRevenue' => 'Unallocated revenue',
         'income' => 'Revenue',
+        'outcome' => 'Outcome',
         'intendedOutcome' => 'Intended outcome :date',
         'effectiveOutcome' => 'Effective outcome',
     ],
