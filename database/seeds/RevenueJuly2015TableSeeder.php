@@ -4,7 +4,7 @@ use App\Revenue;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 
-class RevenueTableSeeder extends Seeder
+class RevenueJuly2015TableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

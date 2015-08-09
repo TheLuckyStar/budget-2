@@ -17,11 +17,13 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
 
         $this->call(AccountTableSeeder::class);
-        $this->call(RevenueTableSeeder::class);
+        $this->call(RevenueJuly2015TableSeeder::class);
+        $this->call(RevenueAugust2015TableSeeder::class);
 
         $this->call(EnvelopeTableSeeder::class);
         $this->call(IncomeTableSeeder::class);
         $this->call(OutcomeJuly2015TableSeeder::class);
+        $this->call(OutcomeAugust2015TableSeeder::class);
 
         Model::reguard();
     }
