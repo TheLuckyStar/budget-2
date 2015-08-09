@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EnvelopeTableSeeder::class);
         $this->call(IncomeTableSeeder::class);
-        $this->call(OutcomeTableSeeder::class);
+        $this->call(OutcomeJuly2015TableSeeder::class);
 
         Model::reguard();
     }

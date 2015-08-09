@@ -75,6 +75,12 @@ class EnvelopeTableSeeder extends Seeder
             'name' => 'Épargne',
             'icon' => 'fa-gift',
         ])->delete();
+
+        Envelope::create([
+            'account_id' => 1,
+            'name' => 'DU Droit des étrangers',
+            'icon' => 'fa-university',
+        ]);
     }
 
     /**

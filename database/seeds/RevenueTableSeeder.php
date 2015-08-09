@@ -26,6 +26,12 @@ class RevenueTableSeeder extends Seeder
     {
         Revenue::create([
             'account_id' => 1,
+            'name' => 'Solde initial',
+            'amount' => 415.64,
+        ]);
+
+        Revenue::create([
+            'account_id' => 1,
             'name' => 'Salaire Simon',
             'amount' => 1551.24,
             'date' => Carbon::create(2015, 7, 2, 0),
@@ -40,16 +46,30 @@ class RevenueTableSeeder extends Seeder
 
         Revenue::create([
             'account_id' => 1,
-            'name' => 'Facturation Concordia',
-            'amount' => 300,
-            'date' => Carbon::create(2015, 7, 5, 0),
-        ])->delete();
-
-        Revenue::create([
-            'account_id' => 1,
             'name' => 'Prestations CAF',
             'amount' => 446.10,
             'date' => Carbon::create(2015, 7, 6, 0),
+        ]);
+
+        Revenue::create([
+            'account_id' => 1,
+            'name' => 'Facturation Concordia',
+            'amount' => 225,
+            'date' => Carbon::create(2015, 7, 13, 0),
+        ]);
+
+        Revenue::create([
+            'account_id' => 1,
+            'name' => 'Prime pour l\'emploi',
+            'amount' => 404,
+            'date' => Carbon::create(2015, 7, 24, 0),
+        ]);
+
+        Revenue::create([
+            'account_id' => 1,
+            'name' => 'Virement depuis CEL',
+            'amount' => 1000,
+            'date' => Carbon::create(2015, 7, 30, 0),
         ]);
     }
 

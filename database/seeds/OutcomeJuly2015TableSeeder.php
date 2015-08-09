@@ -4,7 +4,7 @@ use App\Outcome;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class OutcomeTableSeeder extends Seeder
+class OutcomeJuly2015TableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,6 +26,7 @@ class OutcomeTableSeeder extends Seeder
         $this->runEnvelope11();
         $this->runEnvelope12();
         $this->runEnvelope13();
+        $this->runEnvelope14();
     }
 
     /**
@@ -118,6 +119,14 @@ class OutcomeTableSeeder extends Seeder
             'name' => "Essence",
             'amount' => 55.96,
             'date' => Carbon::create(2015, 7, 17, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 2,
+            'name' => "Train (Lille - Orchies)",
+            'amount' => 3.20,
+            'date' => Carbon::create(2015, 7, 23, 0),
             'effective' => 1,
         ]);
     }
@@ -231,6 +240,70 @@ class OutcomeTableSeeder extends Seeder
             'date' => Carbon::create(2015, 7, 17, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Bio C Bon",
+            'amount' => 15.41,
+            'date' => Carbon::create(2015, 7, 20, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 34.38,
+            'date' => Carbon::create(2015, 7, 20, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 56.29,
+            'date' => Carbon::create(2015, 7, 21, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Bébé au naturel",
+            'amount' => 76.69,
+            'date' => Carbon::create(2015, 7, 22, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Ferme Delemotte",
+            'amount' => 18.10,
+            'date' => Carbon::create(2015, 7, 27, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Épinature",
+            'amount' => 12.52,
+            'date' => Carbon::create(2015, 7, 29, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 11.67,
+            'date' => Carbon::create(2015, 7, 30, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Intermarché",
+            'amount' => 15.14,
+            'date' => Carbon::create(2015, 7, 31, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -240,7 +313,7 @@ class OutcomeTableSeeder extends Seeder
      */
     public function runEnvelope4() {
         Outcome::create([
-            'envelope_id' => 3,
+            'envelope_id' => 4,
             'name' => "Mutuelle Simon & Élie",
             'amount' => 65.91,
             'date' => Carbon::create(2015, 7, 6, 0),
@@ -248,7 +321,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 3,
+            'envelope_id' => 4,
             'name' => "Mutuelle Delphine",
             'amount' => 51.31,
             'date' => Carbon::create(2015, 7, 6, 0),
@@ -256,7 +329,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 3,
+            'envelope_id' => 4,
             'name' => "Reflet du Soleil",
             'amount' => 61,
             'date' => Carbon::create(2015, 7, 7, 0),
@@ -264,19 +337,27 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 3,
+            'envelope_id' => 4,
             'name' => "Body Nature",
             'amount' => 19.95,
             'date' => Carbon::create(2015, 7, 9, 0),
             'effective' => 1,
-        ])->delete();
+        ]);
 
         Outcome::create([
-            'envelope_id' => 3,
+            'envelope_id' => 4,
             'name' => "Coiffeur Arc-en-Ciel",
             'amount' => 39.50,
             'date' => Carbon::create(2015, 7, 9, 0),
             'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 4,
+            'name' => "Body Nature",
+            'amount' => 33.05,
+            'date' => Carbon::create(2015, 7, 30, 0),
+            'effective' => 0,
         ]);
     }
 
@@ -286,7 +367,13 @@ class OutcomeTableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope5() {
-
+        Outcome::create([
+            'envelope_id' => 5,
+            'name' => "Soldes Brice (Simon)",
+            'amount' => 121.84,
+            'date' => Carbon::create(2015, 7, 27, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -300,6 +387,14 @@ class OutcomeTableSeeder extends Seeder
             'name' => "Free Mobile",
             'amount' => 2,
             'date' => Carbon::create(2015, 7, 7, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 6,
+            'name' => "Freebox",
+            'amount' => 32.98,
+            'date' => Carbon::create(2015, 7, 8, 0),
             'effective' => 1,
         ]);
     }
@@ -323,6 +418,14 @@ class OutcomeTableSeeder extends Seeder
             'name' => "Anniversaire Marie-Agnès",
             'amount' => 10,
             'date' => Carbon::create(2015, 7, 9, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 7,
+            'name' => "Anniversaire Pierre-Louis & crémaillère",
+            'amount' => 19.49,
+            'date' => Carbon::create(2015, 7, 20, 0),
             'effective' => 1,
         ]);
     }
@@ -388,6 +491,46 @@ class OutcomeTableSeeder extends Seeder
             'date' => Carbon::create(2015, 7, 16, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 8,
+            'name' => "Semaine en Bretagne - Essence & Nourriture",
+            'amount' => 80,
+            'date' => Carbon::create(2015, 7, 23, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 8,
+            'name' => "Semaine en Bretagne - Airbnb",
+            'amount' => 28,
+            'date' => Carbon::create(2015, 7, 27, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 8,
+            'name' => "Semaine en Bretagne - Essence",
+            'amount' => 33.82,
+            'date' => Carbon::create(2015, 7, 27, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 8,
+            'name' => "Semaine en Bretagne - Essence",
+            'amount' => 55.50,
+            'date' => Carbon::create(2015, 7, 28, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 8,
+            'name' => "Semaine en Bretagne - Airbnb",
+            'amount' => 30,
+            'date' => Carbon::create(2015, 7, 31, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -422,13 +565,44 @@ class OutcomeTableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Logement" on account "Vacances en Écosse".
+     * Run the database seed for envelope "DU Droit des étrangers" on account "Compte joint".
      *
      * @return void
      */
     public function runEnvelope10() {
         Outcome::create([
             'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 241,
+            'date' => Carbon::create(2015, 7, 21, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 64,
+            'date' => Carbon::create(2015, 7, 22, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 25,
+            'date' => Carbon::create(2015, 7, 27, 0),
+            'effective' => 1,
+        ]);
+    }
+
+    /**
+     * Run the database seed for envelope "Logement" on account "Vacances en Écosse".
+     *
+     * @return void
+     */
+    public function runEnvelope11() {
+        Outcome::create([
+            'envelope_id' => 11,
             'name' => "Bed & Breakfast Edimburg",
             'amount' => 150,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -436,7 +610,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 10,
+            'envelope_id' => 11,
             'name' => "Bed & Breakfast Dufftown",
             'amount' => 150,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -444,7 +618,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 10,
+            'envelope_id' => 11,
             'name' => "Bed & Breakfast Wick",
             'amount' => 150,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -452,7 +626,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 10,
+            'envelope_id' => 11,
             'name' => "Bed & Breakfast Ullapool",
             'amount' => 150,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -460,7 +634,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 10,
+            'envelope_id' => 11,
             'name' => "Bed & Breakfast Arrochar",
             'amount' => 150,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -473,9 +647,9 @@ class OutcomeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runEnvelope11() {
+    public function runEnvelope12() {
         Outcome::create([
-            'envelope_id' => 11,
+            'envelope_id' => 12,
             'name' => "Shuttle",
             'amount' => 100,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -483,7 +657,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 11,
+            'envelope_id' => 12,
             'name' => "Essence",
             'amount' => 100,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -496,9 +670,9 @@ class OutcomeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runEnvelope12() {
+    public function runEnvelope13() {
         Outcome::create([
-            'envelope_id' => 12,
+            'envelope_id' => 13,
             'name' => "Repas",
             'amount' => 300,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -511,9 +685,9 @@ class OutcomeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runEnvelope13() {
+    public function runEnvelope14() {
         Outcome::create([
-            'envelope_id' => 13,
+            'envelope_id' => 14,
             'name' => "Museum of Childhood",
             'amount' => 15,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -521,7 +695,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 13,
+            'envelope_id' => 14,
             'name' => "Bateau Loch Lomond",
             'amount' => 30,
             'date' => Carbon::create(2015, 10, 1, 0),
@@ -529,7 +703,7 @@ class OutcomeTableSeeder extends Seeder
         ]);
 
         Outcome::create([
-            'envelope_id' => 13,
+            'envelope_id' => 14,
             'name' => "Château d'Inveraray",
             'amount' => 20,
             'date' => Carbon::create(2015, 10, 1, 0),

@@ -17,7 +17,7 @@ class CreateRevenuesTable extends Migration
             $table->integer('account_id')->index();
             $table->string('name');
             $table->decimal('amount', 9, 2);
-            $table->timestamp('date')->index();
+            $table->timestamp('date')->index()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
