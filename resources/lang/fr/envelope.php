@@ -39,10 +39,9 @@ return [
 
     'summary' => [
         'title' => 'Résumé',
-    ],
-
-    'snapshot' => [
-        'title' => "Solde de l'enveloppe : :balance",
+        'balance' => [
+            'title' => "Solde de l'enveloppe : <b>:balance</b>",
+        ],
     ],
 
     'development' => [

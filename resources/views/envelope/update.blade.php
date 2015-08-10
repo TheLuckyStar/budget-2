@@ -1,7 +1,7 @@
 <div id="envelope-update"
     class='row'
     data-horizontal-url="{{ action('AccountController@getIndex', $envelope->account) }}"
-    data-vertical-url="{{ action('EnvelopeController@getSummary', $envelope) }}"
+    data-vertical-url="{{ action('EnvelopeController@getView', $envelope) }}"
     data-account-id="{{ $envelope->account->id }}">
 
     @include('blocks.alerts')

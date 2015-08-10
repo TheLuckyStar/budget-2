@@ -63,4 +63,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->orderBy('owner', 'desc')
             ->orderBy('name');
     }
+
+    public function envelopes() {
+        return Envelope::whereIn('account_id', function ($query) {
+            $query->select('account_id')
+                ->from('account_user')
+                ->where('user_id', $this->id);
+        })->orderBy('name');
+    }
 }

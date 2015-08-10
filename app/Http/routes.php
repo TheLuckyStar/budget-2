@@ -85,6 +85,9 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
             Route::controller('account', 'AccountController'); // Render main account page
 
             // Envelope pages
+            Route::controller('envelope/summary', 'Envelope\SummaryController'); // Render envelope summary pages
+            Route::controller('envelope/operation', 'Envelope\OperationsController'); // Render envelope operation pages
+            Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Render envelope development pages
             Route::controller('envelope', 'EnvelopeController'); // Render main envelope pages
         });
 

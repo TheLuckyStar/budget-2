@@ -50,11 +50,18 @@ class Envelope extends Model
 
     public function link() {
         return Html::linkAction(
-            'EnvelopeController@getSummary',
+            'EnvelopeController@getView',
             $this,
             $this,
             ['class' => 'link-to-page']
         );
+    }
+
+    public function relatedEvents()
+    {
+        return Event::where('entity_type', 'App\Envelope')
+            ->where('entity_id', $this->id)
+            ->orderBy('created_at', 'desc');
     }
 
     public function account() {

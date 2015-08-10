@@ -39,7 +39,7 @@ return [
     'summary' => [
         'title' => 'Summary',
         'balance' => [
-            'title' => 'Account balance : :balance',
+            'title' => 'Account balance : <b>:balance</b>',
         ],
         'envelope' => [
             'title' => 'Envelope balances',

@@ -107,7 +107,7 @@ class NavbarController extends Controller
 
         foreach ($account->nontrashedEnvelopes as $envelope) {
             $links[] = Html::linkAction(
-                'EnvelopeController@getSummary',
+                'EnvelopeController@getView',
                 $envelope
                     .'<span class="pull-right badge badge-'.$envelope->status.'">'
                     .Html::formatPrice($envelope->balance)
@@ -121,7 +121,7 @@ class NavbarController extends Controller
             $subLinks = [];
             foreach ($account->trashedEnvelopes as $envelope) {
                 $subLinks[] = Html::linkAction(
-                    'EnvelopeController@getSummary',
+                    'EnvelopeController@getView',
                     $envelope
                         .'<span class="pull-right badge badge-'.$envelope->status.'">'
                         .Html::formatPrice($envelope->balance)
