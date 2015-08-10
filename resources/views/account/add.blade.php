@@ -43,15 +43,6 @@
                     </div>
 
                     <div class="panel-footer text-right">
-                        {!! Html::linkAction(
-                            'AccountController@getIndex',
-                            trans('app.button.back'),
-                            [],
-                            [
-                                'class' => 'routable btn btn-xs btn-warning pull-left',
-                                'data-target' => '#page-wrapper',
-                            ]
-                        ) !!}
                         {!! Form::button(
                             trans('app.button.add'),
                             ['type' => 'submit', 'class' => 'btn btn-xs btn-success']

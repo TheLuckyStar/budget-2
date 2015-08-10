@@ -31,8 +31,7 @@ return [
         'save' => 'Save',
         'archive' => 'Archive',
         'restore' => 'Restore',
-        'delete' => 'Delete',
-        'back' => 'Back',
+        'delete' => 'Delete'
     ],
 
     // Error messages
