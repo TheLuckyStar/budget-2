@@ -20,7 +20,7 @@
 
             {!! Form::open([
                 'action' => ['EnvelopeController@postUpdate', $envelope],
-                'class' => 'form-horizontal col-md-12'
+                'class' => 'col-md-12'
             ]) !!}
                 <div class="panel panel-default">
 

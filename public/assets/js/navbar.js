@@ -7,83 +7,61 @@ var NavbarModule = (function() {
     // Container for navbar
     var navbar = $('#navbar-wrapper');
 
-    // URL to fetch navbar content from
-    var url = navbar.data('url');
 
 
-
-    // Empty horizontal menu to force refresh on next activeLinks
-    var emptyHorizontalMenu = function (callback) {
-        var horizontalMenu = navbar.find('.nav.top-nav');
-
-        horizontalMenu.empty();
+    // Return account id for URL building
+    var getAccountId = function () {
+        return $('#page-wrapper').children(':first').data('account-id');
     };
 
-    // Empty vertical menu to force refresh on next activeLinks
-    var emptyVerticalMenu = function (callback) {
-        var verticalMenu = navbar.find('.navbar-nav.side-nav');
 
-        verticalMenu.empty();
-    };
 
-    // Refresh navbar with ajax call
-    var refresh = function (callback) {
-        var currentUrl = url + '/index/' + PageModule.getAccountId();
-        console.log('Refresh navbar from '+currentUrl);
-        $.get(currentUrl).always(function (data) {
-            render(data.content, callback);
+    // Refresh navbar content
+    var refresh = function () {
+        var url = navbar.data('url') + '/index/' + getAccountId();
+
+        console.log('Load ' + url + ' to navbar');
+        navbar.load(url, null, function() {
+            activateLinks(true);
         });
     };
 
-    // Render navbar with string content
-    var render = function (content, callback) {
-        console.log('Render navbar');
-        navbar.html(content);
 
-        if (callback instanceof Function) {
-            callback();
-        }
-    };
 
-    // Set active classes
-    var activeLinks = function (allowRefresh) {
-        if (typeof allowRefresh === 'undefined') {
-            allowRefresh = true;
+    // Set active classes on horizontal navbar links
+    var activateLinks = function (preventRefresh) {
+        if (typeof preventRefresh === 'undefined') {
+            preventRefresh = false;
         }
 
-        var horizontalMenu = navbar.find('.nav.top-nav');
-        var horizontalUrl = PageModule.getHorizontalUrl();
-        var horizontalLink = horizontalMenu.find('.link-to-page[href="'+horizontalUrl+'"]');
+        var horizontalUrl = $('#page-wrapper').children(':first').data('horizontal-url');
+        var verticalUrl = $('#page-wrapper').children(':first').data('vertical-url');
 
-        var verticalMenu = navbar.find('.navbar-nav.side-nav');
-        var verticalUrl = PageModule.getVerticalUrl();
-        var verticalLink = verticalMenu.find('.link-to-page[href="'+verticalUrl+'"]');
+        var horizontalLink = navbar.find('.top-nav .routable[href="' + horizontalUrl + '"]');
+        var verticalLink = navbar.find('.side-nav .routable[href="' + verticalUrl + '"]');
 
-        if (allowRefresh === true && (horizontalLink.length === 0 || verticalLink.length === 0)) {
-            refresh(function () {
-                activeLinks(false);
-            });
+        if ((horizontalUrl && horizontalLink.length === 0) || (verticalUrl && verticalLink.length === 0)) {
+            if (preventRefresh === false) {
+                refresh();
+                return;
+            }
         }
 
-        $(navbar).find('.link-to-page').removeClass('active');
-        $(navbar).find('.link-to-page').closest('li').removeClass('active');
-        $(navbar).find('.link-to-page').closest('ul.collapse').removeClass('in');
+        navbar.find('.routable').removeClass('active');
+        navbar.find('.routable').closest('li').removeClass('active');
+        navbar.find('.routable').closest('ul.collapse').removeClass('in');
 
         horizontalLink.addClass('active');
-        horizontalLink.closest('li').addClass('active');
         verticalLink.addClass('active');
+
+        horizontalLink.closest('li').addClass('active');
         verticalLink.closest('li').addClass('active');
-        verticalLink.closest('ul.collapse').addClass('in');
     }
+
+
 
     // Called on module loading
     var init = function () {
-        // Click on some links should reload page asynchronously
-        $(navbar).on('click', '.link-to-page', function () {
-            PageModule.linkToPage($(this));
-            return false;
-        });
-
     };
 
 
@@ -91,9 +69,8 @@ var NavbarModule = (function() {
     // Define public methods
     return {
         init: init,
-        activeLinks: activeLinks,
-        emptyHorizontalMenu: emptyHorizontalMenu,
-        emptyVerticalMenu: emptyVerticalMenu,
+        refresh: refresh,
+        activateLinks: activateLinks,
     };
 
 

@@ -129,14 +129,15 @@ class Account extends Model
             $operations->push($outcome);
         }
 
-        return $operations;
+        return $operations->sortBy('date');
     }
 
     public function getRevenueAttribute($at = null) {
         $revenue = $this->revenues();
 
         if ($at instanceof Carbon) {
-            $revenue->where('date', '<=', $at);
+            $revenue->where('date', '<=', $at)
+                ->orWhere('date', null);
         }
 
         return floatval($revenue->sum('amount'));

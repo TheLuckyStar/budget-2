@@ -16,7 +16,7 @@
     <link href="assets/css/index.css" rel="stylesheet" type="text/css">
 
 </head>
-<body>
+<body data-locale="{{ App::getLocale() }}">
 
     <div id="wrapper">
 
@@ -24,8 +24,7 @@
 
         <div id="page-wrapper"
             class="container-fluid"
-            data-url="{{ action('HomeController@getIndex') }}"
-            data-locale="{{ App::getLocale() }}"></div>
+            data-url="{{ action('HomeController@getIndex') }}"></div>
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid small text-left">
@@ -53,13 +52,19 @@
                 'theme/js/morris/raphael.min.js',
             ], function () {
                 requirejs([
-                    'assets/js/page.js',
+                    'assets/js/format.js',
+                    'assets/js/router.js',
                     'assets/js/navbar.js',
-                    'assets/js/operation.js',
+                    // 'assets/js/operation.js',
                 ], function () {
-                    PageModule.init();
+                    RouterModule.init();
                     NavbarModule.init();
-                    OperationModule.init();
+
+                    // Load page content
+                    RouterModule.refresh($('#page-wrapper'), function() {
+                    });
+
+                    // OperationModule.init();
                 });
             });
         });

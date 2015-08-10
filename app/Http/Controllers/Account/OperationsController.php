@@ -4,20 +4,20 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Carbon\Carbon;
 
-class OperationController extends Controller
+class OperationsController extends Controller
 {
     /**
      * List operations related to one account (second tab)
      * @param  string $account_id Account ID
      * @return Illuminate/Http/Response View to render
      */
-    public function getIndex($account_id, $month = null) {
+    public function getTable($account_id, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
-        $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth())->sortBy('date');
+        $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
 
         $data = [
             'activeTab' => 'operations',
@@ -28,7 +28,7 @@ class OperationController extends Controller
             'nextMonth' => $month->copy()->addMonth(),
         ];
 
-        return view('account.operations', $data);
+        return view('account.operations.table', $data);
     }
 
     public function getAdd($account_id) {

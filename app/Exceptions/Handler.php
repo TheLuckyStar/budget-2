@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Exception;
 use App;
+use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

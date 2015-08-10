@@ -16,7 +16,7 @@
 
             {!! Form::open([
                 'action' => ['Auth\PasswordController@postReset', $token],
-                'class' => 'form-horizontal col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8'
+                'class' => 'col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8'
             ]) !!}
                 <div class="panel panel-primary">
 

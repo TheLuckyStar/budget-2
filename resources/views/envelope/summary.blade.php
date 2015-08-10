@@ -41,7 +41,7 @@
             element: 'balance-chart',
             data: {!! $chartData !!},
             colors: {!! $chartColors !!},
-            formatter: function (val, data) { return PageModule.formatPrice(val); },
+            formatter: function (val, data) { return FormatModule.price(val); },
             resize: true
         });
 

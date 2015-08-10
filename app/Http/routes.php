@@ -80,11 +80,8 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
 
             // Account pages
             Route::controller('account/summary', 'Account\SummaryController'); // Render account summary pages
-            Route::get('account/summary/index/{id}', 'Account\SummaryController@getIndex'); // Render main summary account page
-            Route::controller('account/operation', 'Account\OperationController'); // Render account operation pages
-            Route::get('account/operation/index/{id}/{date}', 'Account\OperationController@getIndex'); // Render main operation account page
+            Route::controller('account/operation', 'Account\OperationsController'); // Render account operation pages
             Route::controller('account/development', 'Account\DevelopmentController'); // Render account development pages
-            Route::get('account/development/index/{id}/{month}/{year}/{envelopeYear}', 'Account\DevelopmentController@getIndex'); // Render main development account page
             Route::controller('account', 'AccountController'); // Render main account page
 
             // Envelope pages

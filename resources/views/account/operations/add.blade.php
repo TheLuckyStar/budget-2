@@ -1,5 +1,5 @@
 
-<td class="row {{ $errors->has('type') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('type') ? 'has-error' : '' }}">
     {!! Form::select(
         'type',
         [
@@ -19,7 +19,7 @@
     @endif
 </td>
 
-<td class="row {{ $errors->has('envelope_id') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('envelope_id') ? 'has-error' : '' }}">
     {!! Form::select(
         'envelope_id',
         $account->envelopes()->lists('name', 'id'),
@@ -35,7 +35,7 @@
     @endif
 </td>
 
-<td class="row {{ $errors->has('date') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('date') ? 'has-error' : '' }}">
     {{-- @TODO Fix widget position --}}
     {!! Form::text(
         'date',
@@ -53,7 +53,7 @@
     @endif
 </td>
 
-<td class="row {{ $errors->has('name') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('name') ? 'has-error' : '' }}">
     {!! Form::text(
         'name',
         null,
@@ -68,7 +68,7 @@
     @endif
 </td>
 
-<td class="row {{ $errors->has('amount') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
     <div class='input-group'>
         {!! Form::text(
             'amount',
@@ -90,11 +90,11 @@
 
 <td class="text-right">
     {!! Form::button(
-        '<i class="fa fa-fw fa-plus" title="'.trans('app.button.update').'"></i>',
-        ['class' => 'link-to-page btn btn btn-success', 'title' => trans('app.button.add')]
+        '<i class="fa fa-fw fa-plus" title="'.trans('app.button.add').'"></i>',
+        ['class' => 'btn btn btn-success', 'title' => trans('app.button.add')]
     ) !!}
 </td>
 
 <script type="text/javascript">
-    OperationModule.initRow($('#account-add-select-type').closest('tr'));
+//    OperationModule.initRow($('#account-add-select-type').closest('tr'));
 </script>

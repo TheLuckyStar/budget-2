@@ -6,7 +6,6 @@
 return [
 
     'title' => 'Operations',
-    'total' => 'Total',
 
     'fields' => [
         'envelope_id' => "Envelope",
@@ -14,6 +13,14 @@ return [
         'amount' => "Amount",
         'date' => "Date",
         'type' => "Type",
+    ],
+
+    'aggregate' => [
+        'total' => 'Total',
+        'totalIncome' => 'Total incomes',
+        'totalOutcome' => 'Total outcomes',
+        'balance' => 'Balance',
+        'balanceAt' => 'Balance at :date',
     ],
 
     'type' => [

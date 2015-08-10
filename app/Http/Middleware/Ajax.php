@@ -8,15 +8,6 @@ use Illuminate\Http\RedirectResponse;
 class Ajax
 {
     /**
-     * Specific redirection to actions, used on 422 errors
-     * @var array
-     */
-    private $pathToAction = [
-        'fr/auth/login' => 'Auth\AuthController@getLogin',
-        'fr/auth/register' => 'Auth\AuthController@getLogin',
-    ];
-
-    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -34,33 +25,6 @@ class Ajax
         // Process request
         $response = $next($request);
 
-        // Rewrite specific paths
-        $path = $request->path();
-        if (isset($this->pathToAction[$path])) {
-            $path = action($this->pathToAction[$path]);
-        }
-
-        // Render form on validation error
-        if ($response->status() == 422) {
-            $request->session()->reflash();
-
-            $errors = [];
-            foreach (json_decode($response->content(), true) as $key => $val) {
-                $errors[$key] = $val;
-            }
-
-            $response = redirect($path)->withErrors($errors)->with('from', $request->path())->withInput();
-        }
-
-        // Follow redirections
-        if ($response instanceof RedirectResponse) {
-            return $response;
-        }
-
-        // Convert response to JSON array to add metadata (like current path)
-        return response()->json([
-            'from' => $path,
-            'content' => $response->content()
-        ]);
+        return $response;
     }
 }

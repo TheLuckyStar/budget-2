@@ -16,6 +16,7 @@ return [
 
     'add' => [
         'title' => 'Nouveau compte',
+        'redirectMessage' => 'Pour commencer, créez un nouveau compte.',
         'successMessage' => 'Le compte :account a bien été créé.',
     ],
 
@@ -36,18 +37,18 @@ return [
 
     'summary' => [
         'title' => 'Résumé',
-    ],
-
-    'snapshot' => [
-        'balanceTitle' => 'Solde du compte : <b>:balance</b>',
-        'envelopeTitle' => 'Solde des enveloppes',
-    ],
-
-    'users' => [
-        'title' => "Participants",
-        'owner' => "Créateur",
-        'attachUserMessage' => ":user a été rattaché à ce compte.",
-        'detachUserMessage' => ":user a été détaché de ce compte.",
+        'balance' => [
+            'title' => 'Solde du compte : <b>:balance</b>'
+        ],
+        'envelopes' => [
+            'title' => 'Solde des enveloppes'
+        ],
+        'users' => [
+            'title' => "Participants",
+            'owner' => "Créateur",
+            'attachUserMessage' => ":user a été rattaché à ce compte.",
+            'detachUserMessage' => ":user a été détaché de ce compte.",
+        ],
     ],
 
     'development' => [

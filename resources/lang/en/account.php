@@ -16,6 +16,7 @@ return [
 
     'add' => [
         'title' => 'New account',
+        'redirectMessage' => 'To start, create a new account.',
         'successMessage' => 'The account :account has been created.',
     ],
 
@@ -34,20 +35,21 @@ return [
         'successMessage' => 'Le compte :account a bien été restauré.',
     ],
 
+
     'summary' => [
         'title' => 'Summary',
-    ],
-
-    'snapshot' => [
-        'balanceTitle' => 'Account balance : :balance',
-        'envelopeTitle' => 'Envelope balances',
-    ],
-
-    'users' => [
-        'title' => "Participants",
-        'owner' => "Owner",
-        'attachUserMessage' => ":user has been attached to this account.",
-        'detachUserMessage' => ":user has been detached from this account.",
+        'balance' => [
+            'title' => 'Account balance : :balance',
+        ],
+        'envelope' => [
+            'title' => 'Envelope balances',
+        ],
+        'users' => [
+            'title' => "Participants",
+            'owner' => "Owner",
+            'attachUserMessage' => ":user has been attached to this account.",
+            'detachUserMessage' => ":user has been detached from this account.",
+        ],
     ],
 
     'development' => [

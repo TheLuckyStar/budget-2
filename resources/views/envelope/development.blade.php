@@ -65,9 +65,9 @@
                 "@lang('operation.type.available')",
             ],
             lineColors: {!! $monthColors !!},
-            dateFormat: function (date) { return PageModule.formatDate(new Date(date)); },
+            dateFormat: function (date) { return FormatModule.date(new Date(date)); },
             xLabelFormat: function (date) { return date.getDate(); },
-            yLabelFormat: function (val) { return PageModule.formatPrice(val); },
+            yLabelFormat: function (val) { return FormatModule.price(val); },
             resize: true,
         });
 
@@ -90,7 +90,7 @@
             lineColors: {!! $yearColors !!},
             dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
             xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
-            yLabelFormat: function (val) { return PageModule.formatPrice(val); },
+            yLabelFormat: function (val) { return FormatModule.price(val); },
             resize: true,
         });
 

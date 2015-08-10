@@ -11,13 +11,19 @@
                     'Auth\AuthController@getLogin',
                     trans('user.register.title').' & '.trans('user.login.title'),
                     [],
-                    ['class' => 'btn btn-primary btn-lg link-to-page']
+                    [
+                        'class' => 'routable btn btn-lg btn-primary',
+                        'data-target' => '#page-wrapper',
+                    ]
                 ) !!}
                 {!! Html::linkAction(
                     'Auth\AuthController@getLogin', // @TODO Link to demo page
                     trans('home.guest.jumbotron.demoButton'),
                     [],
-                    ['class' => 'link-to-page btn btn-lg btn-warning']
+                    [
+                        'class' => 'routable btn btn-lg btn-warning',
+                        'data-target' => '#page-wrapper',
+                    ]
                 ) !!}
             </p>
         </div>

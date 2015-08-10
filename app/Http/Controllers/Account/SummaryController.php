@@ -8,15 +8,11 @@ use Illuminate\Http\Request;
 
 class SummaryController extends Controller
 {
-    /**
-     * Gather information about account for account home page (first tab)
-     * @param  string $account_id Account ID
-     * @return Illuminate/Http/Response View to render
-     */
-    public function getIndex($account_id) {
+
+    public function getBalance($account_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
 
-        $balanceData = [
+        $data = [
             [
                 'label' => trans('operation.type.effectiveOutcome'),
                 'value' => $account->effective_outcome,
@@ -35,36 +31,49 @@ class SummaryController extends Controller
             ],
         ];
 
-        $envelopesData = [];
-        $envelopesColors = [];
+        $data = [
+            'account' => $account,
+            'data' => json_encode($data),
+            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+        ];
+
+        return view('account.summary.balance', $data);
+    }
+
+    public function getEnvelopes($account_id) {
+        $account = Auth::user()->accounts()->findOrFail($account_id);
+
+        $data = [];
+        $colors = [];
         foreach ($account->envelopes as $envelope) {
             $balance = $envelope->balance;
 
-            $envelopesData[] = [
+            $data[] = [
                 'label' => $envelope->name,
                 'value' => abs($balance),
                 'negative' => $balance < 0,
             ];
 
-            $envelopesColors[] = Config::get('budget.statusColors.'.$envelope->status);
+            $colors[] = Config::get('budget.statusColors.'.$envelope->status);
         }
 
         $data = [
             'account' => $account,
-            'activeTab' => 'summary',
-            'balanceData' => json_encode($balanceData),
-            'balanceColors' => json_encode(array_values(Config::get('budget.statusColors'))),
-            'envelopesData' => json_encode($envelopesData),
-            'envelopesColors' => json_encode($envelopesColors),
-            'events' => $account->relatedEvents()->paginate(5),
+            'data' => json_encode($data),
+            'colors' => json_encode($colors),
         ];
 
-        return view('account.summary', $data);
+        return view('account.summary.envelopes', $data);
     }
 
-    public function getAttachUser(Request $request, $account_id) {
-        $request->session()->reflash();
-        return redirect()->action('Account\SummaryController@getIndex', $account_id);
+    public function getUsers($account_id) {
+        $account = Auth::user()->accounts()->findOrFail($account_id);
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('account.summary.users', $data);
     }
 
     public function postAttachUser(Request $request, $account_id) {
@@ -80,8 +89,7 @@ class SummaryController extends Controller
             $account->users()->attach($user->id);
         }
 
-        return redirect()->action('Account\SummaryController@getIndex', $account)
-                ->withSuccess(trans('account.users.attachUserMessage', ['user' => $user]));
+        return redirect()->action('Account\SummaryController@getUsers', $account);
     }
 
     public function postDetachUser(Request $request, $account_id) {
@@ -90,7 +98,18 @@ class SummaryController extends Controller
         $user = User::find($request->input('user_id'));
         $account->guests()->detach($user->id);
 
-        return redirect()->action('Account\SummaryController@getIndex', $account)
-                ->withSuccess(trans('account.users.detachUserMessage', ['user' => $user]));
+        return redirect()->action('Account\SummaryController@getUsers', $account);
    }
+
+    public function getEvents($account_id) {
+        $account = Auth::user()->accounts()->findOrFail($account_id);
+
+        $data = [
+            'account' => $account,
+            'events' => $account->relatedEvents()->paginate(5),
+        ];
+
+        return view('account.summary.events', $data);
+    }
+
 }

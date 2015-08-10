@@ -8,7 +8,7 @@
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            <i class="fa fa-fw fa-th-large" title="@lang('home.layout.title')"></i>
+            <i class="fa fa-fw fa-home" title="@lang('home.layout.title')"></i>
             @lang('account.index.title')
             <small>
                 {{ $account }}
@@ -19,21 +19,30 @@
                         'AccountController@getUpdate',
                         '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i> '.trans('app.button.update'),
                         $account,
-                        ['class' => 'link-to-page btn btn-primary']
+                        [
+                            'class' => 'routable btn btn-primary',
+                            'data-target' => '#page-wrapper',
+                        ]
                     ) !!}
                     @if ($account->trashed())
                         {!! Html::linkAction(
                             'AccountController@getRestore',
                             '<i class="fa fa-fw fa-recycle" title="'.trans('app.button.restore').'"></i> '.trans('app.button.restore'),
                             $account,
-                            ['class' => 'link-to-page btn btn-success']
+                            [
+                                'class' => 'routable btn btn-success',
+                                'data-target' => '#page-wrapper',
+                            ]
                         ) !!}
                     @else
                         {!! Html::linkAction(
                             'AccountController@getDelete',
                             '<i class="fa fa-fw fa-archive" title="'.trans('app.button.archive').'"></i> '.trans('app.button.archive'),
                             $account,
-                            ['class' => 'link-to-page btn btn-danger']
+                            [
+                                'class' => 'routable btn btn-danger',
+                                'data-target' => '#page-wrapper',
+                            ]
                         ) !!}
                     @endif
                 </div>
@@ -44,47 +53,67 @@
     <div class='col-md-12'>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="{{ $activeTab == 'summary' ? 'active' : '' }}">
-                {!! Html::linkAction(
-                    'Account\SummaryController@getIndex',
+            <li role="presentation" class='active'>
+                {!! Html::link(
+                    '#summary',
                     '<i class="fa fa-fw fa-th-large"></i> '
                         .trans('account.summary.title'),
-                    $account,
-                    ['class' => 'link-to-page', 'aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
+                    ['aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation" class="{{ $activeTab == 'operations' ? 'active' : '' }}">
-                {!! Html::linkAction(
-                    'Account\OperationController@getIndex',
+            <li role="presentation">
+                {!! Html::link(
+                    '#operations',
                     '<i class="fa fa-fw fa-exchange"></i> '
                         .trans('operation.title'),
-                    $account,
-                    ['class' => 'link-to-page', 'aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
+                    ['aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation" class="{{ $activeTab == 'development' ? 'active' : '' }}">
-                {!! Html::linkAction(
-                    'Account\DevelopmentController@getIndex',
+            <li role="presentation">
+                {!! Html::link(
+                    '#development',
                     '<i class="fa fa-fw fa-area-chart"></i> '
                         .trans('account.development.title'),
-                    $account,
-                    ['class' => 'link-to-page', 'aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
+                    ['aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
         </ul>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane row active" id="{{ $activeTab }}">
-                @yield('tabcontent')
+            <div role="tabpanel" class="tab-pane row active" id="summary">
+                <div class='col-md-4' id='account-summary-balance' data-url='{{ action('Account\SummaryController@getBalance', $account) }}'></div>
+                <div class='col-md-4' id='account-summary-envelopes' data-url='{{ action('Account\SummaryController@getEnvelopes', $account) }}'></div>
+                <div class='col-md-4' id='account-summary-users' data-url='{{ action('Account\SummaryController@getUsers', $account) }}'></div>
+                <div class='col-md-4' id='account-summary-events' data-url='{{ action('Account\SummaryController@getEvents', $account) }}'></div>
+            </div>
+            <div role="tabpanel" class="tab-pane row" id="operations">
+                <div class='col-md-12' id='account-operations-table' data-url='{{ action('Account\OperationsController@getTable', $account) }}'></div>
+            </div>
+            <div role="tabpanel" class="tab-pane row" id="development">
+                <div class='col-md-12' id='account-development-monthly' data-url='{{ action('Account\DevelopmentController@getMonthly', $account) }}'></div>
+                <div class='col-md-12' id='account-development-yearly' data-url='{{ action('Account\DevelopmentController@getYearly', $account) }}'></div>
+                <div class='col-md-12' id='account-development-envelopes' data-url='{{ action('Account\DevelopmentController@getEnvelopes', $account) }}'></div>
             </div>
         </div>
 
     </div>
 
     <script type="text/javascript">
-        $('.page-header .btn-danger, .page-header .btn-success').click(function () {
-            NavbarModule.emptyHorizontalMenu();
+
+        RouterModule.refresh($('#account-summary-balance'));
+        RouterModule.refresh($('#account-summary-envelopes'));
+        RouterModule.refresh($('#account-summary-users'));
+        RouterModule.refresh($('#account-summary-events'));
+        RouterModule.refresh($('#account-operations-table'));
+        RouterModule.refresh($('#account-development-monthly'));
+        RouterModule.refresh($('#account-development-yearly'));
+        RouterModule.refresh($('#account-development-envelopes'));
+
+        $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
+            RouterModule.clickLink($(this), NavbarModule.refresh);
+            return false;
         });
+
     </script>
 
 </div>

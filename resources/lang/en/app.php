@@ -32,6 +32,7 @@ return [
         'archive' => 'Archive',
         'restore' => 'Restore',
         'delete' => 'Delete',
+        'back' => 'Back',
     ],
 
     // Error messages

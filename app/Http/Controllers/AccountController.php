@@ -11,16 +11,19 @@ class AccountController extends Controller
     /**
      * Default account routing
      * @param  Illuminate\Http\Request $request Current request
+     * @param  int $account_id Account ID
+     * @param  string $activeTab Name of active tab
      * @return Illuminate/Http/Response Redirection
      */
-    public function getIndex(Request $request, $account_id = null) {
+    public function getIndex(Request $request, $account_id = null, $activeTab = 'summary') {
         // Retrieve first account if no one is provided
         if (is_null($account_id)) {
             $account = Auth::user()->accounts()->first();
 
             // Redirect to add form if no account exist for user
             if (is_null($account)) {
-                die();
+                return redirect()->action('AccountController@getAdd')
+                    ->withSuccess(trans('account.add.redirectMessage'));
             }
         }
 
@@ -29,9 +32,13 @@ class AccountController extends Controller
             $account = Auth::user()->accounts()->findOrFail($account_id);
         }
 
-        // Redirect to summary page if one account has been found
-        $request->session()->reflash();
-        return redirect()->action('Account\SummaryController@getIndex', $account);
+        $data = [
+            'account' => $account,
+            'activeTab' => $activeTab,
+        ];
+
+        // Render account page layout
+        return view('account.index', $data);
     }
 
 

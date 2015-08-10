@@ -8,20 +8,24 @@ use Html;
 
 class NavbarController extends Controller
 {
+
     public function getIndex($account_id = null) {
+        $horizontalMenu = Auth::check() ? $this->horizontalAuthenticated() : $this->horizontalGuest();
+        $verticalMenu = Auth::check() ? $this->verticalAuthenticated($account_id) : $this->verticalGuest();
+
         $data = [
-            'horizontalMenu' => $this->getHorizontalMenu(),
-            'verticalMenu' => $this->getVerticalMenu($account_id),
+            'horizontalMenu' => $horizontalMenu,
+            'verticalMenu' => $verticalMenu,
         ];
 
         return view('navbar', $data);
     }
 
-    private function getHorizontalMenu() {
-        if (Auth::check() === false) {
-            return [];
-        }
+    private function horizontalGuest() {
+        return [];
+    }
 
+    private function horizontalAuthenticated() {
         $links = [];
 
         foreach (Auth::user()->nontrashedAccounts as $account) {
@@ -30,7 +34,7 @@ class NavbarController extends Controller
                     'AccountController@getIndex',
                     $account,
                     $account,
-                    ['class' => 'link-to-page navbar-brand']
+                    ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
                 );
             }
         }
@@ -42,7 +46,7 @@ class NavbarController extends Controller
                     'AccountController@getIndex',
                     $account,
                     $account,
-                    ['class' => 'link-to-page']
+                    ['class' => 'routable', 'data-target' => '#page-wrapper']
                 );
             }
             $links[] = Html::link(
@@ -57,17 +61,31 @@ class NavbarController extends Controller
             'AccountController@getAdd',
             '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
             [],
-            ['class' => 'link-to-page navbar-brand']
+            ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
         );
 
         return $links;
     }
 
-    private function getVerticalMenu($account_id) {
-        if (Auth::check() === false) {
-            return $this->getVerticalMenuGuest();
-        }
+    private function verticalGuest() {
+        return [
+            Html::linkAction(
+                'HomeController@getIndex',
+                '<i class="fa fa-fw fa-home"></i> '.trans('home.guest.title').'</a>',
+                [],
+                ['class' => 'routable', 'data-target' => '#page-wrapper']
+            ),
+            Html::linkAction(
+                'Auth\AuthController@getLogin',
+                '<i class="fa fa-fw fa-sign-in"></i> '
+                    .trans('user.register.title').' & '.trans('user.login.title').'</a>',
+                [],
+                ['class' => 'routable', 'data-target' => '#page-wrapper']
+            ),
+        ];
+    }
 
+    private function verticalAuthenticated($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
 
         if (is_null($account)) {
@@ -83,7 +101,7 @@ class NavbarController extends Controller
                     .Html::formatPrice($account->balance)
                     .'</span>',
                 $account,
-                ['class' => 'link-to-page']
+                ['class' => 'routable', 'data-target' => '#page-wrapper']
             ),
         ];
 
@@ -95,7 +113,7 @@ class NavbarController extends Controller
                     .Html::formatPrice($envelope->balance)
                     .'</span>',
                 $envelope,
-                ['class' => 'link-to-page']
+                ['class' => 'routable', 'data-target' => '#page-wrapper']
             );
         }
 
@@ -109,7 +127,7 @@ class NavbarController extends Controller
                         .Html::formatPrice($envelope->balance)
                         .'</span>',
                     $envelope,
-                    ['class' => 'link-to-page']
+                    ['class' => 'routable', 'data-target' => '#page-wrapper']
                 );
             }
             $links[] = Html::link(
@@ -124,27 +142,9 @@ class NavbarController extends Controller
             'EnvelopeController@getAdd',
             '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
             $account,
-            ['class' => 'link-to-page']
+            ['class' => 'routable', 'data-target' => '#page-wrapper']
         );
 
         return $links;
-    }
-
-    private function getVerticalMenuGuest() {
-        return [
-            Html::linkAction(
-                'HomeController@getIndex',
-                '<i class="fa fa-fw fa-home"></i> '.trans('home.guest.title').'</a>',
-                [],
-                ['class' => 'link-to-page']
-            ),
-            Html::linkAction(
-                'Auth\AuthController@getLogin',
-                '<i class="fa fa-fw fa-sign-in"></i> '
-                    .trans('user.register.title').' & '.trans('user.login.title').'</a>',
-                [],
-                ['class' => 'link-to-page']
-            ),
-        ];
     }
 }

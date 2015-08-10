@@ -21,7 +21,8 @@
 
             {!! Form::open([
                 'action' => ['AccountController@postUpdate', $account],
-                'class' => 'form-horizontal col-md-12'
+                'class' => 'routable col-md-12',
+                'data-target' => '#page-wrapper'
             ]) !!}
                 <div class="panel panel-default">
 
@@ -48,6 +49,15 @@
                     </div>
 
                     <div class="panel-footer text-right">
+                        {!! Html::linkAction(
+                            'AccountController@getIndex',
+                            trans('app.button.back'),
+                            $account,
+                            [
+                                'class' => 'routable btn btn-xs btn-warning pull-left',
+                                'data-target' => '#page-wrapper',
+                            ]
+                        ) !!}
                         {!! Form::button(
                             trans('app.button.update'),
                             ['type' => 'submit', 'class' => 'btn btn-xs btn-success']
