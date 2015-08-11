@@ -116,15 +116,15 @@ class Account extends Model
             ->orderBy('date');
     }
 
-    public function operationsInPeriod($start, $end) {
+    public function operationsInPeriod($from, $to) {
         $operations = new OperationCollection();
 
-        $revenues = $this->revenues()->whereBetween('date', [$start, $end])->get();
+        $revenues = $this->revenues()->whereBetween('date', [$from, $to])->get();
         foreach ($revenues as $revenue) {
             $operations->push($revenue);
         }
 
-        $outcomes = $this->outcomes()->whereBetween('date', [$start, $end])->get();
+        $outcomes = $this->outcomes()->whereBetween('date', [$from, $to])->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
         }
@@ -132,96 +132,118 @@ class Account extends Model
         return $operations->sortBy('date');
     }
 
-    public function getRevenueAttribute($at = null) {
+    public function getRevenueAttribute($from = null, $to = null) {
         $revenue = $this->revenues();
 
-        if ($at instanceof Carbon) {
-            $revenue->where('date', '<=', $at)
-                ->orWhere('date', null);
+        if ($from instanceof Carbon) {
+            $revenue->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $revenue->where(function ($query) use($to) {
+                $query->where('date', '<=', $to);
+                $query->orWhere('date', null);
+            });
         }
 
         return floatval($revenue->sum('amount'));
     }
 
-    public function getAllocatedRevenueAttribute($at = null) {
+    public function getAllocatedRevenueAttribute($from = null, $to = null) {
         $allocatedRevenue = $this->incomes();
 
-        if ($at instanceof Carbon) {
-            $allocatedRevenue->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $allocatedRevenue->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $allocatedRevenue->where('date', '<=', $to);
         }
 
         return floatval($allocatedRevenue->sum('amount'));
     }
 
-    public function getUnallocatedRevenueAttribute($at = null) {
-        $revenue = $this->getRevenueAttribute($at);
-        $allocatedRevenue = $this->getAllocatedRevenueAttribute($at);
+    public function getUnallocatedRevenueAttribute($from = null, $to = null) {
+        $revenue = $this->getRevenueAttribute($from, $to);
+        $allocatedRevenue = $this->getAllocatedRevenueAttribute($from, $to);
 
         $unallocatedRevenue = max(0, $revenue - $allocatedRevenue);
 
         return floatval($unallocatedRevenue);
     }
 
-    public function getOutcomeAttribute($at = null) {
+    public function getOutcomeAttribute($from = null, $to = null) {
         $outcome = $this->outcomes();
 
-        if ($at instanceof Carbon) {
-            $outcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $outcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $outcome->where('date', '<=', $to);
         }
 
         return floatval($outcome->sum('amount'));
     }
 
-    public function getIntendedOutcomeAttribute($at = null) {
+    public function getIntendedOutcomeAttribute($from = null, $to = null) {
         $intendedOutcome = $this->intendedOutcomes();
 
-        if ($at instanceof Carbon) {
-            $intendedOutcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $intendedOutcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $intendedOutcome->where('date', '<=', $to);
         }
 
         return floatval($intendedOutcome->sum('amount'));
     }
 
-    public function getEffectiveOutcomeAttribute($at = null) {
+    public function getEffectiveOutcomeAttribute($from = null, $to = null) {
         $effectiveOutcome = $this->effectiveOutcomes();
 
-        if ($at instanceof Carbon) {
-            $effectiveOutcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $effectiveOutcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $effectiveOutcome->where('date', '<=', $to);
         }
 
         return floatval($effectiveOutcome->sum('amount'));
     }
 
-    public function getBalanceAttribute($at = null) {
-        $revenue = $this->getRevenueAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getBalanceAttribute($from = null, $to = null) {
+        $revenue = $this->getRevenueAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         $balance = $revenue - $outcome;
 
         return floatval($balance);
     }
 
-    public function getAllocatedBalanceAttribute($at = null) {
-        $revenue = $this->getAllocatedRevenueAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getAllocatedBalanceAttribute($from = null, $to = null) {
+        $revenue = $this->getAllocatedRevenueAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         $balance = $revenue - $outcome;
 
         return floatval($balance);
     }
 
-    public function getUnallocatedBalanceAttribute($at = null) {
-        $revenue = $this->getUnallocatedRevenueAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getUnallocatedBalanceAttribute($from = null, $to = null) {
+        $revenue = $this->getUnallocatedRevenueAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         $balance = max(0, $revenue - $outcome);
 
         return floatval($balance);
     }
 
-    public function getStatusAttribute($at = null) {
-        $revenue = $this->getRevenueAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getStatusAttribute($from = null, $to = null) {
+        $revenue = $this->getRevenueAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         if ($revenue == 0) {
             return $outcome ? 'danger' : 'warning';

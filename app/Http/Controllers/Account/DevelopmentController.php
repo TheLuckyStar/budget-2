@@ -17,10 +17,10 @@ class DevelopmentController extends Controller
         for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
             $data[] = [
                 'date' => $d->toDateString(),
-                'effective_outcome' => $account->getEffectiveOutcomeAttribute($d),
-                'intended_outcome' => $account->getIntendedOutcomeAttribute($d),
-                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($d),
-                'allocated_balance' => $account->getAllocatedBalanceAttribute($d),
+                'effective_outcome' => $account->getEffectiveOutcomeAttribute($date, $d),
+                'intended_outcome' => $account->getIntendedOutcomeAttribute($date, $d),
+                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($date, $d),
+                'allocated_balance' => $account->getAllocatedBalanceAttribute($date, $d),
             ];
         }
 
@@ -45,14 +45,17 @@ class DevelopmentController extends Controller
         $monthLabels = [];
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
+            $from = $d->copy()->startOfMonth();
+            $to = $d->copy()->endOfMonth();
+
             $monthLabels[] = $d->formatLocalized('%B');
 
             $data[] = [
                 'date' => $d->format('Y-m'),
-                'effective_outcome' => $account->getEffectiveOutcomeAttribute($d),
-                'intended_outcome' => $account->getIntendedOutcomeAttribute($d),
-                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($d),
-                'allocated_balance' => $account->getAllocatedBalanceAttribute($d),
+                'effective_outcome' => $account->getEffectiveOutcomeAttribute($from, $to),
+                'intended_outcome' => $account->getIntendedOutcomeAttribute($from, $to),
+                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($from, $to),
+                'allocated_balance' => $account->getAllocatedBalanceAttribute($from, $to),
             ];
         }
 
@@ -77,12 +80,15 @@ class DevelopmentController extends Controller
 
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
+            $from = $d->copy()->startOfMonth();
+            $to = $d->copy()->endOfMonth();
+
             $monthlyData = [
                 'date' => $d->formatLocalized('%B'),
             ];
 
             foreach ($account->envelopes as $envelope) {
-                $monthlyData[$envelope->id] = $envelope->getIncomeAttribute($d);
+                $monthlyData[$envelope->id] = $envelope->getIncomeAttribute($from, $to);
             }
 
             $data[] = $monthlyData;

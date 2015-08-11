@@ -17,9 +17,9 @@ class DevelopmentController extends Controller
         for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
             $data[] = [
                 'date' => $d->toDateString(),
-                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($d),
-                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($d),
-                'available' => $envelope->getBalanceAttribute($d),
+                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($date, $d),
+                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($date, $d),
+                'available' => $envelope->getBalanceAttribute($date, $d),
             ];
         }
 
@@ -44,13 +44,16 @@ class DevelopmentController extends Controller
         $monthLabels = [];
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
+            $from = $d->copy()->startOfMonth();
+            $to = $d->copy()->endOfMonth();
+
             $monthLabels[] = $d->formatLocalized('%B');
 
             $data[] = [
                 'date' => $d->format('Y-m'),
-                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($d),
-                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($d),
-                'available' => $envelope->getBalanceAttribute($d),
+                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($from, $to),
+                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($from, $to),
+                'available' => $envelope->getBalanceAttribute($from, $to),
             ];
         }
 

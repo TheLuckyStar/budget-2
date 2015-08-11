@@ -54,22 +54,6 @@ class Outcome extends Model
             ->withTrashed();
     }
 
-    public function getEffectiveStatusAttribute($at = null) {
-        if ($this->effective === 1) {
-            return 'default';
-        }
-
-        if (is_null($at)) {
-            $at = Carbon::today();
-        }
-
-        if ($this->date < $at) {
-            return 'danger';
-        }
-
-        return 'info';
-    }
-
     public function getAmountSymbolAttribute() {
         return '-';
     }

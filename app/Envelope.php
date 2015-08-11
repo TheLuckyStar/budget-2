@@ -103,58 +103,74 @@ class Envelope extends Model
         return $this->outcomes()->where('effective', 1);
     }
 
-    public function getIncomeAttribute($at = null) {
+    public function getIncomeAttribute($from = null, $to = null) {
         $income = $this->incomes();
 
-        if ($at instanceof Carbon) {
-            $income->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $income->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $income->where('date', '<=', $to);
         }
 
         return floatval($income->sum('amount'));
     }
 
-    public function getOutcomeAttribute($at = null) {
+    public function getOutcomeAttribute($from = null, $to = null) {
         $outcome = $this->outcomes();
 
-        if ($at instanceof Carbon) {
-            $outcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $outcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $outcome->where('date', '<=', $to);
         }
 
         return floatval($outcome->sum('amount'));
     }
 
-    public function getIntendedOutcomeAttribute($at = null) {
+    public function getIntendedOutcomeAttribute($from = null, $to = null) {
         $intendedOutcome = $this->intendedOutcomes();
 
-        if ($at instanceof Carbon) {
-            $intendedOutcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $intendedOutcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $intendedOutcome->where('date', '<=', $to);
         }
 
         return floatval($intendedOutcome->sum('amount'));
     }
 
-    public function getEffectiveOutcomeAttribute($at = null) {
+    public function getEffectiveOutcomeAttribute($from = null, $to = null) {
         $effectiveOutcome = $this->effectiveOutcomes();
 
-        if ($at instanceof Carbon) {
-            $effectiveOutcome->where('date', '<=', $at);
+        if ($from instanceof Carbon) {
+            $effectiveOutcome->where('date', '>=', $from);
+        }
+
+        if ($to instanceof Carbon) {
+            $effectiveOutcome->where('date', '<=', $to);
         }
 
         return floatval($effectiveOutcome->sum('amount'));
     }
 
-    public function getBalanceAttribute($at = null) {
-        $income = $this->getIncomeAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getBalanceAttribute($from = null, $to = null) {
+        $income = $this->getIncomeAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         $balance = $income - $outcome;
 
         return floatval($balance);
     }
 
-    public function getStatusAttribute($at = null) {
-        $income = $this->getIncomeAttribute($at);
-        $outcome = $this->getOutcomeAttribute($at);
+    public function getStatusAttribute($from = null, $to = null) {
+        $income = $this->getIncomeAttribute($from, $to);
+        $outcome = $this->getOutcomeAttribute($from, $to);
 
         if ($income == 0) {
             return $outcome ? 'danger' : 'warning';
