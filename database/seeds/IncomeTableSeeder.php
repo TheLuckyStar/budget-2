@@ -13,7 +13,8 @@ class IncomeTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->runAccount1();
+        $this->runAccount1(Carbon::create(2015, 7, 1, 0));
+        $this->runAccount1(Carbon::create(2015, 8, 1, 0));
         $this->runAccount2();
     }
 
@@ -22,60 +23,66 @@ class IncomeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runAccount1()
+    public function runAccount1($date)
     {
         Income::create([
             'envelope_id' => 1,
-            'amount' => 800,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'amount' => 900,
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 2,
             'amount' => 300,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 3,
-            'amount' => 800,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'amount' => 700,
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 4,
-            'amount' => 150,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'amount' => 200,
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 5,
             'amount' => 100,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 6,
             'amount' => 100,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 7,
-            'amount' => 100,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'amount' => 50,
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 8,
             'amount' => 150,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 9,
             'amount' => 0,
-            'date' => Carbon::create(2015, 7, 1, 0),
+            'date' => $date,
+        ]);
+
+        Income::create([
+            'envelope_id' => 10,
+            'amount' => 250,
+            'date' => $date,
         ]);
     }
 
