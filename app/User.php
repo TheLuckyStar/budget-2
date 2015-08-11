@@ -69,6 +69,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $query->select('account_id')
                 ->from('account_user')
                 ->where('user_id', $this->id);
-        })->orderBy('name');
+        })->withTrashed()
+        ->orderBy('name');
     }
 }
