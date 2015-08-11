@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
 
         // Redirect when Envelope model not found
         if ($e instanceof ModelNotFoundException && $e->getModel() === 'App\Envelope') {
-            return redirect()->action('EnvelopeController@getIndex')
+            return redirect()->action('AccountController@getIndex')
                 ->withErrors(trans('envelope.index.notfoundMessage'));
         }
 
