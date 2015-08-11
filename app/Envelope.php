@@ -59,9 +59,17 @@ class Envelope extends Model
 
     public function relatedEvents()
     {
-        return Event::where('entity_type', 'App\Envelope')
-            ->where('entity_id', $this->id)
-            ->orderBy('id', 'desc');
+        return Event::where(function ($query) {
+            $query->where('entity_type', 'App\Envelope')->where('entity_id', $this->id);
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('incomes')->where('envelope_id', $this->id);
+            });
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('outcomes')->where('envelope_id', $this->id);
+            });
+        })->orderBy('id', 'desc');
     }
 
     public function account() {
