@@ -4,6 +4,7 @@ namespace App;
 
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 
 class Income extends Model
@@ -41,6 +42,28 @@ class Income extends Model
     protected $watchedFieldInEvent = [
         'amount',
     ];
+
+    /**
+     * Convert the model to its string representation.
+     * @return string
+     */
+    public function __toString()
+    {
+        return trans('operation.object.income', [
+            'amount' => Html::formatPrice($this->amount),
+            'date' => $this->date->formatLocalized('%B %Y'),
+            'envelope' => $this->envelope,
+        ]);
+    }
+
+    public function link() {
+        return Html::linkAction('EnvelopeController@getView', $this, $this->envelope, ['class' => 'link-to-page']);
+    }
+
+    public function envelope() {
+        return $this->belongsTo('App\Envelope')
+            ->withTrashed();
+    }
 
     public function getAmountSymbolAttribute() {
         return '+';

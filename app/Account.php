@@ -55,7 +55,23 @@ class Account extends Model
             $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function ($query) {
                 $query->select('id')->from('envelopes')->where('account_id', $this->id);
             });
-        })->orderBy('created_at', 'desc');
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
+            });
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('incomes')->whereIn('envelope_id', function ($query) {
+                    $query->select('id')->from('envelopes')->where('account_id', $this->id);
+                });
+            });
+        })->orWhere(function ($query) {
+            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function ($query) {
+                $query->select('id')->from('outcomes')->whereIn('envelope_id', function ($query) {
+                    $query->select('id')->from('envelopes')->where('account_id', $this->id);
+                });
+            });
+        })->orderBy('id', 'desc');
     }
 
     public function users() {

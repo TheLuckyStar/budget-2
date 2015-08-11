@@ -106,7 +106,7 @@ class SummaryController extends Controller
 
         $data = [
             'account' => $account,
-            'events' => $account->relatedEvents()->paginate(5),
+            'events' => $account->relatedEvents()->simplePaginate(5),
         ];
 
         return view('account.summary.events', $data);

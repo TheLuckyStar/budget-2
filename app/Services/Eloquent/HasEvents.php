@@ -13,7 +13,7 @@ trait HasEvents {
     public function events()
     {
         return $this->morphMany('App\Event', 'entity')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('id', 'desc');
     }
 
     /**

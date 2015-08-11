@@ -46,7 +46,7 @@ class SummaryController extends Controller
 
         $data = [
             'envelope' => $envelope,
-            'events' => $envelope->relatedEvents()->paginate(5),
+            'events' => $envelope->relatedEvents()->simplePaginate(5),
         ];
 
         return view('envelope.summary.events', $data);

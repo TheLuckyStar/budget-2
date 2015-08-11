@@ -7,6 +7,15 @@ return [
 
     'title' => 'Opérations',
 
+    'object' => [
+        'revenue' => '<i class="fa fa-fw fa-exchange" title="Revenu"></i> '
+            .'Le revenu ":name" de :amount du :date (:account)',
+        'income' => '<i class="fa fa-fw fa-exchange" title="Revenu"></i> '
+            .'Le revenu mensuel de :amount de :date (:envelope)',
+        'outcome' => '<i class="fa fa-fw fa-exchange" title="Dépense"></i> '
+            .'La dépense ":name" de :amount du :date (:envelope)',
+    ],
+
     'fields' => [
         'envelope_id' => "Enveloppe",
         'name' => "Intitulé",

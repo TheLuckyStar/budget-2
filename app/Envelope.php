@@ -61,7 +61,7 @@ class Envelope extends Model
     {
         return Event::where('entity_type', 'App\Envelope')
             ->where('entity_id', $this->id)
-            ->orderBy('created_at', 'desc');
+            ->orderBy('id', 'desc');
     }
 
     public function account() {

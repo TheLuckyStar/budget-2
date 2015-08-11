@@ -4,6 +4,7 @@ namespace App;
 
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -44,6 +45,29 @@ class Revenue extends Model
         'amount',
         'date',
     ];
+
+    /**
+     * Convert the model to its string representation.
+     * @return string
+     */
+    public function __toString()
+    {
+        return trans('operation.object.revenue', [
+            'name' => $this->name,
+            'amount' => Html::formatPrice($this->amount),
+            'date' => $this->date->format('d/m/Y'),
+            'account' => $this->account,
+        ]);
+    }
+
+    public function link() {
+        return Html::linkAction('AccountController@getIndex', $this, $this->account, ['class' => 'link-to-page']);
+    }
+
+    public function account() {
+        return $this->belongsTo('App\Account')
+            ->withTrashed();
+    }
 
     public function getAmountSymbolAttribute() {
         return '+';

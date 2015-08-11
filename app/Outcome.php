@@ -5,6 +5,7 @@ namespace App;
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -48,6 +49,24 @@ class Outcome extends Model
         'date',
         'effective',
     ];
+
+    /**
+     * Convert the model to its string representation.
+     * @return string
+     */
+    public function __toString()
+    {
+        return trans('operation.object.outcome', [
+            'name' => $this->name,
+            'amount' => Html::formatPrice($this->amount),
+            'date' => $this->date->format('d/m/Y'),
+            'envelope' => $this->envelope,
+        ]);
+    }
+
+    public function link() {
+        return Html::linkAction('EnvelopeController@getView', $this, $this->envelope, ['class' => 'link-to-page']);
+    }
 
     public function envelope() {
         return $this->belongsTo('App\Envelope')
