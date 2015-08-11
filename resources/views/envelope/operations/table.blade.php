@@ -45,7 +45,7 @@
             </tr>
         </thead>
         @foreach ($operations as $operation)
-            <tr class="{{ $operation->context }}">
+            <tr class="text-{{ $operation->context }}">
                 <td>
                     @lang(
                         'operation.type.'.$operation->type,

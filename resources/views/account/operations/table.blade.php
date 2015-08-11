@@ -38,14 +38,14 @@
                 </th>
                 <th class="text-right">
                     <b>
-                        {{ Html::formatPrice($account->getBalanceAttribute($prevMonth), true) }}
+                        {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), true) }}
                     </b>
                 </th>
                 <th></th>
             </tr>
         </thead>
         @foreach ($operations as $operation)
-            <tr class="{{ $operation->context }}">
+            <tr class="text-{{ $operation->context }}">
                 <td>
                     @lang(
                         'operation.type.'.$operation->type,
@@ -108,7 +108,7 @@
                 </td>
                 <td class="text-right">
                     <b>
-                        {{ Html::formatPrice($account->getBalanceAttribute($month), true) }}
+                        {{ Html::formatPrice($account->getBalanceAttribute(null, $month), true) }}
                     </b>
                 </td>
                 <td></td>
