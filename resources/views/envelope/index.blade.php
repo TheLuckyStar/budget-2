@@ -97,8 +97,14 @@
         RouterModule.refresh($('#envelope-summary-balance'));
         RouterModule.refresh($('#envelope-summary-events'));
         RouterModule.refresh($('#envelope-operations-table'));
-        RouterModule.refresh($('#envelope-development-monthly'));
-        RouterModule.refresh($('#envelope-development-yearly'));
+
+        $('#envelope-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
+            if (e.target.hash === '#development' && $('#envelope-development-monthly').is(':empty')) {
+                RouterModule.refresh($('#envelope-development-monthly'), function() {
+                    RouterModule.refresh($('#envelope-development-yearly'));
+                });
+            }
+        });
 
         $('.page-header .btn-danger, .page-header .btn-success').click(function () {
             NavbarModule.emptyVerticalMenu();

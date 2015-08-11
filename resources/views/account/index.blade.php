@@ -105,9 +105,16 @@
         RouterModule.refresh($('#account-summary-users'));
         RouterModule.refresh($('#account-summary-events'));
         RouterModule.refresh($('#account-operations-table'));
-        RouterModule.refresh($('#account-development-monthly'));
-        RouterModule.refresh($('#account-development-yearly'));
-        RouterModule.refresh($('#account-development-envelopes'));
+
+        $('#account-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
+            if (e.target.hash === '#development' && $('#account-development-monthly').is(':empty')) {
+                RouterModule.refresh($('#account-development-monthly'), function() {
+                    RouterModule.refresh($('#account-development-yearly'), function() {
+                        RouterModule.refresh($('#account-development-envelopes'));
+                    });
+                });
+            }
+        });
 
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
             RouterModule.clickLink($(this), NavbarModule.refresh);
