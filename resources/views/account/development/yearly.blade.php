@@ -49,6 +49,7 @@
         dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
         xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
         yLabelFormat: function (val) { return FormatModule.price(val); },
+        smooth: false,
         resize: true,
     });
 
