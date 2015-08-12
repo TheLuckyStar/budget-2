@@ -15,7 +15,7 @@
         element: 'envelope-summary-balance-chart',
         data: {!! $data !!},
         colors: {!! $colors !!},
-        formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val); },
+        formatter: function (val, data) { return FormatModule.price(val); },
         resize: true
     });
 
