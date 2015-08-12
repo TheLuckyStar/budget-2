@@ -89,7 +89,7 @@ class RevenueJuly2015TableSeeder extends Seeder
 
         Revenue::create([
             'account_id' => 2,
-            'name' => 'Enveloppe nourriture',
+            'name' => 'Enveloppe quotidien',
             'amount' => 200,
             'date' => Carbon::create(2015, 10, 1, 0),
         ]);

@@ -132,7 +132,7 @@ class OutcomeJuly2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Nourriture" on account "Compte joint".
+     * Run the database seed for envelope "Quotidien" on account "Compte joint".
      *
      * @return void
      */
@@ -666,14 +666,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Nourriture" on account "Vacances en Écosse".
+     * Run the database seed for envelope "Quotidien" on account "Vacances en Écosse".
      *
      * @return void
      */
     public function runEnvelope13() {
         Outcome::create([
             'envelope_id' => 13,
-            'name' => "Repas",
+            'name' => "Quotidien",
             'amount' => 300,
             'date' => Carbon::create(2015, 10, 1, 0),
             'effective' => 0,

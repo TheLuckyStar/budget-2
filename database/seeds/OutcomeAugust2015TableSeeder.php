@@ -76,7 +76,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Nourriture" on account "Compte joint".
+     * Run the database seed for envelope "Quotidien" on account "Compte joint".
      *
      * @return void
      */
@@ -258,7 +258,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Nourriture" on account "Vacances en Écosse".
+     * Run the database seed for envelope "Quotidien" on account "Vacances en Écosse".
      *
      * @return void
      */

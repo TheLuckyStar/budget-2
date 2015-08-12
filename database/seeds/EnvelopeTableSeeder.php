@@ -37,7 +37,7 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 1,
-            'name' => 'Nourriture',
+            'name' => 'Quotidien',
             'icon' => 'fa-cutlery',
         ]);
 
@@ -78,7 +78,7 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 1,
-            'name' => 'DU Droit des étrangers',
+            'name' => 'DU Delphine',
             'icon' => 'fa-university',
         ]);
     }
@@ -104,7 +104,7 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 2,
-            'name' => 'Nourriture',
+            'name' => 'Quotidien',
             'icon' => 'fa-cutlery',
         ]);
 

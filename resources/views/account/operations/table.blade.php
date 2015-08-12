@@ -30,19 +30,6 @@
                 <th class="text-right">@lang('operation.fields.amount')</th>
                 <th></th>
             </tr>
-            <tr>
-                <th colspan='4'>
-                    <b>
-                        @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->endOfMonth()->formatLocalized('%d/%m/%Y')])
-                    </b>
-                </th>
-                <th class="text-right">
-                    <b>
-                        {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), true) }}
-                    </b>
-                </th>
-                <th></th>
-            </tr>
         </thead>
         @foreach ($operations as $operation)
             <tr class="text-{{ $operation->context }}">
@@ -73,50 +60,43 @@
         @endforeach
         <tfoot>
             <tr>
-                <td colspan='4'>
-                    <b>
-                        @lang('operation.aggregate.totalIncome')
-                        ({{ $operations->filterRevenues()->count() }} @lang('operation.title'))
-                    </b>
-                </td>
-                <td class="text-right">
-                    <b>
-                        {{ Html::formatPrice($operations->filterRevenues()->sum('amount'), true) }}
-                    </b>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan='4'>
-                    <b>
-                        @lang('operation.aggregate.totalOutcome')
-                        ({{ $operations->filterOutcomes()->count() }} @lang('operation.title'))
-                    </b>
-                </td>
-                <td class="text-right">
-                    <b>
-                        {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
-                    </b>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan='4'>
-                    <b>
-                        @lang('operation.aggregate.balanceAt', ['date' => $month->endOfMonth()->formatLocalized('%d/%m/%Y')])
-                    </b>
-                </td>
-                <td class="text-right">
-                    <b>
-                        {{ Html::formatPrice($account->getBalanceAttribute(null, $month), true) }}
-                    </b>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
                 @include('account.operations.add')
             </tr>
         </tfoot>
     </table>
+    <div class="panel-footer clearfix">
+        <div class='col-md-3'>
+            <div class='col-md-12 col-sm-8'>
+                @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->endOfMonth()->formatLocalized('%d/%m/%Y')])
+            </div>
+            <div class='col-md-12 col-sm-4 text-right'>
+                {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), true) }}
+            </div>
+        </div>
+        <div class='col-md-3'>
+            <div class='col-md-12 col-sm-8'>
+                @lang('operation.aggregate.totalIncome')
+            </div>
+            <div class='col-md-12 col-sm-4 text-right'>
+                {{ Html::formatPrice($operations->filterRevenues()->sum('amount'), true) }}
+            </div>
+        </div>
+        <div class='col-md-3'>
+            <div class='col-md-12 col-sm-8'>
+                @lang('operation.aggregate.totalOutcome')
+            </div>
+            <div class='col-md-12 col-sm-4 text-right'>
+                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
+            </div>
+        </div>
+        <div class='col-md-3'>
+            <div class='col-md-12 col-sm-8'>
+                @lang('operation.aggregate.balanceAt', ['date' => $month->endOfMonth()->formatLocalized('%d/%m/%Y')])
+            </div>
+            <div class='col-md-12 col-sm-4 text-right'>
+                {{ Html::formatPrice($account->getBalanceAttribute(null, $month), true) }}
+            </div>
+        </div>
+    </div>
 </div>
 
