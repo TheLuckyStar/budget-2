@@ -57,8 +57,8 @@
                 <td>{{ $operation->name }}</td>
                 <td class="text-right">
                     {{ Html::formatPrice(
-                        $operation->amount,
-                        $operation->amount_symbol
+                        $operation instanceof App\Outcome ? -$operation->amount : $operation->amount,
+                        true
                     ) }}
                 </td>
                 <td class="text-right">
@@ -95,7 +95,7 @@
                 </td>
                 <td class="text-right">
                     <b>
-                        {{ Html::formatPrice($operations->filterOutcomes()->sum('amount'), '-') }}
+                        {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
                     </b>
                 </td>
                 <td></td>

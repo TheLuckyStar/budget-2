@@ -15,7 +15,7 @@
         element: 'account-envelopes-balance-chart',
         data: {!! $data !!},
         colors: {!! $colors !!},
-        formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val); },
+        formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, true); },
         resize: true
     });
 

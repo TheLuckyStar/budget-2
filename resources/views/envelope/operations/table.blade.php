@@ -38,7 +38,7 @@
                 </th>
                 <th class="text-right">
                     <b>
-                        {{ Html::formatPrice($envelope->getBalanceAttribute($prevMonth), true) }}
+                        {{ Html::formatPrice($envelope->getBalanceAttribute(null, $prevMonth), true) }}
                     </b>
                 </th>
                 <th></th>
@@ -57,8 +57,8 @@
                 <td>{{ $operation->name }}</td>
                 <td class="text-right">
                     {{ Html::formatPrice(
-                        $operation->amount,
-                        $operation->amount_symbol
+                        $operation instanceof App\Outcome ? -$operation->amount : $operation->amount,
+                        true
                     ) }}
                 </td>
                 <td class="text-right">
@@ -76,12 +76,12 @@
                 <td colspan='4'>
                     <b>
                         @lang('operation.aggregate.totalIncome')
-                        ({{ $operations->filterRevenues()->count() }} @lang('operation.title'))
+                        ({{ $operations->filterIncomes()->count() }} @lang('operation.title'))
                     </b>
                 </td>
                 <td class="text-right">
                     <b>
-                        {{ Html::formatPrice($operations->filterRevenues()->sum('amount'), true) }}
+                        {{ Html::formatPrice($operations->filterIncomes()->sum('amount'), true) }}
                     </b>
                 </td>
                 <td></td>
@@ -95,7 +95,7 @@
                 </td>
                 <td class="text-right">
                     <b>
-                        {{ Html::formatPrice($operations->filterOutcomes()->sum('amount'), '-') }}
+                        {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
                     </b>
                 </td>
                 <td></td>
@@ -108,7 +108,7 @@
                 </td>
                 <td class="text-right">
                     <b>
-                        {{ Html::formatPrice($envelope->getBalanceAttribute($month), true) }}
+                        {{ Html::formatPrice($envelope->getBalanceAttribute(null, $month), true) }}
                     </b>
                 </td>
                 <td></td>

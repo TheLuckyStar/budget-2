@@ -29,7 +29,11 @@ var FormatModule = (function() {
     };
 
     // Return formated price with currency
-    var price = function (price) {
+    var price = function (price, forceSymbol) {
+        if (forceSymbol === true && price >= 0) {
+            return '+'+number(price, 2) + ' €';
+        }
+
         return number(price, 2) + ' €';
     };
 

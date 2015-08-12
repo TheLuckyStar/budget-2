@@ -2,7 +2,7 @@
 <div class="panel panel-default">
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-pie-chart pull-left"></i>
-        @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance)])
+        @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance, true)])
     </div>
     <div class="panel-body">
         <div id="envelope-summary-balance-chart"></div>
