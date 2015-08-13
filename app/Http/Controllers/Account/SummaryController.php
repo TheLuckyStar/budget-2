@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 
@@ -12,22 +13,25 @@ class SummaryController extends Controller
     public function getBalance($account_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
 
+        $from = Carbon::now()->startOfMonth();
+        $to = Carbon::now()->endOfMonth();
+
         $data = [
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $account->effective_outcome,
+                'value' => $account->getEffectiveOutcomeAttribute($from, $to),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $account->intended_outcome,
+                'value' => $account->getIntendedOutcomeAttribute($from, $to),
             ],
             [
                 'label' => trans('operation.type.unallocatedRevenue'),
-                'value' => $account->unallocated_revenue,
+                'value' => $account->getUnallocatedRevenueAttribute($from, $to),
             ],
             [
                 'label' => trans('operation.type.allocatedRevenue'),
-                'value' => $account->allocated_revenue,
+                'value' => $account->getAllocatedRevenueAttribute($from, $to),
             ],
         ];
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 
@@ -11,18 +12,21 @@ class SummaryController extends Controller
     public function getBalance($envelope_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
 
+        $from = Carbon::now()->startOfMonth();
+        $to = Carbon::now()->endOfMonth();
+
         $chartData = [
             [
                 'label' => trans('operation.type.income'),
-                'value' => $envelope->income,
+                'value' => $envelope->getIncomeAttribute($from, $to),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $envelope->intended_outcome,
+                'value' => $envelope->getIntendedOutcomeAttribute($from, $to),
             ],
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $envelope->effective_outcome,
+                'value' => $envelope->getEffectiveOutcomeAttribute($from, $to),
             ],
         ];
 
