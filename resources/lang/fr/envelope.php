@@ -5,8 +5,6 @@
  */
 return [
 
-    'availableTitle' => 'Argent disponible',
-
     'fields' => [
         'name' => "Nom",
         'icon' => "Icône",

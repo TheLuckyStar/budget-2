@@ -33,9 +33,6 @@ return [
     ],
 
     'type' => [
-        'available' => 'Available money',
-        'allocatedAvailable' => 'Allocated available money',
-        'unallocatedAvailable' => 'Unallocated available money',
         'revenue' => 'Revenue',
         'allocatedRevenue' => 'Allocated revenue',
         'unallocatedRevenue' => 'Unallocated revenue',

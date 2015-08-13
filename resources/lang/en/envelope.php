@@ -5,8 +5,6 @@
  */
 return [
 
-    'availableTitle' => 'Available money',
-
     'fields' => [
         'name' => "Name",
         'icon' => "Icon",

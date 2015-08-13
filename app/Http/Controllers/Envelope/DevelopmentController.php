@@ -15,13 +15,13 @@ class DevelopmentController extends Controller
 
         $data = [];
         for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
-            $data[] = [
-                'date' => $d->toDateString(),
-                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($date, $d),
-                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($date, $d),
-                'available' => $envelope->getBalanceAttribute($date, $d),
-            ];
+            $data[] = $this->getData($envelope, $date, $d);
         }
+
+        $colors = [
+            Config::get('budget.statusColors.success'),
+            Config::get('budget.statusColors.danger'),
+        ];
 
         $data = [
             'envelope' => $envelope,
@@ -29,7 +29,7 @@ class DevelopmentController extends Controller
             'prevMonth' => $date->copy()->subMonth(),
             'nextMonth' => $date->copy()->addMonth(),
             'data' => json_encode($data),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'colors' => json_encode($colors),
         ];
 
         return view('envelope.development.monthly', $data);
@@ -44,18 +44,18 @@ class DevelopmentController extends Controller
         $monthLabels = [];
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
+            $monthLabels[] = $d->formatLocalized('%B');
+
             $from = $d->copy()->startOfMonth();
             $to = $d->copy()->endOfMonth();
 
-            $monthLabels[] = $d->formatLocalized('%B');
-
-            $data[] = [
-                'date' => $d->format('Y-m'),
-                'effective_outcome' => $envelope->getEffectiveOutcomeAttribute($from, $to),
-                'intended_outcome' => $envelope->getIntendedOutcomeAttribute($from, $to),
-                'available' => $envelope->getBalanceAttribute($from, $to),
-            ];
+            $data[] = $this->getData($envelope, $from, $to);
         }
+
+        $colors = [
+            Config::get('budget.statusColors.success'),
+            Config::get('budget.statusColors.danger'),
+        ];
 
         $data = [
             'envelope' => $envelope,
@@ -63,10 +63,32 @@ class DevelopmentController extends Controller
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'colors' => json_encode($colors),
             'monthLabels' => json_encode($monthLabels),
         ];
 
         return view('envelope.development.yearly', $data);
     }
+
+
+    public function getData($envelope, $from, $to) {
+        $balance = $envelope->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
+
+        $income = $envelope->getIncomeAttribute($from, $to);
+        if ($balance > 0) {
+            $income += $balance;
+        }
+
+        $outcome = $envelope->getOutcomeAttribute($from, $to);
+        if ($balance < 0) {
+            $outcome += $balance;
+        }
+
+        return [
+            'date' => $to->toDateString(),
+            'income' => $income,
+            'outcome' => $outcome,
+        ];
+    }
+
 }

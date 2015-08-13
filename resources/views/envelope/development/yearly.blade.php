@@ -34,14 +34,12 @@
         data: {!! $data !!},
         xkey: 'date',
         ykeys: [
-            'effective_outcome',
-            'intended_outcome',
-            'available',
+            'income',
+            'outcome',
         ],
         labels: [
-            "@lang('operation.type.effectiveOutcome')",
-            "@lang('operation.type.intendedOutcome')",
-            "@lang('operation.type.available')",
+            "@lang('operation.type.income')",
+            "@lang('operation.type.outcome')",
         ],
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
@@ -49,6 +47,7 @@
         yLabelFormat: function (val) { return FormatModule.price(val); },
         smooth: false,
         resize: true,
+        behaveLikeLine: true,
     });
 
 </script>

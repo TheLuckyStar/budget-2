@@ -15,14 +15,14 @@ class DevelopmentController extends Controller
 
         $data = [];
         for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
-            $data[] = [
-                'date' => $d->toDateString(),
-                'effective_outcome' => $account->getEffectiveOutcomeAttribute($date, $d),
-                'intended_outcome' => $account->getIntendedOutcomeAttribute($date, $d),
-                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($date, $d),
-                'allocated_balance' => $account->getAllocatedBalanceAttribute($date, $d),
-            ];
+            $data[] = $this->getData($account, $date, $d);
         }
+
+        $colors = [
+            Config::get('budget.statusColors.success'),
+            Config::get('budget.statusColors.info'),
+            Config::get('budget.statusColors.danger'),
+        ];
 
         $data = [
             'account' => $account,
@@ -30,7 +30,7 @@ class DevelopmentController extends Controller
             'prevMonth' => $date->copy()->subMonth(),
             'nextMonth' => $date->copy()->addMonth(),
             'data' => json_encode($data),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'colors' => json_encode($colors),
         ];
 
         return view('account.development.monthly', $data);
@@ -49,15 +49,14 @@ class DevelopmentController extends Controller
             $to = $d->copy()->endOfMonth();
 
             $monthLabels[] = $d->formatLocalized('%B');
-
-            $data[] = [
-                'date' => $d->format('Y-m'),
-                'effective_outcome' => $account->getEffectiveOutcomeAttribute($from, $to),
-                'intended_outcome' => $account->getIntendedOutcomeAttribute($from, $to),
-                'unallocated_balance' => $account->getUnallocatedBalanceAttribute($from, $to),
-                'allocated_balance' => $account->getAllocatedBalanceAttribute($from, $to),
-            ];
+            $data[] = $this->getData($account, $from, $to);
         }
+
+        $colors = [
+            Config::get('budget.statusColors.success'),
+            Config::get('budget.statusColors.info'),
+            Config::get('budget.statusColors.danger'),
+        ];
 
         $data = [
             'account' => $account,
@@ -65,11 +64,34 @@ class DevelopmentController extends Controller
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'colors' => json_encode($colors),
             'monthLabels' => json_encode($monthLabels),
         ];
 
         return view('account.development.yearly', $data);
+    }
+
+    public function getData($account, $from, $to) {
+        $balance = $account->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
+
+        $revenue = $account->getRevenueAttribute($from, $to);
+        if ($balance > 0) {
+            $revenue += $balance;
+        }
+
+        $allocatedRevenue = $account->getAllocatedRevenueAttribute($from, $to);
+
+        $outcome = $account->getOutcomeAttribute($from, $to);
+        if ($balance < 0) {
+            $outcome += $balance;
+        }
+
+        return [
+            'date' => $to->toDateString(),
+            'revenue' => $revenue,
+            'allocatedRevenue' => $allocatedRevenue,
+            'outcome' => $outcome,
+        ];
     }
 
     public function getEnvelopes($account_id, $date = null) {
@@ -80,15 +102,12 @@ class DevelopmentController extends Controller
 
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $from = $d->copy()->startOfMonth();
-            $to = $d->copy()->endOfMonth();
-
             $monthlyData = [
-                'date' => $d->formatLocalized('%B'),
+                'date' => $d->format('Y-m'),
             ];
 
             foreach ($account->envelopes as $envelope) {
-                $monthlyData[$envelope->id] = $envelope->getIncomeAttribute($from, $to);
+                $monthlyData[$envelope->id] = $envelope->getBalanceAttribute(null, $d->copy()->endOfMonth());
             }
 
             $data[] = $monthlyData;

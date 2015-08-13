@@ -27,15 +27,19 @@
 
 <script type="text/javascript">
 
-    Morris.Bar({
+    Morris.Line({
         element: 'envelope-development-envelopes-chart',
         data: {!! $data !!},
         xkey: 'date',
         ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
         labels: {!! json_encode($account->envelopes->lists('name')) !!},
-        stacked: true,
-        // yLabelFormat: function (val) { return FormatModule.price(val); },
+
+        dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
+        xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
+        yLabelFormat: function (val) { return FormatModule.price(val); },
+        smooth: false,
         resize: true,
+        behaveLikeLine: true,
     });
 
 </script>
