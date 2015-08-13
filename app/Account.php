@@ -115,8 +115,9 @@ class Account extends Model
     }
 
     public function incomes() {
-        return $this->hasManyThrough('App\Income', 'App\Envelope')
-            ->orderBy('incomes.date');
+        return Income::whereIn('envelope_id', function ($query) {
+            $query->select('id')->from('envelopes')->where('account_id', $this->id);
+        })->orderBy('incomes.date');
     }
 
     public function intendedOutcomes() {
