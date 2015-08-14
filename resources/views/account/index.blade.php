@@ -100,14 +100,21 @@
 
     <script type="text/javascript">
 
-        RouterModule.refresh($('#account-summary-balance'));
-        RouterModule.refresh($('#account-summary-envelopes'));
-        RouterModule.refresh($('#account-summary-users'));
-        RouterModule.refresh($('#account-summary-events'));
-        RouterModule.refresh($('#account-operations-table'));
-        RouterModule.refresh($('#account-development-monthly'));
-        RouterModule.refresh($('#account-development-yearly'));
-        RouterModule.refresh($('#account-development-envelopes'));
+        RouterModule.refresh($('#account-summary-balance'), function() {
+            RouterModule.refresh($('#account-summary-envelopes'), function() {
+                RouterModule.refresh($('#account-summary-users'), function() {
+                    RouterModule.refresh($('#account-summary-events'), function() {
+                        RouterModule.refresh($('#account-operations-table'), function() {
+                            RouterModule.refresh($('#account-development-monthly'), function() {
+                                RouterModule.refresh($('#account-development-yearly'), function() {
+                                    RouterModule.refresh($('#account-development-envelopes'));
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
 
         $('#account-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
             $(e.target.hash).find('div[id$="-chart"]').each(function() {

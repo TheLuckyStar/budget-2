@@ -94,11 +94,15 @@
 
     <script type="text/javascript">
 
-        RouterModule.refresh($('#envelope-summary-balance'));
-        RouterModule.refresh($('#envelope-summary-events'));
-        RouterModule.refresh($('#envelope-operations-table'));
-        RouterModule.refresh($('#envelope-development-monthly'));
-        RouterModule.refresh($('#envelope-development-yearly'));
+        RouterModule.refresh($('#envelope-summary-balance'), function() {
+            RouterModule.refresh($('#envelope-summary-events'), function() {
+                RouterModule.refresh($('#envelope-operations-table'), function() {
+                    RouterModule.refresh($('#envelope-development-monthly'), function() {
+                        RouterModule.refresh($('#envelope-development-yearly'));
+                    });
+                });
+            });
+        });
 
         $('#envelope-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
             $(e.target.hash).find('div[id$="-chart"]').each(function() {
