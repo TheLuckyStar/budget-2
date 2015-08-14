@@ -4,10 +4,10 @@ var OperationModule = (function() {
 
     var moment = require('moment');
 
-    // Handle row initialization
-    var initRow = function (row) {
-        row.find('.datepicker').datetimepicker({
-            locale: PageModule.locale,
+    // Handle datepicker initialization
+    var initDatepicker = function (target) {
+        target.datetimepicker({
+            locale: $('#page-wrapper').data('locale'),
             format: 'L',
             icons: {
                 time: 'fa fa-clock-o',
@@ -21,8 +21,13 @@ var OperationModule = (function() {
                 close: 'fa fa-times',
             },
         });
+    };
 
-        row.find('select[name="type"]').change(function () {
+    // Handle select type initialization
+    var initDateSelectType = function (target) {
+        target.change(function () {
+            var row = $(this).closest('tr');
+
             var enabled = row.find('input, select:not([name="type"]), button');
             var disabled = row.find('input, select:not([name="type"]), button');
 
@@ -38,6 +43,20 @@ var OperationModule = (function() {
             enabled.removeAttr('disabled');
             disabled.attr('disabled', 'disabled');
         }).change();
+    };
+
+    // Handle submit button initialization
+    var initSubmitButton = function (target) {
+        target.click(function () {
+            alert('send');
+        });
+    };
+
+    // Handle row initialization
+    var initRow = function (row) {
+        initDatepicker(row.find('.datepicker'));
+        initDateSelectType(row.find('select[name="type"]'));
+        initSubmitButton(row.find('button'));
     };
 
     // Called on module loading

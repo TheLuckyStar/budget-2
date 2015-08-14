@@ -91,10 +91,10 @@
 <td class="text-right">
     {!! Form::button(
         '<i class="fa fa-fw fa-plus" title="'.trans('app.button.add').'"></i>',
-        ['class' => 'btn btn btn-success', 'title' => trans('app.button.add')]
+        ['class' => 'btn btn-success', 'title' => trans('app.button.add')]
     ) !!}
 </td>
 
 <script type="text/javascript">
-//    OperationModule.initRow($('#account-add-select-type').closest('tr'));
+    OperationModule.initRow($('#account-add-select-type').closest('tr'));
 </script>

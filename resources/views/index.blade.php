@@ -24,7 +24,8 @@
 
         <div id="page-wrapper"
             class="container-fluid"
-            data-url="{{ action('HomeController@getIndex') }}"></div>
+            data-url="{{ action('HomeController@getIndex') }}"
+            data-locale="{{ App::getLocale() }}"></div>
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
             <div class="container-fluid small text-left">
@@ -55,16 +56,16 @@
                     'assets/js/format.js',
                     'assets/js/router.js',
                     'assets/js/navbar.js',
-                    // 'assets/js/operation.js',
+                    'assets/js/operation.js',
                 ], function () {
                     RouterModule.init();
                     NavbarModule.init();
+                    OperationModule.init();
 
                     // Load page content
                     RouterModule.refresh($('#page-wrapper'), function() {
                     });
 
-                    // OperationModule.init();
                 });
             });
         });
