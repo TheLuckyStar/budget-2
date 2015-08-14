@@ -64,7 +64,7 @@
             <li role="presentation">
                 {!! Html::link(
                     '#operations',
-                    '<i class="fa fa-fw fa-exchange"></i> '
+                    '<i class="fa fa-fw fa-table"></i> '
                         .trans('operation.title'),
                     ['aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
@@ -105,15 +105,14 @@
         RouterModule.refresh($('#account-summary-users'));
         RouterModule.refresh($('#account-summary-events'));
         RouterModule.refresh($('#account-operations-table'));
+        RouterModule.refresh($('#account-development-monthly'));
+        RouterModule.refresh($('#account-development-yearly'));
+        RouterModule.refresh($('#account-development-envelopes'));
 
         $('#account-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
-            if (e.target.hash === '#development' && $('#account-development-monthly').is(':empty')) {
-                RouterModule.refresh($('#account-development-monthly'), function() {
-                    RouterModule.refresh($('#account-development-yearly'), function() {
-                        RouterModule.refresh($('#account-development-envelopes'));
-                    });
-                });
-            }
+            $(e.target.hash).find('div[id$="-chart"]').each(function() {
+                $(this).get(0).chart.resizeHandler();
+            });
         });
 
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {

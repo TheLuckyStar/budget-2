@@ -27,9 +27,7 @@
 
 <script type="text/javascript">
 
-    var monthLabels = {!! $monthLabels !!}
-
-    Morris.Area({
+    $('#account-development-yearly-chart').get(0).chart = Morris.Area({
         element: 'account-development-yearly-chart',
         data: {!! $data !!},
         xkey: 'date',
@@ -44,8 +42,8 @@
             "@lang('operation.type.outcome')",
         ],
         lineColors: {!! $colors !!},
-        dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
-        xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
+        dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
+        xLabelFormat: function (date) {return require('moment')(date).subtract(1, 'months').format("MMMM"); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
         smooth: false,
         resize: true,

@@ -21,21 +21,21 @@
         ) !!}
     </div>
     <div class="panel-body">
-        <div id="envelope-development-envelopes-chart"></div>
+        <div id="account-development-envelopes-chart"></div>
     </div>
 </div>
 
 <script type="text/javascript">
 
-    Morris.Line({
-        element: 'envelope-development-envelopes-chart',
+    $('#account-development-envelopes-chart').get(0).chart = Morris.Line({
+        element: 'account-development-envelopes-chart',
         data: {!! $data !!},
         xkey: 'date',
         ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
         labels: {!! json_encode($account->envelopes->lists('name')) !!},
 
-        dateFormat: function (date) { return monthLabels[new Date(date).getMonth()]; },
-        xLabelFormat: function (date) { return monthLabels[date.getMonth()]; },
+        dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
+        xLabelFormat: function (date) { return require('moment')(date).format("MMMM"); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
         smooth: false,
         resize: true,

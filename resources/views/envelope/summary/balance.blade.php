@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 
-    Morris.Donut({
+    $('#envelope-summary-balance-chart').get(0).chart = Morris.Donut({
         element: 'envelope-summary-balance-chart',
         data: {!! $data !!},
         colors: {!! $colors !!},

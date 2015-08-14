@@ -41,11 +41,8 @@ class DevelopmentController extends Controller
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfYear();
 
-        $monthLabels = [];
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $monthLabels[] = $d->formatLocalized('%B');
-
             $from = $d->copy()->startOfMonth();
             $to = $d->copy()->endOfMonth();
 
@@ -64,7 +61,6 @@ class DevelopmentController extends Controller
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
             'colors' => json_encode($colors),
-            'monthLabels' => json_encode($monthLabels),
         ];
 
         return view('envelope.development.yearly', $data);

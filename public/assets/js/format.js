@@ -45,13 +45,6 @@ var FormatModule = (function() {
         return date + "/" + month + "/" + year;
     };
 
-    // Return formated date to mm/YYYY
-    var month = function (d) {
-        var month = d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1;
-        var year = d.getFullYear();
-        return month + "/" + year;
-    };
-
     // Return bootstrap aler
     var alert = function (content, level) {
         return '<div class="alert alert-' + level + '" role="alert">' + content + '</div>';
@@ -61,7 +54,6 @@ var FormatModule = (function() {
     return {
         price: price,
         date: date,
-        month: month,
         alert: alert,
     };
 

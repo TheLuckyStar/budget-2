@@ -26,7 +26,8 @@
 </div>
 
 <script type="text/javascript">
-    Morris.Area({
+
+    $('#envelope-development-monthly-chart').get(0).chart = Morris.Area({
         element: 'envelope-development-monthly-chart',
         data: {!! $data !!},
         xkey: 'date',
@@ -46,4 +47,5 @@
         resize: true,
         behaveLikeLine: true,
     });
+
 </script>

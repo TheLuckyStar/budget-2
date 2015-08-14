@@ -20,7 +20,6 @@ class OperationsController extends Controller
         $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
 
         $data = [
-            'activeTab' => 'operations',
             'account' => $account,
             'operations' => $operations,
             'month' => $month,

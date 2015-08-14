@@ -11,7 +11,7 @@
 
 <script type="text/javascript">
 
-    Morris.Donut({
+    $('#account-summary-balance-chart').get(0).chart = Morris.Donut({
         element: 'account-summary-balance-chart',
         data: {!! $data !!},
         colors: {!! $colors !!},
