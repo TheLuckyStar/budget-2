@@ -1,5 +1,5 @@
 
-<div class="panel panel-default">
+<div class="panel panel-{{ $envelope->status }}">
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-pie-chart pull-left"></i>
         @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance, true)])

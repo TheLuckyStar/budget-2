@@ -1,5 +1,5 @@
 
-<div class="panel panel-default">
+<div class="panel panel-{{ $account->status }}">
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-pie-chart pull-left"></i>
         @lang('account.summary.balance.title', ['balance' => Html::formatPrice($account->balance, true)])
