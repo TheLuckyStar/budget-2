@@ -65,15 +65,15 @@
         </tfoot>
     </table>
     <div class="panel-footer clearfix">
-        <div class='col-md-3'>
+        <div class='col-md-3 text-{{ $account->getStatusAttribute(null, $prevMonth->endOfMonth()) }}'>
             <div class='col-md-12 col-sm-8'>
-                @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->endOfMonth()->formatLocalized('%d/%m/%Y')])
+                @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
                 {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), true) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-success'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.totalIncome')
             </div>
@@ -81,7 +81,7 @@
                 {{ Html::formatPrice($operations->filterRevenues()->sum('amount'), true) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-danger'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.totalOutcome')
             </div>
@@ -89,9 +89,9 @@
                 {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-{{ $account->getStatusAttribute(null, $month->endOfMonth()) }}'>
             <div class='col-md-12 col-sm-8'>
-                @lang('operation.aggregate.balanceAt', ['date' => $month->endOfMonth()->formatLocalized('%d/%m/%Y')])
+                @lang('operation.aggregate.balanceAt', ['date' => $month->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
                 {{ Html::formatPrice($account->getBalanceAttribute(null, $month), true) }}

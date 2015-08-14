@@ -60,7 +60,7 @@
         @endforeach
     </table>
     <div class="panel-footer clearfix">
-        <div class='col-md-3'>
+        <div class='col-md-3 text-{{ $envelope->getStatusAttribute(null, $prevMonth->endOfMonth()) }}'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->endOfMonth()->formatLocalized('%d/%m/%Y')])
             </div>
@@ -68,7 +68,7 @@
                 {{ Html::formatPrice($envelope->getBalanceAttribute(null, $prevMonth), true) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-success'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.totalIncome')
             </div>
@@ -76,7 +76,7 @@
                 {{ Html::formatPrice($operations->filterIncomes()->sum('amount'), true) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-danger'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.totalOutcome')
             </div>
@@ -84,7 +84,7 @@
                 {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
             </div>
         </div>
-        <div class='col-md-3'>
+        <div class='col-md-3 text-{{ $envelope->getStatusAttribute(null, $month->endOfMonth()) }}'>
             <div class='col-md-12 col-sm-8'>
                 @lang('operation.aggregate.balanceAt', ['date' => $month->endOfMonth()->formatLocalized('%d/%m/%Y')])
             </div>

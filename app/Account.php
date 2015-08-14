@@ -266,14 +266,8 @@ class Account extends Model
             return $outcome ? 'danger' : 'warning';
         }
 
-        $ratio = $outcome / $revenue * 100;
-
-        if ($ratio >= 100) {
+        if ($outcome > $revenue) {
             return 'danger';
-        }
-
-        if ($ratio > 75) {
-            return 'warning';
         }
 
         return 'success';

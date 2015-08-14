@@ -71,5 +71,9 @@ ul.help-block {list-style-type: none;}
 
 #auth-authenticate .control-checkbox {padding-top: 14px;}
 
-#account-index .tab-pane { padding: 15px;}
-#envelope-index .tab-pane { padding: 15px;}
+#account-index #operations .panel-footer {font-weight: bold;}
+#envelope-index #operations .panel-footer {font-weight: bold;}
+
+#account-index .tab-pane {padding: 15px;}
+#envelope-index .tab-pane {padding: 15px;}
+
