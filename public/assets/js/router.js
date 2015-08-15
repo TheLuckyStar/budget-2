@@ -45,7 +45,7 @@ var RouterModule = (function() {
     var submitForm = function (form) {
         var url = form.attr('action');
         var target = $(form.data('target'));
-        var data = form.serializeArray();
+        var data = form.find(':input').serializeArray();
 
         console.log('Submit form to ' + url);
         $.post(url, data, function(data, textStatus, jqXHR) {
@@ -55,26 +55,27 @@ var RouterModule = (function() {
             if (target.attr('id') === 'page-wrapper') {
                 NavbarModule.activateLinks();
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            form.find('.form-group.has-error .help-block').remove();
-            form.find('.form-group').removeClass('.has-error');
-
-            if (jqXHR.status === 422) {
-                invalidForm(form, jqXHR.responseJSON);
-                return;
-            }
-
-            var alert = FormatModule.alert(errorThrown, 'danger');
-            form.find('.messagebox').html(alert);
-
-            console.log('fail')
-            console.log(jqXHR)
-            console.log(textStatus)
-            console.log(errorThrown)
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            submitFormFail(form, jqXHR, errorThrown);
         });
     };
 
-    // Submit form with POST Ajax call
+    // Handle form post failure
+    var submitFormFail = function(form, jqXHR, errorThrown) {
+        console.log(jqXHR);
+        form.find('.form-group.has-error .help-block').remove();
+        form.find('.form-group').removeClass('.has-error');
+
+        if (jqXHR.status === 422) {
+            invalidForm(form, jqXHR.responseJSON);
+            return;
+        }
+
+        var alert = FormatModule.alert(errorThrown, 'danger');
+        form.find('.messagebox').html(alert);
+    };
+
+    // Add error messages to failed form inputs
     var invalidForm = function (form, errors) {
         $.each(errors, function(field, messages) {
             var formGroup = form.find('[name="' + field + '"]').closest('.form-group');
@@ -114,6 +115,8 @@ var RouterModule = (function() {
         init: init,
         refresh: refresh,
         clickLink: clickLink,
+        submitForm: submitForm,
+        submitFormFail: submitFormFail,
         load: load,
     };
 

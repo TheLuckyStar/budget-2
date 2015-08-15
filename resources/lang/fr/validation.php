@@ -55,7 +55,7 @@ return [
         "array"   => "Le tableau :attribute doit avoir au moins :min éléments.",
     ],
     "not_in"               => "Le champ :attribute sélectionné n'est pas valide.",
-    "numeric"              => "Le champ :attribute doit contenir un nombre.",
+    "numeric"              => "Le champ :attribute doit contenir un nombre (utilisant le point si nécessaire).",
     "regex"                => "Le format du champ :attribute est invalide.",
     "required"             => "Le champ :attribute est obligatoire.",
     "required_if"          => "Le champ :attribute est obligatoire quand la valeur de :other est :value.",

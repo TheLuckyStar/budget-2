@@ -2,16 +2,16 @@
 <td class="row form-group {{ $errors->has('type') ? 'has-error' : '' }}">
     {!! Form::select(
         'type',
-        [
-            'revenue' => trans('operation.type.revenue'),
-            'intendedOutcome' => trans('operation.type.intendedOutcome', ['date' => '']),
-            'effectiveOutcome' => trans('operation.type.effectiveOutcome'),
-        ],
-        null,
+        $operation instanceof App\Revenue ?
+            ['revenue' => trans('operation.type.revenue')]
+            : [
+                'intendedOutcome' => trans('operation.type.intendedOutcome', ['date' => '']),
+                'effectiveOutcome' => trans('operation.type.effectiveOutcome'),
+            ],
+        $operation->type,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-select-type',
-            'placeholder' => trans('operation.fields.type')
+            'id' => 'operation-'.$operation->id.'-select-type'
         ]
     ) !!}
     @if ($errors->has('type'))
@@ -23,10 +23,10 @@
     {!! Form::select(
         'envelope_id',
         $account->envelopes()->lists('name', 'id'),
-        null,
+        $operation->envelope_id,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-select-envelope_id',
+            'id' => 'operation-'.$operation->id.'-select-envelope_id',
             'placeholder' => trans('operation.fields.envelope_id')
         ]
     ) !!}
@@ -39,13 +39,11 @@
     {{-- @TODO Fix widget position --}}
     {!! Form::text(
         'date',
-        null,
+        $operation->date->format('d/m/Y'),
         [
             'class' => 'form-control datepicker',
-            'id' => 'operation-add-input-date',
+            'id' => 'operation-'.$operation->id.'-input-date',
             'placeholder' => trans('operation.fields.date'),
-            'data-date-min-date' => $month->startOfMonth()->toDateString(),
-            'data-date-max-date' => $month->endOfMonth()->toDateString(),
         ]
     ) !!}
     @if ($errors->has('date'))
@@ -56,10 +54,10 @@
 <td class="row form-group {{ $errors->has('name') ? 'has-error' : '' }}">
     {!! Form::text(
         'name',
-        null,
+        $operation->name,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-input-name',
+            'id' => 'operation-'.$operation->id.'-input-name',
             'placeholder' => trans('operation.fields.name')
         ]
     ) !!}
@@ -72,10 +70,10 @@
     <div class='input-group'>
         {!! Form::text(
             'amount',
-            null,
+            $operation->amount,
             [
                 'class' => 'form-control text-right',
-                'id' => 'operation-add-input-amount',
+                'id' => 'operation-'.$operation->id.'-input-amount',
                 'placeholder' => trans('operation.fields.amount')
             ]
         ) !!}
@@ -89,15 +87,26 @@
 </td>
 
 <td class="text-right">
+
     {!! Form::token() !!}
+
     {!! Html::linkAction(
-        "Account\OperationsController@postAdd",
-        '<i class="fa fa-fw fa-plus" title="'.trans('app.button.add').'"></i>',
-        $account,
-        ['class' => 'btn btn-success', 'title' => trans('app.button.add')]
+        "Account\OperationsController@postUpdate",
+        '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
+        [$account, $operation->type, $operation],
+        ['class' => 'btn btn-success', 'title' => trans('app.button.update')]
     ) !!}
+
+    {!! Html::linkAction(
+        "Account\OperationsController@postDelete",
+        '<i class="fa fa-fw fa-trash" title="'.trans('app.button.delete').'"></i>',
+        [$account, $operation->type, $operation],
+        ['class' => 'btn btn-danger', 'title' => trans('app.button.delete')]
+    ) !!}
+
+    <script type="text/javascript">
+        OperationModule.initRow($('#row-{{ $operation->type }}-{{ $operation->id }}'));
+    </script>
+
 </td>
 
-<script type="text/javascript">
-    OperationModule.initRow($('#row-operation-new'));
-</script>

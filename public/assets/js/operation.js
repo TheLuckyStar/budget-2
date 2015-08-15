@@ -45,18 +45,51 @@ var OperationModule = (function() {
         }).change();
     };
 
-    // Handle submit button initialization
-    var initSubmitButton = function (target) {
+    // Handle submit links initialization
+    var initSubmitLinks = function (target) {
         target.click(function () {
-            alert('send');
+            var url = $(this).attr('href');
+            var row = $(this).closest('tr');
+            var data = row.find(':input').serializeArray();
+
+            if ($(this).hasClass('btn-danger')) {
+                var msg = $(this).attr('title') + ' ?';
+
+                if (confirm(msg) === false) {
+                    return false;
+                }
+            }
+
+            $.post(url, data, function(data, textStatus, jqXHR) {
+                submitFormSuccess();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                RouterModule.submitFormFail(row, jqXHR, errorThrown);
+            });
+
+            return false;
         });
+    };
+
+    // Handle form post success
+    var submitFormSuccess = function (row) {
+        RouterModule.refresh($('#account-operations-table'));
+
+        NavbarModule.refresh();
+
+        RouterModule.refresh($('#account-summary-balance'));
+        RouterModule.refresh($('#account-summary-envelopes'));
+        RouterModule.refresh($('#account-summary-events'));
+
+        RouterModule.refresh($('#account-development-monthly'));
+        RouterModule.refresh($('#account-development-yearly'));
+        RouterModule.refresh($('#account-development-envelopes'));
     };
 
     // Handle row initialization
     var initRow = function (row) {
         initDatepicker(row.find('.datepicker'));
         initDateSelectType(row.find('select[name="type"]'));
-        initSubmitButton(row.find('button'));
+        initSubmitLinks(row.find('a.btn:not(.routable)'));
     };
 
     // Called on module loading

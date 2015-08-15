@@ -32,34 +32,13 @@
             </tr>
         </thead>
         @foreach ($operations as $operation)
-            <tr class="text-{{ $operation->context }}">
-                <td>
-                    @lang(
-                        'operation.type.'.$operation->type,
-                        ['date' => $operation->date->diffForHumans()]
-                    )
-                </td>
-                <td>{!! $operation->envelope !!}</td>
-                <td>{{ $operation->date->formatLocalized('%A %e') }}</td>
-                <td>{{ $operation->name }}</td>
-                <td class="text-right">
-                    {{ Html::formatPrice(
-                        $operation instanceof App\Outcome ? -$operation->amount : $operation->amount,
-                        true
-                    ) }}
-                </td>
-                <td class="text-right">
-                    {!! Html::linkAction(
-                        'Account\OperationsController@getUpdate',
-                        '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
-                        [$account, get_class($operation), $operation],
-                        ['class' => 'link-to-page btn btn-xs btn-primary']
-                    ) !!}
-                </td>
+            <tr id='row-{{ $operation->type }}-{{ $operation->id }}'
+                action='{{ action("Account\OperationsController@getUpdate", [$account, $operation->type, $operation]) }}'>
+                @include('account.operations.row')
             </tr>
         @endforeach
         <tfoot>
-            <tr>
+            <tr id='row-operation-new'>
                 @include('account.operations.add')
             </tr>
         </tfoot>
