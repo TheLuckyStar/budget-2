@@ -53,6 +53,22 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 1,
+            'name' => "Free Mobile",
+            'amount' => 2,
+            'date' => Carbon::create(2015, 7, 7, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
+            'name' => "Freebox",
+            'amount' => 32.98,
+            'date' => Carbon::create(2015, 7, 8, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
             'name' => "Cage pour Chippie",
             'amount' => 10,
             'date' => Carbon::create(2015, 7, 23, 0),
@@ -422,21 +438,6 @@ class OutcomeJuly2015TableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope6() {
-        Outcome::create([
-            'envelope_id' => 6,
-            'name' => "Free Mobile",
-            'amount' => 2,
-            'date' => Carbon::create(2015, 7, 7, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 6,
-            'name' => "Freebox",
-            'amount' => 32.98,
-            'date' => Carbon::create(2015, 7, 8, 0),
-            'effective' => 1,
-        ]);
     }
 
     /**

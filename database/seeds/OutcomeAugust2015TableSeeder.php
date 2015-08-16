@@ -50,6 +50,22 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 5, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
+            'name' => "Free Mobile",
+            'amount' => 2,
+            'date' => Carbon::create(2015, 8, 6, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
+            'name' => "Freebox",
+            'amount' => 33.15,
+            'date' => Carbon::create(2015, 8, 10, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -81,6 +97,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope3() {
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Semaine en Bretagne - Boucherie",
+            'amount' => 27.36,
+            'date' => Carbon::create(2015, 8, 3, 0),
+            'effective' => 1,
+        ]);
+
         Outcome::create([
             'envelope_id' => 3,
             'name' => "Intermarché",
@@ -197,22 +221,6 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 3, 0),
             'effective' => 1,
         ]);
-
-        Outcome::create([
-            'envelope_id' => 6,
-            'name' => "Free Mobile",
-            'amount' => 2,
-            'date' => Carbon::create(2015, 8, 6, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 6,
-            'name' => "Freebox",
-            'amount' => 33.15,
-            'date' => Carbon::create(2015, 8, 10, 0),
-            'effective' => 1,
-        ]);
     }
 
     /**
@@ -240,14 +248,6 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'envelope_id' => 8,
             'name' => "Semaine en Bretagne - Restaurant",
             'amount' => 16.40,
-            'date' => Carbon::create(2015, 8, 3, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 8,
-            'name' => "Semaine en Bretagne - Boucherie",
-            'amount' => 27.36,
             'date' => Carbon::create(2015, 8, 3, 0),
             'effective' => 1,
         ]);
