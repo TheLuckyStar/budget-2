@@ -27,13 +27,13 @@ class IncomeTableSeeder extends Seeder
     {
         Income::create([
             'envelope_id' => 1,
-            'amount' => 900,
+            'amount' => 850,
             'date' => $date,
         ]);
 
         Income::create([
             'envelope_id' => 2,
-            'amount' => 300,
+            'amount' => 200,
             'date' => $date,
         ]);
 
@@ -69,7 +69,7 @@ class IncomeTableSeeder extends Seeder
 
         Income::create([
             'envelope_id' => 8,
-            'amount' => 150,
+            'amount' => 100,
             'date' => $date,
         ]);
 
@@ -81,7 +81,7 @@ class IncomeTableSeeder extends Seeder
 
         Income::create([
             'envelope_id' => 10,
-            'amount' => 250,
+            'amount' => 200,
             'date' => $date,
         ]);
     }
