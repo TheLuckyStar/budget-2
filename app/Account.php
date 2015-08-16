@@ -146,9 +146,7 @@ class Account extends Model
             $operations->push($outcome);
         }
 
-        return $operations->sortBy(function($operation) {
-            return intval(sprintf('%d%d', $operation->timestamp, $operation->created_at->timestamp));
-        });
+        return $operations->sortBy('date');
     }
 
     public function getRevenueAttribute($from = null, $to = null) {
