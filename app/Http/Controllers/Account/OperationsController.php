@@ -108,6 +108,7 @@ class OperationsController extends Controller
         }
 
         $operation->fill([
+            'envelope_id' => $request->get('envelope_id'),
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),

@@ -17,7 +17,7 @@ class Outcome extends Model
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['name', 'amount', 'date', 'effective'];
+    protected $fillable = ['envelope_id', 'name', 'amount', 'date', 'effective'];
 
     /**
      * The attributes that should be mutated to dates.
