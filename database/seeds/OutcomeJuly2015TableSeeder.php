@@ -50,6 +50,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 7, 6, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
+            'name' => "Cage pour Chippie",
+            'amount' => 10,
+            'date' => Carbon::create(2015, 7, 23, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -195,6 +203,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 3,
+            'name' => "Pizzas (remboursement commande Body Nature)",
+            'amount' => 10,
+            'date' => Carbon::create(2015, 7, 9, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
             'name' => "Carrefour",
             'amount' => 7.44,
             'date' => Carbon::create(2015, 7, 10, 0),
@@ -205,6 +221,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
             'envelope_id' => 3,
             'name' => "Ferme Delemotte",
             'amount' => 12.40,
+            'date' => Carbon::create(2015, 7, 13, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Weekend à Hurdegaryp",
+            'amount' => 52.19,
             'date' => Carbon::create(2015, 7, 13, 0),
             'effective' => 1,
         ]);
@@ -222,6 +246,22 @@ class OutcomeJuly2015TableSeeder extends Seeder
             'name' => "Carrefour",
             'amount' => 38.06,
             'date' => Carbon::create(2015, 7, 13, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Weekend à Hurdegaryp",
+            'amount' => 22.53,
+            'date' => Carbon::create(2015, 7, 16, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Weekend à Hurdegaryp",
+            'amount' => 30,
+            'date' => Carbon::create(2015, 7, 16, 0),
             'effective' => 1,
         ]);
 
@@ -275,6 +315,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 3,
+            'name' => "Retrait en liquide",
+            'amount' => 70,
+            'date' => Carbon::create(2015, 7, 23, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
             'name' => "Ferme Delemotte",
             'amount' => 18.10,
             'date' => Carbon::create(2015, 7, 27, 0),
@@ -286,6 +334,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
             'name' => "Épinature",
             'amount' => 12.52,
             'date' => Carbon::create(2015, 7, 29, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Commande Body Nature (remboursée en liquide)",
+            'amount' => 33.05,
+            'date' => Carbon::create(2015, 7, 30, 0),
             'effective' => 1,
         ]);
 
@@ -338,26 +394,10 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 4,
-            'name' => "Body Nature",
-            'amount' => 19.95,
-            'date' => Carbon::create(2015, 7, 9, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 4,
             'name' => "Coiffeur Arc-en-Ciel",
             'amount' => 39.50,
             'date' => Carbon::create(2015, 7, 9, 0),
             'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 4,
-            'name' => "Body Nature",
-            'amount' => 33.05,
-            'date' => Carbon::create(2015, 7, 30, 0),
-            'effective' => 0,
         ]);
     }
 
@@ -454,14 +494,6 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 8,
-            'name' => "Weekend à Hurdegaryp - Nourriture",
-            'amount' => 52.19,
-            'date' => Carbon::create(2015, 7, 13, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 8,
             'name' => "Weekend à Hurdegaryp - Culture & Loisirs",
             'amount' => 60,
             'date' => Carbon::create(2015, 7, 15, 0),
@@ -470,33 +502,9 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 8,
-            'name' => "Weekend à Hurdegaryp - Nourriture",
-            'amount' => 22.53,
-            'date' => Carbon::create(2015, 7, 16, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 8,
-            'name' => "Weekend à Hurdegaryp - Nourriture",
-            'amount' => 30,
-            'date' => Carbon::create(2015, 7, 16, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 8,
             'name' => "Weekend à Hurdegaryp - Essence",
             'amount' => 30.01,
             'date' => Carbon::create(2015, 7, 16, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 8,
-            'name' => "Semaine en Bretagne - Essence & Nourriture",
-            'amount' => 80,
-            'date' => Carbon::create(2015, 7, 23, 0),
             'effective' => 1,
         ]);
 
@@ -570,6 +578,14 @@ class OutcomeJuly2015TableSeeder extends Seeder
      * @return void
      */
     public function runEnvelope10() {
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Frais de déplacement Émilie (remboursement commande Body Nature)",
+            'amount' => 9.95,
+            'date' => Carbon::create(2015, 7, 9, 0),
+            'effective' => 1,
+        ]);
+
         Outcome::create([
             'envelope_id' => 10,
             'name' => "Train",
