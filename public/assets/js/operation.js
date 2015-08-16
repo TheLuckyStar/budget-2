@@ -72,17 +72,15 @@ var OperationModule = (function() {
 
     // Handle form post success
     var submitFormSuccess = function (row) {
-        RouterModule.refresh($('#account-operations-table'));
+        RouterModule.refresh($('#account-operations-table, #envelope-operations-table'));
 
         NavbarModule.refresh();
 
-        RouterModule.refresh($('#account-summary-balance'));
-        RouterModule.refresh($('#account-summary-envelopes'));
-        RouterModule.refresh($('#account-summary-events'));
+        RouterModule.refresh($('#account-summary-balance, #envelope-summary-balance'));
+        RouterModule.refresh($('#account-summary-events, #envelope-summary-events'));
 
-        RouterModule.refresh($('#account-development-monthly'));
-        RouterModule.refresh($('#account-development-yearly'));
-        RouterModule.refresh($('#account-development-envelopes'));
+        RouterModule.refresh($('#account-development-monthly, #envelope-development-monthly'));
+        RouterModule.refresh($('#account-development-yearly, #envelope-development-yearly'));
     };
 
     // Handle row initialization

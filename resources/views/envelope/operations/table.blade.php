@@ -24,7 +24,6 @@
         <thead>
             <tr>
                 <th>@lang('operation.fields.type')</th>
-                <th>@lang('operation.fields.envelope_id')</th>
                 <th>@lang('operation.fields.date')</th>
                 <th>@lang('operation.fields.name')</th>
                 <th class="text-right">@lang('operation.fields.amount')</th>
@@ -32,32 +31,16 @@
             </tr>
         </thead>
         @foreach ($operations as $operation)
-            <tr class="text-{{ $operation->context }}">
-                <td>
-                    @lang(
-                        'operation.type.'.$operation->type,
-                        ['date' => $operation->date->diffForHumans()]
-                    )
-                </td>
-                <td>{!! $operation->envelope !!}</td>
-                <td>{{ $operation->date->formatLocalized('%A %e') }}</td>
-                <td>{{ $operation->name }}</td>
-                <td class="text-right">
-                    {{ Html::formatPrice(
-                        $operation instanceof App\Outcome ? -$operation->amount : $operation->amount,
-                        true
-                    ) }}
-                </td>
-                <td class="text-right">
-                    {!! Html::linkAction(
-                        'Envelope\OperationsController@getUpdate',
-                        '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
-                        [$envelope, get_class($operation), $operation],
-                        ['class' => 'link-to-page btn btn-xs btn-primary']
-                    ) !!}
-                </td>
+            <tr id='row-{{ $operation->type }}-{{ $operation->id }}'
+                action='{{ action("Envelope\OperationsController@getUpdate", [$envelope, $operation->type, $operation]) }}'>
+                @include('envelope.operations.row')
             </tr>
         @endforeach
+        <tfoot>
+            <tr id='row-operation-new'>
+                @include('envelope.operations.add')
+            </tr>
+        </tfoot>
     </table>
     <div class="panel-footer clearfix">
         <div class='col-md-3 text-{{ $envelope->getStatusAttribute(null, $prevMonth->endOfMonth()) }}'>
