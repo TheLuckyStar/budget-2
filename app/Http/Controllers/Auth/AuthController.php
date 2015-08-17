@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use Mail;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -94,8 +95,14 @@ class AuthController extends Controller
      */
     public function postRegister(Request $request)
     {
-        return $this->postRegisterIlluminate($request)
-            ->withSuccess(trans('user.register.successMessage', ['username' => Auth::user()->name]));
+        $response = $this->postRegisterIlluminate($request);
+
+        Mail::send('emails.registration', ['user' => Auth::user()], function ($m) {
+            $m->to(Auth::user()->email, Auth::user()->name);
+            $m->subject(trans('user.register.emailSubject'));
+        });
+
+        return $response->withSuccess(trans('user.register.successMessage', ['username' => Auth::user()->name]));
     }
 
     /**

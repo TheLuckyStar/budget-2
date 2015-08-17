@@ -27,6 +27,9 @@ return [
         'title' => 'Inscription',
         'submit' => 'S\'inscrire',
         'successMessage' => 'Bonjour :username. Bienvenue dans votre application comptable.',
+        'emailSubject' => 'Bienvenue dans votre nouvelle application',
+        'emailContent' => 'Prêt à travailler votre budget ?<br>Cliquez sur le lien ci-dessous pour commencer !',
+        'emailLink' => 'Se connecter maintenant',
     ],
 
     // Lostpassword action
@@ -38,8 +41,8 @@ return [
             .'Cliquez sur ce lien pour ouvrir le formulaire où vous pourrez définir un nouveau mot de passe.',
         'submit' => 'Récupérer maintenant',
         'emailSubject' => 'Réinitialisation de votre mot de passe',
-        'emailDirections' => 'Avez-vous perdu votre mot de passe ?<br>Cliquez sur le lien ci-dessous pour un définir un nouveau !',
-        'emailButton' => 'Nouveau mot de passe',
+        'emailContent' => 'Avez-vous perdu votre mot de passe ?<br>Cliquez sur le lien ci-dessous pour un définir un nouveau !',
+        'emailLink' => 'Nouveau mot de passe',
     ],
 
     // Resetpassword action

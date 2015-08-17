@@ -27,6 +27,9 @@ return [
         'title' => 'Register',
         'submit' => 'Register now',
         'successMessage' => 'Hello :username. Welcome to your budget application.',
+        'emailSubject' => 'Welcome to your new budget app',
+        'emailContent' => 'Ready to work on your budget?<br>Click on the link below to get started!',
+        'emailLink' => 'Login now',
     ],
 
     // Lostpassword action
@@ -38,8 +41,8 @@ return [
             .'Click on it to open a form where you will be able to set a new password.',
         'submit' => 'Recover now',
         'emailSubject' => 'Your password reset link',
-        'emailDirections' => 'Have you lost your password?<br>Click on the link below to set a new one!',
-        'emailButton' => 'New password',
+        'emailContent' => 'Have you lost your password?<br>Click on the link below to set a new one!',
+        'emailLink' => 'New password',
     ],
 
     // Resetpassword action
