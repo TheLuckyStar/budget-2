@@ -42,6 +42,7 @@
     <script>
         requirejs([
             'jquery',
+            'jquery-ui',
             'bootstrap',
             'moment',
             'vendor/moment/locale/{{ App::getLocale() }}.js',
@@ -57,10 +58,12 @@
                     'assets/js/router.js',
                     'assets/js/navbar.js',
                     'assets/js/operation.js',
+                    'assets/js/allocation.js',
                 ], function () {
                     RouterModule.init();
                     NavbarModule.init();
                     OperationModule.init();
+                    AllocationModule.init();
 
                     // Load page content
                     RouterModule.refresh($('#page-wrapper'), function() {

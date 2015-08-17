@@ -51,6 +51,17 @@ return [
         ],
     ],
 
+    'allocation' => [
+        'title' => 'Répartition des revenus',
+        'sliderTitle' => 'Configuration',
+        'prevIncome' => 'Mois précédent : :amount',
+        'revenueInMonth' => 'Revenu ce mois',
+        'allocatedInMonth' => 'Alloué ce mois',
+        'unallocatedInMonth' => 'Épargné ce mois',
+        'unallocatedEndMonth' => 'Total de l\'épargne à la fin du mois',
+        'chartTitle' => 'Solde des enveloppes au :date :',
+    ],
+
     'development' => [
         'title' => 'Évolution',
     ],

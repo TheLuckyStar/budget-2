@@ -14,7 +14,8 @@
         "thomaspark/bootswatch": "^3.3",
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "select2/select2": "^4.0",
-        "eonasdan/bootstrap-datetimepicker": "^4.15"
+        "eonasdan/bootstrap-datetimepicker": "^4.15",
+        "components/jqueryui": "^1.11"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -63,6 +64,7 @@
             "scripts": [
             ],
             "styles": [
+                "public/vendor/jquery-ui/themes/base/jquery-ui.min.css",
                 "public/vendor/bootswatch/flatly/bootstrap.min.css",
                 "public/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css",
                 "public/assets/css/fontawesome-iconpicker.min.css",

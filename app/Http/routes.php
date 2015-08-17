@@ -79,16 +79,17 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
             Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
 
             // Account pages
-            Route::controller('account/summary', 'Account\SummaryController'); // Render account summary pages
-            Route::controller('account/operation', 'Account\OperationsController'); // Render account operation pages
-            Route::controller('account/development', 'Account\DevelopmentController'); // Render account development pages
+            Route::controller('account/summary', 'Account\SummaryController'); // Render account summary page
+            Route::controller('account/operation', 'Account\OperationsController'); // Render account operation page
+            Route::controller('account/allocation', 'Account\AllocationController'); // Render account allocation page
+            Route::controller('account/development', 'Account\DevelopmentController'); // Render account development page
             Route::controller('account', 'AccountController'); // Render main account page
 
             // Envelope pages
-            Route::controller('envelope/summary', 'Envelope\SummaryController'); // Render envelope summary pages
-            Route::controller('envelope/operation', 'Envelope\OperationsController'); // Render envelope operation pages
-            Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Render envelope development pages
-            Route::controller('envelope', 'EnvelopeController'); // Render main envelope pages
+            Route::controller('envelope/summary', 'Envelope\SummaryController'); // Render envelope summary page
+            Route::controller('envelope/operation', 'Envelope\OperationsController'); // Render envelope operation page
+            Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Render envelope development page
+            Route::controller('envelope', 'EnvelopeController'); // Render main envelope page
         });
 
     });

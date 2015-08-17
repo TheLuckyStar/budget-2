@@ -12,6 +12,12 @@ class Income extends Model
     use HasEvents;
 
     /**
+     * The attributes that are mass assignable.
+     * @var array
+     */
+    protected $fillable = ['amount', 'date'];
+
+    /**
      * The attributes that should be mutated to dates.
      * @var array
      */

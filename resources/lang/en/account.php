@@ -52,6 +52,12 @@ return [
         ],
     ],
 
+    'allocation' => [
+        'title' => 'Income allocation',
+        'sliderTitle' => 'Settings',
+        'chartTitle' => 'Envelope balances at :date',
+    ],
+
     'development' => [
         'title' => 'Development',
     ],

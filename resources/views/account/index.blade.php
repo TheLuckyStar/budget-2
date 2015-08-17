@@ -71,6 +71,14 @@
             </li>
             <li role="presentation">
                 {!! Html::link(
+                    '#allocation',
+                    '<i class="fa fa-fw fa-sliders"></i> '
+                        .trans('account.allocation.title'),
+                    ['aria-controls' => 'allocation', 'role' => 'tab', 'data-toggle' => 'tab']
+                ) !!}
+            </li>
+            <li role="presentation">
+                {!! Html::link(
                     '#development',
                     '<i class="fa fa-fw fa-area-chart"></i> '
                         .trans('account.development.title'),
@@ -89,6 +97,9 @@
             <div role="tabpanel" class="tab-pane row" id="operations">
                 <div class='col-md-12' id='account-operations-table' data-url='{{ action('Account\OperationsController@getTable', $account) }}'></div>
             </div>
+            <div role="tabpanel" class="tab-pane row" id="allocation">
+                <div class='col-md-12' id='account-allocation-sliders' data-url='{{ action('Account\AllocationController@getSliders', $account) }}'></div>
+            </div>
             <div role="tabpanel" class="tab-pane row" id="development">
                 <div class='col-md-12' id='account-development-monthly' data-url='{{ action('Account\DevelopmentController@getMonthly', $account) }}'></div>
                 <div class='col-md-12' id='account-development-yearly' data-url='{{ action('Account\DevelopmentController@getYearly', $account) }}'></div>
@@ -104,10 +115,12 @@
             RouterModule.refresh($('#account-summary-envelopes'), function() {
                 RouterModule.refresh($('#account-summary-users'), function() {
                     RouterModule.refresh($('#account-summary-events'), function() {
-                        RouterModule.refresh($('#account-operations-table'), function() {
-                            RouterModule.refresh($('#account-development-monthly'), function() {
-                                RouterModule.refresh($('#account-development-yearly'), function() {
-                                    RouterModule.refresh($('#account-development-envelopes'));
+                        RouterModule.refresh($('#account-allocation-sliders'), function() {
+                            RouterModule.refresh($('#account-operations-table'), function() {
+                                RouterModule.refresh($('#account-development-monthly'), function() {
+                                    RouterModule.refresh($('#account-development-yearly'), function() {
+                                        RouterModule.refresh($('#account-development-envelopes'));
+                                    });
                                 });
                             });
                         });
