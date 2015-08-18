@@ -56,14 +56,16 @@
                             @endif
                         </div>
 
-                        <div class="col-sm-12 control-checkbox {{ $errors->has('remember') ? 'has-error' : '' }}">
-                            {!! Form::checkbox(
-                                'remember',
-                                1,
-                                null,
-                                ['id' => 'checkbox-remember']
-                            ) !!}
-                            @lang('user.fields.remember')
+                        <div class="col-sm-12 control-checkbox text-right {{ $errors->has('remember') ? 'has-error' : '' }}">
+                            <label>
+                                @lang('user.fields.remember')
+                                {!! Form::checkbox(
+                                    'remember',
+                                    1,
+                                    null,
+                                    ['id' => 'checkbox-remember']
+                                ) !!}
+                            </label>
                             @if ($errors->has('remember'))
                                 {!! Html::ul($errors->get('remember'), ['class' => 'help-block text-right']) !!}
                             @endif
