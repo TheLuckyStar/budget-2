@@ -73,9 +73,10 @@
                                 id="slider-income-{{ $envelope->id }}"
                                 data-label="{{ $envelope->name }}"
                                 data-value="{{ isset($incomes[$envelope->id]) ? $incomes[$envelope->id] : 0 }}"
-                                data-max="{{ $maxIncome }}"
                                 data-target="#input-income-{{ $envelope->id }}"
                                 ></div>
+                            <div class='small pull-right'></div>
+                            <div class='small'>{{ Html::formatPrice(0) }}</div>
                         </div>
 
                     </div>
@@ -86,30 +87,51 @@
 
                 <div class="well">
                     @lang('account.allocation.revenueInMonth') :
-                    <strong class='pull-right'>
-                        {{ Html::formatPrice($account->getRevenueAttribute($startOfMonth, $endOfMonth)) }}
+                    <strong class='pull-right'
+                        id='allocation-sliders-revenueInMonth'
+                        data-amount='{{ $revenue }}'>
+                        {{ Html::formatPrice($revenue) }}
                     </strong>
                 </div>
 
                 <div class="well">
                     @lang('account.allocation.allocatedInMonth') :
-                    <strong class="pull-right">
-                        {{ Html::formatPrice($account->getAllocatedRevenueAttribute($startOfMonth, $endOfMonth)) }}
-                    </strong>
+                    <strong class="pull-right"
+                        id='allocation-sliders-allocatedInMonth'></strong>
                 </div>
 
                 <div class="well">
-                    @lang('account.allocation.unallocatedInMonth') :
-                    <strong class="pull-right">
-                        {{ Html::formatPrice($account->getUnallocatedRevenueAttribute($startOfMonth, $endOfMonth)) }}
-                    </strong>
-                </div>
-
-                <div class="well">
-                    @lang('account.allocation.unallocatedEndMonth') :
-                    <strong class="pull-right">
-                        {{ Html::formatPrice($account->getUnallocatedRevenueAttribute(null, $endOfMonth)) }}
-                    </strong>
+                    <div class='row'>
+                        <div class='col-md-4'>
+                            <div class='col-md-12 col-sm-8'>
+                                @lang('account.allocation.unallocatedRevenueAt',
+                                    ['date' => $prevMonth->format('d/m/Y')])
+                            </div>
+                            <div class='col-md-12 col-sm-4 text-right'
+                                id='allocation-sliders-unallocatedRevenueBeforeMonth'
+                                data-amount="{{ $unallocatedRevenueBeforeMonth }}">
+                                <strong>
+                                    {{ Html::formatPrice($unallocatedRevenueBeforeMonth) }}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class='col-md-4'>
+                            <div class='col-md-12 col-sm-8'>
+                                @lang('account.allocation.unallocatedRevenueMonth')
+                            </div>
+                            <div class='col-md-12 col-sm-4 text-right'
+                                id='allocation-sliders-unallocatedRevenueMonth'
+                                data-amount="{{ $unallocatedRevenueMonth }}"></div>
+                        </div>
+                        <div class='col-md-4'>
+                            <div class='col-md-12 col-sm-8'>
+                                @lang('account.allocation.unallocatedRevenueAt',
+                                    ['date' => $endOfMonth->format('d/m/Y')])
+                            </div>
+                            <div class='col-md-12 col-sm-4 text-right'
+                                id='allocation-sliders-unallocatedRevenueAfterMonth'></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-12">
