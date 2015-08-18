@@ -296,6 +296,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 14, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 25,
+            'date' => Carbon::create(2015, 8, 17, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
