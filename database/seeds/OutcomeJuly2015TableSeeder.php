@@ -46,7 +46,7 @@ class OutcomeJuly2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 1,
             'name' => "Assurance habitation",
-            'amount' => 25.66,
+            'amount' => 16.25,
             'date' => Carbon::create(2015, 7, 6, 0),
             'effective' => 1,
         ]);
@@ -109,7 +109,7 @@ class OutcomeJuly2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 2,
             'name' => "Assurance voiture",
-            'amount' => 25.66,
+            'amount' => 32.26,
             'date' => Carbon::create(2015, 7, 6, 0),
             'effective' => 1,
         ]);
@@ -395,7 +395,7 @@ class OutcomeJuly2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 4,
             'name' => "Mutuelle Delphine",
-            'amount' => 51.31,
+            'amount' => 54.12,
             'date' => Carbon::create(2015, 7, 6, 0),
             'effective' => 1,
         ]);

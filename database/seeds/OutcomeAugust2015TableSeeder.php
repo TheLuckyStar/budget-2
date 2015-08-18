@@ -37,7 +37,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 1,
             'name' => "Assurance habitation",
-            'amount' => 25.66,
+            'amount' => 16.25,
             'date' => Carbon::create(2015, 8, 5, 0),
             'effective' => 1,
         ]);
@@ -76,7 +76,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 2,
             'name' => "Assurance voiture",
-            'amount' => 25.66,
+            'amount' => 32.26,
             'date' => Carbon::create(2015, 8, 5, 0),
             'effective' => 1,
         ]);
@@ -86,6 +86,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Essence",
             'amount' => 58,
             'date' => Carbon::create(2015, 8, 7, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 2,
+            'name' => "Abonnement Transpole Simon",
+            'amount' => 28,
+            'date' => Carbon::create(2015, 8, 18, 0),
             'effective' => 1,
         ]);
     }
@@ -167,6 +175,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 12, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "@TODO Chèque à vérifier",
+            'amount' => 26.60,
+            'date' => Carbon::create(2015, 8, 18, 0),
+            'effective' => 0,
+        ]);
     }
 
     /**
@@ -186,7 +202,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
         Outcome::create([
             'envelope_id' => 4,
             'name' => "Mutuelle Delphine",
-            'amount' => 51.31,
+            'amount' => 54.12,
             'date' => Carbon::create(2015, 8, 5, 0),
             'effective' => 1,
         ]);
