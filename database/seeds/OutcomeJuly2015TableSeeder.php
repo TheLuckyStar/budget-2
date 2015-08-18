@@ -543,34 +543,11 @@ class OutcomeJuly2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Épargne" on account "Compte joint".
+     * Run the database seed for envelope "Impôts" on account "Compte joint".
      *
      * @return void
      */
     public function runEnvelope9() {
-        Outcome::create([
-            'envelope_id' => 9,
-            'name' => "Virement vers le CEL",
-            'amount' => 1000,
-            'date' => Carbon::create(2015, 7, 3, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 9,
-            'name' => "Virement vers le Livret Agir",
-            'amount' => 10,
-            'date' => Carbon::create(2015, 7, 15, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 9,
-            'name' => "Virement vers le PEL",
-            'amount' => 45,
-            'date' => Carbon::create(2015, 7, 15, 0),
-            'effective' => 1,
-        ]);
     }
 
     /**

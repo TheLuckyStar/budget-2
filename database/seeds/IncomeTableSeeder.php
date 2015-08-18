@@ -13,9 +13,14 @@ class IncomeTableSeeder extends Seeder
      */
     public function run()
     {
+        Income::create([
+            'envelope_id' => 9,
+            'amount' => 524,
+            'date' => Carbon::create(2015, 8, 1, 0),
+        ]);
+
         $this->runAccount1(Carbon::create(2015, 7, 1, 0));
         $this->runAccount1(Carbon::create(2015, 8, 1, 0));
-        $this->runAccount2();
     }
 
     /**
@@ -84,14 +89,5 @@ class IncomeTableSeeder extends Seeder
             'amount' => 200,
             'date' => $date,
         ]);
-    }
-
-    /**
-     * Run the database seed for account "Vacances en Écosse".
-     *
-     * @return void
-     */
-    public function runAccount2()
-    {
     }
 }

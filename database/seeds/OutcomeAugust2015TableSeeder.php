@@ -26,7 +26,6 @@ class OutcomeAugust2015TableSeeder extends Seeder
         $this->runEnvelope11();
         $this->runEnvelope12();
         $this->runEnvelope13();
-        $this->runEnvelope14();
     }
 
     /**
@@ -254,7 +253,7 @@ class OutcomeAugust2015TableSeeder extends Seeder
     }
 
     /**
-     * Run the database seed for envelope "Épargne" on account "Compte joint".
+     * Run the database seed for envelope "Impôts" on account "Compte joint".
      *
      * @return void
      */
@@ -264,14 +263,6 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Paiement RSI",
             'amount' => 524,
             'date' => Carbon::create(2015, 8, 3, 0),
-            'effective' => 1,
-        ]);
-
-        Outcome::create([
-            'envelope_id' => 9,
-            'name' => "Virement vers le CEL",
-            'amount' => 1000,
-            'date' => Carbon::create(2015, 8, 5, 0),
             'effective' => 1,
         ]);
     }

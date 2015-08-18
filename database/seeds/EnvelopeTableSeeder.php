@@ -13,7 +13,7 @@ class EnvelopeTableSeeder extends Seeder
     public function run()
     {
         $this->runAccount1();
-        $this->runAccount2();
+        $this->runAccount5();
     }
 
     /**
@@ -72,9 +72,9 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 1,
-            'name' => 'Épargne',
-            'icon' => 'fa-gift',
-        ])->delete();
+            'name' => 'Impôts',
+            'icon' => 'fa-university',
+        ]);
 
         Envelope::create([
             'account_id' => 1,
@@ -88,28 +88,28 @@ class EnvelopeTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runAccount2()
+    public function runAccount5()
     {
         Envelope::create([
-            'account_id' => 2,
+            'account_id' => 5,
             'name' => 'Logement',
             'icon' => 'fa-home',
         ]);
 
         Envelope::create([
-            'account_id' => 2,
+            'account_id' => 5,
             'name' => 'Transport',
             'icon' => 'fa-car',
         ]);
 
         Envelope::create([
-            'account_id' => 2,
+            'account_id' => 5,
             'name' => 'Quotidien',
             'icon' => 'fa-cutlery',
         ]);
 
         Envelope::create([
-            'account_id' => 2,
+            'account_id' => 5,
             'name' => 'Sorties',
             'icon' => 'fa-book',
         ]);

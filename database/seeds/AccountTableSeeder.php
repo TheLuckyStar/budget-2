@@ -1,6 +1,7 @@
 <?php
 
 use App\Account;
+use App\Revenue;
 use Illuminate\Database\Seeder;
 
 class AccountTableSeeder extends Seeder
@@ -14,6 +15,9 @@ class AccountTableSeeder extends Seeder
     {
         $this->runAccount1();
         $this->runAccount2();
+        $this->runAccount3();
+        $this->runAccount4();
+        $this->runAccount5();
     }
 
     /**
@@ -27,6 +31,71 @@ class AccountTableSeeder extends Seeder
             'name' => 'Compte joint',
         ]);
 
+        $revenue = new Revenue([
+            'amount' => 415.64,
+        ]);
+        $account->revenues()->save($revenue);
+
+        $account->owner()->attach(1, ['owner' => 1]);
+        $account->guests()->attach(2, ['owner' => 0]);
+    }
+
+    /**
+     * Run the database seed for account "Livret Agir".
+     *
+     * @return void
+     */
+    public function runAccount2()
+    {
+        $account = Account::create([
+            'name' => 'Livret Agir',
+        ]);
+
+        $revenue = new Revenue([
+            'amount' => 290.14,
+        ]);
+        $account->revenues()->save($revenue);
+
+        $account->owner()->attach(1, ['owner' => 1]);
+        $account->guests()->attach(2, ['owner' => 0]);
+    }
+
+    /**
+     * Run the database seed for account "CEL".
+     *
+     * @return void
+     */
+    public function runAccount3()
+    {
+        $account = Account::create([
+            'name' => 'CEL',
+        ]);
+
+        $revenue = new Revenue([
+            'amount' => 3500,
+        ]);
+        $account->revenues()->save($revenue);
+
+        $account->owner()->attach(1, ['owner' => 1]);
+        $account->guests()->attach(2, ['owner' => 0]);
+    }
+
+    /**
+     * Run the database seed for account "PEL".
+     *
+     * @return void
+     */
+    public function runAccount4()
+    {
+        $account = Account::create([
+            'name' => 'PEL',
+        ]);
+
+        $revenue = new Revenue([
+            'amount' => 18510,
+        ]);
+        $account->revenues()->save($revenue);
+
         $account->owner()->attach(1, ['owner' => 1]);
         $account->guests()->attach(2, ['owner' => 0]);
     }
@@ -36,7 +105,7 @@ class AccountTableSeeder extends Seeder
      *
      * @return void
      */
-    public function runAccount2()
+    public function runAccount5()
     {
         $account = Account::create([
             'name' => 'Vacances en Écosse',
