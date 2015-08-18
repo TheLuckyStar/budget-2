@@ -1,25 +1,24 @@
 <?php namespace App;
 
-use App\Collections\OperationCollection;
-use App\Services\Eloquent\HasEvents;
+use App\Operation;
 use Html;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transfer extends Model
+class Transfer extends Operation
 {
-    use HasEvents;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['from_account_id', 'to_account_id', 'amount', 'date'];
+    protected $fillable = ['from_account_id', 'to_account_id', 'name', 'amount', 'date'];
 
     /**
      * The attributes that should be mutated to dates.
      * @var array
      */
-    protected $dates = ['date', 'created_at', 'updated_at'];
+    protected $dates = ['date', 'created_at', 'updated_at', 'deleted_at'];
 
     /**
      * The attributes that should be casted to native types.
@@ -30,22 +29,13 @@ class Transfer extends Model
     ];
 
     /**
-     * Create a new Eloquent Collection instance.
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new OperationCollection($models);
-    }
-
-    /**
      * Array of field name to watch for changed on updated event
      * @var [type]
      */
     protected $watchedFieldInEvent = [
         'from_account_id',
         'to_account_id',
+        'name',
         'amount',
         'date',
     ];
@@ -57,6 +47,7 @@ class Transfer extends Model
     public function __toString()
     {
         return trans('operation.object.transfer', [
+            'name' => $this->name,
             'amount' => Html::formatPrice($this->amount),
             'date' => $this->date->formatLocalized('%B %Y'),
             'from_account' => $this->fromAccount,
@@ -65,11 +56,12 @@ class Transfer extends Model
     }
 
     // public function link() {
-    //     return Html::linkAction('AccountController@getView', $this, $this->fromAccount, ['class' => 'link-to-page']);
+    //     return Html::linkAction('AccountController@getIndex', $this, $this->account, ['class' => 'link-to-page']);
     // }
 
-    // public function getAmountSymbolAttribute() {
-    //     return '+';
+    // public function account() {
+    //     return $this->belongsTo('App\Account')
+    //         ->withTrashed();
     // }
 
     // public function getContextAttribute() {

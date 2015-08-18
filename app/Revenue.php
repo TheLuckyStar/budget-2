@@ -1,16 +1,12 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use App\Collections\OperationCollection;
-use App\Services\Eloquent\HasEvents;
+use App\Operation;
 use Html;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Revenue extends Model
+class Revenue extends Operation
 {
-    use HasEvents, SoftDeletes;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -31,16 +27,6 @@ class Revenue extends Model
     protected $casts = [
         'amount' => 'float',
     ];
-
-    /**
-     * Create a new Eloquent Collection instance.
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new OperationCollection($models);
-    }
 
     /**
      * Array of field name to watch for changed on updated event
@@ -73,10 +59,6 @@ class Revenue extends Model
     public function account() {
         return $this->belongsTo('App\Account')
             ->withTrashed();
-    }
-
-    public function getAmountSymbolAttribute() {
-        return '+';
     }
 
     public function getContextAttribute() {

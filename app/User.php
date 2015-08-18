@@ -43,8 +43,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->withTrashed()
             ->withPivot('owner')
             ->withTimestamps()
-            ->orderBy('owner', 'desc')
-            ->orderBy('name');
+            // ->orderBy('owner', 'desc')
+            // ->orderBy('name')
+            ;
     }
 
     public function trashedAccounts() {

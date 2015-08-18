@@ -33,7 +33,7 @@ class OperationsController extends Controller
 
     public function getRow($envelope_id, $operation_type, $operation_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
 
         $data = [
             'envelope' => $envelope,
@@ -63,7 +63,7 @@ class OperationsController extends Controller
 
     public function getUpdate($envelope_id, $operation_type, $operation_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
 
         $data = [
             'envelope' => $envelope,
@@ -75,7 +75,7 @@ class OperationsController extends Controller
 
     public function postUpdate(Request $request, $envelope_id, $operation_type, $operation_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
@@ -94,7 +94,7 @@ class OperationsController extends Controller
 
     public function postDelete(Request $request, $envelope_id, $operation_type, $operation_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
 
         $operation->delete();
     }

@@ -1,27 +1,15 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use App\Collections\OperationCollection;
-use App\Services\Eloquent\HasEvents;
+use App\Operation;
 use Html;
-use Illuminate\Database\Eloquent\Model;
 
-class Income extends Model
+class Income extends Operation
 {
-    use HasEvents;
-
     /**
      * The attributes that are mass assignable.
      * @var array
      */
     protected $fillable = ['amount', 'date'];
-
-    /**
-     * The attributes that should be mutated to dates.
-     * @var array
-     */
-    protected $dates = ['date', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be casted to native types.
@@ -30,16 +18,6 @@ class Income extends Model
     protected $casts = [
         'amount' => 'float',
     ];
-
-    /**
-     * Create a new Eloquent Collection instance.
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new OperationCollection($models);
-    }
 
     /**
      * Array of field name to watch for changed on updated event
@@ -69,10 +47,6 @@ class Income extends Model
     public function envelope() {
         return $this->belongsTo('App\Envelope')
             ->withTrashed();
-    }
-
-    public function getAmountSymbolAttribute() {
-        return '+';
     }
 
     public function getContextAttribute() {

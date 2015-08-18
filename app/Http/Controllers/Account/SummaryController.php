@@ -16,22 +16,26 @@ class SummaryController extends Controller
         $from = Carbon::now()->startOfMonth();
         $to = Carbon::now()->endOfMonth();
 
+        $revenue = $account->revenues()->inPeriod($from, $to)->sum('amount');
+        $income = $account->incomes()->inPeriod($from, $to)->sum('amount');
+        $unallocatedRevenue = max(0, $revenue - $income);
+
         $data = [
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $account->getEffectiveOutcomeAttribute($from, $to),
+                'value' => $account->outcomes()->effective()->inPeriod($from, $to)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $account->getIntendedOutcomeAttribute($from, $to),
+                'value' => $account->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.unallocatedRevenue'),
-                'value' => $account->getUnallocatedRevenueAttribute($from, $to),
+                'value' => $unallocatedRevenue,
             ],
             [
                 'label' => trans('operation.type.allocatedRevenue'),
-                'value' => $account->getAllocatedRevenueAttribute($from, $to),
+                'value' => $account->incomes()->inPeriod($from, $to)->sum('amount'),
             ],
         ];
 

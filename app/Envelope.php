@@ -87,15 +87,27 @@ class Envelope extends Model
             ->orderBy('date');
     }
 
-    public function operationsInPeriod($start, $end) {
+    public function operationType($type) {
+        if ($type === 'effectiveOutcome') {
+            return $this->outcomes()->effective();
+        }
+
+        if ($type === 'intendedOutcome') {
+            return $this->outcomes()->intended();
+        }
+
+        return $this->{$type.'s'}();
+    }
+
+    public function operationsInPeriod($from, $to) {
         $operations = new OperationCollection();
 
-        $incomes = $this->incomes()->whereBetween('date', [$start, $end])->get();
+        $incomes = $this->incomes()->inPeriod($from, $to)->get();
         foreach ($incomes as $income) {
             $operations->push($income);
         }
 
-        $outcomes = $this->outcomes()->whereBetween('date', [$start, $end])->get();
+        $outcomes = $this->outcomes()->inPeriod($from, $to)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
         }
@@ -103,73 +115,9 @@ class Envelope extends Model
         return $operations;
     }
 
-    public function intendedOutcomes() {
-        return $this->outcomes()->where('effective', 0);
-    }
-
-    public function effectiveOutcomes() {
-        return $this->outcomes()->where('effective', 1);
-    }
-
-    public function getIncomeAttribute($from = null, $to = null) {
-        $income = $this->incomes();
-
-        if ($from instanceof Carbon) {
-            $income->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $income->where('date', '<=', $to);
-        }
-
-        return floatval($income->sum('amount'));
-    }
-
-    public function getOutcomeAttribute($from = null, $to = null) {
-        $outcome = $this->outcomes();
-
-        if ($from instanceof Carbon) {
-            $outcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $outcome->where('date', '<=', $to);
-        }
-
-        return floatval($outcome->sum('amount'));
-    }
-
-    public function getIntendedOutcomeAttribute($from = null, $to = null) {
-        $intendedOutcome = $this->intendedOutcomes();
-
-        if ($from instanceof Carbon) {
-            $intendedOutcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $intendedOutcome->where('date', '<=', $to);
-        }
-
-        return floatval($intendedOutcome->sum('amount'));
-    }
-
-    public function getEffectiveOutcomeAttribute($from = null, $to = null) {
-        $effectiveOutcome = $this->effectiveOutcomes();
-
-        if ($from instanceof Carbon) {
-            $effectiveOutcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $effectiveOutcome->where('date', '<=', $to);
-        }
-
-        return floatval($effectiveOutcome->sum('amount'));
-    }
-
     public function getBalanceAttribute($from = null, $to = null) {
-        $income = $this->getIncomeAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
+        $income = $this->incomes()->inPeriod($from, $to)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
 
         $balance = $income - $outcome;
 
@@ -177,20 +125,20 @@ class Envelope extends Model
     }
 
     public function getStatusAttribute($from = null, $to = null) {
-        $income = $this->getIncomeAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
+        $income = $this->incomes()->inPeriod($from, $to)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
 
         if ($income == 0) {
             return $outcome ? 'danger' : 'warning';
         }
 
-        $ratio = $outcome / $income * 100;
+        $ratio = $outcome / $income;
 
-        if ($ratio >= 100) {
+        if ($ratio > 1) {
             return 'danger';
         }
 
-        if ($ratio > 75) {
+        if ($ratio > 0.8) {
             return 'warning';
         }
 

@@ -108,6 +108,16 @@ class Account extends Model
             ->orderBy('name');
     }
 
+    public function incomingTransfers() {
+        return $this->hasMany('App\Transfer', 'to_account_id')
+            ->orderBy('date');
+    }
+
+    public function outgoingTransfers() {
+        return $this->hasMany('App\Transfer', 'from_account_id')
+            ->orderBy('date');
+    }
+
     public function outcomes() {
         return Outcome::whereIn('envelope_id', function ($query) {
             $query->select('id')->from('envelopes')->where('account_id', $this->id);
@@ -120,28 +130,32 @@ class Account extends Model
         })->orderBy('incomes.date');
     }
 
-    public function intendedOutcomes() {
-        return $this->outcomes()->where('effective', 0);
-    }
-
-    public function effectiveOutcomes() {
-        return $this->outcomes()->where('effective', 1);
-    }
-
     public function revenues() {
         return $this->hasMany('App\Revenue')
             ->orderBy('date');
     }
 
+    public function operationType($type) {
+        if ($type === 'effectiveOutcome') {
+            return $this->outcomes()->effective();
+        }
+
+        if ($type === 'intendedOutcome') {
+            return $this->outcomes()->intended();
+        }
+
+        return $this->{$type.'s'}();
+    }
+
     public function operationsInPeriod($from, $to) {
         $operations = new OperationCollection();
 
-        $revenues = $this->revenues()->whereBetween('date', [$from, $to])->get();
+        $revenues = $this->revenues()->inPeriod($from, $to)->get();
         foreach ($revenues as $revenue) {
             $operations->push($revenue);
         }
 
-        $outcomes = $this->outcomes()->whereBetween('date', [$from, $to])->get();
+        $outcomes = $this->outcomes()->inPeriod($from, $to)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
         }
@@ -149,118 +163,21 @@ class Account extends Model
         return $operations->sortBy('date');
     }
 
-    public function getRevenueAttribute($from = null, $to = null) {
-        $revenue = $this->revenues();
-
-        if ($from instanceof Carbon) {
-            $revenue->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $revenue->where(function ($query) use($to) {
-                $query->where('date', '<=', $to);
-                $query->orWhere('date', null);
-            });
-        }
-
-        return floatval($revenue->sum('amount'));
-    }
-
-    public function getAllocatedRevenueAttribute($from = null, $to = null) {
-        $allocatedRevenue = $this->incomes();
-
-        if ($from instanceof Carbon) {
-            $allocatedRevenue->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $allocatedRevenue->where('date', '<=', $to);
-        }
-
-        return floatval($allocatedRevenue->sum('amount'));
-    }
-
-    public function getUnallocatedRevenueAttribute($from = null, $to = null) {
-        $revenue = $this->getRevenueAttribute($from, $to);
-        $allocatedRevenue = $this->getAllocatedRevenueAttribute($from, $to);
-
-        $unallocatedRevenue = max(0, $revenue - $allocatedRevenue);
-
-        return floatval($unallocatedRevenue);
-    }
-
-    public function getOutcomeAttribute($from = null, $to = null) {
-        $outcome = $this->outcomes();
-
-        if ($from instanceof Carbon) {
-            $outcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $outcome->where('date', '<=', $to);
-        }
-
-        return floatval($outcome->sum('amount'));
-    }
-
-    public function getIntendedOutcomeAttribute($from = null, $to = null) {
-        $intendedOutcome = $this->intendedOutcomes();
-
-        if ($from instanceof Carbon) {
-            $intendedOutcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $intendedOutcome->where('date', '<=', $to);
-        }
-
-        return floatval($intendedOutcome->sum('amount'));
-    }
-
-    public function getEffectiveOutcomeAttribute($from = null, $to = null) {
-        $effectiveOutcome = $this->effectiveOutcomes();
-
-        if ($from instanceof Carbon) {
-            $effectiveOutcome->where('date', '>=', $from);
-        }
-
-        if ($to instanceof Carbon) {
-            $effectiveOutcome->where('date', '<=', $to);
-        }
-
-        return floatval($effectiveOutcome->sum('amount'));
-    }
-
     public function getBalanceAttribute($from = null, $to = null) {
-        $revenue = $this->getRevenueAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
+        $revenue = $this->revenues()->inPeriod($from, $to)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
 
-        $balance = $revenue - $outcome;
+        $incomingTransfer = $this->incomingTransfers()->inPeriod($from, $to)->sum('amount');
+        $outgoingTransfer = $this->outgoingTransfers()->inPeriod($from, $to)->sum('amount');
 
-        return floatval($balance);
-    }
-
-    public function getAllocatedBalanceAttribute($from = null, $to = null) {
-        $revenue = $this->getAllocatedRevenueAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
-
-        $balance = $revenue - $outcome;
-
-        return floatval($balance);
-    }
-
-    public function getUnallocatedBalanceAttribute($from = null, $to = null) {
-        $revenue = $this->getUnallocatedRevenueAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
-
-        $balance = max(0, $revenue - $outcome);
+        $balance = $revenue + $incomingTransfer - $outcome - $outgoingTransfer;
 
         return floatval($balance);
     }
 
     public function getStatusAttribute($from = null, $to = null) {
-        $revenue = $this->getRevenueAttribute($from, $to);
-        $outcome = $this->getOutcomeAttribute($from, $to);
+        $revenue = $this->revenues()->inPeriod($from, $to)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
 
         if ($revenue == 0) {
             return $outcome ? 'danger' : 'warning';

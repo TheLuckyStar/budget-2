@@ -71,14 +71,14 @@ class DevelopmentController extends Controller
     public function getData($account, $from, $to) {
         $balance = $account->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
 
-        $revenue = $account->getRevenueAttribute($from, $to);
+        $revenue = $account->revenues()->inPeriod($from, $to)->sum('amount');
         if ($balance > 0) {
             $revenue += $balance;
         }
 
-        $allocatedRevenue = $account->getAllocatedRevenueAttribute($from, $to);
+        $allocatedRevenue = $account->incomes()->inPeriod($from, $to)->sum('amount');
 
-        $outcome = $account->getOutcomeAttribute($from, $to);
+        $outcome = $account->outcomes()->inPeriod($from, $to)->sum('amount');
         if ($balance < 0) {
             $outcome += $balance;
         }

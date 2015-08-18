@@ -70,12 +70,12 @@ class DevelopmentController extends Controller
     public function getData($envelope, $from, $to) {
         $balance = $envelope->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
 
-        $income = $envelope->getIncomeAttribute($from, $to);
+        $income = $envelope->incomes()->inPeriod($from, $to)->sum('amount');
         if ($balance > 0) {
             $income += $balance;
         }
 
-        $outcome = $envelope->getOutcomeAttribute($from, $to);
+        $outcome = $envelope->outcomes()->inPeriod($from, $to)->sum('amount');
         if ($balance < 0) {
             $outcome += $balance;
         }

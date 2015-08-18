@@ -22,6 +22,11 @@ class OperationsController extends Controller
 
         $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
 
+        foreach ($operations as $operation) {
+            if (is_null($operation->date))
+                var_dump($operation->toArray());
+        }
+
         $data = [
             'account' => $account,
             'operations' => $operations,
@@ -35,7 +40,7 @@ class OperationsController extends Controller
 
     public function getRow($account_id, $operation_type, $operation_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
 
         $data = [
             'account' => $account,
@@ -75,7 +80,7 @@ class OperationsController extends Controller
 
     public function getUpdate($account_id, $operation_type, $operation_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
 
         $data = [
             'account' => $account,
@@ -88,7 +93,7 @@ class OperationsController extends Controller
     public function postUpdate(Request $request, $account_id, $operation_type, $operation_id) {
 
         $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
 
         $this->validate($request, [
             'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
@@ -118,7 +123,7 @@ class OperationsController extends Controller
 
     public function postDelete(Request $request, $account_id, $operation_type, $operation_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->{$operation_type.'s'}()->findOrFail($operation_id);
+        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
 
         $operation->delete();
     }

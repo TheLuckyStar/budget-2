@@ -18,15 +18,15 @@ class SummaryController extends Controller
         $chartData = [
             [
                 'label' => trans('operation.type.income'),
-                'value' => $envelope->getIncomeAttribute($from, $to),
+                'value' => $envelope->incomes()->inPeriod($from, $to)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $envelope->getIntendedOutcomeAttribute($from, $to),
+                'value' => $envelope->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $envelope->getEffectiveOutcomeAttribute($from, $to),
+                'value' => $envelope->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
             ],
         ];
 

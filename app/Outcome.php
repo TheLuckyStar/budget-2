@@ -1,17 +1,12 @@
-<?php
+<?php namespace App;
 
-namespace App;
-
-use App\Collections\OperationCollection;
-use App\Services\Eloquent\HasEvents;
-use Carbon\Carbon;
+use App\Operation;
 use Html;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Outcome extends Model
+class Outcome extends Operation
 {
-    use HasEvents, SoftDeletes;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -34,16 +29,6 @@ class Outcome extends Model
         'amount' => 'float',
         'effective' => 'integer',
     ];
-
-    /**
-     * Create a new Eloquent Collection instance.
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function newCollection(array $models = [])
-    {
-        return new OperationCollection($models);
-    }
 
     /**
      * Array of field name to watch for changed on updated event
@@ -80,8 +65,12 @@ class Outcome extends Model
             ->withTrashed();
     }
 
-    public function getAmountSymbolAttribute() {
-        return '-';
+    public function scopeEffective($query) {
+        return $query->where('effective', 1);
+    }
+
+    public function scopeIntended($query) {
+        return $query->where('effective', 0);
     }
 
     public function getContextAttribute() {

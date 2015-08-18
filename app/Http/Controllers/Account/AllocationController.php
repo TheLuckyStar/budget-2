@@ -24,9 +24,15 @@ class AllocationController extends Controller
         $prevMonth = $month->copy()->subMonth()->endOfMonth();
         $nextMonth = $month->copy()->addMonth()->startOfMonth();
 
-        $revenue = $account->getRevenueAttribute($startOfMonth, $endOfMonth);
-        $unallocatedRevenueBeforeMonth = $account->getUnallocatedRevenueAttribute(null, $prevMonth);
-        $unallocatedRevenueMonth = $account->getUnallocatedRevenueAttribute($startOfMonth, $endOfMonth);
+        $revenue = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $revenue = $account->revenues()->inPeriod(null, $prevMonth)->sum('amount');
+        $income = $account->incomes()->inPeriod(null, $prevMonth)->sum('amount');
+        $unallocatedRevenueBeforeMonth = max(0, $revenue - $income);
+
+        $revenue = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $revenue = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $income = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $unallocatedRevenueMonth = max(0, $revenue - $income);
 
         $incomes = $account->incomes()
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
