@@ -35,7 +35,6 @@ return [
         'successMessage' => 'Le compte :account a bien été restauré.',
     ],
 
-
     'summary' => [
         'title' => 'Summary',
         'balance' => [
@@ -55,6 +54,10 @@ return [
     'allocation' => [
         'title' => 'Income allocation',
         'sliderTitle' => 'Settings',
+        'revenueInMonth' => 'Income this month',
+        'allocatedInMonth' => 'Allocated this month',
+        'unallocatedRevenueAt' => 'Savings at :date:',
+        'unallocatedRevenueMonth' => 'Savings this month:',
         'chartTitle' => 'Envelope balances at :date',
     ],
 
