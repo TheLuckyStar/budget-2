@@ -106,6 +106,13 @@ var RouterModule = (function() {
             submitForm($(this));
             return false;
         });
+
+        // Support link to tab outside of nav-tabs
+        $('body').on('click', 'a.link-to-tab', function () {
+            var url = $(this).attr('href');
+            $('.nav-tabs a[href="'+url+'"]').click();
+            return false;
+        });
     };
 
 

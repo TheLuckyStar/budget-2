@@ -21,7 +21,8 @@
 
             {!! Form::open([
                 'action' => ['EnvelopeController@postAdd', $account],
-                'class' => 'col-md-12'
+                'class' => 'routable col-md-12',
+                'data-target' => '#page-wrapper',
             ]) !!}
                 <div class="panel panel-default">
 

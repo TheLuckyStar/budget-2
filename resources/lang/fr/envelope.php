@@ -16,7 +16,7 @@ return [
     ],
 
     'add' => [
-        'title' => 'Nouvelle enveloppe',
+        'title' => 'Créer une nouvelle enveloppe',
         'successMessage' => 'L\'enveloppe :envelope a bien été créée.',
     ],
 
@@ -39,6 +39,7 @@ return [
         'title' => 'Résumé',
         'balance' => [
             'title' => "Solde de l'enveloppe : <b>:balance</b>",
+            'emptyMessage' => ':link pour consulter le graphique',
         ],
     ],
 

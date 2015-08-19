@@ -45,7 +45,9 @@ var AllocationModule = (function() {
             });
         });
 
-        revenueChart.setData(data);
+        if (revenueChart) {
+            revenueChart.setData(data);
+        }
     };
 
     // Update max value for sliders
@@ -111,12 +113,14 @@ var AllocationModule = (function() {
 
     // Handle revenue chart initialization
     var initRevenueChart = function (target) {
-        revenueChart = target.get(0).chart = Morris.Donut({
-            element: target.attr('id'),
-            data: [{label: 1, value: 1}],
-            formatter: function (val, data) { return FormatModule.price(val); },
-            resize: true
-        });
+        if (target.length) {
+            revenueChart = target.get(0).chart = Morris.Donut({
+                element: target.attr('id'),
+                data: [{label: 1, value: 1}],
+                formatter: function (val, data) { return FormatModule.price(val); },
+                resize: true
+            });
+        }
     };
 
     // Handle submit form initialization

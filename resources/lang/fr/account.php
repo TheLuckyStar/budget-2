@@ -12,11 +12,12 @@ return [
     'index' => [
         'title' => "Vue d'ensemble",
         'notfoundMessage' => "Le compte recherché n'a pas été trouvé.",
+        'noEnvelopeMessage' => "<b>Prochaine étape ?</b> :link.",
     ],
 
     'add' => [
-        'title' => 'Nouveau compte',
-        'redirectMessage' => 'Pour commencer, créez un nouveau compte.',
+        'title' => 'Créer un nouveau compte',
+        'redirectMessage' => '<b>Par où commencer ?</b> Créez un nouveau compte.',
         'successMessage' => 'Le compte :account a bien été créé.',
     ],
 
@@ -38,10 +39,12 @@ return [
     'summary' => [
         'title' => 'Résumé',
         'balance' => [
-            'title' => 'Solde du compte : <b>:balance</b>'
+            'title' => 'Solde du compte : <b>:balance</b>',
+            'emptyMessage' => ':link pour consulter le graphique',
         ],
         'envelopes' => [
-            'title' => 'Solde des enveloppes'
+            'title' => 'Solde des enveloppes',
+            'emptyMessage' => ':link pour consulter le graphique',
         ],
         'users' => [
             'title' => "Participants",
@@ -53,16 +56,22 @@ return [
 
     'allocation' => [
         'title' => 'Répartition des revenus',
-        'sliderTitle' => 'Configuration',
-        'revenueInMonth' => 'Revenu ce mois',
-        'allocatedInMonth' => 'Alloué ce mois',
-        'unallocatedRevenueAt' => 'Épargné au :date :',
-        'unallocatedRevenueMonth' => 'Épargné ce mois :',
-        'chartTitle' => 'Solde des enveloppes au :date :',
+        'sliders' => [
+            'title' => 'Configuration',
+            'revenueInMonth' => 'Revenu ce mois',
+            'allocatedInMonth' => 'Alloué ce mois',
+            'unallocatedRevenueAt' => 'Épargné au :date :',
+            'unallocatedRevenueMonth' => 'Épargné ce mois :',
+            'chartTitle' => 'Solde des enveloppes au :date :',
+            'emptyMessage' => ':link pour répartir les revenus',
+        ],
     ],
 
     'development' => [
         'title' => 'Évolution',
+        'envelopes' => [
+            'emptyMessage' => ':link pour consulter le graphique',
+        ],
     ],
 
 ];

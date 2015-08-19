@@ -22,11 +22,6 @@ class OperationsController extends Controller
 
         $operations = $account->operationsInPeriod($month, $month->copy()->endOfMonth());
 
-        foreach ($operations as $operation) {
-            if (is_null($operation->date))
-                var_dump($operation->toArray());
-        }
-
         $data = [
             'account' => $account,
             'operations' => $operations,

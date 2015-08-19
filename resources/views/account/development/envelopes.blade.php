@@ -21,25 +21,40 @@
         ) !!}
     </div>
     <div class="panel-body">
-        <div id="account-development-envelopes-chart"></div>
+        @if ($account->envelopes->count() === 0)
+            <div class='alert alert-info'>
+                @lang('account.development.envelopes.emptyMessage', [
+                    'link' => Html::linkAction(
+                        'EnvelopeController@getAdd',
+                        '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
+                        $account,
+                        ['class' => 'routable', 'data-target' => '#page-wrapper']
+                    )
+                ])
+            </div>
+        @else
+            <div id="account-development-envelopes-chart"></div>
+        @endif
     </div>
 </div>
 
 <script type="text/javascript">
 
-    $('#account-development-envelopes-chart').get(0).chart = Morris.Line({
-        element: 'account-development-envelopes-chart',
-        data: {!! $data !!},
-        xkey: 'date',
-        ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
-        labels: {!! json_encode($account->envelopes->lists('name')) !!},
+    $('#account-development-envelopes-chart').each(function () {
+        $(this).get(0).chart = Morris.Line({
+            element: $(this).attr('id'),
+            data: {!! $data !!},
+            xkey: 'date',
+            ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
+            labels: {!! json_encode($account->envelopes->lists('name')) !!},
 
-        dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
-        xLabelFormat: function (date) { return require('moment')(date).format("MMMM"); },
-        yLabelFormat: function (val) { return FormatModule.price(val); },
-        smooth: false,
-        resize: true,
-        behaveLikeLine: true,
+            dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
+            xLabelFormat: function (date) { return require('moment')(date).format("MMMM"); },
+            yLabelFormat: function (val) { return FormatModule.price(val); },
+            smooth: false,
+            resize: true,
+            behaveLikeLine: true,
+        });
     });
 
 </script>

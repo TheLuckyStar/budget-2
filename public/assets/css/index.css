@@ -217,6 +217,11 @@ body {background-color: #2c3e50; margin-top: 60px; height: calc(100% - 60px);}
 
 .table .input-group-addon {width:auto;}
 
+.alert a {
+    color: inherit;
+    text-decoration: underline;
+}
+
 /*
  * Page wrapper content
 */

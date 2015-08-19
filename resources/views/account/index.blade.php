@@ -4,6 +4,21 @@
     data-vertical-url="{{ action('AccountController@getIndex', $account) }}"
     data-account-id="{{ $account->id }}">
 
+    @if ($account->envelopes->count() === 0)
+        <div class='col-md-12'>
+            <div class='alert alert-info'>
+                @lang('account.index.noEnvelopeMessage', [
+                    'link' => Html::linkAction(
+                        'EnvelopeController@getAdd',
+                        '<i class="fa fa-fw fa-plus" title="'.trans('envelope.add.title').'"></i> '.trans('envelope.add.title'),
+                        $account,
+                        ['class' => 'routable', 'data-target' => '#page-wrapper']
+                    )
+                ])
+            </div>
+        </div>
+    @endif
+
     @include('blocks.alerts')
 
     <div class='col-md-12'>

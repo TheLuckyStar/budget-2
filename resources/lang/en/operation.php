@@ -7,6 +7,10 @@ return [
 
     'title' => 'Operations',
 
+    'add' => [
+        'title' => 'Add operations',
+    ],
+
     'object' => [
         'revenue' => '<i class="fa fa-fw fa-exchange" title="Revenue"></i> '
             .'The revenue ":name" of :amount on :date (:account)',

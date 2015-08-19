@@ -57,12 +57,14 @@ class NavbarController extends Controller
                 .Html::ul($subLinks, ['class' => 'dropdown-menu']);
         }
 
-        $links[] = Html::linkAction(
-            'AccountController@getAdd',
-            '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
-            [],
-            ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
-        );
+        if (count($links)) {
+            $links[] = Html::linkAction(
+                'AccountController@getAdd',
+                '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
+                [],
+                ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
+            );
+        }
 
         return $links;
     }

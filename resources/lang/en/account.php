@@ -12,11 +12,12 @@ return [
     'index' => [
         'title' => 'Overview',
         'notfoundMessage' => 'Requested account has not been found.',
+        'noEnvelopeMessage' => "<b>Next step ?</b> :link.",
     ],
 
     'add' => [
-        'title' => 'New account',
-        'redirectMessage' => 'To start, create a new account.',
+        'title' => 'Create a new account',
+        'redirectMessage' => '<b>Where to start ?</b> Create a new account.',
         'successMessage' => 'The account :account has been created.',
     ],
 
@@ -39,9 +40,11 @@ return [
         'title' => 'Summary',
         'balance' => [
             'title' => 'Account balance : <b>:balance</b>',
+            'emptyMessage' => ':link to view the chart',
         ],
-        'envelope' => [
+        'envelopes' => [
             'title' => 'Envelope balances',
+            'emptyMessage' => ':link to view the chart',
         ],
         'users' => [
             'title' => "Participants",
@@ -53,16 +56,21 @@ return [
 
     'allocation' => [
         'title' => 'Income allocation',
-        'sliderTitle' => 'Settings',
-        'revenueInMonth' => 'Income this month',
-        'allocatedInMonth' => 'Allocated this month',
-        'unallocatedRevenueAt' => 'Savings at :date:',
-        'unallocatedRevenueMonth' => 'Savings this month:',
-        'chartTitle' => 'Envelope balances at :date',
+        'sliders' => [
+            'revenueInMonth' => 'Income this month',
+            'allocatedInMonth' => 'Allocated this month',
+            'unallocatedRevenueAt' => 'Savings at :date:',
+            'unallocatedRevenueMonth' => 'Savings this month:',
+            'chartTitle' => 'Envelope balances at :date',
+            'emptyMessage' => ':link to allocate revenues',
+        ],
     ],
 
     'development' => [
         'title' => 'Development',
+        'envelopes' => [
+            'emptyMessage' => ':link to view the chart',
+        ],
     ],
 
 ];

@@ -24,12 +24,12 @@ var OperationModule = (function() {
     };
 
     // Handle select type initialization
-    var initDateSelectType = function (target) {
+    var initSelectType = function (target) {
         target.change(function () {
             var row = $(this).closest('tr');
 
-            var enabled = row.find('input, select:not([name="type"]), button');
-            var disabled = row.find('input, select:not([name="type"]), button');
+            var enabled = row.find('input, select:not([name="type"]), a');
+            var disabled = row.find('input, select:not([name="type"]), a');
 
             if ($(this).val() === '') {
                 enabled = $();
@@ -40,8 +40,8 @@ var OperationModule = (function() {
                 disabled = $();
             }
 
-            enabled.removeAttr('disabled');
-            disabled.attr('disabled', 'disabled');
+            enabled.removeAttr('disabled').removeClass('disabled');
+            disabled.attr('disabled', 'disabled').addClass('disabled');
         }).change();
     };
 
@@ -86,7 +86,7 @@ var OperationModule = (function() {
     // Handle row initialization
     var initRow = function (row) {
         initDatepicker(row.find('.datepicker'));
-        initDateSelectType(row.find('select[name="type"]'));
+        initSelectType(row.find('select[name="type"]'));
         initSubmitLinks(row.find('a.btn:not(.routable)'));
     };
 

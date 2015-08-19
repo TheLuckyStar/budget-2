@@ -16,7 +16,7 @@ return [
     ],
 
     'add' => [
-        'title' => 'New envelope',
+        'title' => 'Create a new envelope',
         'successMessage' => 'The envelope :envelope has been created.',
     ],
 
@@ -37,8 +37,9 @@ return [
 
     'summary' => [
         'title' => 'Summary',
-        'snapshot' => [
+        'balance' => [
             'title' => 'Envelope balance : <b>:balance</b>',
+            'emptyMessage' => ':link to view the chart',
         ],
     ],
 

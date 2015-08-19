@@ -51,7 +51,7 @@
 </td>
 
 <td class="row form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
-    <div class='input-group'>
+    <div class='input-group pull-right'>
         {!! Form::text(
             'amount',
             $operation->amount,
