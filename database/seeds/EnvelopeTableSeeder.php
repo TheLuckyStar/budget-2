@@ -31,7 +31,7 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 1,
-            'name' => 'Transport',
+            'name' => 'Transports',
             'icon' => 'fa-car',
         ]);
 
@@ -98,7 +98,7 @@ class EnvelopeTableSeeder extends Seeder
 
         Envelope::create([
             'account_id' => 5,
-            'name' => 'Transport',
+            'name' => 'Transports',
             'icon' => 'fa-car',
         ]);
 
