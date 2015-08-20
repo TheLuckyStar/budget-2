@@ -69,7 +69,7 @@ class OutcomeJuly2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 1,
-            'name' => "Cage pour Chippie",
+            'name' => "Cage pour Chipie",
             'amount' => 10,
             'date' => Carbon::create(2015, 7, 23, 0),
             'effective' => 1,
