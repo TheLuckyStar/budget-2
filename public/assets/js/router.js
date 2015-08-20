@@ -63,7 +63,7 @@ var RouterModule = (function() {
     // Handle form post failure
     var submitFormFail = function(form, jqXHR, errorThrown) {
         console.log(jqXHR);
-        form.find('.form-group.has-error .help-block').remove();
+        form.find('.form-group.has-error .help-block.text-right').remove();
         form.find('.form-group').removeClass('.has-error');
 
         if (jqXHR.status === 422) {

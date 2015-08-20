@@ -52,11 +52,16 @@ class AccountController extends Controller
 
     public function postAdd(Request $request) {
         $this->validate($request, [
-            'name' => 'string|required',
+            'name' => 'required|string',
+            'balance' => 'required|numeric',
         ]);
 
         $account = Account::create($request->only(['name']));
         Auth::user()->accounts()->save($account, ['owner' => 1]);
+
+        $operation = $account->revenues()->create([
+            'amount' => $request->get('balance'),
+        ]);
 
         return redirect()->action('AccountController@getIndex', $account)
             ->withSuccess(trans('account.add.successMessage', ['account' => $account]));
@@ -82,11 +87,14 @@ class AccountController extends Controller
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($account_id);
 
         $this->validate($request, [
-            'name' => 'string|required',
+            'name' => 'required|string',
+            'balance' => 'required|numeric',
         ]);
 
         $account->fill($request->only(['name']));
         $account->save();
+
+        $account->initial_balance->update(['amount' => $request->get('balance')]);
 
         return redirect()->action('AccountController@getIndex', $account)
             ->withSuccess(trans('account.update.successMessage', ['account' => $account]));

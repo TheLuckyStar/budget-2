@@ -7,6 +7,8 @@ return [
 
     'fields' => [
         'name' => "Name",
+        'balance' => "Initial balance",
+        'balanceHelper' => "<b>Must be a positiv amount.</b> This amount should match the account balance for the date you start recording operations into this application.",
     ],
 
     'index' => [

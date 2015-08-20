@@ -172,6 +172,16 @@ class Account extends Model
         return $count;
     }
 
+    public function getInitialBalanceAttribute() {
+        $income = $this->revenues()->where('date', null)->first();
+
+        if ($income instanceof Revenue) {
+            return $income;
+        }
+
+        return new Income(['account_id' => $this->id, 'amount' => 0]);
+    }
+
     public function getBalanceAttribute($from = null, $to = null) {
         $revenue = $this->revenues()->inPeriod($from, $to)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');

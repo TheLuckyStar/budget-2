@@ -40,6 +40,25 @@
                             @endif
                         </div>
 
+                        <div class="col-sm-12 form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
+                            <div class='input-group'>
+                                {!! Form::text(
+                                    'balance',
+                                    null,
+                                    ['class' => 'form-control text-right', 'id' => 'input-balance', 'placeholder' => trans('account.fields.balance')]
+                                ) !!}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-euro"></span>
+                                </span>
+                            </div>
+                            <p class="help-block">
+                                @lang('account.fields.balanceHelper')
+                            </p>
+                            @if ($errors->has('balance'))
+                                {!! Html::ul($errors->get('balance'), ['class' => 'help-block text-right']) !!}
+                            @endif
+                        </div>
+
                     </div>
 
                     <div class="panel-footer text-right">

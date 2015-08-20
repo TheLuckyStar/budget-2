@@ -7,6 +7,8 @@ return [
 
     'fields' => [
         'name' => "Nom",
+        'balance' => "Solde initial",
+        'balanceHelper' => "<b>Doit être un montant positif.</b> Solde du compte à la date à laquelle vous commencez la saisie des operations dans cette application.",
     ],
 
     'index' => [
