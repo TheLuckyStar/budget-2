@@ -8,15 +8,19 @@ var RouterModule = (function() {
     var load = function (url, target, callback) {
         console.log('Load ' + url + ' to target');
 
-        target.load(url, null, function () {
-            if (target.attr('id') === 'page-wrapper') {
-                NavbarModule.activateLinks();
-            }
-            if (typeof callback == "function") {
-                callback();
-            }
+        target.fadeTo('fast', 0.5, function() {
+            target.load(url, null, function () {
+                target.fadeTo('fast', 1);
+                if (target.attr('id') === 'page-wrapper') {
+                    NavbarModule.activateLinks();
+                }
+                if (typeof callback == "function") {
+                    callback();
+                }
+            });
+
+            target.data('url', url);
         });
-        target.data('url', url);
     };
 
     // Refresh target content from url set as data attribute
@@ -48,15 +52,20 @@ var RouterModule = (function() {
         var data = form.find(':input').serializeArray();
 
         console.log('Submit form to ' + url);
-        $.post(url, data, function(data, textStatus, jqXHR) {
-            target.html(data);
-            target.data('url', url);
+        target.fadeTo('fast', 0.5, function() {
+            $.post(url, data, function(data, textStatus, jqXHR) {
+                target.html(data);
+                target.fadeTo('fast', 1);
+                target.data('url', url);
 
-            if (target.attr('id') === 'page-wrapper') {
-                NavbarModule.activateLinks();
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            submitFormFail(form, jqXHR, errorThrown);
+                if (target.attr('id') === 'page-wrapper') {
+                    NavbarModule.activateLinks();
+                }
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                submitFormFail(form, jqXHR, errorThrown);
+            }).always(function () {
+                target.fadeTo('fast', 1);
+            });
         });
     };
 

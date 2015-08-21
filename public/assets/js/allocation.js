@@ -131,11 +131,15 @@ var AllocationModule = (function() {
             var data = $(this).find(':input').serializeArray();
             console.log(url);
 
-            $.post(url, data, function(data, textStatus, jqXHR) {
-                target.html(data);
-                submitFormSuccess();
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                RouterModule.submitFormFail($(this), jqXHR, errorThrown);
+            target.fadeTo('fast', 0.5, function() {
+                $.post(url, data, function(data, textStatus, jqXHR) {
+                    target.html(data);
+                    submitFormSuccess();
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    RouterModule.submitFormFail($(this), jqXHR, errorThrown);
+                }).always(function () {
+                    target.fadeTo('fast', 1);
+                });
             });
 
             return false;

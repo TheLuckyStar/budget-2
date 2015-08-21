@@ -60,10 +60,12 @@ var OperationModule = (function() {
                 }
             }
 
-            $.post(url, data, function(data, textStatus, jqXHR) {
-                submitFormSuccess();
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                RouterModule.submitFormFail(row, jqXHR, errorThrown);
+            target.fadeTo('fast', 0.5, function() {
+                $.post(url, data, function(data, textStatus, jqXHR) {
+                    submitFormSuccess();
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    RouterModule.submitFormFail(row, jqXHR, errorThrown);
+                });
             });
 
             return false;

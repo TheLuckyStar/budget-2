@@ -21,9 +21,17 @@ var NavbarModule = (function() {
         var url = navbar.data('url') + '/index/' + getAccountId();
 
         console.log('Load ' + url + ' to navbar');
-        navbar.load(url, null, function() {
-            activateLinks(true);
-        });
+        if (navbar.find('.top-nav, .side-nav').length) {
+            navbar.find('.top-nav, .side-nav').fadeTo('fast', 0.5, function() {
+                navbar.load(url, null, function() {
+                    activateLinks(true);
+                });
+            });
+        } else {
+            navbar.load(url, null, function() {
+                activateLinks(true);
+            });
+        }
     };
 
 
