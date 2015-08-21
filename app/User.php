@@ -26,6 +26,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * The "booting" method of the model.
+     * @return void
+     */
+    protected static function boot()
+    {
+        self::created([__CLASS__, 'processInvitations']);
+    }
+
+    protected static function processInvitations($user) {
+        $invitations = Invitation::where('email', $user->email)->get();
+
+        foreach ($invitations as $invitation) {
+            $user->accounts()->attach($invitation->account_id, ['owner' => 0]);
+            $invitation->delete();
+        }
+    }
+
+    /**
      * Convert the model to its string representation.
      * @return string
      */

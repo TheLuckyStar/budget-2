@@ -26,6 +26,22 @@
                 {!! Form::close() !!}
             </li>
         @endforeach
+        @foreach($account->invitations as $invitation)
+            <li class="list-group-item">
+                {!! Form::open([
+                    'action' => ['Account\SummaryController@postDetachInvitation', $account->id],
+                    'class' => 'routable',
+                    'data-target' => '#account-summary-users',
+                ]) !!}
+                    {!! Form::hidden('invitation_id', $invitation->id) !!}
+                    {!! $invitation->link() !!}
+                    {!! Form::button(
+                        '<i class="fa fa-fw fa-trash"></i>',
+                        ['type' => 'submit', 'class' => 'btn btn-danger btn-xs pull-right']
+                    ) !!}
+                {!! Form::close() !!}
+            </li>
+        @endforeach
     </ul>
 
     {!! Form::open([

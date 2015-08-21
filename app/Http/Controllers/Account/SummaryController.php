@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Invitation;
 use App\User;
 use Auth;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
+use Mail;
 
 class SummaryController extends Controller
 {
@@ -88,13 +90,25 @@ class SummaryController extends Controller
         $account = Auth::user()->accounts()->findOrFail($account_id);
 
         $this->validate($request, [
-            'email' => 'required|email|exists:users',
+            'email' => 'required|email',
         ]);
 
         $user = User::where('email', $request->input('email'))->first();
+
+        if (is_null($user)) {
+            if ($account->invitations()->where('email', $request->input('email'))->count() === 0) {
+                $account->invitations()->create(['email' => $request->input('email')]);
+            }
+            return redirect()->action('Account\SummaryController@getUsers', $account);
+        }
+
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
+            Mail::send('emails.inviteExistingUser', ['account' => $account], function ($m) use ($user) {
+                $m->to($user->email);
+                $m->subject(trans('invitation.inviteExistingUser.emailSubject', ['user' => Auth::user()]));
+            });
         }
 
         return redirect()->action('Account\SummaryController@getUsers', $account);
@@ -105,6 +119,15 @@ class SummaryController extends Controller
 
         $user = User::find($request->input('user_id'));
         $account->guests()->detach($user->id);
+
+        return redirect()->action('Account\SummaryController@getUsers', $account);
+   }
+
+    public function postDetachInvitation(Request $request, $account_id) {
+        $account = Auth::user()->accounts()->findOrFail($account_id);
+
+        $invitation = Invitation::find($request->input('invitation_id'));
+        $invitation->delete();
 
         return redirect()->action('Account\SummaryController@getUsers', $account);
    }

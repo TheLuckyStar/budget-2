@@ -91,6 +91,10 @@ class Account extends Model
             ->orderBy('name');
     }
 
+    public function invitations() {
+        return $this->hasMany('App\Invitation');
+    }
+
     public function envelopes() {
         return $this->hasMany('App\Envelope')
             ->withTrashed()
