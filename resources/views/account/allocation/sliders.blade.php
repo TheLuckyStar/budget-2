@@ -46,24 +46,18 @@
                     @foreach ($account->envelopes as $envelope)
                         <div class="price-slider row">
 
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <h4 class="great">
                                     {!! $envelope !!}
                                 </h4>
-                                @if (isset($prevIncomes[$envelope->id]))
-                                    <span class="small">
-                                        <i>
-                                            @lang('account.allocation.sliders.prevIncome', [
-                                                'amount' => Html::formatPrice($prevIncomes[$envelope->id]),
-                                            ])
-                                        </i>
-                                    </span>
-                                @endif
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class='form-group'>
                                     <div class='input-group'>
+                                        <span class="input-group-addon" title="@lang('account.allocation.sliders.prevIncome', ['amount' => Html::formatPrice($prevIncomes[$envelope->id])])">
+                                            <span class="fa fa-fw fa-history"></span>
+                                        </span>
                                         {!! Form::text(
                                             'income-'.$envelope->id,
                                             isset($incomes[$envelope->id]) ? $incomes[$envelope->id] : 0,
@@ -74,7 +68,7 @@
                                             ]
                                         ) !!}
                                         <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-euro"></span>
+                                            <span class="fa fa-fw fa-euro"></span>
                                         </span>
                                     </div>
                                 </div>
@@ -131,22 +125,24 @@
                                 <div class='col-md-12 col-sm-8'>
                                     @lang('account.allocation.sliders.unallocatedRevenueMonth')
                                 </div>
-                                <div class='col-md-12 col-sm-4 text-right'
-                                    id='allocation-sliders-unallocatedRevenueMonth'
-                                    data-amount="{{ $unallocatedRevenueMonth }}"></div>
+                                <div class='col-md-12 col-sm-4 text-right'>
+                                    <strong id='allocation-sliders-unallocatedRevenueMonth'
+                                    data-amount="{{ $unallocatedRevenueMonth }}"></strong>
+                                </div>
                             </div>
                             <div class='col-md-4'>
                                 <div class='col-md-12 col-sm-8'>
                                     @lang('account.allocation.sliders.unallocatedRevenueAt',
                                         ['date' => $endOfMonth->format('d/m/Y')])
                                 </div>
-                                <div class='col-md-12 col-sm-4 text-right'
-                                    id='allocation-sliders-unallocatedRevenueAfterMonth'></div>
+                                <div class='col-md-12 col-sm-4 text-right'>
+                                    <strong id='allocation-sliders-unallocatedRevenueAfterMonth'></strong>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 well">
                         @lang('account.allocation.sliders.chartTitle', ['date' => $endOfMonth->format('d/m/Y')])
                         <div id="account-allocation-revenue-chart"></div>
                     </div>

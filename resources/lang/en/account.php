@@ -59,6 +59,7 @@ return [
     'allocation' => [
         'title' => 'Income allocation',
         'sliders' => [
+            'prevIncome' => 'Previous month: :amount',
             'revenueInMonth' => 'Income this month',
             'allocatedInMonth' => 'Allocated this month',
             'unallocatedRevenueAt' => 'Savings at :date:',

@@ -59,7 +59,7 @@ return [
     'allocation' => [
         'title' => 'Répartition des revenus',
         'sliders' => [
-            'title' => 'Configuration',
+            'prevIncome' => 'Mois précédent : :amount',
             'revenueInMonth' => 'Revenu ce mois',
             'allocatedInMonth' => 'Alloué ce mois',
             'unallocatedRevenueAt' => 'Épargné au :date :',

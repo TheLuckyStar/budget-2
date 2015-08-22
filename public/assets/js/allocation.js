@@ -53,7 +53,7 @@ var AllocationModule = (function() {
     // Update max value for sliders
     var updateSliders = function () {
         var unallocatedRevenueMonth = $('#allocation-sliders-unallocatedRevenueMonth').data('amount');
-
+console.log(unallocatedRevenueMonth);
         $.each(sliders, function(label, slider) {
             var value = slider.slider('value');
             var max = value + Math.max(unallocatedRevenueMonth, 100);
@@ -88,12 +88,13 @@ var AllocationModule = (function() {
         var unallocatedRevenueMonth = $('#allocation-sliders-unallocatedRevenueMonth').data('amount');
 
         target.each(function () {
+            console.log(unallocatedRevenueMonth);
             var max = parseFloat($(this).data('value')) + Math.max(unallocatedRevenueMonth, 100);
 
             sliders[$(this).data('label')] = $(this).slider({
                 animate: true,
                 value: $(this).data('value'),
-                max: max,
+                max: $(this).data('value') + 1,
                 slide: function(event, ui) {
                     var input = $($(this).data('target'));
                     input.val(ui.value);
@@ -166,6 +167,7 @@ var AllocationModule = (function() {
         initRevenueChart($('#account-allocation-revenue-chart'));
         initSubmitForm(form);
         updateData();
+        updateSliders();
     };
 
     // Called on module loading
