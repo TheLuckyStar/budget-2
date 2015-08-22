@@ -65,6 +65,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 10, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 1,
+            'name' => "EDF",
+            'amount' => 82.81,
+            'date' => Carbon::create(2015, 8, 20, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -178,10 +186,42 @@ class OutcomeAugust2015TableSeeder extends Seeder
 
         Outcome::create([
             'envelope_id' => 3,
-            'name' => "@TODO Chèque à vérifier",
+            'name' => "Ferme Delemotte",
             'amount' => 26.60,
             'date' => Carbon::create(2015, 8, 18, 0),
             'effective' => 0,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 57.18,
+            'date' => Carbon::create(2015, 8, 19, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Label Vie",
+            'amount' => 3.96,
+            'date' => Carbon::create(2015, 8, 20, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Label Vie",
+            'amount' => 98.51,
+            'date' => Carbon::create(2015, 8, 21, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Label Vie",
+            'amount' => 98.52,
+            'date' => Carbon::create(2015, 8, 21, 0),
+            'effective' => 1,
         ]);
     }
 
@@ -234,6 +274,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Steam",
             'amount' => 8.36,
             'date' => Carbon::create(2015, 8, 3, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 6,
+            'name' => "Disques dur externes",
+            'amount' => 206.38,
+            'date' => Carbon::create(2015, 8, 20, 0),
             'effective' => 1,
         ]);
     }
@@ -318,6 +366,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Train",
             'amount' => 25,
             'date' => Carbon::create(2015, 8, 17, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 25,
+            'date' => Carbon::create(2015, 8, 20, 0),
             'effective' => 1,
         ]);
     }
