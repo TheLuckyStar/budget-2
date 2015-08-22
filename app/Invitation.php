@@ -25,10 +25,12 @@ class Invitation extends Model
     }
 
     protected static function inviteFutureUser($invitation) {
-        Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function ($m) use ($invitation) {
-            $m->to($invitation->email);
-            $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
-        });
+        if (Auth::check()) {
+            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function ($m) use ($invitation) {
+                $m->to($invitation->email);
+                $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
+            });
+        }
     }
 
     /**
