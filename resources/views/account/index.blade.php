@@ -144,12 +144,6 @@
             });
         });
 
-        $('#account-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
-            $(e.target.hash).find('div[id$="-chart"]').each(function() {
-                $(this).get(0).chart.resizeHandler();
-            });
-        });
-
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
             RouterModule.clickLink($(this), NavbarModule.refresh);
             return false;

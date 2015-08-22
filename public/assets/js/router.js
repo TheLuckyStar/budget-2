@@ -122,6 +122,13 @@ var RouterModule = (function() {
             $('.nav-tabs a[href="'+url+'"]').click();
             return false;
         });
+
+        // Redraw chart in tabs on tab show
+        $('body').on('shown.bs.tab', 'ul.nav-tabs a', function (e) {
+            $(e.target.hash).find('div[id$="-chart"]').each(function() {
+                $(this).get(0).chart.resizeHandler();
+            });
+        });
     };
 
 

@@ -104,12 +104,6 @@
             });
         });
 
-        $('#envelope-index > div > ul.nav-tabs a').on('shown.bs.tab', function (e) {
-            $(e.target.hash).find('div[id$="-chart"]').each(function() {
-                $(this).get(0).chart.resizeHandler();
-            });
-        });
-
         $('.page-header .btn-danger, .page-header .btn-success').click(function () {
             NavbarModule.emptyVerticalMenu();
         });
