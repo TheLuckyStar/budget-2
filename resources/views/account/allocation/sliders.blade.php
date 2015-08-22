@@ -143,7 +143,11 @@
                     </div>
 
                     <div class="col-md-12 well">
-                        @lang('account.allocation.sliders.chartTitle', ['date' => $endOfMonth->format('d/m/Y')])
+                        <div class='text-center'>
+                            <strong>
+                                @lang('account.allocation.sliders.chartTitle', ['date' => $endOfMonth->formatLocalized('%B %Y')])
+                            </strong>
+                        </div>
                         <div id="account-allocation-revenue-chart"></div>
                     </div>
 

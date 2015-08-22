@@ -64,7 +64,7 @@ return [
             'allocatedInMonth' => 'Alloué ce mois',
             'unallocatedRevenueAt' => 'Épargné au :date :',
             'unallocatedRevenueMonth' => 'Épargné ce mois :',
-            'chartTitle' => 'Solde des enveloppes au :date :',
+            'chartTitle' => 'Solde des enveloppes pour :date :',
             'emptyMessage' => ':link pour répartir les revenus',
         ],
     ],

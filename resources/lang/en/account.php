@@ -64,7 +64,7 @@ return [
             'allocatedInMonth' => 'Allocated this month',
             'unallocatedRevenueAt' => 'Savings at :date:',
             'unallocatedRevenueMonth' => 'Savings this month:',
-            'chartTitle' => 'Envelope balances at :date',
+            'chartTitle' => 'Envelope balances for :date',
             'emptyMessage' => ':link to allocate revenues',
         ],
     ],
