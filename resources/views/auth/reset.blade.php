@@ -16,7 +16,8 @@
 
             {!! Form::open([
                 'action' => ['Auth\PasswordController@postReset', $token],
-                'class' => 'col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8'
+                'class' => 'routable col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-8',
+                'data-target' => '#page-wrapper'
             ]) !!}
                 <div class="panel panel-primary">
 

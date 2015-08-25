@@ -9,7 +9,7 @@
 @endsection
 
 @section('linkUrl')
-    {{ url().'#auth/resetPassword/'.$token }}
+    {{ url().'#/auth/resetPassword/'.$token }}
 @endsection
 
 @section('linkText')
