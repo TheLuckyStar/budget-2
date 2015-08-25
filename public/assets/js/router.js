@@ -4,14 +4,33 @@ var RouterModule = (function() {
 
 
 
+    // Set url to fragment
+    var setFragment = function (url) {
+        var baseUrl = $('#page-wrapper').data('base-url');
+        var fragment = url.replace(baseUrl, '');
+
+        window.location.hash = fragment;
+    };
+
+    // Get url from fragment and baseurl
+    var getFragment = function (url) {
+        var baseUrl = $('#page-wrapper').data('base-url');
+        var fragment = window.location.hash.substring(1);
+
+        return baseUrl + fragment;
+    };
+
+
+
     // Get data from url and load it to target
     var load = function (url, target, callback) {
-        console.log('Load ' + url + ' to target');
+        console.log('Load ' + url + ' to ' + target.selector);
 
         target.fadeTo('fast', 0.5, function() {
             target.load(url, null, function () {
                 target.fadeTo('fast', 1);
                 if (target.attr('id') === 'page-wrapper') {
+                    setFragment(url);
                     NavbarModule.activateLinks();
                 }
                 if (typeof callback == "function") {
@@ -103,6 +122,11 @@ var RouterModule = (function() {
 
     // Called on module loading
     var init = function () {
+
+        // Use route from fragment if provided
+        if (getFragment()) {
+            $('#page-wrapper').data('url', getFragment());
+        }
 
         // Click routable links should reload element asynchronously
         $('body').on('click', '.routable a, a.routable', function () {

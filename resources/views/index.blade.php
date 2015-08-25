@@ -25,6 +25,7 @@
         <div id="page-wrapper"
             class="container-fluid"
             data-url="{{ action('HomeController@getIndex') }}"
+            data-base-url="{{ url(App::getLocale()) }}"
             data-locale="{{ App::getLocale() }}"></div>
 
         <nav class="navbar navbar-default navbar-fixed-bottom text-right" role="navigation">
