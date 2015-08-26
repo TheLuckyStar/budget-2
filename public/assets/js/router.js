@@ -4,6 +4,11 @@ var RouterModule = (function() {
 
 
 
+    // Check if fragment ecists
+    var hasFragment = function (url) {
+        return window.location.hash !== '';
+    };
+
     // Set url to fragment
     var setFragment = function (url) {
         var baseUrl = $('#page-wrapper').data('base-url');
@@ -122,9 +127,9 @@ var RouterModule = (function() {
 
     // Called on module loading
     var init = function () {
-
         // Use route from fragment if provided
-        if (getFragment()) {
+        if (hasFragment()) {
+            console.log('=> ' + getFragment());
             $('#page-wrapper').data('url', getFragment());
         }
 
