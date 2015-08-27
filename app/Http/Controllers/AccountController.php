@@ -10,12 +10,11 @@ class AccountController extends Controller
 {
     /**
      * Default account routing
-     * @param  Illuminate\Http\Request $request Current request
      * @param  int $account_id Account ID
      * @param  string $activeTab Name of active tab
      * @return Illuminate/Http/Response Redirection
      */
-    public function getIndex(Request $request, $account_id = null, $activeTab = 'summary') {
+    public function getIndex($account_id = null, $activeTab = 'summary') {
         // Retrieve first account if no one is provided
         if (is_null($account_id)) {
             $account = Auth::user()->accounts()->first();

@@ -15,9 +15,9 @@ return [
         'revenue' => '<i class="fa fa-fw fa-exchange" title="Revenue"></i> '
             .'The revenue ":name" of :amount on :date (:account)',
         'income' => '<i class="fa fa-fw fa-exchange" title="Income"></i> '
-            .'The income mensuel of :amount on :date (:envelope)',
+            .'The monthly allocation of :amount on :date',
         'outcome' => '<i class="fa fa-fw fa-exchange" title="Outcome"></i> '
-            .'The outcome ":name" of :amount on :date (:envelope)',
+            .'The outcome ":name" of :amount on :date',
     ],
 
     'fields' => [

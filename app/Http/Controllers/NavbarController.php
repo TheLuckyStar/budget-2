@@ -30,24 +30,14 @@ class NavbarController extends Controller
 
         foreach (Auth::user()->nontrashedAccounts as $account) {
             if ($account->trashed() === false) {
-                $links[] = Html::linkAction(
-                    'AccountController@getIndex',
-                    $account,
-                    $account,
-                    ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
-                );
+                $links[] = $account->link(null, ['class' => 'routable navbar-brand']);
             }
         }
 
         if (Auth::user()->trashedAccounts()->count()) {
             $subLinks = [];
             foreach (Auth::user()->trashedAccounts as $account) {
-                $subLinks[] = Html::linkAction(
-                    'AccountController@getIndex',
-                    $account,
-                    $account,
-                    ['class' => 'routable', 'data-target' => '#page-wrapper']
-                );
+                $subLinks[] = $account->link();
             }
             $links[] = Html::link(
                     '#',
@@ -95,41 +85,32 @@ class NavbarController extends Controller
         }
 
         $links = [
-            Html::linkAction(
-                'AccountController@getIndex',
+            $account->link(
                 '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
                     .trans('account.index.title')
                     .'<span class="pull-right badge badge-'.$account->status.'">'
                     .Html::formatPrice($account->balance)
-                    .'</span>',
-                $account,
-                ['class' => 'routable', 'data-target' => '#page-wrapper']
+                    .'</span>'
             ),
         ];
 
         foreach ($account->nontrashedEnvelopes as $envelope) {
-            $links[] = Html::linkAction(
-                'EnvelopeController@getView',
+            $links[] = $envelope->link(
                 $envelope
                     .'<span class="pull-right badge badge-'.$envelope->status.'">'
                     .Html::formatPrice($envelope->balance)
-                    .'</span>',
-                $envelope,
-                ['class' => 'routable', 'data-target' => '#page-wrapper']
+                    .'</span>'
             );
         }
 
         if ($account->trashedEnvelopes()->count()) {
             $subLinks = [];
             foreach ($account->trashedEnvelopes as $envelope) {
-                $subLinks[] = Html::linkAction(
-                    'EnvelopeController@getView',
+                $subLinks[] = $envelope->link(
                     $envelope
                         .'<span class="pull-right badge badge-'.$envelope->status.'">'
                         .Html::formatPrice($envelope->balance)
-                        .'</span>',
-                    $envelope,
-                    ['class' => 'routable', 'data-target' => '#page-wrapper']
+                        .'</span>'
                 );
             }
             $links[] = Html::link(

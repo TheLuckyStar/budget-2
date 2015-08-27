@@ -13,11 +13,11 @@ return [
 
     'object' => [
         'revenue' => '<i class="fa fa-fw fa-exchange" title="Revenu"></i> '
-            .'Le revenu ":name" de :amount du :date (:account)',
+            .'Le revenu ":name" de :amount du :date',
         'income' => '<i class="fa fa-fw fa-exchange" title="Revenu"></i> '
-            .'Le revenu mensuel de :amount de :date (:envelope)',
+            .'L\'allocation mensuelle de :amount de :date',
         'outcome' => '<i class="fa fa-fw fa-exchange" title="Dépense"></i> '
-            .'La dépense ":name" de :amount du :date (:envelope)',
+            .'La dépense ":name" de :amount du :date',
     ],
 
     'fields' => [

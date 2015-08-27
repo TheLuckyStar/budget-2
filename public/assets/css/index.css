@@ -243,5 +243,8 @@ ul.help-block {list-style-type: none;}
 #account-operations-table > .panel > .table > tbody > tr > td:last-child {min-width: 127px;}
 #envelope-operations-table > .panel > .table > tbody > tr > td:last-child {min-width: 127px;}
 
+#envelope-operations-table > .panel > .table > tbody > tr > td > a:not(.btn) {color: inherit;}
+#account-operations-table > .panel > .table > tbody > tr > td > a:not(.btn) {color: inherit;}
+
 #account-operations-table .panel-footer {font-weight: bold;}
 #envelope-operations-table .panel-footer {font-weight: bold;}

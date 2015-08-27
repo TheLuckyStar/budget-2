@@ -52,12 +52,16 @@ class Outcome extends Operation
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount),
             'date' => $this->date->format('d/m/Y'),
-            'envelope' => $this->envelope,
         ]);
     }
 
     public function link() {
-        return Html::linkAction('EnvelopeController@getView', $this, $this->envelope, ['class' => 'link-to-page']);
+        return Html::linkAction(
+            'EnvelopeController@getView',
+            $this,
+            [$this->envelope, 'operations'],
+            ['class' => 'routable', 'data-target' => '#page-wrapper']
+        ).' ('.$this->envelope->link().')';
     }
 
     public function envelope() {

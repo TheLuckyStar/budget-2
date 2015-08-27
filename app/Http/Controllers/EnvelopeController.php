@@ -10,11 +10,12 @@ use Illuminate\Http\Request;
 
 class EnvelopeController extends Controller
 {
-    public function getView($envelope_id) {
+    public function getView($envelope_id, $activeTab = 'summary') {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
 
         $data = [
             'envelope' => $envelope,
+            'activeTab' => $activeTab,
         ];
 
         return view('envelope.index', $data);

@@ -43,8 +43,22 @@ class Account extends Model
         return $this->name;
     }
 
-    public function link() {
-        return Html::linkAction('AccountController@getIndex', $this, $this, ['class' => 'link-to-page']);
+    public function link($text = null, $moreAttributes = []) {
+        $attributes = ['class' => 'routable', 'data-target' => '#page-wrapper'];
+
+        if (is_null($text)) {
+            $text = $this;
+        }
+
+        foreach ($moreAttributes as $key => $value) {
+            if (isset($attributes[$key])) {
+                $attributes[$key] .= ' '.$moreAttributes[$key];
+            } else {
+                $attributes[$key] = $moreAttributes[$key];
+            }
+        }
+
+        return Html::linkAction('AccountController@getIndex', $text, $this, $attributes);
     }
 
     public function relatedEvents()

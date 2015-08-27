@@ -84,6 +84,7 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
             Route::controller('account/allocation', 'Account\AllocationController'); // Render account allocation page
             Route::controller('account/development', 'Account\DevelopmentController'); // Render account development page
             Route::controller('account', 'AccountController'); // Render main account page
+            Route::get('account/index/{account_id?}/{activeTab?}', 'AccountController@getIndex'); // Render main account page
 
             // Envelope pages
             Route::controller('envelope/summary', 'Envelope\SummaryController'); // Render envelope summary page

@@ -36,12 +36,16 @@ class Income extends Operation
         return trans('operation.object.income', [
             'amount' => Html::formatPrice($this->amount),
             'date' => $this->date->formatLocalized('%B %Y'),
-            'envelope' => $this->envelope,
         ]);
     }
 
     public function link() {
-        return Html::linkAction('EnvelopeController@getView', $this, $this->envelope, ['class' => 'link-to-page']);
+        return Html::linkAction(
+            'AccountController@getIndex',
+            $this,
+            [$this->envelope->account, 'allocation'],
+            ['class' => 'routable', 'data-target' => '#page-wrapper']
+        ).' ('.$this->envelope->link().')';
     }
 
     public function envelope() {

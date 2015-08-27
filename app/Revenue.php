@@ -48,12 +48,16 @@ class Revenue extends Operation
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount),
             'date' => $this->date->format('d/m/Y'),
-            'account' => $this->account,
         ]);
     }
 
     public function link() {
-        return Html::linkAction('AccountController@getIndex', $this, $this->account, ['class' => 'link-to-page']);
+        return Html::linkAction(
+            'AccountController@getIndex',
+            $this,
+            [$this->account, 'operations'],
+            ['class' => 'routable', 'data-target' => '#page-wrapper']
+        );
     }
 
     public function account() {

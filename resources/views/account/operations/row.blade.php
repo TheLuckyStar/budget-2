@@ -6,7 +6,7 @@
 </td>
 
 <td class="text-{{ $operation->context }}">
-    {!! $operation->envelope !!}
+    {!! $operation->envelope ? $operation->envelope->link() : '' !!}
 </td>
 
 <td class="text-{{ $operation->context }}">

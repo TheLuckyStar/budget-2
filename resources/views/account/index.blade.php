@@ -68,7 +68,7 @@
     <div class='col-md-12'>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class='active'>
+            <li role="presentation" class="{{ $activeTab === 'summary' ? 'active' : '' }}">
                 {!! Html::link(
                     '#summary',
                     '<i class="fa fa-fw fa-th-large"></i> '
@@ -76,7 +76,7 @@
                     ['aria-controls' => 'summary', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation">
+            <li role="presentation" class="{{ $activeTab === 'operations' ? 'active' : '' }}">
                 {!! Html::link(
                     '#operations',
                     '<i class="fa fa-fw fa-table"></i> '
@@ -84,7 +84,7 @@
                     ['aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation">
+            <li role="presentation" class="{{ $activeTab === 'allocation' ? 'active' : '' }}">
                 {!! Html::link(
                     '#allocation',
                     '<i class="fa fa-fw fa-sliders"></i> '
@@ -92,7 +92,7 @@
                     ['aria-controls' => 'allocation', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
-            <li role="presentation">
+            <li role="presentation" class="{{ $activeTab === 'development' ? 'active' : '' }}">
                 {!! Html::link(
                     '#development',
                     '<i class="fa fa-fw fa-area-chart"></i> '
@@ -103,19 +103,19 @@
         </ul>
 
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane row active" id="summary">
+            <div role="tabpanel" class="tab-pane row {{ $activeTab === 'summary' ? 'active' : ''}}" id="summary">
                 <div class='col-md-4' id='account-summary-balance' data-url='{{ action('Account\SummaryController@getBalance', $account) }}'></div>
                 <div class='col-md-4' id='account-summary-envelopes' data-url='{{ action('Account\SummaryController@getEnvelopes', $account) }}'></div>
                 <div class='col-md-4' id='account-summary-users' data-url='{{ action('Account\SummaryController@getUsers', $account) }}'></div>
                 <div class='col-md-4' id='account-summary-events' data-url='{{ action('Account\SummaryController@getEvents', $account) }}'></div>
             </div>
-            <div role="tabpanel" class="tab-pane row" id="operations">
+            <div role="tabpanel" class="tab-pane row {{ $activeTab === 'operations' ? 'active' : ''}}" id="operations">
                 <div class='col-md-12' id='account-operations-table' data-url='{{ action('Account\OperationsController@getTable', $account) }}'></div>
             </div>
-            <div role="tabpanel" class="tab-pane row" id="allocation">
+            <div role="tabpanel" class="tab-pane row {{ $activeTab === 'allocation' ? 'active' : ''}}" id="allocation">
                 <div class='col-md-12' id='account-allocation-sliders' data-url='{{ action('Account\AllocationController@getSliders', $account) }}'></div>
             </div>
-            <div role="tabpanel" class="tab-pane row" id="development">
+            <div role="tabpanel" class="tab-pane row {{ $activeTab === 'development' ? 'active' : ''}}" id="development">
                 <div class='col-md-12' id='account-development-monthly' data-url='{{ action('Account\DevelopmentController@getMonthly', $account) }}'></div>
                 <div class='col-md-12' id='account-development-yearly' data-url='{{ action('Account\DevelopmentController@getYearly', $account) }}'></div>
                 <div class='col-md-12' id='account-development-envelopes' data-url='{{ action('Account\DevelopmentController@getEnvelopes', $account) }}'></div>
