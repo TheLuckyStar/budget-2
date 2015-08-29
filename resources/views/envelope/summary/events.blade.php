@@ -5,7 +5,7 @@
     </div>
     <ul class="list-group">
         @foreach($events as $event)
-            <li class="list-group-item small">
+            <li class="list-group-item small {{ $event->user_id !== Auth::user()->id ? 'active' : '' }}">
                 {!! $event !!}
             </li>
         @endforeach

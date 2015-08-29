@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -21,6 +22,15 @@ class Event extends Model
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     * @var array
+     */
+    protected $casts = [
+        'user_id' => 'integer',
+        'entity_id' => 'integer',
+    ];
+
+    /**
      * Convert the model to its string representation.
      * @return string
      */
@@ -37,13 +47,21 @@ class Event extends Model
             $action = 'archive';
         }
 
+        $user = $this->user->id !== Auth::user()->id ? $this->user->link() : trans('event.self');
+
+        if ($this->created_at->diffInHours() === 0) {
+            $period = $this->created_at->diffForHumans();
+        } else {
+            $period = trans('event.datePrefix').' '.$this->created_at->format('d/m/Y');
+        }
+
         return trans('event.action.'.$action, [
-            'user' => $this->user->link(),
+            'user' => $user,
             'entity' => $this->entity->link(),
             'field_name' => strtolower($fieldName),
             'field_value_from' => $this->formatValue($this->field_name, $this->field_value_from),
             'field_value_to' => $this->formatValue($this->field_name, $this->field_value_to),
-            'period' => $this->created_at->diffForHumans(),
+            'period' => $period,
         ]);
     }
 

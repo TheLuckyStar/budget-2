@@ -17,4 +17,7 @@ return [
         'delete' => ':entity has been deleted by :user :period.',
     ],
 
+    'self' => 'me',
+    'datePrefix' => 'the',
+
 ];
