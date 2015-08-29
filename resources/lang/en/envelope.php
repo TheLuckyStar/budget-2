@@ -11,7 +11,7 @@ return [
         'filterIcon' => "Search for an icon",
     ],
 
-    'view' => [
+    'index' => [
         'notfoundMessage' => 'Requested envelope has not been found.',
     ],
 

@@ -11,7 +11,7 @@ return [
         'filterIcon' => "Rechercher une icône",
     ],
 
-    'view' => [
+    'index' => [
         'notfoundMessage' => "L'enveloppe recherchée n'a pas été trouvée.",
     ],
 
