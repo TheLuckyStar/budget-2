@@ -104,6 +104,14 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'date' => Carbon::create(2015, 8, 18, 0),
             'effective' => 1,
         ]);
+
+        Outcome::create([
+            'envelope_id' => 2,
+            'name' => "Essence",
+            'amount' => 39.81,
+            'date' => Carbon::create(2015, 8, 24, 0),
+            'effective' => 1,
+        ]);
     }
 
     /**
@@ -221,6 +229,30 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Label Vie",
             'amount' => 98.52,
             'date' => Carbon::create(2015, 8, 21, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 57.67,
+            'date' => Carbon::create(2015, 8, 25, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Ferme Delemotte",
+            'amount' => 9.40,
+            'date' => Carbon::create(2015, 8, 26, 0),
+            'effective' => 0,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 3,
+            'name' => "Carrefour",
+            'amount' => 8.19,
+            'date' => Carbon::create(2015, 8, 31, 0),
             'effective' => 1,
         ]);
     }
@@ -374,6 +406,22 @@ class OutcomeAugust2015TableSeeder extends Seeder
             'name' => "Train",
             'amount' => 25,
             'date' => Carbon::create(2015, 8, 20, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 25,
+            'date' => Carbon::create(2015, 8, 24, 0),
+            'effective' => 1,
+        ]);
+
+        Outcome::create([
+            'envelope_id' => 10,
+            'name' => "Train",
+            'amount' => 25,
+            'date' => Carbon::create(2015, 8, 27, 0),
             'effective' => 1,
         ]);
     }
