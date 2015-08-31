@@ -10,7 +10,7 @@ class AccountController extends Controller
      * Default account routing
      * @param  int $account_id Account ID
      * @param  string $activeTab Name of active tab
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return object
      */
     public function getIndex($account_id = null, $activeTab = 'summary') {
         // Retrieve first account if no one is provided
