@@ -46,7 +46,9 @@
             'jquery-ui',
             'bootstrap',
             'moment',
-            'vendor/moment/locale/{{ App::getLocale() }}.js',
+            @if (App::getLocale() !== 'en')
+                'vendor/moment/locale/{{ App::getLocale() }}.js',
+            @endif
         ], function() {
             requirejs([
                 'bootstrap-datetimepicker',
