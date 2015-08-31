@@ -56,7 +56,7 @@ class AccountController extends Controller
         $account = Account::create($request->only(['name']));
         Auth::user()->accounts()->save($account, ['owner' => 1]);
 
-        $operation = $account->revenues()->create([
+        $account->revenues()->create([
             'amount' => $request->get('balance'),
         ]);
 

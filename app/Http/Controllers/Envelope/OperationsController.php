@@ -53,7 +53,7 @@ class OperationsController extends Controller
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        $operation = $envelope->outcomes()->create([
+        $envelope->outcomes()->create([
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -92,7 +92,7 @@ class OperationsController extends Controller
         ])->save();
     }
 
-    public function postDelete(Request $request, $envelope_id, $operation_type, $operation_id) {
+    public function postDelete($envelope_id, $operation_type, $operation_id) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
         $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
 

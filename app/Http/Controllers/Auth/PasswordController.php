@@ -22,9 +22,7 @@ class PasswordController extends Controller
     |
     */
 
-    use ResetsPasswords {
-        getReset as getResetIlluminate;
-    }
+    use ResetsPasswords;
 
     /**
      * Create a new password controller instance.
@@ -79,8 +77,6 @@ class PasswordController extends Controller
      */
     public function getReset($token = null)
     {
-        $response = $this->getResetIlluminate($token);
-
         $passwordReset = DB::table('password_resets')
             ->select('email')
             ->where('token', $token)

@@ -57,7 +57,7 @@ class OperationsController extends Controller
         ]);
 
         if ($request->input('type') == 'revenue') {
-            $operation = $account->revenues()->create([
+            $account->revenues()->create([
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
                 'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -65,7 +65,7 @@ class OperationsController extends Controller
             return;
         }
 
-        $operation = $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
+        $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -116,7 +116,7 @@ class OperationsController extends Controller
         ])->save();
     }
 
-    public function postDelete(Request $request, $account_id, $operation_type, $operation_id) {
+    public function postDelete($account_id, $operation_type, $operation_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
         $operation = $account->operationType($operation_type)->findOrFail($operation_id);
 
