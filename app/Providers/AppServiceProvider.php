@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
          * @param  Illuminate\Http\Request $request Request to consider
          * @return string ISO code of the current language
          */
-        $this->app->bind('findLocale', function ($app) {
+        $this->app->bind('findLocale', function () {
 
             // Routes supported by the application
             $available = ['en', 'fr'];
