@@ -25,22 +25,22 @@ class Operation extends Model
         return new OperationCollection($models);
     }
 
-    public function scopeInPeriod($query, $from = null, $to = null) {
-        if ($from instanceof Carbon === false
-            && $to instanceof Carbon === false) {
+    public function scopeInPeriod($query, $after = null, $before = null) {
+        if ($after instanceof Carbon === false
+            && $before instanceof Carbon === false) {
             return $query;
         }
 
-        $query->where(function($query) use($from, $to) {
-            if ($from instanceof Carbon) {
-                $query->where('date', '>=', $from);
+        $query->where(function($query) use($after, $before) {
+            if ($after instanceof Carbon) {
+                $query->where('date', '>=', $after);
             }
 
-            if ($to instanceof Carbon) {
-                $query->where(function($query) use($from, $to) {
-                    $query->where('date', '<=', $to);
+            if ($before instanceof Carbon) {
+                $query->where(function($query) use($after, $before) {
+                    $query->where('date', '<=', $before);
 
-                    if ($from instanceof Carbon === false) {
+                    if ($after instanceof Carbon === false) {
                         $query->orWhere('date', null);
                     }
                 });

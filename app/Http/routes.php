@@ -11,9 +11,6 @@
 |
 */
 
-// @TODO Remove after implementing login
-//Auth::loginUsingId(1);
-
 // Place any route under ISO language code if provided
 Route::group(['prefix' => App::make('findLocale')], function() {
 
@@ -21,33 +18,33 @@ Route::group(['prefix' => App::make('findLocale')], function() {
     Route::group(['middleware' => 'ajax'], function() {
 
         Route::get('auth/authenticate', 'Auth\AuthController@getLogin'); // Login page content
-        Route::post('auth/login', 'Auth\AuthController@postLogin'); // Login form processing
-        Route::post('auth/register', 'Auth\AuthController@postRegister'); // Registration form processing
+        Route::post('auth/login', 'Auth\AuthController@postLogin'); // Login processing
+        Route::post('auth/register', 'Auth\AuthController@postRegister'); // Registration processing
         Route::get('auth/lostPassword', 'Auth\PasswordController@getEmail'); // Lost password page content
-        Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail'); // Lost password form processing
+        Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail'); // Lost password processing
         Route::get('auth/resetPassword/{segment}', 'Auth\PasswordController@getReset'); // Reset password content
-        Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset'); // Reset password form processing
+        Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset'); // Password reset processing
 
-        Route::controller('navbar', 'NavbarController'); // Render navbar content
-        Route::controller('home', 'HomeController'); // Render homepage content
+        Route::controller('navbar', 'NavbarController'); // Navbar content
+        Route::controller('home', 'HomeController'); // Homepage content
 
         // Authenticated user only
         Route::group(['middleware' => 'auth'], function() {
             Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
 
             // Account pages
-            Route::controller('account/summary', 'Account\SummaryController'); // Render account summary page
-            Route::controller('account/operation', 'Account\OperationsController'); // Render account operation page
-            Route::controller('account/allocation', 'Account\AllocationController'); // Render account allocation page
-            Route::controller('account/development', 'Account\DevelopmentController'); // Render account development page
-            Route::controller('account', 'AccountController'); // Render main account page
-            Route::get('account/index/{account_id?}/{activeTab?}', 'AccountController@getIndex'); // Render main account page
+            Route::controller('account/summary', 'Account\SummaryController'); // Account summary pages
+            Route::controller('account/operation', 'Account\OperationsController'); // Account operation pages
+            Route::controller('account/allocation', 'Account\AllocationController'); // Account allocation pages
+            Route::controller('account/development', 'Account\DevelopmentController'); // Account development pages
+            Route::controller('account', 'AccountController'); // Main account pages
+            Route::get('account/index/{account_id?}/{activeTab?}', 'AccountController@getIndex'); // Main account page
 
             // Envelope pages
-            Route::controller('envelope/summary', 'Envelope\SummaryController'); // Render envelope summary page
-            Route::controller('envelope/operation', 'Envelope\OperationsController'); // Render envelope operation page
-            Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Render envelope development page
-            Route::controller('envelope', 'EnvelopeController'); // Render main envelope page
+            Route::controller('envelope/summary', 'Envelope\SummaryController'); // Envelope summary pages
+            Route::controller('envelope/operation', 'Envelope\OperationsController'); // Envelope operation pages
+            Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Envelope development pages
+            Route::controller('envelope', 'EnvelopeController'); // Main envelope pages
         });
 
     });

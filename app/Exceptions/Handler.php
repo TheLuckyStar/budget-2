@@ -25,46 +25,46 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Exception $exception)
     {
-        return parent::report($e);
+        return parent::report($exception);
     }
 
     /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $exception)
     {
         // Redirect when Account model not found
-        if ($e instanceof ModelNotFoundException && $e->getModel() === 'App\Account') {
+        if ($exception instanceof ModelNotFoundException && $exception->getModel() === 'App\Account') {
             return redirect()->action('AccountController@getIndex')
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
         // Redirect when Envelope model not found
-        if ($e instanceof ModelNotFoundException && $e->getModel() === 'App\Envelope') {
+        if ($exception instanceof ModelNotFoundException && $exception->getModel() === 'App\Envelope') {
             return redirect()->action('AccountController@getIndex')
                 ->withErrors(trans('envelope.index.notfoundMessage'));
         }
 
         // Render error in local environment for easier debugging
         if (App::environment('local')) {
-            return parent::render($request, $e);
+            return parent::render($request, $exception);
         }
 
         // Catch 404 HTTP errors for smart redirecting
-        if ($e instanceof NotFoundHttpException) {
+        if ($exception instanceof NotFoundHttpException) {
             // @TODO 404 error message
             return redirect()->action('HomeController@getIndex')->withErrors([trans('app.error.404')]);
         }
 
-        return redirect()->action('HomeController@getIndex')->withErrors([$e->getMessage()]);
+        return redirect()->action('HomeController@getIndex')->withErrors([$exception->getMessage()]);
     }
 }

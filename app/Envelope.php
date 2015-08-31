@@ -120,15 +120,15 @@ class Envelope extends Model
         return $this->{$type.'s'}();
     }
 
-    public function operationsInPeriod($from, $to) {
+    public function operationsInPeriod($after, $before) {
         $operations = new OperationCollection();
 
-        $incomes = $this->incomes()->inPeriod($from, $to)->get();
+        $incomes = $this->incomes()->inPeriod($after, $before)->get();
         foreach ($incomes as $income) {
             $operations->push($income);
         }
 
-        $outcomes = $this->outcomes()->inPeriod($from, $to)->get();
+        $outcomes = $this->outcomes()->inPeriod($after, $before)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
         }
@@ -136,27 +136,27 @@ class Envelope extends Model
         return $operations;
     }
 
-    public function countOperationsInPeriod($from = null, $to = null) {
+    public function countOperationsInPeriod($after = null, $before = null) {
         $count = 0;
 
-        $count += $this->incomes()->inPeriod($from, $to)->count();
-        $count += $this->outcomes()->inPeriod($from, $to)->count();
+        $count += $this->incomes()->inPeriod($after, $before)->count();
+        $count += $this->outcomes()->inPeriod($after, $before)->count();
 
         return $count;
     }
 
-    public function getBalanceAttribute($from = null, $to = null) {
-        $income = $this->incomes()->inPeriod($from, $to)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
+    public function getBalanceAttribute($after = null, $before = null) {
+        $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
         $balance = $income - $outcome;
 
         return floatval($balance);
     }
 
-    public function getStatusAttribute($from = null, $to = null) {
-        $income = $this->incomes()->inPeriod($from, $to)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
+    public function getStatusAttribute($after = null, $before = null) {
+        $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
         if ($income == 0) {
             return $outcome ? 'danger' : 'warning';

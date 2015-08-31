@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class EnvelopeController extends Controller
 {
-    public function getView($envelope_id, $activeTab = 'summary') {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getView($envelopeId, $activeTab = 'summary') {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $data = [
             'envelope' => $envelope,
@@ -23,8 +23,8 @@ class EnvelopeController extends Controller
      * Render add envelope form
      * @return Illuminate\Http\Response View to render
      */
-    public function getAdd($account_id) {
-        $account = Auth::user()->accounts()->find($account_id);
+    public function getAdd($accountId) {
+        $account = Auth::user()->accounts()->find($accountId);
 
         if (is_null($account)) {
             return redirect()->action('AccountController@getIndex')
@@ -38,8 +38,8 @@ class EnvelopeController extends Controller
         return view('envelope.add', $data);
     }
 
-    public function postAdd(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->find($account_id);
+    public function postAdd(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->find($accountId);
 
         if (is_null($account)) {
             return redirect()->action('AccountController@getIndex')
@@ -64,8 +64,8 @@ class EnvelopeController extends Controller
      * Render update envelope form
      * @return Illuminate\Http\Response View to render
      */
-    public function getUpdate($envelope_id) {
-        $envelope = Envelope::withTrashed()->find($envelope_id);
+    public function getUpdate($envelopeId) {
+        $envelope = Envelope::withTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -79,8 +79,8 @@ class EnvelopeController extends Controller
         return view('envelope.update', $data);
     }
 
-    public function postUpdate(Request $request, $envelope_id) {
-        $envelope = Envelope::withTrashed()->find($envelope_id);
+    public function postUpdate(Request $request, $envelopeId) {
+        $envelope = Envelope::withTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -101,8 +101,8 @@ class EnvelopeController extends Controller
 
 
 
-    public function getDelete($envelope_id) {
-        $envelope = Envelope::find($envelope_id);
+    public function getDelete($envelopeId) {
+        $envelope = Envelope::find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')
@@ -117,8 +117,8 @@ class EnvelopeController extends Controller
 
 
 
-    public function getRestore($envelope_id) {
-        $envelope = Envelope::onlyTrashed()->find($envelope_id);
+    public function getRestore($envelopeId) {
+        $envelope = Envelope::onlyTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
             return redirect()->action('AccountController@getIndex')

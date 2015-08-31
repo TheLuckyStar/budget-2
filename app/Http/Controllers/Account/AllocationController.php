@@ -10,27 +10,27 @@ class AllocationController extends Controller
 {
     /**
      * Render income allocation related to one account (second tab)
-     * @param  string $account_id Account ID
+     * @param  string $accountId Account ID
      * @return Illuminate\Http\Response View to render
      */
-    public function getSliders($account_id, $month = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getSliders($accountId, $month = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
 
         $startOfMonth = $month->startOfMonth();
-        $endOfMonth = $month->copy()->endOfMonth();
+        $endOfMonth   = $month->copy()->endOfMonth();
 
         $prevMonth = $month->copy()->subMonth()->endOfMonth();
         $nextMonth = $month->copy()->addMonth()->startOfMonth();
 
-        $revenue = $account->revenues()->inPeriod(null, $prevMonth)->sum('amount');
-        $income = $account->incomes()->inPeriod(null, $prevMonth)->sum('amount');
-        $unallocatedRevenueBeforeMonth = max(0, $revenue - $income);
+        $revenue           = $account->revenues()->inPeriod(null, $prevMonth)->sum('amount');
+        $income            = $account->incomes()->inPeriod(null, $prevMonth)->sum('amount');
+        $unallocatedBefore = max(0, $revenue - $income);
 
-        $revenue = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $income = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $unallocatedRevenueMonth = max(0, $revenue - $income);
+        $revenue           = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $income            = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $unallocatedMonth  = max(0, $revenue - $income);
 
         $incomes = $account->incomes()
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
@@ -47,8 +47,8 @@ class AllocationController extends Controller
         $data = [
             'account' => $account,
             'revenue' => $revenue,
-            'unallocatedRevenueBeforeMonth' => $unallocatedRevenueBeforeMonth,
-            'unallocatedRevenueMonth' => $unallocatedRevenueMonth,
+            'unallocatedRevenueBeforeMonth' => $unallocatedBefore,
+            'unallocatedRevenueMonth' => $unallocatedMonth,
             'incomes' => $incomes,
             'prevIncomes' => $prevIncomes,
             'startOfMonth' => $startOfMonth,
@@ -60,13 +60,13 @@ class AllocationController extends Controller
         return view('account.allocation.sliders', $data);
     }
 
-    public function postSliders(Request $request, $account_id, $month = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function postSliders(Request $request, $accountId, $month = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
 
         $startOfMonth = $month->startOfMonth();
-        $endOfMonth = $month->copy()->endOfMonth();
+        $endOfMonth   = $month->copy()->endOfMonth();
 
         $account->incomes()
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
@@ -85,7 +85,7 @@ class AllocationController extends Controller
 
         return redirect()->action(
             'Account\AllocationController@getSliders',
-            [$account_id, $month->toDateString()]
+            [$accountId, $month->toDateString()]
         );
     }
 }

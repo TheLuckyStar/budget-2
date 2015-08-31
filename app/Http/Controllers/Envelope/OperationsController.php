@@ -9,11 +9,11 @@ class OperationsController extends Controller
 {
     /**
      * List operations related to one envelope (second tab)
-     * @param  string $envelope_id Envelope ID
+     * @param  string $envelopeId Envelope ID
      * @return Illuminate\Http\Response View to render
      */
-    public function getTable($envelope_id, $month = null) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getTable($envelopeId, $month = null) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
@@ -31,9 +31,9 @@ class OperationsController extends Controller
         return view('envelope.operations.table', $data);
     }
 
-    public function getRow($envelope_id, $operation_type, $operation_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
+    public function getRow($envelopeId, $operationType, $operationId) {
+        $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
+        $operation = $envelope->operationType($operationType)->findOrFail($operationId);
 
         $data = [
             'envelope' => $envelope,
@@ -43,8 +43,8 @@ class OperationsController extends Controller
         return view('envelope.operations.row', $data);
     }
 
-    public function postAdd(Request $request, $envelope_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function postAdd(Request $request, $envelopeId) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
@@ -61,9 +61,9 @@ class OperationsController extends Controller
         ]);
     }
 
-    public function getUpdate($envelope_id, $operation_type, $operation_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
+    public function getUpdate($envelopeId, $operationType, $operationId) {
+        $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
+        $operation = $envelope->operationType($operationType)->findOrFail($operationId);
 
         $data = [
             'envelope' => $envelope,
@@ -73,9 +73,9 @@ class OperationsController extends Controller
         return view('envelope.operations.update', $data);
     }
 
-    public function postUpdate(Request $request, $envelope_id, $operation_type, $operation_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
+    public function postUpdate(Request $request, $envelopeId, $operationType, $operationId) {
+        $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
+        $operation = $envelope->operationType($operationType)->findOrFail($operationId);
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
@@ -92,9 +92,9 @@ class OperationsController extends Controller
         ])->save();
     }
 
-    public function postDelete($envelope_id, $operation_type, $operation_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
-        $operation = $envelope->operationType($operation_type)->findOrFail($operation_id);
+    public function postDelete($envelopeId, $operationType, $operationId) {
+        $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
+        $operation = $envelope->operationType($operationType)->findOrFail($operationId);
 
         $operation->delete();
     }

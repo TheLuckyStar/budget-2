@@ -12,24 +12,24 @@ use Mail;
 class SummaryController extends Controller
 {
 
-    public function getBalance($account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getBalance($accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $from = Carbon::now()->startOfMonth();
-        $to = Carbon::now()->endOfMonth();
+        $after  = Carbon::now()->startOfMonth();
+        $before = Carbon::now()->endOfMonth();
 
-        $revenue = $account->revenues()->inPeriod($from, $to)->sum('amount');
-        $income = $account->incomes()->inPeriod($from, $to)->sum('amount');
+        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
+        $income  = $account->incomes()->inPeriod($after, $before)->sum('amount');
         $unallocatedRevenue = max(0, $revenue - $income);
 
         $data = [
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $account->outcomes()->effective()->inPeriod($from, $to)->sum('amount'),
+                'value' => $account->outcomes()->effective()->inPeriod($after, $before)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $account->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
+                'value' => $account->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.unallocatedRevenue'),
@@ -37,7 +37,7 @@ class SummaryController extends Controller
             ],
             [
                 'label' => trans('operation.type.allocatedRevenue'),
-                'value' => $account->incomes()->inPeriod($from, $to)->sum('amount'),
+                'value' => $account->incomes()->inPeriod($after, $before)->sum('amount'),
             ],
         ];
 
@@ -50,10 +50,10 @@ class SummaryController extends Controller
         return view('account.summary.balance', $data);
     }
 
-    public function getEnvelopes($account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getEnvelopes($accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $data = [];
+        $data   = [];
         $colors = [];
         foreach ($account->envelopes as $envelope) {
             $balance = $envelope->balance;
@@ -76,8 +76,8 @@ class SummaryController extends Controller
         return view('account.summary.envelopes', $data);
     }
 
-    public function getUsers($account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getUsers($accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $data = [
             'account' => $account,
@@ -86,8 +86,8 @@ class SummaryController extends Controller
         return view('account.summary.users', $data);
     }
 
-    public function postAttachUser(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function postAttachUser(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $this->validate($request, [
             'email' => 'required|email',
@@ -114,8 +114,8 @@ class SummaryController extends Controller
         return redirect()->action('Account\SummaryController@getUsers', $account);
     }
 
-    public function postDetachUser(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function postDetachUser(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $user = User::find($request->input('user_id'));
         $account->guests()->detach($user->id);
@@ -123,8 +123,8 @@ class SummaryController extends Controller
         return redirect()->action('Account\SummaryController@getUsers', $account);
     }
 
-    public function postDetachInvitation(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function postDetachInvitation(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $invitation = Invitation::find($request->input('invitation_id'));
         $invitation->delete();
@@ -132,8 +132,8 @@ class SummaryController extends Controller
         return redirect()->action('Account\SummaryController@getUsers', $account);
     }
 
-    public function getEvents($account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getEvents($accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $data = [
             'account' => $account,

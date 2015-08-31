@@ -9,9 +9,9 @@ use Html;
 class NavbarController extends Controller
 {
 
-    public function getIndex($account_id = null) {
+    public function getIndex($accountId = null) {
         $horizontalMenu = Auth::check() ? $this->horizontalAuthenticated() : $this->horizontalGuest();
-        $verticalMenu = Auth::check() ? $this->verticalAuthenticated($account_id) : $this->verticalGuest();
+        $verticalMenu  = Auth::check() ? $this->verticalAuthenticated($accountId) : $this->verticalGuest();
 
         $data = [
             'horizontalMenu' => $horizontalMenu,
@@ -77,8 +77,8 @@ class NavbarController extends Controller
         ];
     }
 
-    private function verticalAuthenticated($account_id) {
-        $account = Auth::user()->accounts()->find($account_id);
+    private function verticalAuthenticated($accountId) {
+        $account = Auth::user()->accounts()->find($accountId);
 
         if (is_null($account)) {
             return [];
@@ -115,7 +115,9 @@ class NavbarController extends Controller
             }
             $links[] = Html::link(
                     '#',
-                    '<i class="fa fa-fw fa-archive"></i> '.trans('envelope.delete.title').' <i class="fa fa-fw fa-caret-down"></i></a>',
+                    '<i class="fa fa-fw fa-archive"></i> '
+                        .trans('envelope.delete.title')
+                        .' <i class="fa fa-fw fa-caret-down"></i></a>',
                     ['data-toggle' => 'collapse', 'data-target' => '#trashed-envelopes']
                 )
                 .Html::ul($subLinks, ['id' => 'trashed-envelopes', 'class' => 'collapse']);

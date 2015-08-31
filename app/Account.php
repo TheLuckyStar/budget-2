@@ -176,15 +176,15 @@ class Account extends Model
         return $this->{$type.'s'}();
     }
 
-    public function operationsInPeriod($from, $to) {
+    public function operationsInPeriod($after, $before) {
         $operations = new OperationCollection();
 
-        $revenues = $this->revenues()->inPeriod($from, $to)->get();
+        $revenues = $this->revenues()->inPeriod($after, $before)->get();
         foreach ($revenues as $revenue) {
             $operations->push($revenue);
         }
 
-        $outcomes = $this->outcomes()->inPeriod($from, $to)->get();
+        $outcomes = $this->outcomes()->inPeriod($after, $before)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
         }
@@ -192,11 +192,11 @@ class Account extends Model
         return $operations->sortBy('date');
     }
 
-    public function countOperationsInPeriod($from = null, $to = null) {
+    public function countOperationsInPeriod($after = null, $before = null) {
         $count = 0;
 
-        $count += $this->revenues()->inPeriod($from, $to)->count();
-        $count += $this->outcomes()->inPeriod($from, $to)->count();
+        $count += $this->revenues()->inPeriod($after, $before)->count();
+        $count += $this->outcomes()->inPeriod($after, $before)->count();
 
         return $count;
     }
@@ -211,25 +211,25 @@ class Account extends Model
         return new Income(['account_id' => $this->id, 'amount' => 0]);
     }
 
-    public function getBalanceAttribute($from = null, $to = null) {
-        $revenue = $this->revenues()->inPeriod($from, $to)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
+    public function getBalanceAttribute($after = null, $before = null) {
+        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
-        $incomingTransfer = $this->incomingTransfers()->inPeriod($from, $to)->sum('amount');
-        $outgoingTransfer = $this->outgoingTransfers()->inPeriod($from, $to)->sum('amount');
+        $incomingTransfer = $this->incomingTransfers()->inPeriod($after, $before)->sum('amount');
+        $outgoingTransfer = $this->outgoingTransfers()->inPeriod($after, $before)->sum('amount');
 
         $balance = $revenue + $incomingTransfer - $outcome - $outgoingTransfer;
 
         return floatval($balance);
     }
 
-    public function getStatusAttribute($from = null, $to = null) {
+    public function getStatusAttribute($after = null, $before = null) {
         if ($this->countOperationsInPeriod() === 0) {
             return 'default';
         }
 
-        $revenue = $this->revenues()->inPeriod($from, $to)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($from, $to)->sum('amount');
+        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
+        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
         if ($revenue == 0) {
             return $outcome ? 'danger' : 'warning';

@@ -54,7 +54,8 @@ class Event extends Model
             $action = 'set';
         } else if ($this->action == 'update' && $this->field_value_to == '') {
             $action = 'clear';
-        } elseif ($this->action == 'delete' && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
+        } elseif ($this->action == 'delete'
+            && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
             $action = 'archive';
         }
 

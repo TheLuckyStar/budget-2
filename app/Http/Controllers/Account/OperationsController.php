@@ -9,11 +9,11 @@ class OperationsController extends Controller
 {
     /**
      * List operations related to one account (second tab)
-     * @param  string $account_id Account ID
+     * @param  string $accountId Account ID
      * @return \Illuminate\View\View View to render
      */
-    public function getTable($account_id, $month = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getTable($accountId, $month = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
@@ -31,9 +31,9 @@ class OperationsController extends Controller
         return view('account.operations.table', $data);
     }
 
-    public function getRow($account_id, $operation_type, $operation_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
+    public function getRow($accountId, $operationType, $operationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $data = [
             'account' => $account,
@@ -43,8 +43,8 @@ class OperationsController extends Controller
         return view('account.operations.row', $data);
     }
 
-    public function postAdd(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function postAdd(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $this->validate($request, [
             'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
@@ -71,9 +71,9 @@ class OperationsController extends Controller
         ]);
     }
 
-    public function getUpdate($account_id, $operation_type, $operation_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
+    public function getUpdate($accountId, $operationType, $operationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $data = [
             'account' => $account,
@@ -83,14 +83,16 @@ class OperationsController extends Controller
         return view('account.operations.update', $data);
     }
 
-    public function postUpdate(Request $request, $account_id, $operation_type, $operation_id) {
+    public function postUpdate(Request $request, $accountId, $operationType, $operationId) {
 
-        $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $this->validate($request, [
             'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
-            'envelope_id' => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'.$account->id,
+            'envelope_id'
+                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                    .$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
@@ -114,9 +116,9 @@ class OperationsController extends Controller
         ])->save();
     }
 
-    public function postDelete($account_id, $operation_type, $operation_id) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
-        $operation = $account->operationType($operation_type)->findOrFail($operation_id);
+    public function postDelete($accountId, $operationType, $operationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $operation->delete();
     }

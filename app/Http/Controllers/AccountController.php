@@ -8,13 +8,13 @@ class AccountController extends Controller
 {
     /**
      * Default account routing
-     * @param  int $account_id Account ID
+     * @param  int $accountId Account ID
      * @param  string $activeTab Name of active tab
      * @return object
      */
-    public function getIndex($account_id = null, $activeTab = 'summary') {
+    public function getIndex($accountId = null, $activeTab = 'summary') {
         // Retrieve first account if no one is provided
-        if (is_null($account_id)) {
+        if (is_null($accountId)) {
             $account = Auth::user()->accounts()->first();
 
             // Redirect to add form if no account exist for user
@@ -24,7 +24,7 @@ class AccountController extends Controller
             }
         } else {
             // Retrieve account if provided
-            $account = Auth::user()->accounts()->findOrFail($account_id);
+            $account = Auth::user()->accounts()->findOrFail($accountId);
         }
 
         $data = [
@@ -68,8 +68,8 @@ class AccountController extends Controller
      * Render update account form
      * @return \Illuminate\View\View View to render
      */
-    public function getUpdate($account_id) {
-        $account = Auth::user()->accounts()->where('owner', true)->findOrFail($account_id);
+    public function getUpdate($accountId) {
+        $account = Auth::user()->accounts()->where('owner', true)->findOrFail($accountId);
 
         $data = [
             'account' => $account,
@@ -78,8 +78,8 @@ class AccountController extends Controller
         return view('account.update', $data);
     }
 
-    public function postUpdate(Request $request, $account_id) {
-        $account = Auth::user()->accounts()->where('owner', true)->findOrFail($account_id);
+    public function postUpdate(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->where('owner', true)->findOrFail($accountId);
 
         $this->validate($request, [
             'name' => 'required|string',
@@ -97,8 +97,8 @@ class AccountController extends Controller
 
 
 
-    public function getDelete($account_id) {
-        $account = Auth::user()->nontrashedAccounts()->where('owner', true)->findOrFail($account_id);
+    public function getDelete($accountId) {
+        $account = Auth::user()->nontrashedAccounts()->where('owner', true)->findOrFail($accountId);
 
         $account->delete();
 
@@ -108,8 +108,8 @@ class AccountController extends Controller
 
 
 
-    public function getRestore($account_id) {
-        $account = Auth::user()->trashedAccounts()->where('owner', true)->findOrFail($account_id);
+    public function getRestore($accountId) {
+        $account = Auth::user()->trashedAccounts()->where('owner', true)->findOrFail($accountId);
 
         $account->restore();
 

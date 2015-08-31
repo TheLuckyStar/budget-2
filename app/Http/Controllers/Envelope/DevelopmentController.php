@@ -7,8 +7,8 @@ use Carbon\Carbon;
 
 class DevelopmentController extends Controller
 {
-    public function getMonthly($envelope_id, $date = null) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getMonthly($envelopeId, $date = null) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfMonth();
@@ -35,18 +35,18 @@ class DevelopmentController extends Controller
         return view('envelope.development.monthly', $data);
     }
 
-    public function getYearly($envelope_id, $date = null) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getYearly($envelopeId, $date = null) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfYear();
 
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $from = $d->copy()->startOfMonth();
-            $to = $d->copy()->endOfMonth();
+            $after  = $d->copy()->startOfMonth();
+            $before = $d->copy()->endOfMonth();
 
-            $data[] = $this->getData($envelope, $from, $to);
+            $data[] = $this->getData($envelope, $after, $before);
         }
 
         $colors = [
@@ -67,21 +67,21 @@ class DevelopmentController extends Controller
     }
 
 
-    public function getData($envelope, $from, $to) {
-        $balance = $envelope->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
+    public function getData($envelope, $after, $before) {
+        $balance = $envelope->getBalanceAttribute(null, $after->copy()->subMonth()->endOfMonth());
 
-        $income = $envelope->incomes()->inPeriod($from, $to)->sum('amount');
+        $income = $envelope->incomes()->inPeriod($after, $before)->sum('amount');
         if ($balance > 0) {
             $income += $balance;
         }
 
-        $outcome = $envelope->outcomes()->inPeriod($from, $to)->sum('amount');
+        $outcome = $envelope->outcomes()->inPeriod($after, $before)->sum('amount');
         if ($balance < 0) {
             $outcome += $balance;
         }
 
         return [
-            'date' => $to->toDateString(),
+            'date' => $before->toDateString(),
             'income' => $income,
             'outcome' => $outcome,
         ];

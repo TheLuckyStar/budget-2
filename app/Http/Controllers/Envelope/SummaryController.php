@@ -9,24 +9,24 @@ use Illuminate\Http\Request;
 
 class SummaryController extends Controller
 {
-    public function getBalance($envelope_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getBalance($envelopeId) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
-        $from = Carbon::now()->startOfMonth();
-        $to = Carbon::now()->endOfMonth();
+        $after  = Carbon::now()->startOfMonth();
+        $before = Carbon::now()->endOfMonth();
 
         $chartData = [
             [
                 'label' => trans('operation.type.income'),
-                'value' => $envelope->incomes()->inPeriod($from, $to)->sum('amount'),
+                'value' => $envelope->incomes()->inPeriod($after, $before)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $envelope->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
+                'value' => $envelope->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $envelope->outcomes()->intended()->inPeriod($from, $to)->sum('amount'),
+                'value' => $envelope->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
             ],
         ];
 
@@ -45,8 +45,8 @@ class SummaryController extends Controller
         return view('envelope.summary.balance', $data);
     }
 
-    public function getEvents($envelope_id) {
-        $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);
+    public function getEvents($envelopeId) {
+        $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $data = [
             'envelope' => $envelope,

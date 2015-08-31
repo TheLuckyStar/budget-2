@@ -7,8 +7,8 @@ use Carbon\Carbon;
 
 class DevelopmentController extends Controller
 {
-    public function getMonthly($account_id, $date = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getMonthly($accountId, $date = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfMonth();
@@ -36,18 +36,18 @@ class DevelopmentController extends Controller
         return view('account.development.monthly', $data);
     }
 
-    public function getYearly($account_id, $date = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getYearly($accountId, $date = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfYear();
 
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $from = $d->copy()->startOfMonth();
-            $to = $d->copy()->endOfMonth();
+            $after = $d->copy()->startOfMonth();
+            $before = $d->copy()->endOfMonth();
 
-            $data[] = $this->getData($account, $from, $to);
+            $data[] = $this->getData($account, $after, $before);
         }
 
         $colors = [
@@ -68,31 +68,31 @@ class DevelopmentController extends Controller
         return view('account.development.yearly', $data);
     }
 
-    public function getData($account, $from, $to) {
-        $balance = $account->getBalanceAttribute(null, $from->copy()->subMonth()->endOfMonth());
+    public function getData($account, $after, $before) {
+        $balance = $account->getBalanceAttribute(null, $after->copy()->subMonth()->endOfMonth());
 
-        $revenue = $account->revenues()->inPeriod($from, $to)->sum('amount');
+        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
         if ($balance > 0) {
             $revenue += $balance;
         }
 
-        $allocatedRevenue = $account->incomes()->inPeriod($from, $to)->sum('amount');
+        $allocatedRevenue = $account->incomes()->inPeriod($after, $before)->sum('amount');
 
-        $outcome = $account->outcomes()->inPeriod($from, $to)->sum('amount');
+        $outcome = $account->outcomes()->inPeriod($after, $before)->sum('amount');
         if ($balance < 0) {
             $outcome += $balance;
         }
 
         return [
-            'date' => $to->toDateString(),
+            'date' => $before->toDateString(),
             'revenue' => $revenue,
             'allocatedRevenue' => $allocatedRevenue,
             'outcome' => $outcome,
         ];
     }
 
-    public function getEnvelopes($account_id, $date = null) {
-        $account = Auth::user()->accounts()->findOrFail($account_id);
+    public function getEnvelopes($accountId, $date = null) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
         $date->startOfYear();
