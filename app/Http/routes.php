@@ -15,24 +15,24 @@
 //Auth::loginUsingId(1);
 
 // Place any route under ISO language code if provided
-Route::group(['prefix' => App::make('findLocale')], function () {
+Route::group(['prefix' => App::make('findLocale')], function() {
 
     // Ajax URLs only
-    Route::group(['middleware' => 'ajax'], function () {
+    Route::group(['middleware' => 'ajax'], function() {
 
         Route::get('auth/authenticate', 'Auth\AuthController@getLogin'); // Login page content
         Route::post('auth/login', 'Auth\AuthController@postLogin'); // Login form processing
-        Route::post('auth/register', 'Auth\AuthController@postRegister');  // Registration form processing
+        Route::post('auth/register', 'Auth\AuthController@postRegister'); // Registration form processing
         Route::get('auth/lostPassword', 'Auth\PasswordController@getEmail'); // Lost password page content
-        Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail');  // Lost password form processing
+        Route::post('auth/lostPassword', 'Auth\PasswordController@postEmail'); // Lost password form processing
         Route::get('auth/resetPassword/{segment}', 'Auth\PasswordController@getReset'); // Reset password content
-        Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset');  // Reset password form processing
+        Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset'); // Reset password form processing
 
         Route::controller('navbar', 'NavbarController'); // Render navbar content
         Route::controller('home', 'HomeController'); // Render homepage content
 
         // Authenticated user only
-        Route::group(['middleware' => 'auth'], function () {
+        Route::group(['middleware' => 'auth'], function() {
             Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
 
             // Account pages
@@ -53,7 +53,7 @@ Route::group(['prefix' => App::make('findLocale')], function () {
     });
 
     // Root URL, used to render HTML document layout
-    Route::get('/', function () {
+    Route::get('/', function() {
         if (Request::ajax()) {
             abort(404);
         }
@@ -64,7 +64,7 @@ Route::group(['prefix' => App::make('findLocale')], function () {
 });
 
 // Root URL, used to render HTML document layout
-Route::get('/', function () {
+Route::get('/', function() {
     return redirect(App::getLocale());
 });
 

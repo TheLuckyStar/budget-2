@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Mail;
 
 /**
-  * @property string $email
-  */
+ * @property string $email
+ */
 class Invitation extends Model
 {
     /**
@@ -29,7 +29,7 @@ class Invitation extends Model
 
     public static function inviteFutureUser($invitation) {
         if (Auth::check()) {
-            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function ($m) use ($invitation) {
+            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function($m) use ($invitation) {
                 $m->to($invitation->email);
                 $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
             });

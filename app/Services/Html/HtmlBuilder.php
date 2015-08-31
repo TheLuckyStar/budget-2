@@ -16,7 +16,9 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
     {
         $url = $this->url->to($url, array(), $secure);
 
-        if (is_null($title) || $title === false) $title = $url;
+        if (is_null($title) || $title === false) {
+            $title = $url;
+        }
 
         return '<a href="'.$url.'"'.$this->attributes($attributes).'>'.$title.'</a>';
     }
@@ -33,8 +35,7 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         if (is_array($value))
         {
             return $this->nestedListing($key, $type, $value);
-        }
-        else
+        } else
         {
             return '<li>'.$value.'</li>';
         }

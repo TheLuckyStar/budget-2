@@ -95,7 +95,7 @@ class AuthController extends Controller
     {
         $response = $this->postRegisterIlluminate($request);
 
-        Mail::send('emails.registration', ['user' => Auth::user()], function ($m) {
+        Mail::send('emails.registration', ['user' => Auth::user()], function($m) {
             $m->to(Auth::user()->email, Auth::user()->name);
             $m->subject(trans('user.register.emailSubject'));
         });

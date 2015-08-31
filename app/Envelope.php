@@ -4,16 +4,15 @@ namespace App;
 
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
-use Carbon\Carbon;
 use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
-  * @property integer $id
-  * @property string $name
-  * @property string $icon
-  */
+ * @property integer $id
+ * @property string $name
+ * @property string $icon
+ */
 class Envelope extends Model
 {
     use SoftDeletes;
@@ -81,14 +80,14 @@ class Envelope extends Model
 
     public function relatedEvents()
     {
-        return Event::where(function ($query) {
+        return Event::where(function($query) {
             $query->where('entity_type', 'App\Envelope')->where('entity_id', $this->id);
-        })->orWhere(function ($query) {
-            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function ($query) {
+        })->orWhere(function($query) {
+            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function($query) {
                 $query->select('id')->from('incomes')->where('envelope_id', $this->id);
             });
-        })->orWhere(function ($query) {
-            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function ($query) {
+        })->orWhere(function($query) {
+            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function($query) {
                 $query->select('id')->from('outcomes')->where('envelope_id', $this->id);
             });
         })->orderBy('id', 'desc');

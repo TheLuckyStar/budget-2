@@ -10,10 +10,10 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 /**
-  * @property integer $id
-  * @property string $name
-  * @property string $email
-  */
+ * @property integer $id
+ * @property string $name
+ * @property string $email
+ */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
@@ -96,7 +96,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function envelopes() {
-        return Envelope::whereIn('account_id', function ($query) {
+        return Envelope::whereIn('account_id', function($query) {
             $query->select('account_id')
                 ->from('account_user')
                 ->where('user_id', $this->id);

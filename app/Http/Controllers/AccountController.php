@@ -2,8 +2,6 @@
 
 use App\Account;
 use Auth;
-use Carbon\Carbon;
-use Config;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -41,7 +39,7 @@ class AccountController extends Controller
 
     /**
      * Render add account form
-     * @return Illuminate\Http\Response View to render
+     * @return \Illuminate\View\View View to render
      */
     public function getAdd() {
         return view('account.add');
@@ -68,7 +66,7 @@ class AccountController extends Controller
 
     /**
      * Render update account form
-     * @return Illuminate\Http\Response View to render
+     * @return \Illuminate\View\View View to render
      */
     public function getUpdate($account_id) {
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($account_id);

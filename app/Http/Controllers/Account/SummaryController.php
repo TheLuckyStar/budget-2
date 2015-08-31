@@ -105,7 +105,7 @@ class SummaryController extends Controller
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
-            Mail::send('emails.inviteExistingUser', ['account' => $account], function ($m) use ($user) {
+            Mail::send('emails.inviteExistingUser', ['account' => $account], function($m) use ($user) {
                 $m->to($user->email);
                 $m->subject(trans('invitation.inviteExistingUser.emailSubject', ['user' => Auth::user()]));
             });
@@ -121,7 +121,7 @@ class SummaryController extends Controller
         $account->guests()->detach($user->id);
 
         return redirect()->action('Account\SummaryController@getUsers', $account);
-   }
+    }
 
     public function postDetachInvitation(Request $request, $account_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
@@ -130,7 +130,7 @@ class SummaryController extends Controller
         $invitation->delete();
 
         return redirect()->action('Account\SummaryController@getUsers', $account);
-   }
+    }
 
     public function getEvents($account_id) {
         $account = Auth::user()->accounts()->findOrFail($account_id);
