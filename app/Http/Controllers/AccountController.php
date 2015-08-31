@@ -24,10 +24,8 @@ class AccountController extends Controller
                 return redirect()->action('AccountController@getAdd')
                     ->withSuccess(trans('account.add.redirectMessage'));
             }
-        }
-
-        // Retrieve account if provided
-        if (is_numeric($account_id)) {
+        } else {
+            // Retrieve account if provided
             $account = Auth::user()->accounts()->findOrFail($account_id);
         }
 

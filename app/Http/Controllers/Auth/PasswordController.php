@@ -38,8 +38,6 @@ class PasswordController extends Controller
 
     /**
      * Get the e-mail subject line to be used for the reset link email.
-     *
-     * @return string
      */
     protected function getEmailSubject()
     {

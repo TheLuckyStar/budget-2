@@ -1,14 +1,14 @@
 <?php
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as IlluminateRequest;
 
 /**
  * Set locale from request.
  * @param  Illuminate\Http\Request $request Request to consider
  * @return string ISO code of the current language
  */
-function findLocale(Request $request) {
+function findLocale(IlluminateRequest $request) {
 
     // Routes supported by the application
     $available = ['en', 'fr'];
@@ -58,7 +58,7 @@ function findLocale(Request $request) {
 //Auth::loginUsingId(1);
 
 // Place any route under ISO language code if provided
-Route::group(['prefix' => findLocale(Request::capture())], function () {
+Route::group(['prefix' => findLocale(IlluminateRequest::capture())], function () {
 
     // Ajax URLs only
     Route::group(['middleware' => 'ajax'], function () {
@@ -96,7 +96,7 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
     });
 
     // Root URL, used to render HTML document layout
-    Route::get('/', function (Request $request) {
+    Route::get('/', function (IlluminateRequest $request) {
         if ($request->ajax()) {
             abort(404);
         }
@@ -107,7 +107,7 @@ Route::group(['prefix' => findLocale(Request::capture())], function () {
 });
 
 // Root URL, used to render HTML document layout
-Route::get('/', function (Request $request) {
+Route::get('/', function (IlluminateRequest $request) {
     return redirect(App::getLocale());
 });
 

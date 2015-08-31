@@ -7,6 +7,19 @@ use Auth;
 trait HasEvents {
 
     /**
+     * Define a polymorphic one-to-many relationship.
+     * @param  string  $related
+     * @param  string  $name
+     * @param  string  $type
+     * @param  string  $id
+     * @param  string  $localKey
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    abstract public function morphMany($related, $name, $type = null, $id = null, $localKey = null);
+
+
+
+    /**
      * Define relation to App\Event
      * @return Illuminate\Database\Eloquent\Relations\MorphMany
      */
