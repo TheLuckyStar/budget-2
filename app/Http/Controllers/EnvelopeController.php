@@ -23,7 +23,7 @@ class EnvelopeController extends Controller
 
     /**
      * Render add envelope form
-     * @return Illuminate/Http/Response View to render
+     * @return Illuminate\Http\Response View to render
      */
     public function getAdd($account_id) {
         $account = Auth::user()->accounts()->find($account_id);
@@ -56,7 +56,7 @@ class EnvelopeController extends Controller
         $envelope = Envelope::create($request->only(['name', 'icon']));
         $account->envelopes()->save($envelope);
 
-        return redirect()->action('EnvelopeController@getView', $envelope)
+        return redirect()->action('EnvelopeController@getView', [$envelope])
             ->withSuccess(trans('envelope.add.successMessage', ['envelope' => $envelope]));
     }
 
@@ -64,7 +64,7 @@ class EnvelopeController extends Controller
 
     /**
      * Render update envelope form
-     * @return Illuminate/Http/Response View to render
+     * @return Illuminate\Http\Response View to render
      */
     public function getUpdate($envelope_id) {
         $envelope = Envelope::withTrashed()->find($envelope_id);

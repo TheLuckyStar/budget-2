@@ -10,7 +10,7 @@ class OperationsController extends Controller
     /**
      * List operations related to one envelope (second tab)
      * @param  string $envelope_id Envelope ID
-     * @return Illuminate/Http/Response View to render
+     * @return Illuminate\Http\Response View to render
      */
     public function getTable($envelope_id, $month = null) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelope_id);

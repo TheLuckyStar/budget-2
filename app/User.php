@@ -9,6 +9,11 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/**
+  * @property integer $id
+  * @property string $name
+  * @property string $email
+  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
@@ -25,7 +30,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-
     /**
      * The attributes that should be casted to native types.
      * @var array
@@ -40,7 +44,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected static function boot()
     {
-        self::created([__CLASS__, 'processInvitations']);
+        self::created(__CLASS__.'@processInvitations');
     }
 
     protected static function processInvitations($user) {
@@ -70,9 +74,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->withTrashed()
             ->withPivot('owner')
             ->withTimestamps()
-            // ->orderBy('owner', 'desc')
-            // ->orderBy('name')
-            ;
+            ->orderBy('owner', 'desc')
+            ->orderBy('name');
     }
 
     public function trashedAccounts() {

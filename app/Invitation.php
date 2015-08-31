@@ -7,6 +7,9 @@ use Html;
 use Illuminate\Database\Eloquent\Model;
 use Mail;
 
+/**
+  * @property string $email
+  */
 class Invitation extends Model
 {
     /**
@@ -21,10 +24,10 @@ class Invitation extends Model
      */
     protected static function boot()
     {
-        self::created([__CLASS__, 'inviteFutureUser']);
+        self::created(__CLASS__.'@inviteFutureUser');
     }
 
-    protected static function inviteFutureUser($invitation) {
+    public static function inviteFutureUser($invitation) {
         if (Auth::check()) {
             Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function ($m) use ($invitation) {
                 $m->to($invitation->email);

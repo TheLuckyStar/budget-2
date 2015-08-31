@@ -4,6 +4,14 @@ use App\Operation;
 use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+  * @property integer $id
+  * @property App\Envelope $envelope
+  * @property string $name
+  * @property float $amount
+  * @property int $effective
+  * @property Carbon\Carbon $date
+  */
 class Outcome extends Operation
 {
     use SoftDeletes;
@@ -26,6 +34,7 @@ class Outcome extends Operation
      */
     // @TODO Cast effective to boolean
     protected $casts = [
+        'id' => 'id',
         'amount' => 'float',
         'effective' => 'integer',
     ];

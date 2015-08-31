@@ -4,6 +4,13 @@ use App\Operation;
 use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+  * @property integer $id
+  * @property App\Account $account
+  * @property string $name
+  * @property float $amount
+  * @property Carbon\Carbon $date
+  */
 class Revenue extends Operation
 {
     use SoftDeletes;
@@ -25,6 +32,7 @@ class Revenue extends Operation
      * @var array
      */
     protected $casts = [
+        'id' => 'id',
         'amount' => 'float',
     ];
 

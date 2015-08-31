@@ -3,6 +3,12 @@
 use App\Operation;
 use Html;
 
+/**
+  * @property integer $id
+  * @property App\Envelope $envelope
+  * @property float $amount
+  * @property Carbon\Carbon $date
+  */
 class Income extends Operation
 {
     /**
@@ -16,6 +22,7 @@ class Income extends Operation
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'amount' => 'float',
     ];
 

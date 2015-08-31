@@ -12,7 +12,7 @@ class AccountController extends Controller
      * Default account routing
      * @param  int $account_id Account ID
      * @param  string $activeTab Name of active tab
-     * @return Illuminate/Http/Response Redirection
+     * @return Illuminate\Http\Response Redirection
      */
     public function getIndex($account_id = null, $activeTab = 'summary') {
         // Retrieve first account if no one is provided
@@ -41,7 +41,7 @@ class AccountController extends Controller
 
     /**
      * Render add account form
-     * @return Illuminate/Http/Response View to render
+     * @return Illuminate\Http\Response View to render
      */
     public function getAdd() {
         return view('account.add');
@@ -60,7 +60,7 @@ class AccountController extends Controller
             'amount' => $request->get('balance'),
         ]);
 
-        return redirect()->action('AccountController@getIndex', $account)
+        return redirect()->action('AccountController@getIndex', [$account])
             ->withSuccess(trans('account.add.successMessage', ['account' => $account]));
     }
 
@@ -68,7 +68,7 @@ class AccountController extends Controller
 
     /**
      * Render update account form
-     * @return Illuminate/Http/Response View to render
+     * @return Illuminate\Http\Response View to render
      */
     public function getUpdate($account_id) {
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($account_id);

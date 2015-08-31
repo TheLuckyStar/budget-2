@@ -9,6 +9,11 @@ use Html;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+  * @property integer $id
+  * @property string $name
+  * @property string $icon
+  */
 class Envelope extends Model
 {
     use SoftDeletes;
@@ -19,6 +24,14 @@ class Envelope extends Model
      * @var array
      */
     protected $fillable = ['name', 'icon'];
+
+    /**
+     * The attributes that should be casted to native types.
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+    ];
 
     /**
      * The attributes that should be mutated to dates.

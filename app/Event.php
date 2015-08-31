@@ -5,6 +5,16 @@ namespace App;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+  * @property integer $id
+  * @property App\User $user
+  * @property Illuminate\Database\Eloquent\Model $entity
+  * @property string $action
+  * @property string $field_name
+  * @property string $field_value_from
+  * @property string $field_value_to
+  * @property Carbon\Carbon $created_at
+  */
 class Event extends Model
 {
     /**
@@ -26,6 +36,7 @@ class Event extends Model
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'user_id' => 'integer',
         'entity_id' => 'integer',
     ];
