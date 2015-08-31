@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Envelope;
 use Auth;
-use Carbon\Carbon;
-use Config;
 use Illuminate\Http\Request;
 
 class EnvelopeController extends Controller

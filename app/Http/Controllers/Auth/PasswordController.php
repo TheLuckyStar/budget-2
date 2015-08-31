@@ -44,13 +44,13 @@ class PasswordController extends Controller
      * Send a reset link to the given user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|null
      */
     public function postEmail(Request $request)
     {
         $this->validate($request, ['email' => 'required|email']);
 
-        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+        $response = Password::sendResetLink($request->only('email'), function(Message $message) {
             $message->subject($this->getEmailSubject());
         });
         switch ($response) {
@@ -96,7 +96,7 @@ class PasswordController extends Controller
      * Reset the given user's password.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postReset(Request $request, $token)
     {
@@ -110,7 +110,7 @@ class PasswordController extends Controller
             'email', 'password', 'password_confirmation', 'token'
         );
 
-        $response = Password::reset($credentials, function ($user, $password) {
+        $response = Password::reset($credentials, function($user, $password) {
             $this->resetPassword($user, $password);
         });
 

@@ -4,11 +4,11 @@ use App\Operation;
 use Html;
 
 /**
-  * @property integer $id
-  * @property App\Envelope $envelope
-  * @property float $amount
-  * @property Carbon\Carbon $date
-  */
+ * @property integer $id
+ * @property App\Envelope $envelope
+ * @property float $amount
+ * @property Carbon\Carbon $date
+ */
 class Income extends Operation
 {
     /**

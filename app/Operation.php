@@ -31,13 +31,13 @@ class Operation extends Model
             return $query;
         }
 
-        $query->where(function ($query) use($from, $to) {
+        $query->where(function($query) use($from, $to) {
             if ($from instanceof Carbon) {
                 $query->where('date', '>=', $from);
             }
 
             if ($to instanceof Carbon) {
-                $query->where(function ($query) use($from, $to) {
+                $query->where(function($query) use($from, $to) {
                     $query->where('date', '<=', $to);
 
                     if ($from instanceof Carbon === false) {

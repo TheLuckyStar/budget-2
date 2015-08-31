@@ -5,13 +5,13 @@ use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
-  * @property integer $id
-  * @property App\Account $fromAccount
-  * @property App\Account $toAccount
-  * @property string $name
-  * @property float $amount
-  * @property Carbon\Carbon $date
-  */
+ * @property integer $id
+ * @property App\Account $fromAccount
+ * @property App\Account $toAccount
+ * @property string $name
+ * @property float $amount
+ * @property Carbon\Carbon $date
+ */
 class Transfer extends Operation
 {
     use SoftDeletes;
