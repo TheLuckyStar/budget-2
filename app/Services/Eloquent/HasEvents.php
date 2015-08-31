@@ -70,7 +70,7 @@ trait HasEvents {
     {
         foreach ($entity->watchedFieldInEvent as $fieldName) {
             $fieldValueFrom = $entity->getOriginal($fieldName);
-            $fieldValueTo  = $entity->$fieldName;
+            $fieldValueTo   = $entity->$fieldName;
 
             if ($fieldValueFrom != $fieldValueTo) {
                 $event = new Event([

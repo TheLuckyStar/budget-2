@@ -44,7 +44,7 @@ class DevelopmentController extends Controller
 
         $data = [];
         for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $after = $d->copy()->startOfMonth();
+            $after  = $d->copy()->startOfMonth();
             $before = $d->copy()->endOfMonth();
 
             $data[] = $this->getData($account, $after, $before);

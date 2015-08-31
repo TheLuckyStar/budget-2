@@ -28,11 +28,11 @@ class AllocationController extends Controller
         $income            = $account->incomes()->inPeriod(null, $prevMonth)->sum('amount');
         $unallocatedBefore = max(0, $revenue - $income);
 
-        $revenue           = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $income            = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $unallocatedMonth  = max(0, $revenue - $income);
+        $revenue          = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $income           = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
+        $unallocatedMonth = max(0, $revenue - $income);
 
-        $incomes = $account->incomes()
+        $incomes     = $account->incomes()
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
             ->lists('amount', 'envelope_id')
             ->toArray();

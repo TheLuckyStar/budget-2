@@ -48,7 +48,9 @@ class OperationsController extends Controller
 
         $this->validate($request, [
             'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
-            'envelope_id' => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'.$account->id,
+            'envelope_id'
+                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                    .$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',

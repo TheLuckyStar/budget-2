@@ -11,7 +11,7 @@ class NavbarController extends Controller
 
     public function getIndex($accountId = null) {
         $horizontalMenu = Auth::check() ? $this->horizontalAuthenticated() : $this->horizontalGuest();
-        $verticalMenu  = Auth::check() ? $this->verticalAuthenticated($accountId) : $this->verticalGuest();
+        $verticalMenu   = Auth::check() ? $this->verticalAuthenticated($accountId) : $this->verticalGuest();
 
         $data = [
             'horizontalMenu' => $horizontalMenu,

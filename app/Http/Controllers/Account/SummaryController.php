@@ -18,8 +18,8 @@ class SummaryController extends Controller
         $after  = Carbon::now()->startOfMonth();
         $before = Carbon::now()->endOfMonth();
 
-        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
-        $income  = $account->incomes()->inPeriod($after, $before)->sum('amount');
+        $revenue            = $account->revenues()->inPeriod($after, $before)->sum('amount');
+        $income             = $account->incomes()->inPeriod($after, $before)->sum('amount');
         $unallocatedRevenue = max(0, $revenue - $income);
 
         $data = [
