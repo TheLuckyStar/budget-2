@@ -41,31 +41,18 @@ class Event extends Model
         'entity_id' => 'integer',
     ];
 
+
+
     /**
      * Convert the model to its string representation.
      * @return string
      */
     public function __toString()
     {
+        $action = $this->actionForString();
+        $user = $this->userForString();
         $fieldName = trans(strtolower(class_basename($this->entity)).'.fields.'.$this->field_name);
-
-        $action = $this->action;
-        if ($this->action == 'update' && $this->field_value_from == '') {
-            $action = 'set';
-        } else if ($this->action == 'update' && $this->field_value_to == '') {
-            $action = 'clear';
-        } elseif ($this->action == 'delete'
-            && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
-            $action = 'archive';
-        }
-
-        $user = $this->user->id !== Auth::user()->id ? $this->user->link() : trans('event.self');
-
-        if ($this->created_at->diffInHours() === 0) {
-            $period = $this->created_at->diffForHumans();
-        } else {
-            $period = trans('event.datePrefix').' '.$this->created_at->format('d/m/Y');
-        }
+        $period = $this->periodForString();
 
         return trans('event.action.'.$action, [
             'user' => $user,
@@ -76,6 +63,44 @@ class Event extends Model
             'period' => $period,
         ]);
     }
+
+    public function actionForString()
+    {
+        if ($this->action == 'update' && $this->field_value_from == '') {
+            return 'set';
+        }
+
+        if ($this->action == 'update' && $this->field_value_to == '') {
+            return 'clear';
+        }
+
+        if ($this->action == 'delete'
+            && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
+            return 'archive';
+        }
+
+        return $this->action;
+    }
+
+    public function userForString()
+    {
+        if ($this->user->id !== Auth::user()->id) {
+            return $this->user->link();
+        }
+
+        return trans('event.self');
+    }
+
+    public function periodForString()
+    {
+        if ($this->created_at->diffInHours() === 0) {
+            return $this->created_at->diffForHumans();
+        }
+
+        return trans('event.datePrefix').' '.$this->created_at->format('d/m/Y');
+    }
+
+
 
     public function user() {
         return $this->belongsTo('App\User');
