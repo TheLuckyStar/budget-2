@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Account;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\Invitation;
 use App\User;
 use Auth;
@@ -9,7 +9,7 @@ use Config;
 use Illuminate\Http\Request;
 use Mail;
 
-class SummaryController extends Controller
+class SummaryController extends AbstractController
 {
 
     public function getBalance($accountId) {

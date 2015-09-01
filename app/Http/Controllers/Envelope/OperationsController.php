@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers\Envelope;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class OperationsController extends Controller
+class OperationsController extends AbstractController
 {
     /**
      * List operations related to one envelope (second tab)

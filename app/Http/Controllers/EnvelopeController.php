@@ -6,7 +6,7 @@ use App\Envelope;
 use Auth;
 use Illuminate\Http\Request;
 
-class EnvelopeController extends Controller
+class EnvelopeController extends AbstractController
 {
     public function getView($envelopeId, $activeTab = 'summary') {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);

@@ -4,7 +4,7 @@ use App\Account;
 use Auth;
 use Illuminate\Http\Request;
 
-class AccountController extends Controller
+class AccountController extends AbstractController
 {
     /**
      * Default account routing

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Mail;
 use Validator;
 
-class AuthController extends Controller
+class AuthController extends AbstractController
 {
     /*
     |--------------------------------------------------------------------------

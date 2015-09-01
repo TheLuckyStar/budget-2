@@ -35,7 +35,8 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         if (is_array($value))
         {
             return $this->nestedListing($key, $type, $value);
-        } else
+        }
+        else
         {
             return '<li>'.$value.'</li>';
         }

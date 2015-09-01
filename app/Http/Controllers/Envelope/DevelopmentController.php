@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers\Envelope;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Auth;
 use Config;
 use Carbon\Carbon;
 
-class DevelopmentController extends Controller
+class DevelopmentController extends AbstractController
 {
     public function getMonthly($envelopeId, $date = null) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);

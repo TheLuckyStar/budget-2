@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers\Envelope;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use App\User;
 use Auth;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
 
-class SummaryController extends Controller
+class SummaryController extends AbstractController
 {
     public function getBalance($envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);

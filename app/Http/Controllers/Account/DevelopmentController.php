@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers\Account;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\AbstractController;
 use Auth;
 use Config;
 use Carbon\Carbon;
 
-class DevelopmentController extends Controller
+class DevelopmentController extends AbstractController
 {
     public function getMonthly($accountId, $date = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);

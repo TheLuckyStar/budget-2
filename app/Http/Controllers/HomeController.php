@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use \Auth;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
     public function getIndex(Request $request) {
         // Redirect for authenticated users

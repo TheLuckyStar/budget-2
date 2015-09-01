@@ -6,7 +6,7 @@ use App\Account;
 use Auth;
 use Html;
 
-class NavbarController extends Controller
+class NavbarController extends AbstractController
 {
 
     public function getIndex($accountId = null) {
