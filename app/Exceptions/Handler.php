@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
     {
         // Redirect when model not found
         if ($exception instanceof ModelNotFoundException) {
-            return $this->renderModelnotFound($request, $exception);
+            return $this->renderModelnotFound($exception);
         }
 
         // Render error in local environment for easier debugging
@@ -66,11 +66,10 @@ class Handler extends ExceptionHandler
     /**
      * Render a ModelNotFound exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  Illuminate\Database\Eloquent\ModelNotFoundException  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function renderModelnotFound($request, Exception $exception)
+    public function renderModelnotFound(ModelNotFoundException $exception)
     {
         // Redirect when Account model not found
         if ($exception->getModel() === 'App\Account') {
