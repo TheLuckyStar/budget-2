@@ -36,10 +36,8 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         {
             return $this->nestedListing($key, $type, $value);
         }
-        else
-        {
-            return '<li>'.$value.'</li>';
-        }
+
+        return '<li>'.$value.'</li>';
     }
 
     /**

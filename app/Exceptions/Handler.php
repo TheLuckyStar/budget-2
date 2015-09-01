@@ -42,16 +42,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // Redirect when Account model not found
-        if ($exception instanceof ModelNotFoundException && $exception->getModel() === 'App\Account') {
-            return redirect()->action('AccountController@getIndex')
-                ->withErrors(trans('account.index.notfoundMessage'));
-        }
-
-        // Redirect when Envelope model not found
-        if ($exception instanceof ModelNotFoundException && $exception->getModel() === 'App\Envelope') {
-            return redirect()->action('AccountController@getIndex')
-                ->withErrors(trans('envelope.index.notfoundMessage'));
+        // Redirect when model not found
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->renderModelnotFound($request, $exception);
         }
 
         // Render error in local environment for easier debugging
@@ -62,9 +55,37 @@ class Handler extends ExceptionHandler
         // Catch 404 HTTP errors for smart redirecting
         if ($exception instanceof NotFoundHttpException) {
             // @TODO 404 error message
-            return redirect()->action('HomeController@getIndex')->withErrors([trans('app.error.404')]);
+            return redirect()->action('HomeController@getIndex')
+                ->withErrors([trans('app.error.404')]);
         }
 
-        return redirect()->action('HomeController@getIndex')->withErrors([$exception->getMessage()]);
+        return redirect()->action('HomeController@getIndex')
+            ->withErrors([$exception->getMessage()]);
+    }
+
+    /**
+     * Render a ModelNotFound exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Illuminate\Database\Eloquent\ModelNotFoundException  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function renderModelnotFound($request, Exception $exception)
+    {
+        // Redirect when Account model not found
+        if ($exception->getModel() === 'App\Account') {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('account.index.notfoundMessage'));
+        }
+
+        // Redirect when Envelope model not found
+        if ($exception->getModel() === 'App\Envelope') {
+            return redirect()->action('AccountController@getIndex')
+                ->withErrors(trans('envelope.index.notfoundMessage'));
+        }
+
+        // Redirect when other model not found
+        return redirect()->action('HomeController@getIndex')
+            ->withErrors([trans('app.error.404')]);
     }
 }

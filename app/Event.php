@@ -49,10 +49,10 @@ class Event extends Model
      */
     public function __toString()
     {
-        $action = $this->actionForString();
-        $user = $this->userForString();
+        $action    = $this->actionForString();
+        $user      = $this->userForString();
         $fieldName = trans(strtolower(class_basename($this->entity)).'.fields.'.$this->field_name);
-        $period = $this->periodForString();
+        $period    = $this->periodForString();
 
         return trans('event.action.'.$action, [
             'user' => $user,
