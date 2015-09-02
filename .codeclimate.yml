@@ -1,0 +1,12 @@
+languages:
+  JavaScript: true
+  PHP: true
+
+exclude_paths:
+- "bootstrap/*"
+- "public/theme/*"
+- "public/vendor/*"
+- "resources/*"
+- "storage/*"
+- "tests/*"
+- "vendor/*"
