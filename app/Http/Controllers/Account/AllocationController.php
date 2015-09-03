@@ -20,41 +20,28 @@ class AllocationController extends AbstractController
 
         $startOfMonth = $month->startOfMonth();
         $endOfMonth   = $month->copy()->endOfMonth();
-
         $prevMonth = $month->copy()->subMonth()->endOfMonth();
-        $nextMonth = $month->copy()->addMonth()->startOfMonth();
-
-        $revenue           = $account->revenues()->inPeriod(null, $prevMonth)->sum('amount');
-        $income            = $account->incomes()->inPeriod(null, $prevMonth)->sum('amount');
-        $unallocatedBefore = max(0, $revenue - $income);
-
-        $revenue          = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $income           = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->sum('amount');
-        $unallocatedMonth = max(0, $revenue - $income);
 
         $incomes     = $account->incomes()
-            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->inPeriod($startOfMonth, $endOfMonth)
             ->lists('amount', 'envelope_id')
             ->toArray();
         $prevIncomes = $account->incomes()
-            ->whereBetween('date', [
-                $month->copy()->subMonth()->startOfMonth(),
-                $month->copy()->subMonth()->endOfMonth(),
-            ])
+            ->inPeriod($prevMonth->copy()->startOfMonth(), $prevMonth)
             ->lists('amount', 'envelope_id')
             ->toArray();
 
         $data = [
             'account' => $account,
-            'revenue' => $revenue,
-            'unallocatedRevenueBeforeMonth' => $unallocatedBefore,
-            'unallocatedRevenueMonth' => $unallocatedMonth,
+            'revenue' => $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount'),
+            'unallocatedRevenueBeforeMonth' => $account->getUnallocatedAttribute(null, $prevMonth),
+            'unallocatedRevenueMonth' => $account->getUnallocatedAttribute($startOfMonth, $endOfMonth),
             'incomes' => $incomes,
             'prevIncomes' => $prevIncomes,
             'startOfMonth' => $startOfMonth,
             'endOfMonth' => $endOfMonth,
             'prevMonth' => $prevMonth,
-            'nextMonth' => $nextMonth,
+            'nextMonth' => $month->copy()->addMonth()->startOfMonth(),
         ];
 
         return view('account.allocation.sliders', $data);

@@ -214,6 +214,15 @@ class Account extends Model
         return floatval($balance);
     }
 
+    public function getUnallocatedAttribute($after = null, $before = null) {
+        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
+        $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+
+        $unallocated = max(0, $revenue - $income);
+
+        return floatval($unallocated);
+    }
+
     public function getStatusAttribute($after = null, $before = null) {
         $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
