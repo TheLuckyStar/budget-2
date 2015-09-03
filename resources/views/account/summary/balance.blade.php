@@ -5,7 +5,9 @@
         @lang('account.summary.balance.title', ['balance' => Html::formatPrice($account->balance, true)])
     </div>
     <div class="panel-body">
-        @if ($account->countOperationsInPeriod() === 0)
+        @if ($withChartData)
+            <div id="account-summary-balance-chart"></div>
+        @else
             <div class='alert alert-info'>
                 @lang('account.summary.balance.emptyMessage', [
                     'link' => Html::link(
@@ -15,8 +17,6 @@
                     )
                 ])
             </div>
-        @else
-            <div id="account-summary-balance-chart"></div>
         @endif
     </div>
 </div>

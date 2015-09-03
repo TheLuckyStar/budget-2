@@ -136,15 +136,6 @@ class Envelope extends Model
         return $operations;
     }
 
-    public function countOperationsInPeriod($after = null, $before = null) {
-        $count = 0;
-
-        $count += $this->incomes()->inPeriod($after, $before)->count();
-        $count += $this->outcomes()->inPeriod($after, $before)->count();
-
-        return $count;
-    }
-
     public function getBalanceAttribute($after = null, $before = null) {
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');

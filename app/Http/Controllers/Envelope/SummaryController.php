@@ -39,6 +39,7 @@ class SummaryController extends AbstractController
         $data = [
             'envelope' => $envelope,
             'data' => json_encode($chartData),
+            'withChartData' => empty(array_filter(array_pluck($chartData, 'value'))) === false,
             'colors' => json_encode(array_values($chartColors)),
         ];
 

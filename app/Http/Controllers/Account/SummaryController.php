@@ -44,6 +44,7 @@ class SummaryController extends AbstractController
         $data = [
             'account' => $account,
             'data' => json_encode($data),
+            'withChartData' => empty(array_filter(array_pluck($data, 'value'))) === false,
             'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
         ];
 

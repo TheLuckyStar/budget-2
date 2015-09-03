@@ -5,7 +5,9 @@
         @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance, true)])
     </div>
     <div class="panel-body">
-        @if ($envelope->countOperationsInPeriod() === 0)
+        @if ($withChartData)
+            <div id="envelope-summary-balance-chart"></div>
+        @else
             <div class='alert alert-info'>
                 @lang('envelope.summary.balance.emptyMessage', [
                     'link' => Html::link(
@@ -15,8 +17,6 @@
                     )
                 ])
             </div>
-        @else
-            <div id="envelope-summary-balance-chart"></div>
         @endif
     </div>
 </div>

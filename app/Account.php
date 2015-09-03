@@ -192,15 +192,6 @@ class Account extends Model
         return $operations->sortBy('date');
     }
 
-    public function countOperationsInPeriod($after = null, $before = null) {
-        $count = 0;
-
-        $count += $this->revenues()->inPeriod($after, $before)->count();
-        $count += $this->outcomes()->inPeriod($after, $before)->count();
-
-        return $count;
-    }
-
     public function getInitialBalanceAttribute() {
         $income = $this->revenues()->where('date', null)->first();
 
@@ -224,10 +215,6 @@ class Account extends Model
     }
 
     public function getStatusAttribute($after = null, $before = null) {
-        if ($this->countOperationsInPeriod() === 0) {
-            return 'default';
-        }
-
         $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
