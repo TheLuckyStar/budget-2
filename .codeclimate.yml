@@ -3,6 +3,8 @@ languages:
   PHP: true
 exclude_paths:
 - "bootstrap/*"
+- "config/*"
+- "database/*"
 - "public/theme/*"
 - "public/vendor/*"
 - "resources/*"
