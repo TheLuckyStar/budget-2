@@ -20,7 +20,7 @@ class AllocationController extends AbstractController
 
         $startOfMonth = $month->startOfMonth();
         $endOfMonth   = $month->copy()->endOfMonth();
-        $prevMonth = $month->copy()->subMonth()->endOfMonth();
+        $prevMonth    = $month->copy()->subMonth()->endOfMonth();
 
         $incomes     = $account->incomes()
             ->inPeriod($startOfMonth, $endOfMonth)
