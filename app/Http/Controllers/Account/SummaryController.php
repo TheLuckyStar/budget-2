@@ -18,9 +18,8 @@ class SummaryController extends AbstractController
         $after  = Carbon::now()->startOfMonth();
         $before = Carbon::now()->endOfMonth();
 
-        $revenue            = $account->revenues()->inPeriod($after, $before)->sum('amount');
-        $income             = $account->incomes()->inPeriod($after, $before)->sum('amount');
-        $unallocatedRevenue = max(0, $revenue - $income);
+        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
+        $income  = $account->incomes()->inPeriod($after, $before)->sum('amount');
 
         $data = [
             [
@@ -33,18 +32,18 @@ class SummaryController extends AbstractController
             ],
             [
                 'label' => trans('operation.type.unallocatedRevenue'),
-                'value' => $unallocatedRevenue,
+                'value' => max(0, $revenue - $income),
             ],
             [
                 'label' => trans('operation.type.allocatedRevenue'),
-                'value' => $account->incomes()->inPeriod($after, $before)->sum('amount'),
+                'value' => $income,
             ],
         ];
 
         $data = [
             'account' => $account,
             'data' => json_encode($data),
-            'withChartData' => empty(array_filter(array_pluck($data, 'value'))) === false,
+            'withChartData' => count(array_filter(array_pluck($data, 'value'))),
             'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
         ];
 
