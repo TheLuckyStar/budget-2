@@ -47,7 +47,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         self::created(__CLASS__.'@processInvitations');
     }
 
-    protected static function processInvitations($user) {
+    public static function processInvitations($user) {
         $invitations = Invitation::where('email', $user->email)->get();
 
         foreach ($invitations as $invitation) {
