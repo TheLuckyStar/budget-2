@@ -887,16 +887,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.1.12",
+            "version": "v5.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "76a9816f37a58383f6ba093ccf08f253e5488555"
+                "reference": "231b5ee6d8439edb5f7d45da00fd31d915bdf6f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/76a9816f37a58383f6ba093ccf08f253e5488555",
-                "reference": "76a9816f37a58383f6ba093ccf08f253e5488555",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/231b5ee6d8439edb5f7d45da00fd31d915bdf6f0",
+                "reference": "231b5ee6d8439edb5f7d45da00fd31d915bdf6f0",
                 "shasum": ""
             },
             "require": {
@@ -1011,20 +1011,20 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-08-30 23:25:48"
+            "time": "2015-09-03 16:00:33"
         },
         {
             "name": "laravelcollective/html",
-            "version": "v5.1.5",
+            "version": "v5.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "59f124084c9135a6a8d87323e5c5562ab823deb4"
+                "reference": "8b7c357e78b8fb6a2e48377cf2441441aac6dd1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/59f124084c9135a6a8d87323e5c5562ab823deb4",
-                "reference": "59f124084c9135a6a8d87323e5c5562ab823deb4",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/8b7c357e78b8fb6a2e48377cf2441441aac6dd1e",
+                "reference": "8b7c357e78b8fb6a2e48377cf2441441aac6dd1e",
                 "shasum": ""
             },
             "require": {
@@ -1061,7 +1061,7 @@
                     "email": "adam@laravelcollective.com"
                 }
             ],
-            "time": "2015-07-28 03:18:41"
+            "time": "2015-09-03 17:16:48"
         },
         {
             "name": "league/flysystem",
