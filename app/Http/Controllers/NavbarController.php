@@ -104,23 +104,7 @@ class NavbarController extends AbstractController
         }
 
         if ($account->trashedEnvelopes()->count()) {
-            $subLinks = [];
-            foreach ($account->trashedEnvelopes as $envelope) {
-                $subLinks[] = $envelope->link(
-                    $envelope
-                        .'<span class="pull-right badge badge-'.$envelope->status.'">'
-                        .Html::formatPrice($envelope->balance)
-                        .'</span>'
-                );
-            }
-            $links[] = Html::link(
-                    '#',
-                    '<i class="fa fa-fw fa-archive"></i> '
-                        .trans('envelope.delete.title')
-                        .' <i class="fa fa-fw fa-caret-down"></i></a>',
-                    ['data-toggle' => 'collapse', 'data-target' => '#trashed-envelopes']
-                )
-                .Html::ul($subLinks, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
+            $links[] = $this->verticalTrashedEnvelopes($account);
         }
 
         $links[] = Html::linkAction(
@@ -131,5 +115,27 @@ class NavbarController extends AbstractController
         );
 
         return $links;
+    }
+
+    private function verticalTrashedEnvelopes($account) {
+        $links = [];
+
+        foreach ($account->trashedEnvelopes as $envelope) {
+            $links[] = $envelope->link(
+                $envelope
+                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
+                    .Html::formatPrice($envelope->balance)
+                    .'</span>'
+            );
+        }
+
+        return Html::link(
+                '#',
+                '<i class="fa fa-fw fa-archive"></i> '
+                    .trans('envelope.delete.title')
+                    .' <i class="fa fa-fw fa-caret-down"></i></a>',
+                ['data-toggle' => 'collapse', 'data-target' => '#trashed-envelopes']
+            )
+            .Html::ul($links, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
     }
 }
