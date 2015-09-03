@@ -1,3 +1,4 @@
+ /*exported NavbarModule */
 
 // The module pattern
 var NavbarModule = (function() {
@@ -38,18 +39,11 @@ var NavbarModule = (function() {
 
     // Set active classes on horizontal navbar links
     var activateLinks = function (preventRefresh) {
-        if (typeof preventRefresh === 'undefined') {
-            preventRefresh = false;
-        }
+        var horizontalLink = getHorizontalLinkToActivate();
+        var verticalLink = getVerticalLinkToActivate();
 
-        var horizontalUrl = $('#page-wrapper').children(':first').data('horizontal-url');
-        var verticalUrl = $('#page-wrapper').children(':first').data('vertical-url');
-
-        var horizontalLink = navbar.find('.top-nav .routable[href="' + horizontalUrl + '"]');
-        var verticalLink = navbar.find('.side-nav .routable[href="' + verticalUrl + '"]');
-
-        if ((horizontalUrl && horizontalLink.length === 0) || (verticalUrl && verticalLink.length === 0)) {
-            if (preventRefresh === false) {
+        if (horizontalLink.length === 0 || verticalLink.length === 0) {
+            if (preventRefresh !== true) {
                 refresh();
                 return;
             }
@@ -59,12 +53,23 @@ var NavbarModule = (function() {
         navbar.find('.routable').closest('li').removeClass('active');
         navbar.find('.routable').closest('ul.collapse').removeClass('in');
 
-        horizontalLink.addClass('active');
-        verticalLink.addClass('active');
+        horizontalLink.addClass('active').closest('li').addClass('active');
+        verticalLink.addClass('active').closest('li').addClass('active');
+    };
 
-        horizontalLink.closest('li').addClass('active');
-        verticalLink.closest('li').addClass('active');
-    }
+    var getHorizontalLinkToActivate = function () {
+        var url = $('#page-wrapper').children(':first').data('horizontal-url');
+        var link = navbar.find('.top-nav .routable[href="' + url + '"]');
+
+        return link;
+    };
+
+    var getVerticalLinkToActivate = function () {
+        var url = $('#page-wrapper').children(':first').data('vertical-url');
+        var link = navbar.find('.side-nav .routable[href="' + url + '"]');
+
+        return link;
+    };
 
 
 
