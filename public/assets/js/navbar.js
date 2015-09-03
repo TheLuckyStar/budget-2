@@ -1,4 +1,4 @@
- /*exported NavbarModule */
+ /* exported NavbarModule */
 
 // The module pattern
 var NavbarModule = (function() {
@@ -49,12 +49,7 @@ var NavbarModule = (function() {
             }
         }
 
-        navbar.find('.routable').removeClass('active');
-        navbar.find('.routable').closest('li').removeClass('active');
-        navbar.find('.routable').closest('ul.collapse').removeClass('in');
-
-        horizontalLink.addClass('active').closest('li').addClass('active');
-        verticalLink.addClass('active').closest('li').addClass('active');
+        refreshActivatedLinks(horizontalLink, verticalLink);
     };
 
     var getHorizontalLinkToActivate = function () {
@@ -71,7 +66,14 @@ var NavbarModule = (function() {
         return link;
     };
 
+    var refreshActivatedLinks = function (horizontalLink, verticalLink) {
+        navbar.find('.routable').removeClass('active');
+        navbar.find('.routable').closest('li').removeClass('active');
+        navbar.find('.routable').closest('ul.collapse').removeClass('in');
 
+        horizontalLink.addClass('active').closest('li').addClass('active');
+        verticalLink.addClass('active').closest('li').addClass('active');
+    };
 
     // Called on module loading
     var init = function () {

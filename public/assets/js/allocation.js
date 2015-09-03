@@ -1,3 +1,5 @@
+/* global Morris */
+ /* exported AllocationModule */
 
 // The module pattern
 var AllocationModule = (function() {
@@ -5,10 +7,10 @@ var AllocationModule = (function() {
 
 
     // Collection of sliders
-    sliders = {};
+    var sliders = {};
 
     // Donut revenue chart
-    revenueChart = null;
+    var revenueChart = null;
 
     // Update data elements from sliders
     var updateData = function () {
@@ -100,7 +102,7 @@ var AllocationModule = (function() {
                     $(this).slider('value', ui.value);
                     updateData();
                 },
-                stop: function(event, ui) {
+                stop: function() {
                     updateSliders();
                 }
             });
@@ -117,7 +119,7 @@ var AllocationModule = (function() {
             revenueChart = target.get(0).chart = Morris.Donut({
                 element: target.attr('id'),
                 data: [{label: 1, value: 1}],
-                formatter: function (val, data) { return FormatModule.price(val); },
+                formatter: function (val) { return FormatModule.price(val); },
                 resize: true
             });
         }
@@ -132,7 +134,7 @@ var AllocationModule = (function() {
             console.log(url);
 
             target.fadeTo('fast', 0.5, function() {
-                $.post(url, data, function(data, textStatus, jqXHR) {
+                $.post(url, data, function(data) {
                     target.html(data);
                     submitFormSuccess();
                 }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -147,7 +149,7 @@ var AllocationModule = (function() {
     };
 
     // Handle form post success
-    var submitFormSuccess = function (row) {
+    var submitFormSuccess = function () {
         RouterModule.refresh($('#account-operations-table, #envelope-operations-table'));
 
         NavbarModule.refresh();

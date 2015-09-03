@@ -50,6 +50,7 @@
                 'vendor/moment/locale/{{ App::getLocale() }}.js',
             @endif
         ], function() {
+            moment = require('moment');
             requirejs([
                 'bootstrap-datetimepicker',
                 'assets/js/fontawesome-iconpicker.min.js',

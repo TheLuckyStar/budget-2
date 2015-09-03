@@ -1,8 +1,8 @@
+/* global confirm */
+/* exported OperationModule */
 
 // The module pattern
 var OperationModule = (function() {
-
-    var moment = require('moment');
 
     // Handle datepicker initialization
     var initDatepicker = function (target) {
@@ -61,7 +61,7 @@ var OperationModule = (function() {
             }
 
             target.fadeTo('fast', 0.5, function() {
-                $.post(url, data, function(data, textStatus, jqXHR) {
+                $.post(url, data, function() {
                     submitFormSuccess();
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     RouterModule.submitFormFail(row, jqXHR, errorThrown);
@@ -73,7 +73,7 @@ var OperationModule = (function() {
     };
 
     // Handle form post success
-    var submitFormSuccess = function (row) {
+    var submitFormSuccess = function () {
         RouterModule.refresh($('#account-operations-table, #envelope-operations-table'));
 
         NavbarModule.refresh();

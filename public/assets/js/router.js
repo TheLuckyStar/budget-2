@@ -1,3 +1,4 @@
+/* exported RouterModule */
 
 // The module pattern
 var RouterModule = (function() {
@@ -38,7 +39,7 @@ var RouterModule = (function() {
                     setFragment(url);
                     NavbarModule.activateLinks();
                 }
-                if (typeof callback == "function") {
+                if (typeof callback === "function") {
                     callback();
                 }
             });
@@ -59,10 +60,11 @@ var RouterModule = (function() {
     var clickLink = function (link, callback) {
         var url = link.attr('href');
 
+        var target;
         if (link.hasClass('routable')) {
-            var target = link.data('target');
+            target = link.data('target');
         } else {
-            var target = link.closest('.routable').data('target');
+            target = link.closest('.routable').data('target');
         }
 
         load(url, $(target), callback);

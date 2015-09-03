@@ -1,3 +1,4 @@
+ /* exported FormatModule */
 
 // The module pattern
 var FormatModule = (function() {
@@ -31,10 +32,10 @@ var FormatModule = (function() {
     // Return formated price with currency
     var price = function (price, forceSymbol) {
         if (forceSymbol === true && price >= 0) {
-            return '+'+number(price, 2) + ' €';
+            return '+'+number(price, 2) + ' \u20AC';
         }
 
-        return number(price, 2) + ' €';
+        return number(price, 2) + ' \u20AC';
     };
 
     // Return formated date to dd/mm/YYYY
@@ -48,7 +49,7 @@ var FormatModule = (function() {
     // Return bootstrap aler
     var alert = function (content, level) {
         return '<div class="alert alert-' + level + '" role="alert">' + content + '</div>';
-    }
+    };
 
     // Define public methods
     return {
