@@ -1,4 +1,7 @@
 /* global confirm */
+/* global RouterModule */
+/* global NavbarModule */
+
 /* exported OperationModule */
 
 // The module pattern

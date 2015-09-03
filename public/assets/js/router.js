@@ -1,3 +1,6 @@
+/* global FormatModule */
+/* global NavbarModule */
+
 /* exported RouterModule */
 
 // The module pattern
@@ -6,7 +9,7 @@ var RouterModule = (function() {
 
 
     // Check if fragment ecists
-    var hasFragment = function (url) {
+    var hasFragment = function () {
         return window.location.hash !== '';
     };
 
@@ -19,7 +22,7 @@ var RouterModule = (function() {
     };
 
     // Get url from fragment and baseurl
-    var getFragment = function (url) {
+    var getFragment = function () {
         var baseUrl = $('#page-wrapper').data('base-url');
         var fragment = window.location.hash.substring(1);
 
@@ -79,7 +82,7 @@ var RouterModule = (function() {
 
         console.log('Submit form to ' + url);
         target.fadeTo('fast', 0.5, function() {
-            $.post(url, data, function(data, textStatus, jqXHR) {
+            $.post(url, data, function(data) {
                 target.html(data);
                 target.fadeTo('fast', 1);
                 target.data('url', url);

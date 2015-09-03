@@ -1,4 +1,8 @@
+/* global FormatModule */
 /* global Morris */
+/* global NavbarModule */
+/* global RouterModule */
+
  /* exported AllocationModule */
 
 // The module pattern
