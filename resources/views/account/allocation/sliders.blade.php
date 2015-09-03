@@ -55,7 +55,7 @@
                             <div class="col-md-5">
                                 <div class='form-group'>
                                     <div class='input-group'>
-                                        <span class="input-group-addon" title="@lang('account.allocation.sliders.prevIncome', ['amount' => Html::formatPrice($prevIncomes[$envelope->id])])">
+                                        <span class="input-group-addon price-slider-prevIncome-button" title="@lang('account.allocation.sliders.prevIncome', ['amount' => Html::formatPrice($prevIncomes[$envelope->id])])" data-value='{{ $prevIncomes[$envelope->id] }}' data-target='#input-income-{{ $envelope->id }}'>
                                             <span class="fa fa-fw fa-history"></span>
                                         </span>
                                         {!! Form::text(

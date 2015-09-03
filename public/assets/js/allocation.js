@@ -72,6 +72,16 @@ var AllocationModule = (function() {
 
 
 
+    // Handle prevIncome button initialization
+    var initPrevIncomeButton = function (target) {
+        target.click(function () {
+            var val = $(this).data('value');
+            var input = $($(this).data('target'));
+
+            input.val(val).change();
+        });
+    };
+
     // Handle text input initialization
     var initTextInput = function (target) {
         target.change(function () {
@@ -167,6 +177,7 @@ var AllocationModule = (function() {
 
     // Handle form initialization
     var initForm = function (form) {
+        initPrevIncomeButton(form.find('.price-slider-prevIncome-button'));
         initTextInput(form.find('input[type="text"]'));
         initSliders(form.find('.slider'));
         initRevenueChart($('#account-allocation-revenue-chart'));
