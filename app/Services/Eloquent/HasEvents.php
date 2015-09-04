@@ -52,7 +52,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertCreateEvent(Model $entity)
+    protected static function insertCreateEvent(self $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
@@ -67,7 +67,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertUpdateEvent(Model $entity)
+    protected static function insertUpdateEvent(self $entity)
     {
         foreach ($entity->watchedFieldInEvent as $fieldName) {
             $fieldValueFrom = $entity->getOriginal($fieldName);
@@ -92,7 +92,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertDeleteEvent(Model $entity)
+    protected static function insertDeleteEvent(self $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
@@ -107,7 +107,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertRestoreEvent(Model $entity)
+    protected static function insertRestoreEvent(self $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,

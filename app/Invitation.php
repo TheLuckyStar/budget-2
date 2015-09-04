@@ -30,10 +30,14 @@ class Invitation extends Model
 
     public static function inviteFutureUser($invitation) {
         if (Auth::check()) {
-            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function(Message $m) use ($invitation) {
-                $m->to($invitation->email);
-                $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
-            });
+            Mail::send(
+                'emails.inviteFutureUser',
+                ['invitation' => $invitation],
+                function(Message $m) use ($invitation) {
+                    $m->to($invitation->email);
+                    $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
+                }
+            );
         }
     }
 
