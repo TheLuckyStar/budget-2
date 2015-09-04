@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Mail;
 use Validator;
 
@@ -95,7 +96,7 @@ class AuthController extends AbstractController
     {
         $response = $this->postRegisterIlluminate($request);
 
-        Mail::send('emails.registration', ['user' => Auth::user()], function($m) {
+        Mail::send('emails.registration', ['user' => Auth::user()], function(Message $m) {
             $m->to(Auth::user()->email, Auth::user()->name);
             $m->subject(trans('user.register.emailSubject'));
         });

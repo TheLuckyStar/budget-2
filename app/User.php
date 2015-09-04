@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @property integer $id
@@ -96,7 +97,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function envelopes() {
-        return Envelope::whereIn('account_id', function($query) {
+        return Envelope::whereIn('account_id', function(QueryBuilder $query) {
             $query->select('account_id')
                 ->from('account_user')
                 ->where('user_id', $this->id);

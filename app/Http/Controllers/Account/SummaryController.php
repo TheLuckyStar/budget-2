@@ -7,6 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
 use Mail;
 
 class SummaryController extends AbstractController
@@ -105,7 +106,7 @@ class SummaryController extends AbstractController
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
-            Mail::send('emails.inviteExistingUser', ['account' => $account], function($m) use ($user) {
+            Mail::send('emails.inviteExistingUser', ['account' => $account], function(Message $m) use ($user) {
                 $m->to($user->email);
                 $m->subject(trans('invitation.inviteExistingUser.emailSubject', ['user' => Auth::user()]));
             });

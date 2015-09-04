@@ -3,6 +3,7 @@
 use App;
 use App\Event;
 use Auth;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasEvents {
 
@@ -51,7 +52,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertCreateEvent($entity)
+    protected static function insertCreateEvent(Model $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
@@ -66,7 +67,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertUpdateEvent($entity)
+    protected static function insertUpdateEvent(Model $entity)
     {
         foreach ($entity->watchedFieldInEvent as $fieldName) {
             $fieldValueFrom = $entity->getOriginal($fieldName);
@@ -91,7 +92,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertDeleteEvent($entity)
+    protected static function insertDeleteEvent(Model $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,
@@ -106,7 +107,7 @@ trait HasEvents {
      * @param  Illuminate\Database\Eloquent\Model $entity Entity related to the event
      * @return void
      */
-    protected static function insertRestoreEvent($entity)
+    protected static function insertRestoreEvent(Model $entity)
     {
         $event = new Event([
             'user_id' => App::runningInConsole() ? 1 : Auth::user()->id,

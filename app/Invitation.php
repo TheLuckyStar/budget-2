@@ -5,6 +5,7 @@ namespace App;
 use Auth;
 use Html;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Mail\Message;
 use Mail;
 
 /**
@@ -29,7 +30,7 @@ class Invitation extends Model
 
     public static function inviteFutureUser($invitation) {
         if (Auth::check()) {
-            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function($m) use ($invitation) {
+            Mail::send('emails.inviteFutureUser', ['invitation' => $invitation], function(Message $m) use ($invitation) {
                 $m->to($invitation->email);
                 $m->subject(trans('invitation.inviteFutureUser.emailSubject', ['user' => Auth::user()]));
             });

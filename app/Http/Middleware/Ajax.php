@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class Ajax
 {
@@ -14,7 +14,7 @@ class Ajax
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         // Throw 404 HTTP error if not an Ajax request
         if (!$request->ajax()) {

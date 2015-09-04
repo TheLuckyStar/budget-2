@@ -5,8 +5,10 @@ namespace App;
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Html;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @property integer $id
@@ -80,14 +82,14 @@ class Envelope extends Model
 
     public function relatedEvents()
     {
-        return Event::where(function($query) {
+        return Event::where(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Envelope')->where('entity_id', $this->id);
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('incomes')->where('envelope_id', $this->id);
             });
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('outcomes')->where('envelope_id', $this->id);
             });
         })->orderBy('id', 'desc');

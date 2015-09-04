@@ -3,7 +3,9 @@
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 class Operation extends Model
 {
@@ -25,19 +27,19 @@ class Operation extends Model
         return new OperationCollection($models);
     }
 
-    public function scopeInPeriod($query, $after = null, $before = null) {
+    public function scopeInPeriod(EloquentBuilder $query, $after = null, $before = null) {
         if ($after instanceof Carbon === false
             && $before instanceof Carbon === false) {
             return $query;
         }
 
-        $query->where(function($query) use($after, $before) {
+        $query->where(function(EloquentBuilder $query) use($after, $before) {
             if ($after instanceof Carbon) {
                 $query->where('date', '>=', $after);
             }
 
             if ($before instanceof Carbon) {
-                $query->where(function($query) use($after, $before) {
+                $query->where(function(EloquentBuilder $query) use($after, $before) {
                     $query->where('date', '<=', $before);
 
                     if ($after instanceof Carbon === false) {

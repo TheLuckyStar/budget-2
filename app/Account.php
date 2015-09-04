@@ -5,8 +5,10 @@ namespace App;
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Html;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @property integer $id
@@ -74,25 +76,25 @@ class Account extends Model
 
     public function relatedEvents()
     {
-        return Event::where(function($query) {
+        return Event::where(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Account')->where('entity_id', $this->id);
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('envelopes')->where('account_id', $this->id);
             });
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
             });
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function($query) {
-                $query->select('id')->from('incomes')->whereIn('envelope_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
+                $query->select('id')->from('incomes')->whereIn('envelope_id', function(QueryBuilder $query) {
                     $query->select('id')->from('envelopes')->where('account_id', $this->id);
                 });
             });
-        })->orWhere(function($query) {
-            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function($query) {
-                $query->select('id')->from('outcomes')->whereIn('envelope_id', function($query) {
+        })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
+                $query->select('id')->from('outcomes')->whereIn('envelope_id', function(QueryBuilder $query) {
                     $query->select('id')->from('envelopes')->where('account_id', $this->id);
                 });
             });
@@ -148,13 +150,13 @@ class Account extends Model
     }
 
     public function outcomes() {
-        return Outcome::whereIn('envelope_id', function($query) {
+        return Outcome::whereIn('envelope_id', function(QueryBuilder $query) {
             $query->select('id')->from('envelopes')->where('account_id', $this->id);
         })->orderBy('outcomes.date');
     }
 
     public function incomes() {
-        return Income::whereIn('envelope_id', function($query) {
+        return Income::whereIn('envelope_id', function(QueryBuilder $query) {
             $query->select('id')->from('envelopes')->where('account_id', $this->id);
         })->orderBy('incomes.date');
     }
