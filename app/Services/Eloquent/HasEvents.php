@@ -3,7 +3,6 @@
 use App;
 use App\Event;
 use Auth;
-use Illuminate\Database\Eloquent\Model;
 
 trait HasEvents {
 
