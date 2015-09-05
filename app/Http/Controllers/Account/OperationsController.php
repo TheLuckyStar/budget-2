@@ -86,7 +86,6 @@ class OperationsController extends AbstractController
     }
 
     public function postUpdate(Request $request, $accountId, $operationType, $operationId) {
-
         $account   = Auth::user()->accounts()->findOrFail($accountId);
         $operation = $account->operationType($operationType)->findOrFail($operationId);
 

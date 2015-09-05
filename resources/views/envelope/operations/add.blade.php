@@ -18,6 +18,21 @@
     @endif
 </td>
 
+<td class="row form-group {{ $errors->has('envelope_id') ? 'has-error' : '' }}">
+    {!! Form::select(
+        'envelope_id',
+        $envelope->account->envelopes()->lists('name', 'id'),
+        $envelope->id,
+        [
+            'class' => 'form-control',
+            'id' => 'operation-add-select-envelope_id',
+        ]
+    ) !!}
+    @if ($errors->has('envelope_id'))
+        {!! Html::ul($errors->get('envelope_id'), ['class' => 'help-block text-right']) !!}
+    @endif
+</td>
+
 <td class="row form-group {{ $errors->has('date') ? 'has-error' : '' }}">
     {{-- @TODO Fix widget position --}}
     {!! Form::text(

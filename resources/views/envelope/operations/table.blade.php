@@ -24,6 +24,7 @@
         <thead>
             <tr>
                 <th>@lang('operation.fields.type')</th>
+                <th>@lang('operation.fields.envelope_id')</th>
                 <th>@lang('operation.fields.date')</th>
                 <th>@lang('operation.fields.name')</th>
                 <th class="text-right">@lang('operation.fields.amount')</th>

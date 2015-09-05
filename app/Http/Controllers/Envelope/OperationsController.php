@@ -45,15 +45,19 @@ class OperationsController extends AbstractController
 
     public function postAdd(Request $request, $envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
+        $account = $envelope->account;
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
+            'envelope_id'
+                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                    .$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        $envelope->outcomes()->create([
+        $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -76,15 +80,20 @@ class OperationsController extends AbstractController
     public function postUpdate(Request $request, $envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
+        $account = $envelope->account;
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
+            'envelope_id'
+                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                    .$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
         ]);
 
         $operation->fill([
+            'envelope_id' => $request->get('envelope_id'),
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
