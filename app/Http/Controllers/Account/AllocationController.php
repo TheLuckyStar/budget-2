@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\AbstractController;
-use App\Income;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,7 +10,7 @@ class AllocationController extends AbstractController
     /**
      * Render income allocation related to one account (second tab)
      * @param  string $accountId Account ID
-     * @return Illuminate\Http\Response View to render
+     * @return Illuminate\View\View View to render
      */
     public function getSliders($accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
@@ -50,10 +49,8 @@ class AllocationController extends AbstractController
     public function postSliders(Request $request, $accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
-
+        $month        = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $startOfMonth = $month->startOfMonth();
-        $endOfMonth   = $month->copy()->endOfMonth();
 
         foreach ($account->envelopes as $envelope) {
             $amount = floatval($request->input('income-'.$envelope->id, 0));
