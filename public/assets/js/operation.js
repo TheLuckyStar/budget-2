@@ -9,6 +9,8 @@ var OperationModule = (function() {
 
     // Handle datepicker initialization
     var initDatepicker = function (target) {
+        target.parent().css('position', 'relative');
+
         target.datetimepicker({
             locale: $('#page-wrapper').data('locale'),
             format: 'L',
