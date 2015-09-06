@@ -55,19 +55,17 @@ class AllocationController extends AbstractController
         $startOfMonth = $month->startOfMonth();
         $endOfMonth   = $month->copy()->endOfMonth();
 
-        $account->incomes()
-            ->whereBetween('date', [$startOfMonth, $endOfMonth])
-            ->delete();
-
         foreach ($account->envelopes as $envelope) {
             $amount = floatval($request->input('income-'.$envelope->id, 0));
 
-            if ($amount > 0) {
-                $envelope->incomes()->save(new Income([
-                    'amount' => $amount,
-                    'date' => $startOfMonth,
-                ]));
+            if ($amount === 0.0) {
+                $envelope->incomes()->where('date', $startOfMonth)->delete();
+                continue;
             }
+
+            $income = $envelope->incomes()->firstOrNew(['date' => $startOfMonth]);
+            $income->amount = $amount;
+            $income->save();
         }
 
         return redirect()->action(

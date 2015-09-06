@@ -3,6 +3,7 @@
 namespace App;
 
 use Auth;
+use Html;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -51,7 +52,7 @@ class Event extends Model
     {
         $action    = $this->actionForString();
         $user      = $this->userForString();
-        $fieldName = trans(strtolower(class_basename($this->entity)).'.fields.'.$this->field_name);
+        $fieldName = $this->fieldNameForString();
         $period    = $this->periodForString();
 
         return trans('event.action.'.$action, [
@@ -91,6 +92,19 @@ class Event extends Model
         return trans('event.self');
     }
 
+    public function fieldNameForString()
+    {
+        if ($this->entity instanceof Operation) {
+            $basename = 'operation';
+        } else {
+            $basename = strtolower(class_basename($this->entity));
+        }
+
+        $key = $basename.'.fields.'.$this->field_name;
+
+        return trans($key);
+    }
+
     public function periodForString()
     {
         if ($this->created_at->diffInHours() === 0) {
@@ -114,7 +128,11 @@ class Event extends Model
     public function formatValue($fieldName, $value) {
 
         if ($fieldName === 'icon') {
-            $value = "<i class='fa fa-fw ".$value."'></i>";
+            return "<i class='fa fa-fw ".$value."'></i>";
+        }
+
+        if ($fieldName === 'amount') {
+            return Html::formatPrice($value);
         }
 
         return $value;
