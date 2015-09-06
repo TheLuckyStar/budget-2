@@ -79,12 +79,6 @@ class IncomeTableSeeder extends Seeder
         ]);
 
         Income::create([
-            'envelope_id' => 9,
-            'amount' => 0,
-            'date' => $date,
-        ]);
-
-        Income::create([
             'envelope_id' => 10,
             'amount' => 200,
             'date' => $date,
