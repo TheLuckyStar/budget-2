@@ -35,7 +35,7 @@
 
                     <div class="panel-body">
 
-                        <div class="col-sm-12 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                        <div class="col-md-6 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::text(
                                 'name',
                                 $account->name,
@@ -46,7 +46,7 @@
                             @endif
                         </div>
 
-                        <div class="col-sm-12 form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
+                        <div class="col-md-6 form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
                             <div class='input-group'>
                                 {!! Form::text(
                                     'balance',

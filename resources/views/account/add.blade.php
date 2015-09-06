@@ -29,7 +29,7 @@
 
                     <div class="panel-body">
 
-                        <div class="col-sm-12 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                        <div class="col-md-6 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::text(
                                 'name',
                                 null,
@@ -40,7 +40,7 @@
                             @endif
                         </div>
 
-                        <div class="col-sm-12 form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
+                        <div class="col-md-6 form-group {{ $errors->has('balance') ? 'has-error' : '' }}">
                             <div class='input-group'>
                                 {!! Form::text(
                                     'balance',
@@ -52,7 +52,9 @@
                                 </span>
                             </div>
                             <p class="help-block">
-                                @lang('account.fields.balanceHelper')
+                                <p class='text-right'>
+                                    @lang('account.fields.balanceHelper')
+                                </p>
                             </p>
                             @if ($errors->has('balance'))
                                 {!! Html::ul($errors->get('balance'), ['class' => 'help-block text-right']) !!}
