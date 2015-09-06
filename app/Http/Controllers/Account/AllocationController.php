@@ -60,7 +60,7 @@ class AllocationController extends AbstractController
                 continue;
             }
 
-            $income = $envelope->incomes()->firstOrNew(['date' => $startOfMonth]);
+            $income         = $envelope->incomes()->firstOrNew(['date' => $startOfMonth]);
             $income->amount = $amount;
             $income->save();
         }
