@@ -45,7 +45,7 @@ class OperationsController extends AbstractController
 
     public function postAdd(Request $request, $envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
-        $account = $envelope->account;
+        $account  = $envelope->account;
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
@@ -80,7 +80,7 @@ class OperationsController extends AbstractController
     public function postUpdate(Request $request, $envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
-        $account = $envelope->account;
+        $account   = $envelope->account;
 
         $this->validate($request, [
             'type' => 'required|in:intendedOutcome,effectiveOutcome',
