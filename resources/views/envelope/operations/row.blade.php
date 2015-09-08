@@ -26,8 +26,7 @@
 
 <td class="text-{{ $operation->context }} text-right">
 
-    {{-- @todo Link to account/allocation route for revenue --}}
-    @if ($operation->type !== 'revenue')
+    @if ($operation->type === 'effectiveOutcome' || $operation->type === 'intendedOutcome')
         {!! Html::linkAction(
             "Envelope\OperationsController@getUpdate",
             '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
