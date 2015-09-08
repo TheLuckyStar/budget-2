@@ -246,22 +246,21 @@ class Account extends Model
 
     public function getUnallocatedAttribute($after = null, $before = null) {
         $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
+
+        $incomingTransfer = $this->incomingTransfers()->inPeriod($after, $before)->sum('amount');
+        $outgoingTransfer = $this->outgoingTransfers()->inPeriod($after, $before)->sum('amount');
+
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
 
-        $unallocated = max(0, $revenue - $income);
+        $unallocated = max(0, $revenue + $incomingTransfer - $outgoingTransfer - $income);
 
         return floatval($unallocated);
     }
 
     public function getStatusAttribute($after = null, $before = null) {
-        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
+        $balance = $this->getBalanceAttribute($after, $before);
 
-        if ($revenue == 0) {
-            return $outcome ? 'danger' : 'warning';
-        }
-
-        if ($outcome > $revenue) {
+        if ($balance < 0) {
             return 'danger';
         }
 
