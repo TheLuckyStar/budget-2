@@ -45,7 +45,7 @@ return [
             'emptyMessage' => ':link pour consulter le graphique',
         ],
         'envelopes' => [
-            'title' => 'Solde des enveloppes',
+            'title' => 'Solde des enveloppes : <b>:balance</b>',
             'emptyMessage' => ':link pour consulter le graphique',
         ],
         'users' => [

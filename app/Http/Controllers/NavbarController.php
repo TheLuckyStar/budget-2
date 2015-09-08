@@ -87,8 +87,8 @@ class NavbarController extends AbstractController
             $account->link(
                 '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
                     .trans('account.index.title')
-                    .'<span class="pull-right badge badge-'.$account->status.'">'
-                    .Html::formatPrice($account->balance)
+                    .'<span class="pull-right badge badge-'.$account->envelopes_status.'">'
+                    .Html::formatPrice($account->envelopes_balance)
                     .'</span>'
             ),
         ];

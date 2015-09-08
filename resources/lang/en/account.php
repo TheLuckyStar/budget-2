@@ -45,7 +45,7 @@ return [
             'emptyMessage' => ':link to view the chart',
         ],
         'envelopes' => [
-            'title' => 'Envelope balances',
+            'title' => 'Envelope balance : <b>:balance</b>',
             'emptyMessage' => ':link to view the chart',
         ],
         'users' => [

@@ -1,8 +1,8 @@
 
-<div class="panel panel-default">
+<div class="panel panel-{{ $account->envelopes_status }}">
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-pie-chart pull-left"></i>
-        @lang('account.summary.envelopes.title')
+        @lang('account.summary.envelopes.title', ['balance' => Html::formatPrice($account->envelopes_balance, true)])
     </div>
     <div class="panel-body">
         @if ($account->envelopes->count() === 0)

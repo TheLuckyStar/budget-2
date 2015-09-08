@@ -233,6 +233,16 @@ class Account extends Model
         return floatval($balance);
     }
 
+    public function getEnvelopesBalanceAttribute($after = null, $before = null) {
+        $balance = 0;
+
+        foreach ($this->envelopes as $envelope) {
+            $balance += $envelope->getBalanceAttribute($after, $before);
+        }
+
+        return floatval($balance);
+    }
+
     public function getUnallocatedAttribute($after = null, $before = null) {
         $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
@@ -256,4 +266,15 @@ class Account extends Model
 
         return 'success';
     }
+
+    public function getEnvelopesStatusAttribute($after = null, $before = null) {
+        $balance = $this->getEnvelopesBalanceAttribute($after, $before);
+
+        if ($balance < 0) {
+            return 'danger';
+        }
+
+        return 'success';
+    }
+
 }
