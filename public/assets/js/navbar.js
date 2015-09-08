@@ -73,6 +73,7 @@ var NavbarModule = (function() {
 
         horizontalLink.addClass('active').closest('li').addClass('active');
         verticalLink.addClass('active').closest('li').addClass('active');
+        verticalLink.closest('.collapse').addClass('in');
     };
 
     // Called on module loading
