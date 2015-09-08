@@ -17,7 +17,7 @@
                     ]
                 ) !!}
                 {!! Html::linkAction(
-                    'Auth\AuthController@getLogin', // @TODO Link to demo page
+                    'HomeController@getDemo',
                     trans('home.guest.jumbotron.demoButton'),
                     [],
                     [
