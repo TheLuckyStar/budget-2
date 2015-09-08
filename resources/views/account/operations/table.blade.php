@@ -1,4 +1,4 @@
-<div class="panel panel-default table-responsive">
+<div class="panel panel-default">
     <div class="panel-heading text-center">
         {!! Html::linkAction(
             'Account\OperationsController@getTable',
