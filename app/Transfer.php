@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer $id
- * @property App\Account $fromAccount
- * @property App\Account $toAccount
+ * @property App\Account $accountFrom
+ * @property App\Account $accountTo
  * @property string $name
  * @property float $amount
  * @property Carbon\Carbon $date
@@ -71,7 +71,7 @@ class Transfer extends Operation
         return Html::linkAction(
             'AccountController@getIndex',
             $this,
-            [$this->account, 'operations'],
+            [$this->accountFrom, 'operations'],
             ['class' => 'routable', 'data-target' => '#page-wrapper']
         );
     }

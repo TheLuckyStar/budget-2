@@ -88,7 +88,10 @@ class Account extends Model
             });
         })->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Transfer')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')->from('transfers')->where('from_account_id', $this->id)->orWhere('to_account_id', $this->id);
+                $query->select('id')
+                    ->from('transfers')
+                    ->where('from_account_id', $this->id)
+                    ->orWhere('to_account_id', $this->id);
             });
         })->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
