@@ -32,11 +32,10 @@ class Outcome extends Operation
      * The attributes that should be casted to native types.
      * @var array
      */
-    // @TODO Cast effective to boolean
     protected $casts = [
         'id' => 'id',
         'amount' => 'float',
-        'effective' => 'integer',
+        'effective' => 'boolean',
     ];
 
     /**
@@ -79,11 +78,11 @@ class Outcome extends Operation
     }
 
     public function scopeEffective($query) {
-        return $query->where('effective', 1);
+        return $query->where('effective', true);
     }
 
     public function scopeIntended($query) {
-        return $query->where('effective', 0);
+        return $query->where('effective', false);
     }
 
     public function getContextAttribute() {
