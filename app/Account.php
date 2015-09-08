@@ -87,6 +87,10 @@ class Account extends Model
                 $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
             });
         })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Transfer')->whereIn('entity_id', function(QueryBuilder $query) {
+                $query->select('id')->from('transfers')->where('from_account_id', $this->id)->orWhere('to_account_id', $this->id);
+            });
+        })->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('incomes')->whereIn('envelope_id', function(QueryBuilder $query) {
                     $query->select('id')->from('envelopes')->where('account_id', $this->id);
@@ -189,6 +193,16 @@ class Account extends Model
         $outcomes = $this->outcomes()->inPeriod($after, $before)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
+        }
+
+        $incomingTransfers = $this->incomingTransfers()->inPeriod($after, $before)->get();
+        foreach ($incomingTransfers as $incomingTransfer) {
+            $operations->push($incomingTransfer);
+        }
+
+        $outgoingTransfers = $this->outgoingTransfers()->inPeriod($after, $before)->get();
+        foreach ($outgoingTransfers as $outgoingTransfer) {
+            $operations->push($outgoingTransfer);
         }
 
         return $operations->sortBy('date');

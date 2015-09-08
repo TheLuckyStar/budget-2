@@ -39,10 +39,17 @@ var OperationModule = (function() {
             if ($(this).val() === '') {
                 enabled = $();
             } else if ($(this).val() === 'revenue') {
-                enabled = enabled.not('select[name="envelope_id"]');
-                disabled = disabled.filter('select[name="envelope_id"]');
-            } else {
-                disabled = $();
+                enabled = enabled.not('select[name="envelope_id"], select[name="from_account_id"], select[name="to_account_id"]');
+                disabled = disabled.filter('select[name="envelope_id"], select[name="from_account_id"], select[name="to_account_id"]');
+            } else if ($(this).val() === 'intendedOutcome' || $(this).val() === 'effectiveOutcome') {
+                enabled = enabled.not('select[name="from_account_id"], select[name="to_account_id"]');
+                disabled = disabled.filter('select[name="from_account_id"], select[name="to_account_id"]');
+            } else if ($(this).val() === 'outgoingTransfer') {
+                enabled = enabled.not('select[name="envelope_id"], select[name="from_account_id"]');
+                disabled = disabled.filter('select[name="envelope_id"], select[name="from_account_id"]');
+            } else if ($(this).val() === 'incomingTransfer') {
+                enabled = enabled.not('select[name="envelope_id"], select[name="to_account_id"]');
+                disabled = disabled.filter('select[name="envelope_id"], select[name="to_account_id"]');
             }
 
             enabled.removeAttr('disabled').removeClass('disabled');

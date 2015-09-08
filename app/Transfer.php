@@ -1,5 +1,6 @@
 <?php namespace App;
 
+use App\Account;
 use App\Operation;
 use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -34,6 +35,8 @@ class Transfer extends Operation
      */
     protected $casts = [
         'id' => 'id',
+        'from_account_id' => 'integer',
+        'to_account_id' => 'integer',
         'amount' => 'float',
     ];
 
@@ -58,26 +61,44 @@ class Transfer extends Operation
         return trans('operation.object.transfer', [
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount),
-            'date' => $this->date->formatLocalized('%B %Y'),
-            'from_account' => $this->fromAccount,
-            'to_account' => $this->toAccount,
+            'date' => $this->date->format('d/m/Y'),
+            'from_account' => $this->accountFrom,
+            'to_account' => $this->accountTo,
         ]);
     }
 
-    // public function link() {
-    //     return Html::linkAction('AccountController@getIndex', $this, $this->account, ['class' => 'link-to-page']);
-    // }
+    public function link() {
+        return Html::linkAction(
+            'AccountController@getIndex',
+            $this,
+            [$this->account, 'operations'],
+            ['class' => 'routable', 'data-target' => '#page-wrapper']
+        );
+    }
 
-    // public function account() {
-    //     return $this->belongsTo('App\Account')
-    //         ->withTrashed();
-    // }
+    public function accountFrom() {
+        return $this->belongsTo('App\Account', 'from_account_id')
+            ->withTrashed();
+    }
 
-    // public function getContextAttribute() {
-    //     return 'success';
-    // }
+    public function accountTo() {
+        return $this->belongsTo('App\Account', 'to_account_id')
+            ->withTrashed();
+    }
 
-    // public function getTypeAttribute() {
-    //     return 'revenue';
-    // }
+    public function getContextAttribute(Account $account) {
+        if ($account->id === $this->accountFrom->id) {
+            return 'danger';
+        }
+
+        return 'success';
+    }
+
+    public function getTypeAttribute(Account $account) {
+        if ($account->id === $this->accountFrom->id) {
+            return 'outgoingTransfer';
+        }
+
+        return 'incomingTransfer';
+    }
 }

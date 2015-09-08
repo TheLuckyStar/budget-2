@@ -24,7 +24,7 @@
         <thead>
             <tr>
                 <th>@lang('operation.fields.type')</th>
-                <th>@lang('operation.fields.envelope_id')</th>
+                <th>@lang('operation.fields.envelope_id') / @lang('operation.fields.account_id')</th>
                 <th>@lang('operation.fields.date')</th>
                 <th>@lang('operation.fields.name')</th>
                 <th class="text-right">@lang('operation.fields.amount')</th>
@@ -32,8 +32,8 @@
             </tr>
         </thead>
         @foreach ($operations as $operation)
-            <tr id='row-{{ $operation->type }}-{{ $operation->id }}'
-                action='{{ action("Account\OperationsController@getUpdate", [$account, $operation->type, $operation]) }}'>
+            <tr id='row-{{ $operation->getTypeAttribute($account) }}-{{ $operation->id }}'
+                action='{{ action("Account\OperationsController@getUpdate", [$account, $operation->getTypeAttribute($account), $operation]) }}'>
                 @include('account.operations.row')
             </tr>
         @endforeach

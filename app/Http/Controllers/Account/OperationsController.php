@@ -47,16 +47,20 @@ class OperationsController extends AbstractController
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $this->validate($request, [
-            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
+            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome,outgoingTransfer,incomingTransfer',
             'envelope_id'
                 => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
                     .$account->id,
+            'to_account_id'
+                => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'from_account_id'
+                => 'required_if:type,incomingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        if ($request->input('type') == 'revenue') {
+        if ($request->input('type') === 'revenue') {
             $account->revenues()->create([
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
@@ -65,12 +69,35 @@ class OperationsController extends AbstractController
             return;
         }
 
-        $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
-            'name' => $request->get('name'),
-            'amount' => $request->get('amount'),
-            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            'effective' => $request->get('type') === 'effectiveOutcome',
-        ]);
+        if ($request->input('type') === 'intendedOutcome' || $request->input('type') === 'effectiveOutcome') {
+            $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+                'effective' => $request->get('type') === 'effectiveOutcome',
+            ]);
+            return;
+        }
+
+        if ($request->input('type') === 'outgoingTransfer') {
+            $account->outgoingTransfers()->create([
+                'to_account_id' => $request->get('to_account_id'),
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+            ]);
+            return;
+        }
+
+        if ($request->input('type') === 'incomingTransfer') {
+            $account->incomingTransfers()->create([
+                'from_account_id' => $request->get('from_account_id'),
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+            ]);
+            return;
+        }
     }
 
     public function getUpdate($accountId, $operationType, $operationId) {
@@ -90,16 +117,20 @@ class OperationsController extends AbstractController
         $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $this->validate($request, [
-            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome',
+            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome,outgoingTransfer,incomingTransfer',
             'envelope_id'
                 => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
                     .$account->id,
+            'to_account_id'
+                => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'from_account_id'
+                => 'required_if:type,incomingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        if ($request->input('type') == 'revenue') {
+        if ($request->input('type') === 'revenue') {
             $operation->fill([
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
@@ -108,13 +139,39 @@ class OperationsController extends AbstractController
             return;
         }
 
-        $operation->fill([
-            'envelope_id' => $request->get('envelope_id'),
-            'name' => $request->get('name'),
-            'amount' => $request->get('amount'),
-            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            'effective' => $request->get('type') === 'effectiveOutcome',
-        ])->save();
+
+        if ($request->input('type') === 'intendedOutcome' || $request->input('type') === 'effectiveOutcome') {
+            $operation->fill([
+                'envelope_id' => $request->get('envelope_id'),
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+                'effective' => $request->get('type') === 'effectiveOutcome',
+            ])->save();
+            return;
+        }
+
+        if ($request->input('type') === 'outgoingTransfer') {
+            $operation->fill([
+                'from_account_id' => $account->id,
+                'to_account_id' => $request->get('to_account_id'),
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+            ])->save();
+            return;
+        }
+
+        if ($request->input('type') === 'incomingTransfer') {
+            $operation->fill([
+                'from_account_id' => $request->get('from_account_id'),
+                'to_account_id' => $account->id,
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+            ])->save();
+            return;
+        }
     }
 
     public function postDelete($accountId, $operationType, $operationId) {

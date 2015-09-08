@@ -103,6 +103,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "envelope_id" => "Envelope",
+        "from_account_id" => "Creditor account",
+        "to_account_id" => "Debtor account",
+    ],
 
 ];

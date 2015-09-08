@@ -22,6 +22,11 @@ return [
 
     'fields' => [
         'envelope_id' => "Envelope",
+        'account_id' => "Account",
+        'to_account_id' => "Creditor account",
+        'from_account_id' => "Debtor account",
+        'accountFromPrefix' => "from",
+        'accountToPrefix' => "to",
         'name' => "Label",
         'amount' => "Amount",
         'date' => "Date",
@@ -44,6 +49,8 @@ return [
         'outcome' => 'Outcome',
         'intendedOutcome' => 'Intended outcome :date',
         'effectiveOutcome' => 'Effective outcome',
+        'incomingTransfer' => 'Incoming transfer',
+        'outgoingTransfer' => 'Outgoing transfer',
     ],
 
 ];

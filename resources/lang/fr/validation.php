@@ -133,6 +133,10 @@ return [
         "time" => "Heure",
         "available" => "Disponible",
         "size" => "Taille",
+        "amount" => "Montant",
+        "envelope_id" => "Enveloppe",
+        "from_account_id" => "Compte débiteur",
+        "to_account_id" => "Compte créditeur",
     ],
 
 ];

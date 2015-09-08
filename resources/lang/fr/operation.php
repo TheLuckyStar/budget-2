@@ -18,10 +18,17 @@ return [
             .'L\'allocation mensuelle de :amount de :date',
         'outcome' => '<i class="fa fa-fw fa-exchange" title="Dépense"></i> '
             .'La dépense ":name" de :amount du :date',
+        'transfer' => '<i class="fa fa-fw fa-exchange" title="Virement"></i> '
+            .'Le virement de :from_account vers :to_account de :amount du :date',
     ],
 
     'fields' => [
         'envelope_id' => "Enveloppe",
+        'account_id' => "Compte",
+        'to_account_id' => "Compte débiteur",
+        'from_account_id' => "Compte créditeur",
+        'accountFromPrefix' => "de",
+        'accountToPrefix' => "vers",
         'name' => "Intitulé",
         'amount' => "Montant",
         'date' => "Date",
@@ -44,6 +51,8 @@ return [
         'outcome' => 'Dépense',
         'intendedOutcome' => 'Dépense prévue :date',
         'effectiveOutcome' => 'Dépense effectuée',
+        'incomingTransfer' => 'Virement entrant',
+        'outgoingTransfer' => 'Virement sortant',
     ],
 
 ];
