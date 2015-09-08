@@ -13,6 +13,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 /**
  * @property integer $id
  * @property string $name
+ * @property Illuminate\Database\Eloquent\Collection $envelopes
  */
 class Account extends Model
 {
