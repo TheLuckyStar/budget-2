@@ -25,6 +25,7 @@
 </td>
 
 <td class="text-{{ $operation->context }} text-right">
+
     {!! Html::linkAction(
         "Account\OperationsController@getUpdate",
         '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
@@ -35,8 +36,10 @@
             'data-target' => '#row-'.$operation->type.'-'.$operation->id,
         ]
     ) !!}
+
+    <script type="text/javascript">
+        OperationModule.initRow($('#row-{{ $operation->type }}-{{ $operation->id }}'));
+    </script>
+
 </td>
 
-<script type="text/javascript">
-    OperationModule.initRow($('#row-{{ $operation->type }}-{{ $operation->id }}'));
-</script>

@@ -25,6 +25,7 @@
 </td>
 
 <td class="text-{{ $operation->context }} text-right">
+
     {{-- @todo Link to account/allocation route for revenue --}}
     @if ($operation->type !== 'revenue')
         {!! Html::linkAction(
@@ -38,8 +39,10 @@
             ]
         ) !!}
     @endif
+
+    <script type="text/javascript">
+        OperationModule.initRow($('#row-{{ $operation->type }}-{{ $operation->id }}'));
+    </script>
+
 </td>
 
-<script type="text/javascript">
-    OperationModule.initRow($('#row-{{ $operation->type }}-{{ $operation->id }}'));
-</script>

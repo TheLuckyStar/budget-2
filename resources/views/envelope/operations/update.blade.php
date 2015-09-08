@@ -94,14 +94,14 @@
         "Envelope\OperationsController@postUpdate",
         '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',
         [$envelope, $operation->type, $operation],
-        ['class' => 'btn btn-success', 'title' => trans('app.button.update')]
+        ['class' => 'btn btn-xs btn-success', 'title' => trans('app.button.update')]
     ) !!}
 
     {!! Html::linkAction(
         "Envelope\OperationsController@postDelete",
         '<i class="fa fa-fw fa-trash" title="'.trans('app.button.delete').'"></i>',
         [$envelope, $operation->type, $operation],
-        ['class' => 'btn btn-danger', 'title' => trans('app.button.delete')]
+        ['class' => 'btn btn-xs btn-danger', 'title' => trans('app.button.delete')]
     ) !!}
 
     <script type="text/javascript">
