@@ -250,7 +250,7 @@ class Account extends Model
         $incomingTransfer = $this->incomingTransfers()->inPeriod($after, $before)->sum('amount');
         $outgoingTransfer = $this->outgoingTransfers()->inPeriod($after, $before)->sum('amount');
 
-        $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+        $income = $this->incomes()->inPeriod($after, $before)->sum('amount');
 
         $unallocated = max(0, $revenue + $incomingTransfer - $outgoingTransfer - $income);
 
