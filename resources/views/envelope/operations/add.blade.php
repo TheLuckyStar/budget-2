@@ -34,7 +34,6 @@
 </td>
 
 <td class="row form-group {{ $errors->has('date') ? 'has-error' : '' }}">
-    {{-- @TODO Fix widget position --}}
     {!! Form::text(
         'date',
         null,

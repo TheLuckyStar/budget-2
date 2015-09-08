@@ -43,10 +43,10 @@ return [
                 '4. Browse charts and summaries to take your decisions.',
             ],
             'footer' => Html::linkAction(
-                'Auth\AuthController@getLogin', // @TODO Link to demo page
+                'HomeController@getDemo',
                 'Try the demo now',
                 [],
-                ['class' => 'link-to-page']
+                ['class' => 'routable', 'data-target' => '#page-wrapper']
             ),
         ],
 

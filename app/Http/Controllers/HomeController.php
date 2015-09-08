@@ -17,4 +17,8 @@ class HomeController extends AbstractController
         // Homepage for non authenticated users
         return view('home.guest');
     }
+
+    public function getDemo() {
+        return redirect()->action('HomeController@getIndex')->withErrors(trans('app.error.demo'));
+    }
 }

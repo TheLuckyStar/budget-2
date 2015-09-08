@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
 
         // Catch 404 HTTP errors for smart redirecting
         if ($exception instanceof NotFoundHttpException) {
-            // @TODO 404 error message
             return redirect()->action('HomeController@getIndex')
                 ->withErrors([trans('app.error.404')]);
         }

@@ -37,6 +37,7 @@ return [
     // Error messages
     'error' => [
         '404' => 'Page not found.',
+        'demo' => 'Demo version is not available yet.',
         'guest' => 'Please authenticate to be granted.',
     ],
 

@@ -37,6 +37,7 @@ return [
     // Error messages
     'error' => [
         '404' => 'Page introuvable.',
+        'demo' => 'La version de démo n\'est pas encore disponible.',
         'guest' => 'Veuillez vous identifier pour accéder à cette page.',
     ],
 
