@@ -105,7 +105,7 @@
         });
 
         $('.page-header .btn-danger, .page-header .btn-success').click(function () {
-            NavbarModule.emptyVerticalMenu();
+            NavbarModule.refresh();
         });
 
     </script>
