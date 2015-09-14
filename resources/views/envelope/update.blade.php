@@ -20,7 +20,8 @@
 
             {!! Form::open([
                 'action' => ['EnvelopeController@postUpdate', $envelope],
-                'class' => 'col-md-12'
+                'class' => 'col-md-12 routable',
+                'data-target' => '#page-wrapper'
             ]) !!}
                 <div class="panel panel-default">
 
@@ -81,7 +82,7 @@
         });
 
         $('#envelope-update form').submit(function () {
-            NavbarModule.emptyVerticalMenu();
+            NavbarModule.refresh();
         });
 
     </script>
