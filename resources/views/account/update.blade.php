@@ -83,7 +83,7 @@
     <script type="text/javascript">
 
         $('#account-update form').submit(function () {
-            NavbarModule.emptyHorizontalMenu();
+            NavbarModule.refresh();
         });
 
     </script>
