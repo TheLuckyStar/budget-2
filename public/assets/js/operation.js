@@ -93,6 +93,8 @@ var OperationModule = (function() {
         RouterModule.refresh($('#account-summary-balance, #envelope-summary-balance'));
         RouterModule.refresh($('#account-summary-events, #envelope-summary-events'));
 
+        RouterModule.refresh($('#account-allocation-sliders'));
+
         RouterModule.refresh($('#account-development-monthly, #envelope-development-monthly'));
         RouterModule.refresh($('#account-development-yearly, #envelope-development-yearly'));
     };
