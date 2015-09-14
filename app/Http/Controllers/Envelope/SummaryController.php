@@ -49,7 +49,7 @@ class SummaryController extends AbstractController
 
         $data = [
             'envelope' => $envelope,
-            'events' => $envelope->relatedEvents()->simplePaginate(5),
+            'events' => $envelope->relatedEvents()->simplePaginate(10),
         ];
 
         return view('envelope.summary.events', $data);

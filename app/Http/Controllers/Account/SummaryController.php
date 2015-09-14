@@ -138,7 +138,7 @@ class SummaryController extends AbstractController
 
         $data = [
             'account' => $account,
-            'events' => $account->relatedEvents()->simplePaginate(5),
+            'events' => $account->relatedEvents()->simplePaginate(10),
         ];
 
         return view('account.summary.events', $data);
