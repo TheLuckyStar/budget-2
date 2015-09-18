@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7be2fa7bda931a2031ce4f487cf15e51",
+    "hash": "bd12618877e489ee9415edeedb6ca116",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2408,16 +2408,16 @@
         },
         {
             "name": "thomaspark/bootswatch",
-            "version": "v3.3.5+2",
+            "version": "v3.3.5+3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thomaspark/bootswatch.git",
-                "reference": "ceefe110c1f64b9ebca41215d02c6e50e45d9e19"
+                "reference": "913f54b9483b99fa12c7feccfa18ee5cc0206043"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/913f54b9483b99fa12c7feccfa18ee5cc0206043",
-                "reference": "ceefe110c1f64b9ebca41215d02c6e50e45d9e19",
+                "reference": "913f54b9483b99fa12c7feccfa18ee5cc0206043",
                 "shasum": ""
             },
             "suggest": {
@@ -2462,7 +2462,7 @@
                 }
             ],
             "description": "Themes for Bootstrap",
-            "time": "2015-07-07 18:03:38"
+            "time": "2015-09-03 20:39:50"
         },
         {
             "name": "vlucas/phpdotenv",
