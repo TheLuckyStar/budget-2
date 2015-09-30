@@ -26,13 +26,31 @@ var NavbarModule = (function() {
             navbar.find('.top-nav, .side-nav').fadeTo('fast', 0.5, function() {
                 navbar.load(url, null, function() {
                     activateLinks(true);
+                    updateLanguageLinks();
                 });
             });
         } else {
             navbar.load(url, null, function() {
                 activateLinks(true);
+                updateLanguageLinks();
             });
         }
+    };
+
+
+
+    // Update language links
+    var updateLanguageLinks = function () {
+        navbar.find('.language-link').each(function () {
+            var href = $(this).attr('href');
+
+            if (href.indexOf('#') > -1) {
+                href = href.substring(0, href.indexOf('#'));
+            }
+            href += window.location.hash;
+
+            $(this).attr('href', href);
+        });
     };
 
 
@@ -76,6 +94,8 @@ var NavbarModule = (function() {
         verticalLink.closest('.collapse').addClass('in');
     };
 
+
+
     // Called on module loading
     var init = function () {
     };
@@ -87,6 +107,7 @@ var NavbarModule = (function() {
         init: init,
         refresh: refresh,
         activateLinks: activateLinks,
+        updateLanguageLinks: updateLanguageLinks,
     };
 
 

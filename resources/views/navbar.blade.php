@@ -17,9 +17,16 @@
 
     <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-            <!-- Top Menu Items - These collapse to the responsive navigation menu on small screens -->
-            @if (Auth::check())
-                <ul class="nav navbar-right top-nav">
+            <ul class="nav navbar-right top-nav">
+                <li>
+                    @if (App::getLocale() === 'fr')
+                        {!! Html::link('en', 'EN', ['class' => 'language-link']) !!}
+                    @elseif (App::getLocale() === 'en')
+                        {!! Html::link('fr', 'FR', ['class' => 'language-link']) !!}
+                    @endif
+                </li>
+                <!-- Top Menu Items - These collapse to the responsive navigation menu on small screens -->
+                @if (Auth::check())
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             {{ Auth::user()->name }} <b class="caret"></b>
@@ -41,8 +48,8 @@
                             </li>
                         </ul>
                     </li>
-                </ul>
-            @endif
+                @endif
+            </ul>
 
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             {!! Html::ul($verticalMenu, ['class' => 'nav navbar-nav side-nav small']) !!}

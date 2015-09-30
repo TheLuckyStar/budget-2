@@ -19,6 +19,8 @@ var RouterModule = (function() {
         var fragment = url.replace(baseUrl, '');
 
         window.location.hash = fragment;
+
+        NavbarModule.updateLanguageLinks();
     };
 
     // Get url from fragment and baseurl
