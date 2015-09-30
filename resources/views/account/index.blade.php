@@ -126,23 +126,15 @@
 
     <script type="text/javascript">
 
-        RouterModule.refresh($('#account-summary-balance'), function() {
-            RouterModule.refresh($('#account-summary-envelopes'), function() {
-                RouterModule.refresh($('#account-summary-users'), function() {
-                    RouterModule.refresh($('#account-summary-events'), function() {
-                        RouterModule.refresh($('#account-allocation-sliders'), function() {
-                            RouterModule.refresh($('#account-operations-table'), function() {
-                                RouterModule.refresh($('#account-development-monthly'), function() {
-                                    RouterModule.refresh($('#account-development-yearly'), function() {
-                                        RouterModule.refresh($('#account-development-envelopes'));
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        });
+        RouterModule.refresh($('#account-summary-balance'));
+        RouterModule.refresh($('#account-summary-envelopes'));
+        RouterModule.refresh($('#account-summary-users'));
+        RouterModule.refresh($('#account-summary-events'));
+        RouterModule.refresh($('#account-allocation-sliders'));
+        RouterModule.refresh($('#account-operations-table'));
+        RouterModule.refresh($('#account-development-monthly'));
+        RouterModule.refresh($('#account-development-yearly'));
+        RouterModule.refresh($('#account-development-envelopes'));
 
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
             RouterModule.clickLink($(this), NavbarModule.refresh);
