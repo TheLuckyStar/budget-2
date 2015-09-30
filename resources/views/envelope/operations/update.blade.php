@@ -4,10 +4,7 @@
         'type',
         $operation instanceof App\Revenue ?
             ['revenue' => trans('operation.type.revenue')]
-            : [
-                'intendedOutcome' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'effectiveOutcome' => trans('operation.type.effectiveOutcome'),
-            ],
+            : ['outcome' => trans('operation.type.outcome')],
         $operation->type,
         [
             'class' => 'form-control',

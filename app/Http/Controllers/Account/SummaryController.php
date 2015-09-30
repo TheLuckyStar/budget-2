@@ -24,12 +24,8 @@ class SummaryController extends AbstractController
 
         $data = [
             [
-                'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $account->outcomes()->effective()->inPeriod($after, $before)->sum('amount'),
-            ],
-            [
-                'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $account->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
+                'label' => trans('operation.type.outcome', ['date' => '']),
+                'value' => $account->outcomes()->inPeriod($after, $before)->sum('amount'),
             ],
             [
                 'label' => trans('operation.type.unallocatedRevenue'),

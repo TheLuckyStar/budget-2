@@ -175,14 +175,6 @@ class Account extends Model
     }
 
     public function operationType($type) {
-        if ($type === 'effectiveOutcome') {
-            return $this->outcomes()->effective();
-        }
-
-        if ($type === 'intendedOutcome') {
-            return $this->outcomes()->intended();
-        }
-
         return $this->{$type.'s'}();
     }
 

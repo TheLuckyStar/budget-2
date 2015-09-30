@@ -49,8 +49,6 @@ return [
         'unallocatedRevenue' => 'Revenu non alloué',
         'income' => 'Revenu',
         'outcome' => 'Dépense',
-        'intendedOutcome' => 'Dépense prévue :date',
-        'effectiveOutcome' => 'Dépense effectuée',
         'incomingTransfer' => 'Virement entrant',
         'outgoingTransfer' => 'Virement sortant',
     ],

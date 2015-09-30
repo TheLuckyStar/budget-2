@@ -3,8 +3,7 @@
     {!! Form::select(
         'type',
         [
-            'intendedOutcome' => trans('operation.type.intendedOutcome', ['date' => '']),
-            'effectiveOutcome' => trans('operation.type.effectiveOutcome'),
+            'outcome' => trans('operation.type.outcome'),
         ],
         null,
         [

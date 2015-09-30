@@ -48,10 +48,8 @@ class OperationsController extends AbstractController
         $account  = $envelope->account;
 
         $this->validate($request, [
-            'type' => 'required|in:intendedOutcome,effectiveOutcome',
-            'envelope_id'
-                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
-                    .$account->id,
+            'type' => 'required|in:outcome',
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
@@ -61,7 +59,6 @@ class OperationsController extends AbstractController
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            'effective' => $request->get('type') === 'effectiveOutcome',
         ]);
     }
 
@@ -83,10 +80,8 @@ class OperationsController extends AbstractController
         $account   = $envelope->account;
 
         $this->validate($request, [
-            'type' => 'required|in:intendedOutcome,effectiveOutcome',
-            'envelope_id'
-                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
-                    .$account->id,
+            'type' => 'required|in:outcome',
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
@@ -97,7 +92,6 @@ class OperationsController extends AbstractController
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            'effective' => $request->get('type') === 'effectiveOutcome',
         ])->save();
     }
 

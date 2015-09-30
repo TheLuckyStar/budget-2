@@ -47,9 +47,9 @@ class OperationsController extends AbstractController
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $this->validate($request, [
-            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome,outgoingTransfer,incomingTransfer',
+            'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
             'envelope_id'
-                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
                     .$account->id,
             'to_account_id'
                 => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
@@ -69,12 +69,11 @@ class OperationsController extends AbstractController
             return;
         }
 
-        if ($request->input('type') === 'intendedOutcome' || $request->input('type') === 'effectiveOutcome') {
+        if ($request->input('type') === 'outcome') {
             $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-                'effective' => $request->get('type') === 'effectiveOutcome',
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay()
             ]);
             return;
         }
@@ -117,9 +116,9 @@ class OperationsController extends AbstractController
         $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $this->validate($request, [
-            'type' => 'required|in:revenue,intendedOutcome,effectiveOutcome,outgoingTransfer,incomingTransfer',
+            'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
             'envelope_id'
-                => 'required_if:type,intendedOutcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
+                => 'required_if:type,outcome,type,efectiveOutcome|exists:envelopes,id,account_id,'
                     .$account->id,
             'to_account_id'
                 => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
@@ -140,13 +139,12 @@ class OperationsController extends AbstractController
         }
 
 
-        if ($request->input('type') === 'intendedOutcome' || $request->input('type') === 'effectiveOutcome') {
+        if ($request->input('type') === 'outcome') {
             $operation->fill([
                 'envelope_id' => $request->get('envelope_id'),
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
                 'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-                'effective' => $request->get('type') === 'effectiveOutcome',
             ])->save();
             return;
         }

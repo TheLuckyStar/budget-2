@@ -26,7 +26,7 @@
 
 <td class="text-{{ $operation->context }} text-right">
 
-    @if ($operation->type === 'effectiveOutcome' || $operation->type === 'intendedOutcome')
+    @if ($operation->type === 'outcome')
         {!! Html::linkAction(
             "Envelope\OperationsController@getUpdate",
             '<i class="fa fa-fw fa-pencil" title="'.trans('app.button.update').'"></i>',

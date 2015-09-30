@@ -4,8 +4,7 @@
         'type',
         [
             'revenue' => trans('operation.type.revenue'),
-            'intendedOutcome' => trans('operation.type.intendedOutcome', ['date' => '']),
-            'effectiveOutcome' => trans('operation.type.effectiveOutcome'),
+            'outcome' => trans('operation.type.outcome'),
             'incomingTransfer' => trans('operation.type.incomingTransfer'),
             'outgoingTransfer' => trans('operation.type.outgoingTransfer'),
         ],

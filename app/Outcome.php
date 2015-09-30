@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property App\Envelope $envelope
  * @property string $name
  * @property float $amount
- * @property int $effective
  * @property Carbon\Carbon $date
  */
 class Outcome extends Operation
@@ -20,7 +19,7 @@ class Outcome extends Operation
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['envelope_id', 'name', 'amount', 'date', 'effective'];
+    protected $fillable = ['envelope_id', 'name', 'amount', 'date'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -35,7 +34,6 @@ class Outcome extends Operation
     protected $casts = [
         'id' => 'id',
         'amount' => 'float',
-        'effective' => 'boolean',
     ];
 
     /**
@@ -77,27 +75,11 @@ class Outcome extends Operation
             ->withTrashed();
     }
 
-    public function scopeEffective($query) {
-        return $query->where('effective', true);
-    }
-
-    public function scopeIntended($query) {
-        return $query->where('effective', false);
-    }
-
     public function getContextAttribute() {
-        if ($this->effective) {
-            return 'danger';
-        }
-
-        return 'warning';
+        return 'danger';
     }
 
     public function getTypeAttribute() {
-        if ($this->effective) {
-            return 'effectiveOutcome';
-        }
-
-        return 'intendedOutcome';
+        return 'outcome';
     }
 }

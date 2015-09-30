@@ -19,12 +19,8 @@ class SummaryController extends AbstractController
                 'value' => $envelope->incomes()->inPeriod($after, $before)->sum('amount'),
             ],
             [
-                'label' => trans('operation.type.intendedOutcome', ['date' => '']),
-                'value' => $envelope->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
-            ],
-            [
-                'label' => trans('operation.type.effectiveOutcome'),
-                'value' => $envelope->outcomes()->intended()->inPeriod($after, $before)->sum('amount'),
+                'label' => trans('operation.type.outcome'),
+                'value' => $envelope->outcomes()->inPeriod($after, $before)->sum('amount'),
             ],
         ];
 

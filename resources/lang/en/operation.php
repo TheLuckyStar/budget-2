@@ -47,8 +47,6 @@ return [
         'unallocatedRevenue' => 'Unallocated revenue',
         'income' => 'Revenue',
         'outcome' => 'Outcome',
-        'intendedOutcome' => 'Intended outcome :date',
-        'effectiveOutcome' => 'Effective outcome',
         'incomingTransfer' => 'Incoming transfer',
         'outgoingTransfer' => 'Outgoing transfer',
     ],
