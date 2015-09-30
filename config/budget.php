@@ -9,6 +9,7 @@ return [
         'warning' => '#f39c12',
         'info' => '#3498db',
         'success' => '#18bc9c',
+        'primary' => '#2c3e50',
     ],
 
 ];

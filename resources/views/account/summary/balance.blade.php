@@ -28,7 +28,7 @@
             element: $(this).attr('id'),
             data: {!! $data !!},
             colors: {!! $colors !!},
-            formatter: function (val, data) { return FormatModule.price(val); },
+            formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, true); },
             resize: true
         });
     });

@@ -16,24 +16,39 @@ class SummaryController extends AbstractController
     public function getBalance($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $after  = Carbon::now()->startOfMonth();
-        $before = Carbon::now()->endOfMonth();
+        $prevMonth = Carbon::now()->subMonth()->endOfMonth();
+        $after     = Carbon::now()->startOfMonth();
+        $before    = Carbon::now()->endOfMonth();
 
-        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
-        $income  = $account->incomes()->inPeriod($after, $before)->sum('amount');
+        $prevBalance      = $account->getBalanceAttribute(null, $prevMonth);
+        $prevBalanceColor = $prevBalance < 0 ?
+            Config::get('budget.statusColors.danger') : Config::get('budget.statusColors.success');
 
         $data = [
             [
-                'label' => trans('operation.type.outcome', ['date' => '']),
+                'label' => trans('operation.aggregate.balanceAt', ['date' => $prevMonth->formatLocalized('%d/%m/%Y')]),
+                'value' => abs($prevBalance),
+                'negative' => $prevBalance < 0,
+            ],
+            [
+                'label' => trans('operation.type.outcome'),
                 'value' => $account->outcomes()->inPeriod($after, $before)->sum('amount'),
+                'negative' => true,
             ],
             [
-                'label' => trans('operation.type.unallocatedRevenue'),
-                'value' => max(0, $revenue - $income),
+                'label' => trans('operation.type.outgoingTransfer'),
+                'value' => $account->outgoingTransfers()->inPeriod($after, $before)->sum('amount'),
+                'negative' => true,
             ],
             [
-                'label' => trans('operation.type.allocatedRevenue'),
-                'value' => $income,
+                'label' => trans('operation.type.incomingTransfer'),
+                'value' => $account->incomingTransfers()->inPeriod($after, $before)->sum('amount'),
+                'negative' => false,
+            ],
+            [
+                'label' => trans('operation.type.revenue'),
+                'value' => $account->revenues()->inPeriod($after, $before)->sum('amount'),
+                'negative' => false,
             ],
         ];
 
@@ -41,7 +56,7 @@ class SummaryController extends AbstractController
             'account' => $account,
             'data' => json_encode($data),
             'withChartData' => count(array_filter(array_pluck($data, 'value'))),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
+            'colors' => json_encode(array_values([$prevBalanceColor] + Config::get('budget.statusColors'))),
         ];
 
         return view('account.summary.balance', $data);
