@@ -149,6 +149,11 @@ return [
          */
         App\Services\Html\HtmlServiceProvider::class,
 
+        /*
+         * Vendor Service Providers...
+         */
+        BackupManager\Laravel\Laravel5ServiceProvider::class,
+
     ],
 
     /*

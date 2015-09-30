@@ -15,7 +15,8 @@
         "select2/select2": "^4.0",
         "eonasdan/bootstrap-datetimepicker": "^4.15",
         "components/jqueryui": "^1.11",
-        "thomaspark/bootswatch": "^3.3"
+        "thomaspark/bootswatch": "^3.3",
+        "backup-manager/laravel": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
