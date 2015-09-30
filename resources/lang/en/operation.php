@@ -38,6 +38,7 @@ return [
         'totalIncome' => 'Total incomes',
         'totalOutcome' => 'Total outcomes',
         'balance' => 'Balance',
+        'balanceEnvelopes' => 'Envelope balance',
         'balanceAt' => 'Balance at :date',
     ],
 

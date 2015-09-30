@@ -10,15 +10,17 @@
             ]
         ) !!}
         {{ $date->formatLocalized('%B %Y') }}
-        {!! Html::linkAction(
-            'Account\DevelopmentController@getMonthly',
-            $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-            [$account, $nextMonth->toDateString()],
-            [
-                'class' => 'routable btn btn-xs btn-default pull-right',
-                'data-target' => '#account-development-monthly',
-            ]
-        ) !!}
+        @if ($nextMonth->lte(Carbon\Carbon::now()))
+            {!! Html::linkAction(
+                'Account\DevelopmentController@getMonthly',
+                $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                [$account, $nextMonth->toDateString()],
+                [
+                    'class' => 'routable btn btn-xs btn-default pull-right',
+                    'data-target' => '#account-development-monthly',
+                ]
+            ) !!}
+        @endif
     </div>
     <div class="panel-body">
         <div id="account-development-monthly-chart"></div>
@@ -27,27 +29,21 @@
 
 <script type="text/javascript">
 
-    $('#account-development-monthly-chart').get(0).chart = Morris.Area({
+    $('#account-development-monthly-chart').get(0).chart = Morris.Line({
         element: 'account-development-monthly-chart',
         data: {!! $data !!},
         xkey: 'date',
         ykeys: [
-            'revenue',
-            'allocatedRevenue',
-            'outcome',
+            'balance',
         ],
         labels: [
-            "@lang('operation.type.revenue')",
-            "@lang('operation.type.allocatedRevenue')",
-            "@lang('operation.type.outcome')",
+            "@lang('operation.aggregate.balanceEnvelopes')",
         ],
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return FormatModule.date(new Date(date)); },
         xLabelFormat: function (date) { return date.getDate(); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
-        smooth: false,
         resize: true,
-        behaveLikeLine: true,
     });
 
 </script>

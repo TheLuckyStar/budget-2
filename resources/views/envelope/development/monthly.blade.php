@@ -10,15 +10,17 @@
             ]
         ) !!}
         {{ $date->formatLocalized('%B %Y') }}
-        {!! Html::linkAction(
-            'Envelope\DevelopmentController@getMonthly',
-            $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-            [$envelope, $nextMonth->toDateString()],
-            [
-                'class' => 'routable btn btn-xs btn-default pull-right',
-                'data-target' => '#envelope-development-monthly',
-            ]
-        ) !!}
+        @if ($nextMonth->lte(Carbon\Carbon::now()))
+            {!! Html::linkAction(
+                'Envelope\DevelopmentController@getMonthly',
+                $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                [$envelope, $nextMonth->toDateString()],
+                [
+                    'class' => 'routable btn btn-xs btn-default pull-right',
+                    'data-target' => '#envelope-development-monthly',
+                ]
+            ) !!}
+        @endif
     </div>
     <div class="panel-body">
         <div id="envelope-development-monthly-chart"></div>
@@ -27,25 +29,21 @@
 
 <script type="text/javascript">
 
-    $('#envelope-development-monthly-chart').get(0).chart = Morris.Area({
+    $('#envelope-development-monthly-chart').get(0).chart = Morris.Line({
         element: 'envelope-development-monthly-chart',
         data: {!! $data !!},
         xkey: 'date',
         ykeys: [
-            'income',
-            'outcome',
+            'balance',
         ],
         labels: [
-            "@lang('operation.type.income')",
-            "@lang('operation.type.outcome')",
+            "@lang('operation.aggregate.balance')",
         ],
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return FormatModule.date(new Date(date)); },
         xLabelFormat: function (date) { return date.getDate(); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
-        smooth: false,
         resize: true,
-        behaveLikeLine: true,
     });
 
 </script>

@@ -10,15 +10,17 @@
             ]
         ) !!}
         {{ $date->formatLocalized('%Y') }}
-        {!! Html::linkAction(
-            'Account\DevelopmentController@getEnvelopes',
-            $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-            [$account, $nextYear->toDateString()],
-            [
-                'class' => 'routable btn btn-xs btn-default pull-right',
-                'data-target' => '#account-development-envelopes',
-            ]
-        ) !!}
+        @if ($nextYear->lte(Carbon\Carbon::now()))
+            {!! Html::linkAction(
+                'Account\DevelopmentController@getEnvelopes',
+                $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                [$account, $nextYear->toDateString()],
+                [
+                    'class' => 'routable btn btn-xs btn-default pull-right',
+                    'data-target' => '#account-development-envelopes',
+                ]
+            ) !!}
+        @endif
     </div>
     <div class="panel-body">
         @if ($account->envelopes->count() === 0)
@@ -47,13 +49,10 @@
             xkey: 'date',
             ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
             labels: {!! json_encode($account->envelopes->lists('name')) !!},
-
             dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
             xLabelFormat: function (date) { return require('moment')(date).format("MMMM"); },
             yLabelFormat: function (val) { return FormatModule.price(val); },
-            smooth: false,
             resize: true,
-            behaveLikeLine: true,
         });
     });
 

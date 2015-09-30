@@ -14,14 +14,12 @@ class DevelopmentController extends AbstractController
         $date->startOfMonth();
 
         $data = [];
-        for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
-            $data[] = $this->getData($envelope, $date, $d);
+        for ($d = $date->copy(); $d->month === $date->month && $d->lte(Carbon::now()); $d->addDay()) {
+            $data[] = [
+                'date' => $d->toDateString(),
+                'balance' => $envelope->getBalanceAttribute(null, $d),
+            ];
         }
-
-        $colors = [
-            Config::get('budget.statusColors.success'),
-            Config::get('budget.statusColors.danger'),
-        ];
 
         $data = [
             'envelope' => $envelope,
@@ -29,7 +27,7 @@ class DevelopmentController extends AbstractController
             'prevMonth' => $date->copy()->subMonth(),
             'nextMonth' => $date->copy()->addMonth(),
             'data' => json_encode($data),
-            'colors' => json_encode($colors),
+            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
         ];
 
         return view('envelope.development.monthly', $data);
@@ -42,17 +40,12 @@ class DevelopmentController extends AbstractController
         $date->startOfYear();
 
         $data = [];
-        for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $after  = $d->copy()->startOfMonth();
-            $before = $d->copy()->endOfMonth();
-
-            $data[] = $this->getData($envelope, $after, $before);
+        for ($d = $date->copy(); $d->year === $date->year && $d->lte(Carbon::now()); $d->addMonth()) {
+            $data[] = [
+                'date' => $d->toDateString(),
+                'balance' => $envelope->getBalanceAttribute(null, $d->copy()->endOfMonth()),
+            ];
         }
-
-        $colors = [
-            Config::get('budget.statusColors.success'),
-            Config::get('budget.statusColors.danger'),
-        ];
 
         $data = [
             'envelope' => $envelope,
@@ -60,31 +53,9 @@ class DevelopmentController extends AbstractController
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
-            'colors' => json_encode($colors),
+            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
         ];
 
         return view('envelope.development.yearly', $data);
     }
-
-
-    public function getData($envelope, $after, $before) {
-        $balance = $envelope->getBalanceAttribute(null, $after->copy()->subMonth()->endOfMonth());
-
-        $income = $envelope->incomes()->inPeriod($after, $before)->sum('amount');
-        if ($balance > 0) {
-            $income += $balance;
-        }
-
-        $outcome = $envelope->outcomes()->inPeriod($after, $before)->sum('amount');
-        if ($balance < 0) {
-            $outcome += $balance;
-        }
-
-        return [
-            'date' => $before->toDateString(),
-            'income' => $income,
-            'outcome' => $outcome,
-        ];
-    }
-
 }

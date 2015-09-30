@@ -40,6 +40,7 @@ return [
         'totalIncome' => 'Total des revenus',
         'totalOutcome' => 'Total des dépenses',
         'balance' => 'Solde',
+        'balanceEnvelopes' => 'Solde des envelopes',
         'balanceAt' => 'Solde au :date',
     ],
 

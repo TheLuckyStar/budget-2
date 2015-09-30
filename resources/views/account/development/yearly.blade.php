@@ -10,15 +10,17 @@
             ]
         ) !!}
         {{ $date->formatLocalized('%Y') }}
-        {!! Html::linkAction(
-            'Account\DevelopmentController@getYearly',
-            $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-            [$account, $nextYear->toDateString()],
-            [
-                'class' => 'routable btn btn-xs btn-default pull-right',
-                'data-target' => '#account-development-yearly',
-            ]
-        ) !!}
+        @if ($nextYear->lte(Carbon\Carbon::now()))
+            {!! Html::linkAction(
+                'Account\DevelopmentController@getYearly',
+                $nextYear->formatLocalized('%Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                [$account, $nextYear->toDateString()],
+                [
+                    'class' => 'routable btn btn-xs btn-default pull-right',
+                    'data-target' => '#account-development-yearly',
+                ]
+            ) !!}
+        @endif
     </div>
     <div class="panel-body">
         <div id="account-development-yearly-chart"></div>
@@ -27,27 +29,21 @@
 
 <script type="text/javascript">
 
-    $('#account-development-yearly-chart').get(0).chart = Morris.Area({
+    $('#account-development-yearly-chart').get(0).chart = Morris.Line({
         element: 'account-development-yearly-chart',
         data: {!! $data !!},
         xkey: 'date',
         ykeys: [
-            'revenue',
-            'allocatedRevenue',
-            'outcome',
+            'balance',
         ],
         labels: [
-            "@lang('operation.type.revenue')",
-            "@lang('operation.type.allocatedRevenue')",
-            "@lang('operation.type.outcome')",
+            "@lang('operation.aggregate.balanceEnvelopes')",
         ],
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
         xLabelFormat: function (date) {return require('moment')(date).subtract(1, 'months').format("MMMM"); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
-        smooth: false,
         resize: true,
-        behaveLikeLine: true,
     });
 
 </script>

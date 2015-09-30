@@ -14,15 +14,12 @@ class DevelopmentController extends AbstractController
         $date->startOfMonth();
 
         $data = [];
-        for ($d = $date->copy(); $d->month === $date->month; $d->addDay()) {
-            $data[] = $this->getData($account, $date, $d);
+        for ($d = $date->copy(); $d->month === $date->month && $d->lte(Carbon::now()); $d->addDay()) {
+            $data[] = [
+                'date' => $d->toDateString(),
+                'balance' => $account->getEnvelopesBalanceAttribute(null, $d),
+            ];
         }
-
-        $colors = [
-            Config::get('budget.statusColors.success'),
-            Config::get('budget.statusColors.info'),
-            Config::get('budget.statusColors.danger'),
-        ];
 
         $data = [
             'account' => $account,
@@ -30,7 +27,7 @@ class DevelopmentController extends AbstractController
             'prevMonth' => $date->copy()->subMonth(),
             'nextMonth' => $date->copy()->addMonth(),
             'data' => json_encode($data),
-            'colors' => json_encode($colors),
+            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
         ];
 
         return view('account.development.monthly', $data);
@@ -43,18 +40,12 @@ class DevelopmentController extends AbstractController
         $date->startOfYear();
 
         $data = [];
-        for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
-            $after  = $d->copy()->startOfMonth();
-            $before = $d->copy()->endOfMonth();
-
-            $data[] = $this->getData($account, $after, $before);
+        for ($d = $date->copy(); $d->year === $date->year && $d->lte(Carbon::now()); $d->addMonth()) {
+            $data[] = [
+                'date' => $d->toDateString(),
+                'balance' => $account->getEnvelopesBalanceAttribute(null, $d->copy()->endOfMonth()),
+            ];
         }
-
-        $colors = [
-            Config::get('budget.statusColors.success'),
-            Config::get('budget.statusColors.info'),
-            Config::get('budget.statusColors.danger'),
-        ];
 
         $data = [
             'account' => $account,
@@ -62,33 +53,10 @@ class DevelopmentController extends AbstractController
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
-            'colors' => json_encode($colors),
+            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
         ];
 
         return view('account.development.yearly', $data);
-    }
-
-    public function getData($account, $after, $before) {
-        $balance = $account->getBalanceAttribute(null, $after->copy()->subMonth()->endOfMonth());
-
-        $revenue = $account->revenues()->inPeriod($after, $before)->sum('amount');
-        if ($balance > 0) {
-            $revenue += $balance;
-        }
-
-        $allocatedRevenue = $account->incomes()->inPeriod($after, $before)->sum('amount');
-
-        $outcome = $account->outcomes()->inPeriod($after, $before)->sum('amount');
-        if ($balance < 0) {
-            $outcome += $balance;
-        }
-
-        return [
-            'date' => $before->toDateString(),
-            'revenue' => $revenue,
-            'allocatedRevenue' => $allocatedRevenue,
-            'outcome' => $outcome,
-        ];
     }
 
     public function getEnvelopes($accountId, $date = null) {
@@ -98,7 +66,7 @@ class DevelopmentController extends AbstractController
         $date->startOfYear();
 
         $data = [];
-        for ($d = $date->copy(); $d->year === $date->year; $d->addMonth()) {
+        for ($d = $date->copy(); $d->year === $date->year && $d->lte(Carbon::now()); $d->addMonth()) {
             $monthlyData = [
                 'date' => $d->format('Y-m'),
             ];
@@ -116,7 +84,6 @@ class DevelopmentController extends AbstractController
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
             'data' => json_encode($data),
-            'colors' => json_encode(array_values(Config::get('budget.statusColors'))),
         ];
 
         return view('account.development.envelopes', $data);
