@@ -84,6 +84,20 @@ var OperationModule = (function() {
         });
     };
 
+    // Handle submit links initialization
+    var initEnterKey = function (target) {
+        $(target).keyup(function (e) {
+            if (e.keyCode != 13) {
+                return true;
+            }
+
+            var row = $(this).closest('tr');
+            var link = row.find('a.btn.btn-success:not(.routable)');
+
+            link.click();
+        });
+    };
+
     // Handle form post success
     var submitFormSuccess = function () {
         RouterModule.refresh($('#account-operations-table, #envelope-operations-table'));
@@ -104,6 +118,7 @@ var OperationModule = (function() {
         initDatepicker(row.find('.datepicker'));
         initSelectType(row.find('select[name="type"]'));
         initSubmitLinks(row.find('a.btn:not(.routable)'));
+        initEnterKey(row.find('input'));
     };
 
     // Called on module loading
