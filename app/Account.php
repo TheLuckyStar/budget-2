@@ -209,7 +209,7 @@ class Account extends Model
             $operations->push($outgoingTransfer);
         }
 
-        return $operations->sortBy('date');
+        return $operations->sortByDateThenCreatedAt();
     }
 
     public function getInitialBalanceAttribute() {

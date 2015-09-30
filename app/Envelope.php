@@ -135,7 +135,7 @@ class Envelope extends Model
             $operations->push($outcome);
         }
 
-        return $operations;
+        return $operations->sortByDateThenCreatedAt();
     }
 
     public function getBalanceAttribute($after = null, $before = null) {

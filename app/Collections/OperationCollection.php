@@ -27,4 +27,15 @@ class OperationCollection extends Collection
             return $operation instanceOf Outcome;
         });
     }
+
+    public function sortByDateThenCreatedAt()
+    {
+        return $this->sort(function ($operation1, $operation2) {
+            if ($operation1->date->eq($operation2->date)) {
+                return $operation2->created_at->diffInSeconds($operation1->created_at, false);
+            }
+
+            return $operation2->date->diffInSeconds($operation1->date, false);
+        });
+    }
 }
