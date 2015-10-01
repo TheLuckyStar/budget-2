@@ -2,20 +2,20 @@
 
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-users pull-left"></i>
-        @lang('account.summary.users.title')
+        @lang('account.configuration.users.title')
     </div>
 
     <ul class="list-group">
         <li class="list-group-item">
             {!! $account->owner()->first()->link() !!}
-            <i class="fa fa-fw fa-star pull-right" title="@lang('account.summary.users.owner')"></i>
+            <i class="fa fa-fw fa-star pull-right" title="@lang('account.configuration.users.owner')"></i>
         </li>
         @foreach($account->guests as $user)
             <li class="list-group-item">
                 {!! Form::open([
-                    'action' => ['Account\SummaryController@postDetachUser', $account->id],
+                    'action' => ['Account\ConfigurationController@postDetachUser', $account->id],
                     'class' => 'routable',
-                    'data-target' => '#account-summary-users',
+                    'data-target' => '#account-configuration-users',
                 ]) !!}
                     {!! Form::hidden('user_id', $user->id) !!}
                     {!! $user->link() !!}
@@ -29,9 +29,9 @@
         @foreach($account->invitations as $invitation)
             <li class="list-group-item">
                 {!! Form::open([
-                    'action' => ['Account\SummaryController@postDetachInvitation', $account->id],
+                    'action' => ['Account\ConfigurationController@postDetachInvitation', $account->id],
                     'class' => 'routable',
-                    'data-target' => '#account-summary-users',
+                    'data-target' => '#account-configuration-users',
                 ]) !!}
                     {!! Form::hidden('invitation_id', $invitation->id) !!}
                     {!! $invitation->link() !!}
@@ -45,9 +45,9 @@
     </ul>
 
     {!! Form::open([
-        'action' => ['Account\SummaryController@postAttachUser', $account->id],
+        'action' => ['Account\ConfigurationController@postAttachUser', $account->id],
         'class' => 'routable panel-footer'.($errors->has('email') ? ' has-error' : ''),
-        'data-target' => '#account-summary-users',
+        'data-target' => '#account-configuration-users',
     ]) !!}
 
         <div class='messagebox'></div>

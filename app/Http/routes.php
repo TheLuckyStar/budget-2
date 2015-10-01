@@ -37,6 +37,7 @@ Route::group(['prefix' => App::make('findLocale')], function() {
             Route::controller('account/operation', 'Account\OperationsController'); // Account operation pages
             Route::controller('account/allocation', 'Account\AllocationController'); // Account allocation pages
             Route::controller('account/development', 'Account\DevelopmentController'); // Account development pages
+            Route::controller('account/configuration', 'Account\ConfigurationController'); // Account development pages
             Route::controller('account', 'AccountController'); // Main account pages
             Route::get('account/index/{account_id?}/{activeTab?}', 'AccountController@getIndex'); // Main account page
 

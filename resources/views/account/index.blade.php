@@ -100,13 +100,20 @@
                     ['aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
             </li>
+            <li role="presentation" class="{{ $activeTab === 'configuration' ? 'active' : '' }}">
+                {!! Html::link(
+                    '#configuration',
+                    '<i class="fa fa-fw fa-cog"></i> '
+                        .trans('account.configuration.title'),
+                    ['aria-controls' => 'configuration', 'role' => 'tab', 'data-toggle' => 'tab']
+                ) !!}
+            </li>
         </ul>
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane row {{ $activeTab === 'summary' ? 'active' : ''}}" id="summary">
                 <div class='col-md-4' id='account-summary-balance' data-url='{{ action('Account\SummaryController@getBalance', $account) }}'></div>
                 <div class='col-md-4' id='account-summary-envelopes' data-url='{{ action('Account\SummaryController@getEnvelopes', $account) }}'></div>
-                <div class='col-md-4' id='account-summary-users' data-url='{{ action('Account\SummaryController@getUsers', $account) }}'></div>
                 <div class='col-md-4' id='account-summary-events' data-url='{{ action('Account\SummaryController@getEvents', $account) }}'></div>
             </div>
             <div role="tabpanel" class="tab-pane row {{ $activeTab === 'operations' ? 'active' : ''}}" id="operations">
@@ -120,6 +127,9 @@
                 <div class='col-md-12' id='account-development-yearly' data-url='{{ action('Account\DevelopmentController@getYearly', $account) }}'></div>
                 <div class='col-md-12' id='account-development-envelopes' data-url='{{ action('Account\DevelopmentController@getEnvelopes', $account) }}'></div>
             </div>
+            <div role="tabpanel" class="tab-pane row {{ $activeTab === 'configuration' ? 'active' : ''}}" id="configuration">
+                <div class='col-md-4' id='account-configuration-users' data-url='{{ action('Account\ConfigurationController@getUsers', $account) }}'></div>
+            </div>
         </div>
 
     </div>
@@ -128,13 +138,13 @@
 
         RouterModule.refresh($('#account-summary-balance'));
         RouterModule.refresh($('#account-summary-envelopes'));
-        RouterModule.refresh($('#account-summary-users'));
         RouterModule.refresh($('#account-summary-events'));
         RouterModule.refresh($('#account-allocation-sliders'));
         RouterModule.refresh($('#account-operations-table'));
         RouterModule.refresh($('#account-development-monthly'));
         RouterModule.refresh($('#account-development-yearly'));
         RouterModule.refresh($('#account-development-envelopes'));
+        RouterModule.refresh($('#account-configuration-users'));
 
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
             RouterModule.clickLink($(this), NavbarModule.refresh);

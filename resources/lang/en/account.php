@@ -48,12 +48,6 @@ return [
             'title' => 'Envelope balance : <b>:balance</b>',
             'emptyMessage' => ':link to view the chart',
         ],
-        'users' => [
-            'title' => "Participants",
-            'owner' => "Owner",
-            'attachUserMessage' => ":user has been attached to this account.",
-            'detachUserMessage' => ":user has been detached from this account.",
-        ],
     ],
 
     'allocation' => [
@@ -73,6 +67,14 @@ return [
         'title' => 'Development',
         'envelopes' => [
             'emptyMessage' => ':link to view the chart',
+        ],
+    ],
+
+    'configuration' => [
+        'title' => 'Configuration',
+        'users' => [
+            'title' => "Participants",
+            'owner' => "Owner",
         ],
     ],
 

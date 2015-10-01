@@ -48,12 +48,6 @@ return [
             'title' => 'Solde des enveloppes : <b>:balance</b>',
             'emptyMessage' => ':link pour consulter le graphique',
         ],
-        'users' => [
-            'title' => "Participants",
-            'owner' => "Créateur",
-            'attachUserMessage' => ":user a été rattaché à ce compte.",
-            'detachUserMessage' => ":user a été détaché de ce compte.",
-        ],
     ],
 
     'allocation' => [
@@ -73,6 +67,14 @@ return [
         'title' => 'Évolution',
         'envelopes' => [
             'emptyMessage' => ':link pour consulter le graphique',
+        ],
+    ],
+
+    'configuration' => [
+        'title' => 'Configuration',
+        'users' => [
+            'title' => "Participants",
+            'owner' => "Créateur",
         ],
     ],
 
