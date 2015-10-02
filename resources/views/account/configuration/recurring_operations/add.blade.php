@@ -1,16 +1,20 @@
 
 <td class="row form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-    <select class="form-control" id="operation-add-select-type" name="type">
-        <option selected="selected" value="">@lang('operation.fields.type')</option>
-        <option value="revenue">@lang('operation.type.revenue')</option>
-        <option value="outcome">@lang('operation.type.outcome')</option>
-        <option value="incomingTransfer">@lang('operation.type.incomingTransfer')</option>
-        <option value="outgoingTransfer">@lang('operation.type.outgoingTransfer')</option>
-        {!! $account->recurringOperationsSelectOptions('revenue') !!}
-        {!! $account->recurringOperationsSelectOptions('outcome') !!}
-        {!! $account->recurringOperationsSelectOptions('incomingTransfer') !!}
-        {!! $account->recurringOperationsSelectOptions('outgoingTransfer') !!}
-    </select>
+    {!! Form::select(
+        'type',
+        [
+            'revenue' => trans('operation.type.revenue'),
+            'outcome' => trans('operation.type.outcome'),
+            'incomingTransfer' => trans('operation.type.incomingTransfer'),
+            'outgoingTransfer' => trans('operation.type.outgoingTransfer'),
+        ],
+        null,
+        [
+            'class' => 'form-control',
+            'id' => 'recurring_operation-add-select-type',
+            'placeholder' => trans('operation.fields.type')
+        ]
+    ) !!}
     @if ($errors->has('type'))
         {!! Html::ul($errors->get('type'), ['class' => 'help-block text-right']) !!}
     @endif
@@ -24,7 +28,7 @@
         null,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-select-envelope_id',
+            'id' => 'recurring_operation-add-select-envelope_id',
             'placeholder' => trans('operation.fields.envelope_id')
         ]
     ) !!}
@@ -41,7 +45,7 @@
         null,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-select-to_account_id',
+            'id' => 'recurring_operation-add-select-to_account_id',
             'placeholder' => trans('operation.fields.to_account_id')
         ]
     ) !!}
@@ -58,7 +62,7 @@
         null,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-select-from_account_id',
+            'id' => 'recurring_operation-add-select-from_account_id',
             'placeholder' => trans('operation.fields.from_account_id')
         ]
     ) !!}
@@ -69,30 +73,13 @@
 
 </td>
 
-<td class="row form-group {{ $errors->has('date') ? 'has-error' : '' }}">
-    {!! Form::text(
-        'date',
-        null,
-        [
-            'class' => 'form-control datepicker',
-            'id' => 'operation-add-input-date',
-            'placeholder' => trans('operation.fields.date'),
-            'data-date-min-date' => $month->startOfMonth()->toDateString(),
-            'data-date-max-date' => $month->endOfMonth()->toDateString(),
-        ]
-    ) !!}
-    @if ($errors->has('date'))
-        {!! Html::ul($errors->get('date'), ['class' => 'help-block text-right']) !!}
-    @endif
-</td>
-
 <td class="row form-group {{ $errors->has('name') ? 'has-error' : '' }}">
     {!! Form::text(
         'name',
         null,
         [
             'class' => 'form-control',
-            'id' => 'operation-add-input-name',
+            'id' => 'recurring_operation-add-input-name',
             'placeholder' => trans('operation.fields.name')
         ]
     ) !!}
@@ -108,7 +95,7 @@
             null,
             [
                 'class' => 'form-control text-right',
-                'id' => 'operation-add-input-amount',
+                'id' => 'recurring_operation-add-input-amount',
                 'placeholder' => trans('operation.fields.amount')
             ]
         ) !!}
@@ -126,14 +113,14 @@
     {!! Form::token() !!}
 
     {!! Html::linkAction(
-        "Account\OperationsController@postAdd",
+        "Account\ConfigurationController@postRecurringOperationAdd",
         '<i class="fa fa-fw fa-plus" title="'.trans('app.button.add').'"></i>',
         $account,
         ['class' => 'btn btn-success', 'title' => trans('app.button.add')]
     ) !!}
 
     <script type="text/javascript">
-        OperationModule.initRow($('#row-operation-new'));
+        OperationModule.initRow($('#row-recurring_operation-new'));
     </script>
 
 </td>

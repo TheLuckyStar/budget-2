@@ -25,8 +25,8 @@ return [
     'fields' => [
         'envelope_id' => "Enveloppe",
         'account_id' => "Compte",
-        'to_account_id' => "Compte débiteur",
-        'from_account_id' => "Compte créditeur",
+        'to_account_id' => "Compte créditeur",
+        'from_account_id' => "Compte débiteur",
         'accountFromPrefix' => "de",
         'accountToPrefix' => "vers",
         'name' => "Intitulé",
@@ -52,6 +52,10 @@ return [
         'outcome' => 'Dépense',
         'incomingTransfer' => 'Virement entrant',
         'outgoingTransfer' => 'Virement sortant',
+        'recurringRevenues' => 'Revenus récurrents',
+        'recurringOutcomes' => 'Dépenses récurrentes',
+        'recurringIncomingTransfers' => 'Virements entrants récurrents',
+        'recurringOutgoingTransfers' => 'Virements sortants récurrents',
     ],
 
 ];

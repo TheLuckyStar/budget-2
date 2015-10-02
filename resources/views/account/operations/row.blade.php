@@ -25,7 +25,7 @@
 
 <td class="text-{{ $operation->getContextAttribute($account) }} text-right">
     {{ Html::formatPrice(
-        $operation->getContextAttribute($account) === 'success' ? $operation->amount : -$operation->amount,
+        $operation->getContextAttribute($account) === 'success' || $operation->getContextAttribute($account) === 'info' ? $operation->amount : -$operation->amount,
         true
     ) }}
 </td>

@@ -252,3 +252,6 @@ ul.help-block {list-style-type: none;}
 #account-allocation-sliders .price-slider-prevIncome-button {cursor: pointer;}
 
 #account-configuration-users .fa-star {display: inline-block; margin: 6px 5px;}
+
+#account-configuration-recurring_operations > .panel > .table > tbody > tr > td > a:not(.btn) {color: inherit;}
+#account-configuration-recurring_operations > .panel > .table tr > td > select.disabled {display: none;}

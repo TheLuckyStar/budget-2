@@ -129,6 +129,7 @@
             </div>
             <div role="tabpanel" class="tab-pane row {{ $activeTab === 'configuration' ? 'active' : ''}}" id="configuration">
                 <div class='col-md-4' id='account-configuration-users' data-url='{{ action('Account\ConfigurationController@getUsers', $account) }}'></div>
+                <div class='col-md-8' id='account-configuration-recurring_operations' data-url='{{ action('Account\ConfigurationController@getRecurringOperations', $account) }}'></div>
             </div>
         </div>
 
@@ -145,6 +146,7 @@
         RouterModule.refresh($('#account-development-yearly'));
         RouterModule.refresh($('#account-development-envelopes'));
         RouterModule.refresh($('#account-configuration-users'));
+        RouterModule.refresh($('#account-configuration-recurring_operations'));
 
         $('.page-header .routable.btn-danger, .page-header .routable.btn-success').click(function () {
             RouterModule.clickLink($(this), NavbarModule.refresh);

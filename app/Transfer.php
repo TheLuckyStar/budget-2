@@ -34,7 +34,7 @@ class Transfer extends Operation
      * @var array
      */
     protected $casts = [
-        'id' => 'id',
+        'id' => 'integer',
         'from_account_id' => 'integer',
         'to_account_id' => 'integer',
         'amount' => 'float',
@@ -88,10 +88,10 @@ class Transfer extends Operation
 
     public function getContextAttribute(Account $account) {
         if ($account->id === $this->accountFrom->id) {
-            return 'danger';
+            return 'warning';
         }
 
-        return 'success';
+        return 'info';
     }
 
     public function getTypeAttribute(Account $account) {

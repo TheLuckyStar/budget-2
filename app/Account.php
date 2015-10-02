@@ -157,6 +157,36 @@ class Account extends Model
             ->orderBy('date');
     }
 
+    public function recurringOperations() {
+        return $this->hasMany('App\RecurringOperation')
+            ->orderBy('type')->orderBy('entity_id')->orderBy('name');
+    }
+
+    public function recurringOperationsSelectOptions($type) {
+        $options = [];
+
+        $recurringOperations = $this->recurringOperations->where('type', $type);
+        foreach ($recurringOperations as $recurringOperation) {
+            $attributes = [
+                'class' => 'recurring_operation',
+                'data-type' => $recurringOperation->type,
+                'data-envelope_id' => $recurringOperation->type === 'outcome' ? $recurringOperation->entity_id : null,
+                'data-from_account_id' => $recurringOperation->type === 'incomingTransfer' ? $recurringOperation->entity_id : null,
+                'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer' ? $recurringOperation->entity_id : null,
+                'data-name' => $recurringOperation->name,
+                'data-amount' => $recurringOperation->amount,
+            ];
+            $options[] = '<option '.Html::attributes($attributes).'>'.$recurringOperation.'</option>';
+        }
+
+        if (count($options) === 0) {
+            return '';
+        }
+
+        $label = trans('operation.type.recurring'.ucfirst($type).'s');
+        return '<optgroup label="'.$label.'">'.implode('', $options).'</optgroup>';
+    }
+
     public function outcomes() {
         return Outcome::whereIn('envelope_id', function(QueryBuilder $query) {
             $query->select('id')->from('envelopes')->where('account_id', $this->id);

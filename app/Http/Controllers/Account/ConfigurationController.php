@@ -67,4 +67,100 @@ class ConfigurationController extends AbstractController
 
         return redirect()->action('Account\ConfigurationController@getUsers', $account);
     }
+
+    public function getRecurringOperations($accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
+
+        $data = [
+            'account' => $account,
+        ];
+
+        return view('account.configuration.recurring_operations', $data);
+    }
+
+    public function postRecurringOperationAdd(Request $request, $accountId) {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
+
+        $this->validate($request, [
+            'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
+            'envelope_id'
+                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
+                    .$account->id,
+            'to_account_id'
+                => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'from_account_id'
+                => 'required_if:type,incomingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'name' => 'required|string',
+            'amount' => 'required|numeric',
+        ]);
+
+        $entity_id = null;
+        if ($request->input('type') === 'outcome') {
+            $entity_id = $request->get('envelope_id');
+        } elseif ($request->input('type') === 'outgoingTransfer') {
+            $entity_id = $request->get('to_account_id');
+        } elseif ($request->input('type') === 'incomingTransfer') {
+            $entity_id = $request->get('from_account_id');
+        }
+
+        $account->recurringOperations()->create([
+            'type' => $request->get('type'),
+            'entity_id' => $entity_id,
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+        ]);
+    }
+
+    public function getRecurringOperationUpdate($accountId, $recurringOperationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
+
+        $data = [
+            'account' => $account,
+            'recurringOperation' => $recurringOperation,
+        ];
+
+        return view('account.configuration.recurring_operations.update', $data);
+    }
+
+    public function postRecurringOperationUpdate(Request $request, $accountId, $recurringOperationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
+
+        $this->validate($request, [
+            'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
+            'envelope_id'
+                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
+                    .$account->id,
+            'to_account_id'
+                => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'from_account_id'
+                => 'required_if:type,incomingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
+            'name' => 'required|string',
+            'amount' => 'required|numeric',
+        ]);
+
+        $entity_id = null;
+        if ($request->input('type') === 'outcome') {
+            $entity_id = $request->get('envelope_id');
+        } elseif ($request->input('type') === 'outgoingTransfer') {
+            $entity_id = $request->get('to_account_id');
+        } elseif ($request->input('type') === 'incomingTransfer') {
+            $entity_id = $request->get('from_account_id');
+        }
+
+        $recurringOperation->fill([
+            'type' => $request->get('type'),
+            'entity_id' => $entity_id,
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+        ])->save();
+    }
+
+    public function postRecurringOperationDelete($accountId, $recurringOperationId) {
+        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
+
+        $recurringOperation->delete();
+    }
 }

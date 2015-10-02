@@ -76,6 +76,9 @@ return [
             'title' => "Participants",
             'owner' => "Créateur",
         ],
+        'recurring_operations' => [
+            'title' => "Opérations récurrentes",
+        ],
     ],
 
 ];

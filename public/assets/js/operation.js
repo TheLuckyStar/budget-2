@@ -7,6 +7,14 @@
 // The module pattern
 var OperationModule = (function() {
 
+    // Set input values inside a given row based on attributes
+    var setValues = function (row, data) {
+        var key;
+        for (key in data) {
+            row.find('input[name='+key+'], select[name='+key+']').val(data[key]).change();
+        }
+    };
+
     // Handle datepicker initialization
     var initDatepicker = function (target) {
         target.parent().css('position', 'relative');
@@ -32,6 +40,12 @@ var OperationModule = (function() {
     var initSelectType = function (target) {
         target.change(function () {
             var row = $(this).closest('tr');
+
+            var option = $(this).find('option:selected');
+            if (option.hasClass('recurring_operation')) {
+                setValues(row, option.data());
+                return false;
+            }
 
             var enabled = row.find('input, select:not([name="type"]), a');
             var disabled = row.find('input, select:not([name="type"]), a');
@@ -74,7 +88,7 @@ var OperationModule = (function() {
 
             target.fadeTo('fast', 0.5, function() {
                 $.post(url, data, function() {
-                    submitFormSuccess();
+                    submitFormSuccess(row.data('refresh'));
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     RouterModule.submitFormFail(row, jqXHR, errorThrown);
                 });
@@ -99,7 +113,15 @@ var OperationModule = (function() {
     };
 
     // Handle form post success
-    var submitFormSuccess = function () {
+    var submitFormSuccess = function (target) {
+        if (target) {
+            target = target.split(',');
+            for (key in target) {
+                RouterModule.refresh($(target[key]));
+            }
+            return;
+        }
+
         RouterModule.refresh($('#account-operations-table, #envelope-operations-table'));
 
         NavbarModule.refresh();

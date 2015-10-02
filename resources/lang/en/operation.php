@@ -50,6 +50,10 @@ return [
         'outcome' => 'Outcome',
         'incomingTransfer' => 'Incoming transfer',
         'outgoingTransfer' => 'Outgoing transfer',
+        'recurringRevenues' => 'Recurrent revenues',
+        'recurringOutcomes' => 'Recurrent outcomes',
+        'recurringIncomingTransfers' => 'Recurrent incoming transfers',
+        'recurringOutgoingTransfers' => 'Recurrent outgoing transfers',
     ],
 
 ];

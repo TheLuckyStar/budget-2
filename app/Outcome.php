@@ -32,7 +32,7 @@ class Outcome extends Operation
      * @var array
      */
     protected $casts = [
-        'id' => 'id',
+        'id' => 'integer',
         'amount' => 'float',
     ];
 
