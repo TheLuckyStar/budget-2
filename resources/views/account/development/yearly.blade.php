@@ -41,7 +41,7 @@
         ],
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
-        xLabelFormat: function (date) {return require('moment')(date).subtract(1, 'months').format("MMMM"); },
+        xLabelFormat: function (date) {return require('moment')(date).format("MMMM"); },
         yLabelFormat: function (val) { return FormatModule.price(val); },
         resize: true,
     });
