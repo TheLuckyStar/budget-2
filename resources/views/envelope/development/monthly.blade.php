@@ -39,6 +39,7 @@
         labels: [
             "@lang('operation.aggregate.balance')",
         ],
+        xLabels: 'day',
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return FormatModule.date(new Date(date)); },
         xLabelFormat: function (date) { return date.getDate(); },
