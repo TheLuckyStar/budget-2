@@ -3,6 +3,7 @@
 use App\Income;
 use App\Revenue;
 use App\Outcome;
+use App\Transfer;
 use Illuminate\Database\Eloquent\Collection;
 
 class OperationCollection extends Collection
@@ -25,6 +26,20 @@ class OperationCollection extends Collection
     {
         return $this->filter(function($operation) {
             return $operation instanceOf Outcome;
+        });
+    }
+
+    public function filterIncomingTransfers($account)
+    {
+        return $this->filter(function($operation) use ($account) {
+            return $operation instanceOf Transfer && $account->id === $operation->accountTo->id;
+        });
+    }
+
+    public function filterOutgoingTransfers($account)
+    {
+        return $this->filter(function($operation) use ($account) {
+            return $operation instanceOf Transfer && $account->id === $operation->accountFrom->id;
         });
     }
 

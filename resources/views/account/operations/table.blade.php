@@ -57,7 +57,7 @@
                 @lang('operation.aggregate.totalIncome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($operations->filterRevenues()->sum('amount'), true) }}
+                {{ Html::formatPrice($operations->filterRevenues()->sum('amount') + $operations->filterIncomingTransfers($account)->sum('amount'), true) }}
             </div>
         </div>
         <div class='col-md-3 text-danger'>
@@ -65,7 +65,7 @@
                 @lang('operation.aggregate.totalOutcome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
+                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount') - $operations->filterOutgoingTransfers($account)->sum('amount')) }}
             </div>
         </div>
         <div class='col-md-3 text-{{ $account->getStatusAttribute(null, $month->endOfMonth()) }}'>
