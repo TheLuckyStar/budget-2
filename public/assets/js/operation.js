@@ -127,6 +127,7 @@ var OperationModule = (function() {
         NavbarModule.refresh();
 
         RouterModule.refresh($('#account-summary-balance, #envelope-summary-balance'));
+        RouterModule.refresh($('#account-summary-envelopes'));
         RouterModule.refresh($('#account-summary-events, #envelope-summary-events'));
 
         RouterModule.refresh($('#account-allocation-sliders'));
