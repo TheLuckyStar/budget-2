@@ -7,7 +7,7 @@ return [
 
     // Model fields
     'fields' => [
-        'name' => 'Nom',
+        'name' => 'Prénom Nom',
         'email' => 'E-mail',
         'password' => 'Mot de passe',
         'password_confirmation' => 'Confirmer le mot de passe',
