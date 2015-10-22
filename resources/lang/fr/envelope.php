@@ -8,7 +8,7 @@ return [
     'fields' => [
         'name' => "Nom",
         'icon' => "Icône",
-        'filterIcon' => "Rechercher une icône",
+        'filterIcon' => "Rechercher une icône (en anglais seulement, par exemple 'home', 'car', 'present', 'cutlery')",
     ],
 
     'index' => [
