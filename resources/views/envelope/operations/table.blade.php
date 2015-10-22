@@ -10,15 +10,17 @@
             ]
         ) !!}
         {{ $month->formatLocalized('%B %Y') }}
-        {!! Html::linkAction(
-            'Envelope\OperationsController@getTable',
-            $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-            [$envelope, $nextMonth->toDateString()],
-            [
-                'class' => 'routable btn btn-xs btn-default pull-right',
-                'data-target' => '#envelope-operations-table',
-            ]
-        ) !!}
+        @if ($nextMonth->lte(Carbon\Carbon::now()))
+            {!! Html::linkAction(
+                'Envelope\OperationsController@getTable',
+                $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                [$envelope, $nextMonth->toDateString()],
+                [
+                    'class' => 'routable btn btn-xs btn-default pull-right',
+                    'data-target' => '#envelope-operations-table',
+                ]
+            ) !!}
+        @endif
     </div>
     <table class="table">
         <thead>

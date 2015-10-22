@@ -23,15 +23,17 @@
                 ]
             ) !!}
             {{ $startOfMonth->formatLocalized('%B %Y') }}
-            {!! Html::linkAction(
-                'Account\AllocationController@getSliders',
-                $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
-                [$account, $nextMonth->toDateString()],
-                [
-                    'class' => 'routable btn btn-xs btn-default pull-right',
-                    'data-target' => '#account-allocation-sliders',
-                ]
-            ) !!}
+            @if ($nextMonth->lte(Carbon\Carbon::now()))
+                {!! Html::linkAction(
+                    'Account\AllocationController@getSliders',
+                    $nextMonth->formatLocalized('%B %Y').' <i class="fa fa-fw fa-arrow-right"></i>',
+                    [$account, $nextMonth->toDateString()],
+                    [
+                        'class' => 'routable btn btn-xs btn-default pull-right',
+                        'data-target' => '#account-allocation-sliders',
+                    ]
+                ) !!}
+            @endif
         </div>
 
         <div class="panel-body">
