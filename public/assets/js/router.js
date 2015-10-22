@@ -113,6 +113,10 @@ var RouterModule = (function() {
 
         var alert = FormatModule.alert(errorThrown, 'danger');
         form.find('.messagebox').html(alert);
+        swal({
+            title: errorThrown,
+            type: "error",
+        });
     };
 
     // Add error messages to failed form inputs

@@ -54,6 +54,7 @@
             requirejs([
                 'bootstrap-datetimepicker',
                 'assets/js/fontawesome-iconpicker.min.js',
+                'assets/js/sweetalert.min.js',
                 'theme/js/morris/morris.min.js',
                 'theme/js/morris/raphael.min.js',
             ], function () {

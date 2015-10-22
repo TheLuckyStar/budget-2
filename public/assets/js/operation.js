@@ -81,9 +81,22 @@ var OperationModule = (function() {
             if ($(this).hasClass('btn-danger')) {
                 var msg = $(this).attr('title') + ' ?';
 
-                if (confirm(msg) === false) {
-                    return false;
-                }
+                swal({
+                    title: msg,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                }, function() {
+                    target.fadeTo('fast', 0.5, function() {
+                        $.post(url, data, function() {
+                            submitFormSuccess(row.data('refresh'));
+                        }).fail(function (jqXHR, textStatus, errorThrown) {
+                            RouterModule.submitFormFail(row, jqXHR, errorThrown);
+                        });
+                    });
+                });
+
+                return false;
             }
 
             target.fadeTo('fast', 0.5, function() {
