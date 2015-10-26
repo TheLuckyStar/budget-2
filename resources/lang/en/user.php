@@ -11,6 +11,8 @@ return [
         'email' => 'Email',
         'password' => 'Password',
         'password_confirmation' => 'Confirm password',
+        'passwordHelper' => 'leave empty to keep the same',
+        'currency' => 'Currency',
         'remember' => 'Remember me',
     ],
 
@@ -48,6 +50,11 @@ return [
     // Resetpassword action
     'resetpassword' => [
         'title' => 'New password',
+    ],
+
+    // Profile action
+    'profile' => [
+        'title' => 'Profile',
     ],
 
     // Logout action

@@ -46,6 +46,9 @@ Route::group(['prefix' => App::make('findLocale')], function() {
             Route::controller('envelope/operation', 'Envelope\OperationsController'); // Envelope operation pages
             Route::controller('envelope/development', 'Envelope\DevelopmentController'); // Envelope development pages
             Route::controller('envelope', 'EnvelopeController'); // Main envelope pages
+
+            // user pages
+            Route::controller('user', 'UserController'); // Main user pages
         });
 
     });

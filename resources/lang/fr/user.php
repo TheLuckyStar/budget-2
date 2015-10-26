@@ -11,6 +11,8 @@ return [
         'email' => 'E-mail',
         'password' => 'Mot de passe',
         'password_confirmation' => 'Confirmer le mot de passe',
+        'passwordHelper' => 'laisser vide pour conserver le même',
+        'currency' => 'Devise',
         'remember' => 'Se souvenir de moi',
     ],
 
@@ -48,6 +50,11 @@ return [
     // Resetpassword action
     'resetpassword' => [
         'title' => 'Nouveau mot de passe',
+    ],
+
+    // Profile action
+    'profile' => [
+        'title' => 'Profil',
     ],
 
     // Logout action

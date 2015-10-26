@@ -33,9 +33,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-fw fa-user"></i> @lang('profile.layout.title')
-                                </a>
+                                {!! Html::linkAction(
+                                    'UserController@getProfile',
+                                    '<i class="fa fa-fw fa-user"></i> '.trans('user.profile.title'),
+                                    [],
+                                    ['class' => 'routable', 'data-target' => '#page-wrapper']
+                                ) !!}
                             </li>
                             <li class="divider"></li>
                             <li>
