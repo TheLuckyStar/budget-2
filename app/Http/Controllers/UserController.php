@@ -17,12 +17,16 @@ class UserController extends AbstractController
         $user = Auth::user();
 
         $this->validate($request, [
-            'name' => 'string|required|unique:envelopes,name,NULL,id,account_id,'.$account->id,
-            'icon' => 'string',
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'password' => 'confirmed|min:6',
         ]);
 
-        $envelope->fill($request->only(['name', 'icon']));
-        $envelope->save();
+        $user->fill($request->only(['name', 'email']));
+        if ($request->input('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        $user->save();
 
         return redirect()->action('UserController@getProfile')
             ->withSuccess(trans('user.profile.successMessage'));

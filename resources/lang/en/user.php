@@ -55,6 +55,7 @@ return [
     // Profile action
     'profile' => [
         'title' => 'Profile',
+        'successMessage' => 'Your profile has been updated.',
     ],
 
     // Logout action
