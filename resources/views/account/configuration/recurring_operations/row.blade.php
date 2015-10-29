@@ -19,6 +19,7 @@
 <td class="text-{{ $recurringOperation->getContextAttribute($account) }} text-right">
     {{ Html::formatPrice(
         $recurringOperation->getContextAttribute($account) === 'success' || $recurringOperation->getContextAttribute($account) === 'info' ? $recurringOperation->amount : -$recurringOperation->amount,
+        $account->currency,
         true
     ) }}
 </td>

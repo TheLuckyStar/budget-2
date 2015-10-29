@@ -56,7 +56,7 @@ class Outcome extends Operation
     {
         return trans('operation.object.outcome', [
             'name' => $this->name,
-            'amount' => Html::formatPrice($this->amount),
+            'amount' => Html::formatPrice($this->amount, $this->currency),
             'date' => $this->date->format('d/m/Y'),
         ]);
     }
@@ -81,5 +81,9 @@ class Outcome extends Operation
 
     public function getTypeAttribute() {
         return 'outcome';
+    }
+
+    public function getCurrencyAttribute() {
+        return $this->envelope->currency;
     }
 }

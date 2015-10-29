@@ -54,7 +54,7 @@
                                     ['class' => 'form-control text-right', 'id' => 'input-balance', 'placeholder' => trans('account.fields.balance')]
                                 ) !!}
                                 <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-euro"></span>
+                                    {{ $account->currency }}
                                 </span>
                             </div>
                             <p class="help-block">

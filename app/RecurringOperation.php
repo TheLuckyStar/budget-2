@@ -37,7 +37,7 @@ class RecurringOperation extends Model
      */
     public function __toString()
     {
-        $str = $this->name.' ('.Html::formatPrice($this->amount).')';
+        $str = $this->name.' ('.Html::formatPrice($this->amount, $this->currency).')';
 
         if ($this->type === 'outcome') {
             return $this->envelopeEntity.' : '.$str;
@@ -83,5 +83,9 @@ class RecurringOperation extends Model
         }
 
         return 'info';
+    }
+
+    public function getCurrencyAttribute() {
+        return $this->account->currency;
     }
 }

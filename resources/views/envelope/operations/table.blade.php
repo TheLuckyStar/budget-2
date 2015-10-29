@@ -51,7 +51,7 @@
                 @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->endOfMonth()->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($envelope->getBalanceAttribute(null, $prevMonth), true) }}
+                {{ Html::formatPrice($envelope->getBalanceAttribute(null, $prevMonth), $envelope->currency, true) }}
             </div>
         </div>
         <div class='col-md-3 text-success'>
@@ -59,7 +59,7 @@
                 @lang('operation.aggregate.totalIncome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($operations->filterIncomes()->sum('amount'), true) }}
+                {{ Html::formatPrice($operations->filterIncomes()->sum('amount'), $envelope->currency, true) }}
             </div>
         </div>
         <div class='col-md-3 text-danger'>
@@ -67,7 +67,7 @@
                 @lang('operation.aggregate.totalOutcome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount')) }}
+                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount'), $envelope->currency) }}
             </div>
         </div>
         <div class='col-md-3 text-{{ $envelope->getStatusAttribute(null, $month->endOfMonth()) }}'>
@@ -75,7 +75,7 @@
                 @lang('operation.aggregate.balanceAt', ['date' => $month->endOfMonth()->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($envelope->getBalanceAttribute(null, $month), true) }}
+                {{ Html::formatPrice($envelope->getBalanceAttribute(null, $month), $envelope->currency, true) }}
             </div>
         </div>
     </div>

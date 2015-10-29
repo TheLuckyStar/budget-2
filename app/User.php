@@ -14,6 +14,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property integer $id
  * @property string $name
  * @property string $email
+ * @property string $curency
  */
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -23,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'currency'];
 
     /**
      * The attributes excluded from the model's JSON form.

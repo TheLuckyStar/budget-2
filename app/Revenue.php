@@ -54,7 +54,7 @@ class Revenue extends Operation
     {
         return trans('operation.object.revenue', [
             'name' => $this->name,
-            'amount' => Html::formatPrice($this->amount),
+            'amount' => Html::formatPrice($this->amount, $this->currency),
             'date' => $this->date->format('d/m/Y'),
         ]);
     }
@@ -79,5 +79,9 @@ class Revenue extends Operation
 
     public function getTypeAttribute() {
         return 'revenue';
+    }
+
+    public function getCurrencyAttribute() {
+        return $this->account->currency;
     }
 }

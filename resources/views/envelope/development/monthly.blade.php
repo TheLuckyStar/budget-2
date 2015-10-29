@@ -43,7 +43,7 @@
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return FormatModule.date(new Date(date)); },
         xLabelFormat: function (date) { return date.getDate(); },
-        yLabelFormat: function (val) { return FormatModule.price(val); },
+        yLabelFormat: function (val) { return FormatModule.price(val, '{!! $envelope->currency !!}'); },
         resize: true,
     });
 

@@ -20,6 +20,7 @@
 <td class="text-{{ $operation->context }} text-right">
     {{ Html::formatPrice(
         $operation instanceof App\Outcome ? -$operation->amount : $operation->amount,
+        $operation->currency,
         true
     ) }}
 </td>

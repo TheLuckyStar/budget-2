@@ -62,7 +62,8 @@
                                                 'account.allocation.sliders.prevIncome',
                                                 ['amount' => Html::formatPrice(
                                                     isset($prevIncomes[$envelope->id]) ?
-                                                        $prevIncomes[$envelope->id] : 0
+                                                        $prevIncomes[$envelope->id] : 0,
+                                                    $account->currency
                                                 )]
                                             )"
                                             data-value='{{ isset($prevIncomes[$envelope->id]) ?
@@ -80,7 +81,7 @@
                                             ]
                                         ) !!}
                                         <span class="input-group-addon">
-                                            <span class="fa fa-fw fa-euro"></span>
+                                            {{ $account->currency }}
                                         </span>
                                     </div>
                                 </div>
@@ -94,7 +95,7 @@
                                     data-target="#input-income-{{ $envelope->id }}"
                                     ></div>
                                 <div class='small pull-right'></div>
-                                <div class='small'>{{ Html::formatPrice(0) }}</div>
+                                <div class='small'>{{ Html::formatPrice(0, $account->currency) }}</div>
                             </div>
 
                         </div>
@@ -108,7 +109,7 @@
                         <strong class='pull-right'
                             id='allocation-sliders-revenueInMonth'
                             data-amount='{{ $revenue }}'>
-                            {{ Html::formatPrice($revenue) }}
+                            {{ Html::formatPrice($revenue, $account->currency) }}
                         </strong>
                     </div>
 
@@ -129,7 +130,7 @@
                                     id='allocation-sliders-unallocatedRevenueBeforeMonth'
                                     data-amount="{{ $unallocatedRevenueBeforeMonth }}">
                                     <strong>
-                                        {{ Html::formatPrice($unallocatedRevenueBeforeMonth) }}
+                                        {{ Html::formatPrice($unallocatedRevenueBeforeMonth, $account->currency) }}
                                     </strong>
                                 </div>
                             </div>
@@ -178,7 +179,7 @@
     </div>
 
     <script type="text/javascript">
-        AllocationModule.initForm($('#account-allocation-form'));
+        AllocationModule.initForm($('#account-allocation-form'), '{!! $account->currency !!}');
     </script>
 
 @endif

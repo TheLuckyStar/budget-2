@@ -299,4 +299,8 @@ class Account extends Model
         return 'success';
     }
 
+    public function getCurrencyAttribute() {
+        return $this->owner->first()->currency;
+    }
+
 }

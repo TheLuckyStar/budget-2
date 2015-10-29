@@ -20,9 +20,10 @@ class UserController extends AbstractController
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
             'password' => 'confirmed|min:6',
+            'currency' => 'required|size:1',
         ]);
 
-        $user->fill($request->only(['name', 'email']));
+        $user->fill($request->only(['name', 'email', 'currency']));
         if ($request->input('password')) {
             $user->password = bcrypt($request->input('password'));
         }

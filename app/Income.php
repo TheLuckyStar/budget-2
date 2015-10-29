@@ -41,7 +41,7 @@ class Income extends Operation
     public function __toString()
     {
         return trans('operation.object.income', [
-            'amount' => Html::formatPrice($this->amount),
+            'amount' => Html::formatPrice($this->amount, $this->currency),
             'date' => $this->date->formatLocalized('%B %Y'),
         ]);
     }
@@ -66,5 +66,9 @@ class Income extends Operation
 
     public function getTypeAttribute() {
         return 'revenue';
+    }
+
+    public function getCurrencyAttribute() {
+        return $this->envelope->currency;
     }
 }

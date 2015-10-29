@@ -88,7 +88,7 @@ class NavbarController extends AbstractController
                 '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
                     .trans('account.index.title')
                     .'<span class="pull-right badge badge-'.$account->envelopes_status.'">'
-                    .Html::formatPrice($account->envelopes_balance)
+                    .Html::formatPrice($account->envelopes_balance, $account->currency)
                     .'</span>'
             ),
         ];
@@ -97,7 +97,7 @@ class NavbarController extends AbstractController
             $links[] = $envelope->link(
                 $envelope
                     .'<span class="pull-right badge badge-'.$envelope->status.'">'
-                    .Html::formatPrice($envelope->balance)
+                    .Html::formatPrice($envelope->balance, $envelope->currency)
                     .'</span>'
             );
         }
@@ -123,7 +123,7 @@ class NavbarController extends AbstractController
             $links[] = $envelope->link(
                 $envelope
                     .'<span class="pull-right badge badge-'.$envelope->status.'">'
-                    .Html::formatPrice($envelope->balance)
+                    .Html::formatPrice($envelope->balance, $envelope->currency)
                     .'</span>'
             );
         }

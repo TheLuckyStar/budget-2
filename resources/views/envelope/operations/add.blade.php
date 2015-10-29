@@ -76,7 +76,7 @@
             ]
         ) !!}
         <span class="input-group-addon">
-            <span class="glyphicon glyphicon-euro"></span>
+            {{ $envelope->currency }}
         </span>
     </div>
     @if ($errors->has('amount'))

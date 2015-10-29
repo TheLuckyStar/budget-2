@@ -59,8 +59,8 @@ class Event extends Model
             'user' => $user,
             'entity' => $this->entity->link(),
             'field_name' => strtolower($fieldName),
-            'field_value_from' => $this->formatValue($this->field_name, $this->field_value_from),
-            'field_value_to' => $this->formatValue($this->field_name, $this->field_value_to),
+            'field_value_from' => $this->formatValue($this->entity, $this->field_name, $this->field_value_from),
+            'field_value_to' => $this->formatValue($this->entity, $this->field_name, $this->field_value_to),
             'period' => $period,
         ]);
     }
@@ -125,14 +125,14 @@ class Event extends Model
             ->withTrashed();
     }
 
-    public function formatValue($fieldName, $value) {
+    public function formatValue($entity, $fieldName, $value) {
 
         if ($fieldName === 'icon') {
             return "<i class='fa fa-fw ".$value."'></i>";
         }
 
         if ($fieldName === 'amount') {
-            return Html::formatPrice($value);
+            return Html::formatPrice($value, $entity->currency);
         }
 
         return $value;

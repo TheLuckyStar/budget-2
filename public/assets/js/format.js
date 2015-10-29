@@ -30,12 +30,12 @@ var FormatModule = (function() {
     };
 
     // Return formated price with currency
-    var price = function (price, forceSymbol) {
+    var price = function (price, currency, forceSymbol) {
         if (forceSymbol === true && price >= 0) {
-            return '+'+number(price, 2) + ' \u20AC';
+            return '+'+number(price, 2) + ' ' + currency;
         }
 
-        return number(price, 2) + ' \u20AC';
+        return number(price, 2) + ' ' + currency;
     };
 
     // Return formated date to dd/mm/YYYY

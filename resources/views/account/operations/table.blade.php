@@ -51,7 +51,7 @@
                 @lang('operation.aggregate.balanceAt', ['date' => $prevMonth->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), true) }}
+                {{ Html::formatPrice($account->getBalanceAttribute(null, $prevMonth), $account->currency, true) }}
             </div>
         </div>
         <div class='col-md-3 text-success'>
@@ -59,7 +59,7 @@
                 @lang('operation.aggregate.totalIncome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($operations->filterRevenues()->sum('amount') + $operations->filterIncomingTransfers($account)->sum('amount'), true) }}
+                {{ Html::formatPrice($operations->filterRevenues()->sum('amount') + $operations->filterIncomingTransfers($account)->sum('amount'), $account->currency, true) }}
             </div>
         </div>
         <div class='col-md-3 text-danger'>
@@ -67,7 +67,7 @@
                 @lang('operation.aggregate.totalOutcome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount') - $operations->filterOutgoingTransfers($account)->sum('amount')) }}
+                {{ Html::formatPrice(-$operations->filterOutcomes()->sum('amount') - $operations->filterOutgoingTransfers($account)->sum('amount'), $account->currency) }}
             </div>
         </div>
         <div class='col-md-3 text-{{ $account->getStatusAttribute(null, $month->endOfMonth()) }}'>
@@ -75,7 +75,7 @@
                 @lang('operation.aggregate.balanceAt', ['date' => $month->formatLocalized('%d/%m/%Y')])
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($account->getBalanceAttribute(null, $month), true) }}
+                {{ Html::formatPrice($account->getBalanceAttribute(null, $month), $account->currency, true) }}
             </div>
         </div>
     </div>

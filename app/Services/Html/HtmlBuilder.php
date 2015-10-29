@@ -41,14 +41,15 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
     }
 
     /**
-     * Format a price with two decimal digits
+     * Format a price with two decimal digits and append currency
      * @param  string  $value
+     * @param  string  $currency
      * @param  bool  $forceSymbol Set to true to print '+' in front of positive price (default : false)
      * @return string
      */
-    public function formatPrice($value, $forceSymbol = false)
+    public function formatPrice($value, $currency, $forceSymbol = false)
     {
-        $price = number_format($value, 2).' €';
+        $price = number_format($value, 2).' '.$currency;
 
         if ($forceSymbol && $price >= 0) {
             return '+'.$price;

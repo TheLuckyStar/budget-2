@@ -2,7 +2,7 @@
 <div class="panel panel-{{ $envelope->status }}">
     <div class="panel-heading text-right">
         <i class="fa fa-fw fa-pie-chart pull-left"></i>
-        @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance, true)])
+        @lang('envelope.summary.balance.title', ['balance' => Html::formatPrice($envelope->balance, $envelope->currency, true)])
     </div>
     <div class="panel-body">
         @if ($withChartData)
@@ -28,7 +28,7 @@
             element: $(this).attr('id'),
             data: {!! $data !!},
             colors: {!! $colors !!},
-            formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, true); },
+            formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $envelope->currency !!}', true); },
             resize: true
         });
     });

@@ -159,4 +159,9 @@ class Envelope extends Model
 
         return 'success';
     }
+
+    public function getCurrencyAttribute() {
+        return $this->account->currency;
+    }
+
 }

@@ -10,6 +10,9 @@ var AllocationModule = (function() {
 
 
 
+    // Current currency
+    var currency = null;
+
     // Collection of sliders
     var sliders = {};
 
@@ -34,10 +37,10 @@ var AllocationModule = (function() {
         var unallocatedRevenueMonth = revenueInMonth - allocatedInMonth;
         var unallocatedRevenueAfterMonth = unallocatedRevenueBeforeMonth + unallocatedRevenueMonth;
 
-        $('#allocation-sliders-allocatedInMonth').text(FormatModule.price(allocatedInMonth));
+        $('#allocation-sliders-allocatedInMonth').text(FormatModule.price(allocatedInMonth, currency));
         $('#allocation-sliders-unallocatedRevenueMonth').data('amount', unallocatedRevenueMonth);
-        $('#allocation-sliders-unallocatedRevenueMonth').text(FormatModule.price(unallocatedRevenueMonth));
-        $('#allocation-sliders-unallocatedRevenueAfterMonth').text(FormatModule.price(unallocatedRevenueAfterMonth));
+        $('#allocation-sliders-unallocatedRevenueMonth').text(FormatModule.price(unallocatedRevenueMonth, currency));
+        $('#allocation-sliders-unallocatedRevenueAfterMonth').text(FormatModule.price(unallocatedRevenueAfterMonth, currency));
     };
 
     // Update revenue chart from sliders
@@ -66,7 +69,7 @@ var AllocationModule = (function() {
 
             slider.slider('option', 'max', max);
 
-            $(this).next('.pull-right').text(FormatModule.price(Math.round(max)));
+            $(this).next('.pull-right').text(FormatModule.price(Math.round(max), currency));
         });
     };
 
@@ -121,7 +124,7 @@ var AllocationModule = (function() {
                 }
             });
 
-            $(this).next('.pull-right').text(FormatModule.price(Math.round(max)));
+            $(this).next('.pull-right').text(FormatModule.price(Math.round(max), currency));
 
             $(this).children('span').html('<i class="fa fa-fw fa-arrows-h"></i>');
         });
@@ -133,7 +136,7 @@ var AllocationModule = (function() {
             revenueChart = target.get(0).chart = Morris.Donut({
                 element: target.attr('id'),
                 data: [{label: 1, value: 1}],
-                formatter: function (val) { return FormatModule.price(val); },
+                formatter: function (val) { return FormatModule.price(val, currency); },
                 resize: true
             });
         }
@@ -177,7 +180,8 @@ var AllocationModule = (function() {
     };
 
     // Handle form initialization
-    var initForm = function (form) {
+    var initForm = function (form, _currency) {
+        currency = _currency;
         initPrevIncomeButton(form.find('.price-slider-prevIncome-button'));
         initTextInput(form.find('input[type="text"]'));
         initSliders(form.find('.slider'));

@@ -42,7 +42,7 @@
         lineColors: {!! $colors !!},
         dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
         xLabelFormat: function (date) {return require('moment')(date).format("MMMM"); },
-        yLabelFormat: function (val) { return FormatModule.price(val); },
+        yLabelFormat: function (val) { return FormatModule.price(val, '{!! $account->currency !!}'); },
         resize: true,
     });
 

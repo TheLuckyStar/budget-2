@@ -137,6 +137,7 @@ return [
         "envelope_id" => "Enveloppe",
         "from_account_id" => "Compte débiteur",
         "to_account_id" => "Compte créditeur",
+        "currency" => 'Devise',
     ],
 
 ];
