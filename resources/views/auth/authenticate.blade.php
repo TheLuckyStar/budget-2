@@ -147,6 +147,17 @@
                             @endif
                         </div>
 
+                        <div class="col-md-12 form-group {{ $errors->has('currency') ? 'has-error' : '' }}">
+                            {!! Form::text(
+                                'currency',
+                                null,
+                                ['class' => 'form-control', 'id' => 'input-currency', 'placeholder' => trans('user.fields.currency')]
+                            ) !!}
+                            @if ($errors->has('currency'))
+                                {!! Html::ul($errors->get('currency'), ['class' => 'help-block text-right']) !!}
+                            @endif
+                        </div>
+
                     </div>
 
                     <div class="panel-footer text-right">

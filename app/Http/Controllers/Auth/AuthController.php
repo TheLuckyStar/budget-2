@@ -137,6 +137,7 @@ class AuthController extends AbstractController
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'currency' => 'required|size:1',
         ]);
     }
 
@@ -152,6 +153,7 @@ class AuthController extends AbstractController
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'currency' => $data['currency'],
         ]);
     }
 }
