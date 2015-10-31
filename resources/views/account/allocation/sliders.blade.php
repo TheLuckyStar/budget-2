@@ -124,7 +124,7 @@
                             <div class='col-md-4'>
                                 <div class='col-md-12 col-sm-8'>
                                     @lang('account.allocation.sliders.unallocatedRevenueAt',
-                                        ['date' => $prevMonth->format('d/m/Y')])
+                                        ['date' => $prevMonth->format(trans('app.date.short'))])
                                 </div>
                                 <div class='col-md-12 col-sm-4 text-right'
                                     id='allocation-sliders-unallocatedRevenueBeforeMonth'
@@ -146,7 +146,7 @@
                             <div class='col-md-4'>
                                 <div class='col-md-12 col-sm-8'>
                                     @lang('account.allocation.sliders.unallocatedRevenueAt',
-                                        ['date' => $endOfMonth->format('d/m/Y')])
+                                        ['date' => $endOfMonth->format(trans('app.date.short'))])
                                 </div>
                                 <div class='col-md-12 col-sm-4 text-right'>
                                     <strong id='allocation-sliders-unallocatedRevenueAfterMonth'></strong>

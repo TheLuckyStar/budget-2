@@ -55,7 +55,7 @@ class Revenue extends Operation
         return trans('operation.object.revenue', [
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount, $this->currency),
-            'date' => $this->date->format('d/m/Y'),
+            'date' => $this->date->format(trans('app.date.short')),
         ]);
     }
 

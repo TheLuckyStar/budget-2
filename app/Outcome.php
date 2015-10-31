@@ -57,7 +57,7 @@ class Outcome extends Operation
         return trans('operation.object.outcome', [
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount, $this->currency),
-            'date' => $this->date->format('d/m/Y'),
+            'date' => $this->date->format(trans('app.date.short')),
         ]);
     }
 

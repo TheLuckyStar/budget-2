@@ -61,7 +61,7 @@ class Transfer extends Operation
         return trans('operation.object.transfer', [
             'name' => $this->name,
             'amount' => Html::formatPrice($this->amount, $this->currency),
-            'date' => $this->date->format('d/m/Y'),
+            'date' => $this->date->format(trans('app.date.short')),
             'from_account' => $this->accountFrom,
             'to_account' => $this->accountTo,
         ]);

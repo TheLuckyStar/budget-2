@@ -34,6 +34,11 @@ return [
         'delete' => 'Supprimer',
     ],
 
+    // Date formats
+    'date' => [
+        'short' => 'd/m/Y',
+    ],
+
     // Error messages
     'error' => [
         '404' => 'Page introuvable.',

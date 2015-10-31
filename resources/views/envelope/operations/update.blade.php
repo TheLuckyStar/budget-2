@@ -35,7 +35,7 @@
 <td class="row form-group {{ $errors->has('date') ? 'has-error' : '' }}">
     {!! Form::text(
         'date',
-        $operation->date->format('d/m/Y'),
+        $operation->date->format(trans('app.date.short')),
         [
             'class' => 'form-control datepicker',
             'id' => 'operation-'.$operation->id.'-input-date',

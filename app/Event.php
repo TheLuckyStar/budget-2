@@ -111,7 +111,7 @@ class Event extends Model
             return $this->created_at->diffForHumans();
         }
 
-        return trans('event.datePrefix').' '.$this->created_at->format('d/m/Y');
+        return trans('event.datePrefix').' '.$this->created_at->format(trans('app.date.short'));
     }
 
 
