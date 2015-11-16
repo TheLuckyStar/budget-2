@@ -25,7 +25,14 @@ class NavbarController extends AbstractController
     }
 
     private function horizontalAuthenticated() {
-        $links = [];
+        $links = [
+            Html::linkAction(
+                'HomeController@getIndex',
+                '<i class="fa fa-fw fa-home"></i></a>',
+                [],
+                ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
+            ),
+        ];
 
         foreach (Auth::user()->nontrashedAccounts as $account) {
             if ($account->trashed() === false) {
@@ -85,7 +92,7 @@ class NavbarController extends AbstractController
 
         $links = [
             $account->link(
-                '<i class="fa fa-fw fa-home" title="'.trans('home.layout.title').'"></i> '
+                '<i class="fa fa-fw fa-home" title="'.trans('home.authenticated.title').'"></i> '
                     .trans('account.index.title')
                     .'<span class="pull-right badge badge-'.$account->envelopes_status.'">'
                     .Html::formatPrice($account->envelopes_balance, $account->currency)

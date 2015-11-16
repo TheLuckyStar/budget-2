@@ -246,7 +246,9 @@ ul.help-block {list-style-type: none;}
  * Specific page content
 */
 
-#home-guest .panel-info h3 {color: white;}
+.panel-heading h3, .panel-heading a {color: inherit;}
+
+#home-authenticated .list-group-item b {float: right;}
 
 #account-index .tab-pane {padding: 15px;}
 #envelope-index .tab-pane {padding: 15px;}

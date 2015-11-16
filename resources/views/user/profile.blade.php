@@ -1,6 +1,6 @@
 <div id="user-profile"
     class='row'
-    data-horizontal-url="{{ action('AccountController@getIndex') }}">
+    data-horizontal-url="{{ action('UserController@getIndex') }}">
 
     @include('blocks.alerts')
 

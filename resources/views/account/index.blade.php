@@ -23,7 +23,7 @@
 
     <div class='col-md-12'>
         <h1 class="page-header">
-            <i class="fa fa-fw fa-home" title="@lang('home.layout.title')"></i>
+            <i class="fa fa-fw fa-home" title="@lang('home.authenticated.title')"></i>
             @lang('account.index.title')
             <small>
                 {{ $account }}

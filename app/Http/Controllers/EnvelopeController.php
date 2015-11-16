@@ -27,7 +27,7 @@ class EnvelopeController extends AbstractController
         $account = Auth::user()->accounts()->find($accountId);
 
         if (is_null($account)) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
@@ -42,7 +42,7 @@ class EnvelopeController extends AbstractController
         $account = Auth::user()->accounts()->find($accountId);
 
         if (is_null($account)) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
@@ -68,7 +68,7 @@ class EnvelopeController extends AbstractController
         $envelope = Envelope::withTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 
@@ -83,7 +83,7 @@ class EnvelopeController extends AbstractController
         $envelope = Envelope::withTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 
@@ -105,7 +105,7 @@ class EnvelopeController extends AbstractController
         $envelope = Envelope::find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 
@@ -121,7 +121,7 @@ class EnvelopeController extends AbstractController
         $envelope = Envelope::onlyTrashed()->find($envelopeId);
 
         if (is_null($envelope) || is_null(Auth::user()->accounts()->find($envelope->account_id))) {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('envelope.view.notfoundMessage'));
         }
 

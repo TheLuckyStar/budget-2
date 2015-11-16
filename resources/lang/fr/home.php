@@ -88,9 +88,8 @@ return [
 
     // /home/authenticated
     'authenticated' => [
-        'layout' => [
-            'title' => 'Accueil',
-        ],
+        'title' => 'Accueil',
+        'noEnvelope' => 'aucune enveloppe',
     ],
 
 ];

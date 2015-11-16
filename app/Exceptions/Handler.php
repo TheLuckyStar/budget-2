@@ -72,13 +72,13 @@ class Handler extends ExceptionHandler
     {
         // Redirect when Account model not found
         if ($exception->getModel() === 'App\Account') {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('account.index.notfoundMessage'));
         }
 
         // Redirect when Envelope model not found
         if ($exception->getModel() === 'App\Envelope') {
-            return redirect()->action('AccountController@getIndex')
+            return redirect()->action('HomeController@getIndex')
                 ->withErrors(trans('envelope.index.notfoundMessage'));
         }
 

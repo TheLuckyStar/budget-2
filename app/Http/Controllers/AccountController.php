@@ -7,32 +7,19 @@ use Illuminate\Http\Request;
 class AccountController extends AbstractController
 {
     /**
-     * Default account routing
+     * Render account page
      * @param  int $accountId Account ID
      * @param  string $activeTab Name of active tab
      * @return object
      */
-    public function getIndex($accountId = null, $activeTab = 'summary') {
-        // Retrieve first account if no one is provided
-        if (is_null($accountId)) {
-            $account = Auth::user()->accounts()->first();
-
-            // Redirect to add form if no account exist for user
-            if (is_null($account)) {
-                return redirect()->action('AccountController@getAdd')
-                    ->withSuccess(trans('account.add.redirectMessage'));
-            }
-        } else {
-            // Retrieve account if provided
-            $account = Auth::user()->accounts()->findOrFail($accountId);
-        }
+    public function getIndex($accountId, $activeTab = 'summary') {
+        $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $data = [
             'account' => $account,
             'activeTab' => $activeTab,
         ];
 
-        // Render account page layout
         return view('account.index', $data);
     }
 
