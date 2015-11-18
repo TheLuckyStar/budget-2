@@ -2,6 +2,40 @@
 
     @include('blocks.alerts')
 
+    <div class="col-md-12">
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4>
+                            <i class="fa fa-fw fa-pie-chart pull-left"></i>
+                            @lang('home.authenticated.allAccountsTitle', ['balance' => implode(' / ', $allAccountsBalance)])
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="home-authenticated-allaccounts-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4>
+                            <i class="fa fa-fw fa-pie-chart pull-left"></i>
+                            @lang('home.authenticated.allEnvelopesTitle', ['balance' => implode(' / ', $allEnvelopesBalance)])
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="home-authenticated-allenvelopes-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
     @foreach ($accounts as $account)
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -32,4 +66,30 @@
         </div>
     @endforeach
 
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+
+    $('#home-authenticated-allaccounts-chart').each(function () {
+        $(this).get(0).chart = Morris.Donut({
+            element: $(this).attr('id'),
+            data: {!! $allAccountsData !!},
+            colors: {!! $allAccountsColors !!},
+            formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
+            resize: true
+        });
+    });
+
+    $('#home-authenticated-allenvelopes-chart').each(function () {
+        $(this).get(0).chart = Morris.Donut({
+            element: $(this).attr('id'),
+            data: {!! $allEnvelopesData !!},
+            colors: {!! $allEnvelopesColors !!},
+            formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
+            resize: true
+        });
+    });
+
+</script>
