@@ -18,8 +18,10 @@ class Ajax
     {
         // Throw 404 HTTP error if not an Ajax request
         if (!$request->ajax()) {
-            error_log('not ajax');
-            abort(404);
+            $segments = $request->segments();
+            $ln = array_shift($segments);
+            $url = url().'/'.$ln.$request->path.'#/'.implode('/', $segments);
+            return redirect($url);
         }
 
         // Process request
