@@ -7,42 +7,8 @@
 
     @include('blocks.alerts')
 
-    <div class="col-md-12">
-        <div class="row">
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h4>
-                            <i class="fa fa-fw fa-pie-chart pull-left"></i>
-                            @lang('home.authenticated.allAccountsTitle', ['balance' => implode(' / ', $allAccountsBalance)])
-                        </h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="home-authenticated-allaccounts-chart"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h4>
-                            <i class="fa fa-fw fa-pie-chart pull-left"></i>
-                            @lang('home.authenticated.allEnvelopesTitle', ['balance' => implode(' / ', $allEnvelopesBalance)])
-                        </h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="home-authenticated-allenvelopes-chart"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-
-    @foreach ($accounts as $account)
-        <div class="col-md-4">
+    <div class="col-md-4">
+        @foreach ($accounts as $account)
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
@@ -68,11 +34,37 @@
                 </ul>
 
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>
+                    <i class="fa fa-fw fa-pie-chart pull-left"></i>
+                    @lang('home.authenticated.allAccountsTitle', ['balance' => implode(' / ', $allAccountsBalance)])
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div id="home-authenticated-allaccounts-chart"></div>
+            </div>
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>
+                    <i class="fa fa-fw fa-pie-chart pull-left"></i>
+                    @lang('home.authenticated.allEnvelopesTitle', ['balance' => implode(' / ', $allEnvelopesBalance)])
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div id="home-authenticated-allenvelopes-chart"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script type="text/javascript">
