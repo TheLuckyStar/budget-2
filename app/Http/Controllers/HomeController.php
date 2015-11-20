@@ -10,11 +10,6 @@ use Illuminate\Http\Request;
 class HomeController extends AbstractController
 {
     public function getIndex(Request $request) {
-        // Homepage for non authenticated users
-        if (Auth::check() === false) {
-            return view('home.guest');
-        }
-
         $accounts = Auth::user()->nontrashedAccounts->where('deleted_at', null);
 
         // Redirect for authenticated users with without account

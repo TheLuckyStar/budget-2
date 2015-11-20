@@ -3,7 +3,7 @@
 
     @include('blocks.breadcrumb', [
         'elements' => [
-            'HomeController@getIndex' => trans('home.guest.title'),
+            'HomeController@getIndex' => trans('home.authenticated.title'),
             'Auth\AuthController@getLogin' => trans('user.login.title').' & '.trans('user.register.title')
         ],
         'active' => trans('user.lostpassword.title')
@@ -15,7 +15,7 @@
             @include('blocks.alerts')
 
             <div class="alert alert-info">
-              @lang('user.lostpassword.message')
+                @lang('user.lostpassword.message')
             </div>
 
             {!! Form::open([

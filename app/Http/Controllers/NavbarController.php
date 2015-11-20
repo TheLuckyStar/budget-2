@@ -66,21 +66,7 @@ class NavbarController extends AbstractController
     }
 
     private function verticalGuest() {
-        return [
-            Html::linkAction(
-                'HomeController@getIndex',
-                '<i class="fa fa-fw fa-home"></i> '.trans('home.guest.title').'</a>',
-                [],
-                ['class' => 'routable', 'data-target' => '#page-wrapper']
-            ),
-            Html::linkAction(
-                'Auth\AuthController@getLogin',
-                '<i class="fa fa-fw fa-sign-in"></i> '
-                    .trans('user.register.title').' & '.trans('user.login.title').'</a>',
-                [],
-                ['class' => 'routable', 'data-target' => '#page-wrapper']
-            ),
-        ];
+        return [];
     }
 
     private function verticalAuthenticated($accountId) {

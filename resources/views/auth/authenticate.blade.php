@@ -2,7 +2,9 @@
 <div id="auth-authenticate" class="row" data-vertical-url="{{ action('Auth\AuthController@getLogin') }}">
 
     @include('blocks.breadcrumb', [
-        'elements' => ['HomeController@getIndex' => trans('home.guest.title')],
+        'elements' => [
+            'HomeController@getIndex' => trans('home.authenticated.title'),
+        ],
         'active' => trans('user.login.title').' & '.trans('user.register.title')
     ])
 

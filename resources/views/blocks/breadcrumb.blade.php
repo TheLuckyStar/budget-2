@@ -7,13 +7,13 @@
                 {!! Html::linkAction(
                     $action,
                     $title,
-                    [],
+                    isset($params[$action]) ? $params[$action] : [],
                     ['class' => 'routable', 'data-target' => '#page-wrapper']
                 ) !!}
             </li>
         @endforeach
 
-        <li class="active">{{ $active }}</li>
+        <li class="active">{!! $active !!}</li>
 
     </ul>
 </div>

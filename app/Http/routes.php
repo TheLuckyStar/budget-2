@@ -26,10 +26,11 @@ Route::group(['prefix' => App::make('findLocale')], function() {
         Route::post('auth/resetPassword/{segment}', 'Auth\PasswordController@postReset'); // Password reset processing
 
         Route::controller('navbar', 'NavbarController'); // Navbar content
-        Route::controller('home', 'HomeController'); // Homepage content
 
         // Authenticated user only
         Route::group(['middleware' => 'auth'], function() {
+            Route::controller('home', 'HomeController'); // Homepage content
+
             Route::get('auth/logout', 'Auth\AuthController@getLogout'); // Logout page
 
             // Account pages

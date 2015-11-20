@@ -3,12 +3,11 @@
 
     @include('blocks.breadcrumb', [
         'elements' => [
-            'HomeController@getIndex' => trans('home.guest.title'),
+            'HomeController@getIndex' => trans('home.authenticated.title'),
             'Auth\AuthController@getLogin' => trans('user.login.title').' & '.trans('user.register.title')
         ],
         'active' => trans('user.resetpassword.title')
     ])
-
     <div class="col-md-10 col-md-offset-1">
         <div class='row'>
 

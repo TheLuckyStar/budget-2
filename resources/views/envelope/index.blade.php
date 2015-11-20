@@ -4,6 +4,17 @@
     data-vertical-url="{{ action('EnvelopeController@getView', $envelope) }}"
     data-account-id="{{ $envelope->account->id }}">
 
+    @include('blocks.breadcrumb', [
+        'elements' => [
+            'HomeController@getIndex' => trans('home.authenticated.title'),
+            'AccountController@getIndex' => $envelope->account,
+        ],
+        'params' => [
+            'AccountController@getIndex' => $envelope->account,
+        ],
+        'active' => $envelope
+    ])
+
     @include('blocks.alerts')
 
     <div class='col-md-12'>

@@ -4,6 +4,13 @@
     data-vertical-url="{{ action('AccountController@getIndex', $account) }}"
     data-account-id="{{ $account->id }}">
 
+    @include('blocks.breadcrumb', [
+        'elements' => [
+            'HomeController@getIndex' => trans('home.authenticated.title'),
+        ],
+        'active' => $account
+    ])
+
     @if ($account->envelopes->count() === 0)
         <div class='col-md-12'>
             <div class='alert alert-info'>

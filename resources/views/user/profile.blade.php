@@ -1,6 +1,13 @@
 <div id="user-profile"
     class='row'
-    data-horizontal-url="{{ action('UserController@getIndex') }}">
+    data-horizontal-url="{{ action('UserController@getProfile') }}">
+
+    @include('blocks.breadcrumb', [
+        'elements' => [
+            'HomeController@getIndex' => trans('home.authenticated.title'),
+        ],
+        'active' => trans('user.profile.title')
+    ])
 
     @include('blocks.alerts')
 
