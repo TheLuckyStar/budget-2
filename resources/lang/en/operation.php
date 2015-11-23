@@ -18,6 +18,8 @@ return [
             .'The monthly allocation of :amount on :date',
         'outcome' => '<i class="fa fa-fw fa-exchange" title="Outcome"></i> '
             .'The outcome ":name" of :amount on :date',
+        'transfer' => '<i class="fa fa-fw fa-exchange" title="Transfer"></i> '
+            .'The transfer from :from_account to :to_account of :amount on :date',
     ],
 
     'fields' => [
