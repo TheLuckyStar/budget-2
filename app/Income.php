@@ -65,7 +65,7 @@ class Income extends Operation
     }
 
     public function getTypeAttribute() {
-        return 'revenue';
+        return 'income';
     }
 
     public function getCurrencyAttribute() {

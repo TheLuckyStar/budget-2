@@ -19,12 +19,13 @@
 <td class="row form-group {{ $errors->has('envelope_id') ? 'has-error' : '' }}">
     {!! Form::select(
         'envelope_id',
-        $envelope->account->envelopes()->lists('name', 'id'),
+        ['' => ''] + $envelope->account->envelopes()->lists('name', 'id')->toArray(),
         $operation->envelope_id,
         [
             'class' => 'form-control',
             'id' => 'operation-'.$operation->id.'-select-envelope_id',
-            'placeholder' => trans('operation.fields.envelope_id')
+            'data-placeholder-revenue' => trans('operation.placeholder.envelope_id_for_revenue'),
+            'data-placeholder-outcome' => trans('operation.placeholder.envelope_id_for_outcome'),
         ]
     ) !!}
     @if ($errors->has('envelope_id'))

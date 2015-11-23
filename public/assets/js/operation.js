@@ -53,8 +53,8 @@ var OperationModule = (function() {
             if ($(this).val() === '') {
                 enabled = $();
             } else if ($(this).val() === 'revenue') {
-                enabled = enabled.not('select[name="envelope_id"], select[name="from_account_id"], select[name="to_account_id"]');
-                disabled = disabled.filter('select[name="envelope_id"], select[name="from_account_id"], select[name="to_account_id"]');
+                enabled = enabled.not('select[name="from_account_id"], select[name="to_account_id"]');
+                disabled = disabled.filter('select[name="from_account_id"], select[name="to_account_id"]');
             } else if ($(this).val() === 'outcome') {
                 enabled = enabled.not('select[name="from_account_id"], select[name="to_account_id"]');
                 disabled = disabled.filter('select[name="from_account_id"], select[name="to_account_id"]');
@@ -68,6 +68,9 @@ var OperationModule = (function() {
 
             enabled.removeAttr('disabled').removeClass('disabled');
             disabled.attr('disabled', 'disabled').addClass('disabled');
+
+            var select_envelope = row.find('select[name="envelope_id"]');
+            select_envelope.children('option[value=""]').text(select_envelope.data('placeholder-'+$(this).val()));
         }).change();
     };
 

@@ -3,6 +3,7 @@
     {!! Form::select(
         'type',
         [
+            'revenue' => trans('operation.type.revenue'),
             'outcome' => trans('operation.type.outcome'),
         ],
         null,
@@ -20,11 +21,13 @@
 <td class="row form-group {{ $errors->has('envelope_id') ? 'has-error' : '' }}">
     {!! Form::select(
         'envelope_id',
-        $envelope->account->envelopes()->lists('name', 'id'),
+        ['' => ''] + $envelope->account->envelopes()->lists('name', 'id')->toArray(),
         $envelope->id,
         [
             'class' => 'form-control',
             'id' => 'operation-add-select-envelope_id',
+            'data-placeholder-revenue' => trans('operation.placeholder.envelope_id_for_revenue'),
+            'data-placeholder-outcome' => trans('operation.placeholder.envelope_id_for_outcome'),
         ]
     ) !!}
     @if ($errors->has('envelope_id'))

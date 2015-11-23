@@ -27,12 +27,13 @@
 
     {!! Form::select(
         'envelope_id',
-        $account->envelopes()->lists('name', 'id'),
+        ['' => ''] + $account->envelopes()->lists('name', 'id')->toArray(),
         $operation->envelope_id,
         [
             'class' => 'form-control',
             'id' => 'operation-'.$operation->id.'-select-envelope_id',
-            'placeholder' => trans('operation.fields.envelope_id')
+            'data-placeholder-revenue' => trans('operation.placeholder.envelope_id_for_revenue'),
+            'data-placeholder-outcome' => trans('operation.placeholder.envelope_id_for_outcome'),
         ]
     ) !!}
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property integer $id
  * @property App\Account $account
+ * @property App\Envelope $envelope
  * @property string $name
  * @property float $amount
  * @property Carbon\Carbon $date
@@ -19,7 +20,7 @@ class Revenue extends Operation
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['name', 'amount', 'date'];
+    protected $fillable = ['account_id', 'envelope_id', 'name', 'amount', 'date'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -70,6 +71,11 @@ class Revenue extends Operation
 
     public function account() {
         return $this->belongsTo('App\Account')
+            ->withTrashed();
+    }
+
+    public function envelope() {
+        return $this->belongsTo('App\Envelope')
             ->withTrashed();
     }
 

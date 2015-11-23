@@ -45,17 +45,26 @@ class OperationsController extends AbstractController
 
     public function postAdd(Request $request, $envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
-        $account  = $envelope->account;
 
         $this->validate($request, [
-            'type' => 'required|in:outcome',
-            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
+            'type' => 'required|in:revenue,outcome',
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$envelope->account_id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
+        if ($request->input('type') === 'revenue') {
+            $envelope->revenues()->create([
+                'account_id' => $envelope->account_id,
+                'name' => $request->get('name'),
+                'amount' => $request->get('amount'),
+                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+            ]);
+            return;
+        }
+
+        $envelope->outcomes()->create([
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -77,11 +86,10 @@ class OperationsController extends AbstractController
     public function postUpdate(Request $request, $envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
-        $account   = $envelope->account;
 
         $this->validate($request, [
-            'type' => 'required|in:outcome',
-            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
+            'type' => 'required|in:revenue,outcome',
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$envelope->account_id,
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date_format:d/m/Y',

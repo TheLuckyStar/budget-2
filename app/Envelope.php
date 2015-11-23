@@ -89,6 +89,10 @@ class Envelope extends Model
                 $query->select('id')->from('incomes')->where('envelope_id', $this->id);
             });
         })->orWhere(function(EloquentBuilder $query) {
+            $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function(QueryBuilder $query) {
+                $query->select('id')->from('revenues')->where('envelope_id', $this->id);
+            });
+        })->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('outcomes')->where('envelope_id', $this->id);
             });
@@ -102,6 +106,11 @@ class Envelope extends Model
 
     public function incomes() {
         return $this->hasMany('App\Income')
+            ->orderBy('date');
+    }
+
+    public function revenues() {
+        return $this->hasMany('App\Revenue')
             ->orderBy('date');
     }
 
@@ -122,6 +131,11 @@ class Envelope extends Model
             $operations->push($income);
         }
 
+        $revenues = $this->revenues()->inPeriod($after, $before)->get();
+        foreach ($revenues as $revenue) {
+            $operations->push($revenue);
+        }
+
         $outcomes = $this->outcomes()->inPeriod($after, $before)->get();
         foreach ($outcomes as $outcome) {
             $operations->push($outcome);
@@ -132,22 +146,24 @@ class Envelope extends Model
 
     public function getBalanceAttribute($after = null, $before = null) {
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
-        $balance = $income - $outcome;
+        $balance = $income + $revenue - $outcome;
 
         return floatval($balance);
     }
 
     public function getStatusAttribute($after = null, $before = null) {
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
+        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
         $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
 
-        if ($income == 0) {
+        if ($income == 0 && $revenue == 0) {
             return $outcome ? 'danger' : 'warning';
         }
 
-        $ratio = $outcome / $income;
+        $ratio = $outcome / ($income + $revenue);
 
         if ($ratio > 1) {
             return 'danger';

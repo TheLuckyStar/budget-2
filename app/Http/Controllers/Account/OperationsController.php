@@ -49,8 +49,7 @@ class OperationsController extends AbstractController
         $this->validate($request, [
             'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
             'envelope_id'
-                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
-                    .$account->id,
+                => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
             'to_account_id'
                 => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
             'from_account_id'
@@ -62,6 +61,7 @@ class OperationsController extends AbstractController
 
         if ($request->input('type') === 'revenue') {
             $account->revenues()->create([
+                'envelope_id' => $request->get('envelope_id') ?: null,
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
                 'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
@@ -131,6 +131,7 @@ class OperationsController extends AbstractController
 
         if ($request->input('type') === 'revenue') {
             $operation->fill([
+                'envelope_id' => $request->get('envelope_id') ?: null,
                 'name' => $request->get('name'),
                 'amount' => $request->get('amount'),
                 'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),

@@ -59,7 +59,7 @@
                 @lang('operation.aggregate.totalIncome')
             </div>
             <div class='col-md-12 col-sm-4 text-right'>
-                {{ Html::formatPrice($operations->filterIncomes()->sum('amount'), $envelope->currency, true) }}
+                {{ Html::formatPrice($operations->filterIncomes()->sum('amount') + $operations->filterRevenues()->sum('amount'), $envelope->currency, true) }}
             </div>
         </div>
         <div class='col-md-3 text-danger'>

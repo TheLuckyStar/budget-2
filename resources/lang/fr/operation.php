@@ -35,6 +35,11 @@ return [
         'type' => "Type",
     ],
 
+    'placeholder' => [
+        'envelope_id_for_revenue' => 'Ensemble du compte',
+        'envelope_id_for_outcome' => 'Enveloppe',
+    ],
+
     'aggregate' => [
         'total' => 'Total',
         'totalIncome' => 'Total des revenus',
