@@ -23,7 +23,7 @@
     @endif
 </td>
 
-<td class="row form-group {{ $errors->has('envelope_id') || $errors->has('to_account_id') ? 'has-error' : '' }}">
+<td class="row form-group {{ $errors->has('envelope_id') || $errors->has('to_account_id') || $errors->has('from_account_id') ? 'has-error' : '' }}">
 
     {!! Form::select(
         'envelope_id',
