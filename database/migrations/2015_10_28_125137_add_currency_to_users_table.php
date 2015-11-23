@@ -27,7 +27,7 @@ class AddCurrencyToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->char('currency', 1);
+            $table->dropColumn('currency');
         });
     }
 }
