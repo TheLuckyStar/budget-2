@@ -35,7 +35,7 @@
 
                     <div class="panel-body">
 
-                        <div class="col-sm-12 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                        <div class="col-md-6 col-sm-12 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             {!! Form::text(
                                 'name',
                                 null,
@@ -43,6 +43,22 @@
                             ) !!}
                             @if ($errors->has('name'))
                                 {!! Html::ul($errors->get('name'), ['class' => 'help-block text-right']) !!}
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 col-sm-12 form-group {{ $errors->has('default_income') ? 'has-error' : '' }}">
+                            <div class='input-group'>
+                                {!! Form::text(
+                                    'default_income',
+                                    null,
+                                    ['class' => 'form-control text-right', 'id' => 'input-default_income', 'placeholder' => trans('envelope.fields.default_income')]
+                                ) !!}
+                                <span class="input-group-addon">
+                                    {{ $account->currency }}
+                                </span>
+                            </div>
+                            @if ($errors->has('default_income'))
+                                {!! Html::ul($errors->get('default_income'), ['class' => 'help-block text-right']) !!}
                             @endif
                         </div>
 

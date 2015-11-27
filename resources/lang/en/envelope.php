@@ -7,6 +7,7 @@ return [
 
     'fields' => [
         'name' => "Name",
+        'default_income' => "Default monthly revenue",
         'icon' => "Icon",
         'filterIcon' => "Search for an icon",
     ],

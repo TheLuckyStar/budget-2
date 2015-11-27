@@ -13,6 +13,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 /**
  * @property integer $id
  * @property string $name
+ * @property float $default_income
  * @property string $icon
  */
 class Envelope extends Model
@@ -24,7 +25,7 @@ class Envelope extends Model
      * The attributes that are mass assignable.
      * @var array
      */
-    protected $fillable = ['name', 'icon'];
+    protected $fillable = ['name', 'default_income', 'icon'];
 
     /**
      * The attributes that should be casted to native types.
@@ -32,6 +33,7 @@ class Envelope extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'default_income' => 'float',
     ];
 
     /**
@@ -46,6 +48,7 @@ class Envelope extends Model
      */
     protected $watchedFieldInEvent = [
         'name',
+        'default_income',
         'icon',
     ];
 

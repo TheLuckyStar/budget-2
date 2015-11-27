@@ -48,10 +48,11 @@ class EnvelopeController extends AbstractController
 
         $this->validate($request, [
             'name' => 'string|required|unique:envelopes,name,NULL,id,account_id,'.$account->id,
+            'default_income' => 'numeric',
             'icon' => 'string',
         ]);
 
-        $envelope = Envelope::create($request->only(['name', 'icon']));
+        $envelope = Envelope::create($request->only(['name', 'default_income', 'icon']));
         $account->envelopes()->save($envelope);
 
         return redirect()->action('EnvelopeController@getView', [$envelope])
@@ -89,10 +90,11 @@ class EnvelopeController extends AbstractController
 
         $this->validate($request, [
             'name' => 'string|required|unique:envelopes,name,'.$envelope->id.',id,account_id,'.$envelope->account->id,
+            'default_income' => 'numeric',
             'icon' => 'string',
         ]);
 
-        $envelope->fill($request->only(['name', 'icon']));
+        $envelope->fill($request->only(['name', 'default_income', 'icon']));
         $envelope->save();
 
         return redirect()->action('EnvelopeController@getView', $envelope)
