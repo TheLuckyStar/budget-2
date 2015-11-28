@@ -127,7 +127,7 @@
                 <div class='col-md-12' id='account-operations-table' data-url='{{ action('Account\OperationsController@getTable', $account) }}'></div>
             </div>
             <div role="tabpanel" class="tab-pane row {{ $activeTab === 'allocation' ? 'active' : ''}}" id="allocation">
-                <div class='col-md-12' id='account-allocation-sliders' data-url='{{ action('Account\AllocationController@getSliders', $account) }}'></div>
+                <div class='col-md-12' id='account-allocation-main' data-url='{{ action('Account\AllocationController@getMain', $account) }}'></div>
             </div>
             <div role="tabpanel" class="tab-pane row {{ $activeTab === 'development' ? 'active' : ''}}" id="development">
                 <div class='col-md-12' id='account-development-monthly' data-url='{{ action('Account\DevelopmentController@getMonthly', $account) }}'></div>
@@ -147,7 +147,7 @@
         RouterModule.refresh($('#account-summary-balance'));
         RouterModule.refresh($('#account-summary-envelopes'));
         RouterModule.refresh($('#account-summary-events'));
-        RouterModule.refresh($('#account-allocation-sliders'));
+        RouterModule.refresh($('#account-allocation-main'));
         RouterModule.refresh($('#account-operations-table'));
         RouterModule.refresh($('#account-development-monthly'));
         RouterModule.refresh($('#account-development-yearly'));

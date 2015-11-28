@@ -12,7 +12,7 @@ class AllocationController extends AbstractController
      * @param  string $accountId Account ID
      * @return Illuminate\View\View View to render
      */
-    public function getSliders($accountId, $month = null) {
+    public function getMain($accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
@@ -21,39 +21,36 @@ class AllocationController extends AbstractController
         $endOfMonth   = $month->copy()->endOfMonth();
         $prevMonth    = $month->copy()->subMonth()->endOfMonth();
 
+        $revenues     = $account->revenues()
+            ->inPeriod($startOfMonth, $endOfMonth)
+            ->get();
+
         $incomes     = $account->incomes()
             ->inPeriod($startOfMonth, $endOfMonth)
-            ->lists('amount', 'envelope_id')
-            ->toArray();
-        $prevIncomes = $account->incomes()
-            ->inPeriod($prevMonth->copy()->startOfMonth(), $prevMonth)
             ->lists('amount', 'envelope_id')
             ->toArray();
 
         $data = [
             'account' => $account,
-            'revenue' => $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->sum('amount'),
-            'unallocatedRevenueBeforeMonth' => $account->getUnallocatedAttribute(null, $prevMonth),
-            'unallocatedRevenueMonth' => $account->getUnallocatedAttribute($startOfMonth, $endOfMonth),
             'incomes' => $incomes,
-            'prevIncomes' => $prevIncomes,
+            'revenues' => $revenues,
             'startOfMonth' => $startOfMonth,
             'endOfMonth' => $endOfMonth,
             'prevMonth' => $prevMonth,
             'nextMonth' => $month->copy()->addMonth()->startOfMonth(),
         ];
 
-        return view('account.allocation.sliders', $data);
+        return view('account.allocation.main', $data);
     }
 
-    public function postSliders(Request $request, $accountId, $month = null) {
+    public function postMain(Request $request, $accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
         $month        = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $startOfMonth = $month->startOfMonth();
 
         foreach ($account->envelopes as $envelope) {
-            $amount = floatval($request->input('income-'.$envelope->id, 0));
+            $amount = floatval($request->input('allocated-income-'.$envelope->id, 0));
 
             if ($amount === 0.0) {
                 $envelope->incomes()->where('date', $startOfMonth)->delete();
@@ -66,7 +63,7 @@ class AllocationController extends AbstractController
         }
 
         return redirect()->action(
-            'Account\AllocationController@getSliders',
+            'Account\AllocationController@getMain',
             [$accountId, $month->toDateString()]
         );
     }

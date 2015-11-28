@@ -52,14 +52,11 @@ return [
 
     'allocation' => [
         'title' => 'Income allocation',
-        'sliders' => [
-            'prevIncome' => 'Previous month: :amount. Click to set the same amount again.',
-            'revenueInMonth' => 'Income this month',
-            'allocatedInMonth' => 'Allocated this month',
-            'unallocatedRevenueAt' => 'Savings at :date:',
-            'unallocatedRevenueMonth' => 'Savings this month:',
-            'chartTitle' => 'Envelope balances for :date',
+        'main' => [
             'emptyMessage' => ':link to allocate revenues',
+            'revenueIncome' => 'Incomes',
+            'allocatedIncome' => 'Allocated revenue',
+            'totalIncome' => 'Total',
         ],
     ],
 

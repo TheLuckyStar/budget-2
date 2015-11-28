@@ -13,134 +13,7 @@ var AllocationModule = (function() {
     // Current currency
     var currency = null;
 
-    // Collection of sliders
-    var sliders = {};
 
-    // Donut revenue chart
-    var revenueChart = null;
-
-    // Update data elements from sliders
-    var updateData = function () {
-        updateAggregates();
-        updateRevenueChart();
-    };
-
-    // Update aggregates from sliders
-    var updateAggregates = function () {
-        var allocatedInMonth = 0;
-        $.each(sliders, function(label, slider) {
-            allocatedInMonth += slider.slider('value');
-        });
-
-        var revenueInMonth = $('#allocation-sliders-revenueInMonth').data('amount');
-        var unallocatedRevenueBeforeMonth = $('#allocation-sliders-unallocatedRevenueBeforeMonth').data('amount');
-        var unallocatedRevenueMonth = revenueInMonth - allocatedInMonth;
-        var unallocatedRevenueAfterMonth = unallocatedRevenueBeforeMonth + unallocatedRevenueMonth;
-
-        $('#allocation-sliders-allocatedInMonth').text(FormatModule.price(allocatedInMonth, currency));
-        $('#allocation-sliders-unallocatedRevenueMonth').data('amount', unallocatedRevenueMonth);
-        $('#allocation-sliders-unallocatedRevenueMonth').text(FormatModule.price(unallocatedRevenueMonth, currency));
-        $('#allocation-sliders-unallocatedRevenueAfterMonth').text(FormatModule.price(unallocatedRevenueAfterMonth, currency));
-    };
-
-    // Update revenue chart from sliders
-    var updateRevenueChart = function () {
-        var data = [];
-
-        $.each(sliders, function(label, slider) {
-            data.push({
-                label: label,
-                value: slider.slider('value')
-            });
-        });
-
-        if (revenueChart) {
-            revenueChart.setData(data);
-        }
-    };
-
-    // Update max value for sliders
-    var updateSliders = function () {
-        var unallocatedRevenueMonth = $('#allocation-sliders-unallocatedRevenueMonth').data('amount');
-
-        $.each(sliders, function(label, slider) {
-            var value = slider.slider('value');
-            var max = value + Math.max(unallocatedRevenueMonth, 100);
-
-            slider.slider('option', 'max', max);
-
-            $(this).next('.pull-right').text(FormatModule.price(Math.round(max), currency));
-        });
-    };
-
-
-
-    // Handle prevIncome button initialization
-    var initPrevIncomeButton = function (target) {
-        target.click(function () {
-            var val = $(this).data('value');
-            var input = $($(this).data('target'));
-
-            input.val(val).change();
-        });
-    };
-
-    // Handle text input initialization
-    var initTextInput = function (target) {
-        target.change(function () {
-            var slider = $($(this).data('target'));
-            var val = $(this).val();
-
-            if (val > slider.slider('option', 'max')) {
-                slider.slider('option', 'max', val);
-            }
-
-            slider.slider('value', val);
-
-            updateData();
-            updateSliders();
-        });
-    };
-
-    // Handle slider initialization
-    var initSliders = function (target) {
-        var unallocatedRevenueMonth = $('#allocation-sliders-unallocatedRevenueMonth').data('amount');
-
-        target.each(function () {
-            var max = parseFloat($(this).data('value')) + Math.max(unallocatedRevenueMonth, 100);
-
-            sliders[$(this).data('label')] = $(this).slider({
-                animate: true,
-                value: $(this).data('value'),
-                max: $(this).data('value') + 1,
-                slide: function(event, ui) {
-                    var input = $($(this).data('target'));
-                    input.val(ui.value);
-                    $(this).slider('value', ui.value);
-                    updateData();
-                },
-                stop: function() {
-                    updateSliders();
-                }
-            });
-
-            $(this).next('.pull-right').text(FormatModule.price(Math.round(max), currency));
-
-            $(this).children('span').html('<i class="fa fa-fw fa-arrows-h"></i>');
-        });
-    };
-
-    // Handle revenue chart initialization
-    var initRevenueChart = function (target) {
-        if (target.length) {
-            revenueChart = target.get(0).chart = Morris.Donut({
-                element: target.attr('id'),
-                data: [{label: 1, value: 1}],
-                formatter: function (val) { return FormatModule.price(val, currency); },
-                resize: true
-            });
-        }
-    };
 
     // Handle submit form initialization
     var initSubmitForm = function (form) {
@@ -148,8 +21,8 @@ var AllocationModule = (function() {
             var url = $(this).attr('action');
             var target = $($(this).data('target'));
             var data = $(this).find(':input').serializeArray();
-            console.log(url);
 
+            console.log('Submit form to ' + url);
             target.fadeTo('fast', 0.5, function() {
                 $.post(url, data, function(data) {
                     target.html(data);
@@ -179,16 +52,95 @@ var AllocationModule = (function() {
         RouterModule.refresh($('#account-development-yearly, #envelope-development-yearly'));
     };
 
+
+
+    // Refresh total income span content
+    var refreshDefaultIncome = function (envelope_id) {
+        var defaultIncome = $('#default-income-' + envelope_id);
+        var allocatedIncome = $('#allocated-income-' + envelope_id);
+
+        if (parseFloat(defaultIncome.data('value')) === parseFloat(allocatedIncome.val())) {
+            defaultIncome.removeClass('btn-default').addClass('btn-primary');
+            defaultIncome.children('.fa').removeClass('fa-star-o').addClass('fa-star');
+        } else {
+            defaultIncome.removeClass('btn-primary').addClass('btn-default');
+            defaultIncome.children('.fa').removeClass('fa-star').addClass('fa-star-o');
+        }
+    };
+
+    // Refresh total income span content
+    var refreshTotalIncome = function (envelope_id) {
+        var allocatedIncome = $('#allocated-income-' + envelope_id);
+        var revenueIncome = $('#revenue-income-' + envelope_id);
+        var totalIncome = $('#total-income-' + envelope_id);
+
+        var income = parseFloat(allocatedIncome.val());
+
+        if (revenueIncome.length) {
+            income += parseFloat(revenueIncome.val());
+        }
+
+        totalIncome.html(FormatModule.price(income, currency));
+    };
+
+    // Refresh monthly income well
+    var refreshMonthlyIncome = function (envelope_id) {
+        var allocatedIncome = 0;
+        $('.allocated-income').each(function () {
+            allocatedIncome += parseFloat($(this).val());
+        });
+        $('#monthly-allocated-income').html(FormatModule.price(allocatedIncome, currency));
+
+        var revenueIncome = 0;
+        $('.revenue-income').each(function () {
+            revenueIncome += parseFloat($(this).val());
+        });
+        $('#monthly-revenue-income').html(FormatModule.price(revenueIncome, currency));
+
+        var totalIncome = allocatedIncome + revenueIncome;
+        $('#monthly-total-income').html(FormatModule.price(totalIncome, currency));
+    };
+
+
+
+    // Handle button toolip
+    var initIncomeButtons = function (target) {
+        target.tooltip({
+            container: 'body',
+            html: true
+        });
+    };
+
+    // Set allocated income to default income on button click
+    var initDefaultIncome = function (target) {
+        target.click(function () {
+            var envelope_id = $(this).data('envelope_id');
+            var defaultIncome = $(this);
+            var allocatedIncome = $('#allocated-income-' + envelope_id);
+
+            var income = parseFloat(defaultIncome.data('value'));
+
+            allocatedIncome.val(income);
+            allocatedIncome.change();
+        }).change();
+    };
+
+    // Refresh default income and total income on allocated income change
+    var initAllocatedIncome = function (target) {
+        target.change(function () {
+            refreshDefaultIncome($(this).data('envelope_id'));
+            refreshTotalIncome($(this).data('envelope_id'));
+            refreshMonthlyIncome();
+        }).change();
+    };
+
     // Handle form initialization
     var initForm = function (form, _currency) {
         currency = _currency;
-        initPrevIncomeButton(form.find('.price-slider-prevIncome-button'));
-        initTextInput(form.find('input[type="text"]'));
-        initSliders(form.find('.slider'));
-        initRevenueChart($('#account-allocation-revenue-chart'));
+        initIncomeButtons(form.find('.btn[data-toggle="tooltip"]'));
+        initDefaultIncome(form.find('.default-income'));
+        initAllocatedIncome(form.find('.allocated-income'));
         initSubmitForm(form);
-        updateData();
-        updateSliders();
     };
 
     // Called on module loading

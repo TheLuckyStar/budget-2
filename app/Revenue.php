@@ -34,6 +34,7 @@ class Revenue extends Operation
      */
     protected $casts = [
         'id' => 'integer',
+        'envelope_id' => 'int',
         'amount' => 'float',
     ];
 

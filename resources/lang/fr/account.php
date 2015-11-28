@@ -52,14 +52,11 @@ return [
 
     'allocation' => [
         'title' => 'Répartition des revenus',
-        'sliders' => [
-            'prevIncome' => 'Mois précédent : :amount. Cliquez pour appliquer de nouveau le même montant.',
-            'revenueInMonth' => 'Revenu ce mois',
-            'allocatedInMonth' => 'Alloué ce mois',
-            'unallocatedRevenueAt' => 'Épargné au :date :',
-            'unallocatedRevenueMonth' => 'Épargné ce mois :',
-            'chartTitle' => 'Solde des enveloppes pour :date :',
+        'main' => [
             'emptyMessage' => ':link pour répartir les revenus',
+            'revenueIncome' => 'Revenu des opérations',
+            'allocatedIncome' => 'Revenu alloué',
+            'totalIncome' => 'Total',
         ],
     ],
 

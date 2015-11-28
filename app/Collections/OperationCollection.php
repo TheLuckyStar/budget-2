@@ -4,6 +4,7 @@ use App\Income;
 use App\Revenue;
 use App\Outcome;
 use App\Transfer;
+use Html;
 use Illuminate\Database\Eloquent\Collection;
 
 class OperationCollection extends Collection
@@ -52,5 +53,11 @@ class OperationCollection extends Collection
 
             return $operation2->date->diffInSeconds($operation1->date, false);
         });
+    }
+
+    public function toNameAndAmountList() {
+        return $this->map(function ($operation) {
+            return sprintf("%s : %s", $operation->name, Html::formatPrice($operation->amount, $operation->account->currency));
+        })->toArray();
     }
 }

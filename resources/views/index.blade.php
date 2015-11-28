@@ -43,7 +43,6 @@
     <script>
         requirejs([
             'jquery',
-            'jquery-ui',
             'bootstrap',
             'moment',
             @if (App::getLocale() !== 'en')

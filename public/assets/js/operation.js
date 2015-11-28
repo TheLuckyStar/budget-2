@@ -146,7 +146,7 @@ var OperationModule = (function() {
         RouterModule.refresh($('#account-summary-envelopes'));
         RouterModule.refresh($('#account-summary-events, #envelope-summary-events'));
 
-        RouterModule.refresh($('#account-allocation-sliders'));
+        RouterModule.refresh($('#account-allocation-main'));
 
         RouterModule.refresh($('#account-development-monthly, #envelope-development-monthly'));
         RouterModule.refresh($('#account-development-yearly, #envelope-development-yearly'));

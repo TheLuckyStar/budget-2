@@ -49,7 +49,11 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
      */
     public function formatPrice($value, $currency, $forceSymbol = false)
     {
-        $price = number_format($value, 2).' '.$currency;
+        $price = number_format($value, 2);
+
+        if ($currency) {
+            $price .= ' '.$currency;
+        }
 
         if ($forceSymbol && $price >= 0) {
             return '+'.$price;
