@@ -86,7 +86,7 @@
             <li role="presentation" class="{{ $activeTab === 'operations' ? 'active' : '' }}">
                 {!! Html::link(
                     '#operations',
-                    '<i class="fa fa-fw fa-table"></i> '
+                    '<i class="fa fa-fw fa-exchange"></i> '
                         .trans('operation.title'),
                     ['aria-controls' => 'operations', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
