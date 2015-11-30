@@ -39,7 +39,7 @@ class RecurringOperation extends Model
     {
         $str = $this->name.' ('.Html::formatPrice($this->amount, $this->currency).')';
 
-        if ($this->type === 'outcome') {
+        if ($this->type === 'outcome' || ($this->type === 'revenue' && is_int($this->entity_id))) {
             return $this->envelopeEntity.' : '.$str;
         }
 

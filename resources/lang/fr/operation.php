@@ -53,7 +53,7 @@ return [
         'revenue' => 'Revenu',
         'allocatedRevenue' => 'Revenu alloué',
         'unallocatedRevenue' => 'Revenu non alloué',
-        'income' => 'Revenu',
+        'income' => 'Revenu alloué',
         'outcome' => 'Dépense',
         'incomingTransfer' => 'Virement entrant',
         'outgoingTransfer' => 'Virement sortant',

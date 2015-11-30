@@ -83,9 +83,7 @@ class ConfigurationController extends AbstractController
 
         $this->validate($request, [
             'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
-            'envelope_id'
-                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
-                    .$account->id,
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
             'to_account_id'
                 => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
             'from_account_id'
@@ -95,7 +93,7 @@ class ConfigurationController extends AbstractController
         ]);
 
         $entity_id = null;
-        if ($request->input('type') === 'outcome') {
+        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
             $entity_id = $request->get('envelope_id');
         } elseif ($request->input('type') === 'outgoingTransfer') {
             $entity_id = $request->get('to_account_id');
@@ -129,9 +127,7 @@ class ConfigurationController extends AbstractController
 
         $this->validate($request, [
             'type' => 'required|in:revenue,outcome,outgoingTransfer,incomingTransfer',
-            'envelope_id'
-                => 'required_if:type,outcome|exists:envelopes,id,account_id,'
-                    .$account->id,
+            'envelope_id' => 'required_if:type,outcome|exists:envelopes,id,account_id,'.$account->id,
             'to_account_id'
                 => 'required_if:type,outgoingTransfer|exists:account_user,account_id,user_id,'.Auth::user()->id,
             'from_account_id'
@@ -141,7 +137,7 @@ class ConfigurationController extends AbstractController
         ]);
 
         $entity_id = null;
-        if ($request->input('type') === 'outcome') {
+        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
             $entity_id = $request->get('envelope_id');
         } elseif ($request->input('type') === 'outgoingTransfer') {
             $entity_id = $request->get('to_account_id');

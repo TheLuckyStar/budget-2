@@ -53,7 +53,7 @@ return [
         'revenue' => 'Revenue',
         'allocatedRevenue' => 'Allocated revenue',
         'unallocatedRevenue' => 'Unallocated revenue',
-        'income' => 'Revenue',
+        'income' => 'Allocated revenue',
         'outcome' => 'Outcome',
         'incomingTransfer' => 'Incoming transfer',
         'outgoingTransfer' => 'Outgoing transfer',

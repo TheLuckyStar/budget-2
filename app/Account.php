@@ -170,7 +170,8 @@ class Account extends Model
             $attributes = [
                 'class' => 'recurring_operation',
                 'data-type' => $recurringOperation->type,
-                'data-envelope_id' => $recurringOperation->type === 'outcome' ? $recurringOperation->entity_id : null,
+                'data-envelope_id' => $recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue'
+                    ? $recurringOperation->entity_id : null,
                 'data-from_account_id' => $recurringOperation->type === 'incomingTransfer' ? $recurringOperation->entity_id : null,
                 'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer' ? $recurringOperation->entity_id : null,
                 'data-name' => $recurringOperation->name,
