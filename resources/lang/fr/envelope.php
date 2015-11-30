@@ -8,6 +8,7 @@ return [
     'fields' => [
         'name' => "Nom",
         'default_income' => "Revenu mensuel par défaut",
+        'default_income_short' => "Par défaut",
         'icon' => "Icône",
         'filterIcon' => "Rechercher une icône (en anglais seulement, par exemple \'home\', \'car\', \'present\', \'cutlery\')",
     ],

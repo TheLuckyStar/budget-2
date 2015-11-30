@@ -60,10 +60,8 @@ var AllocationModule = (function() {
         var allocatedIncome = $('#allocated-income-' + envelope_id);
 
         if (parseFloat(defaultIncome.data('value')) === parseFloat(allocatedIncome.val())) {
-            defaultIncome.removeClass('btn-default').addClass('btn-primary');
             defaultIncome.children('.fa').removeClass('fa-star-o').addClass('fa-star');
         } else {
-            defaultIncome.removeClass('btn-primary').addClass('btn-default');
             defaultIncome.children('.fa').removeClass('fa-star').addClass('fa-star-o');
         }
     };
@@ -122,7 +120,7 @@ var AllocationModule = (function() {
 
             allocatedIncome.val(income);
             allocatedIncome.change();
-        }).change();
+        });
     };
 
     // Refresh default income and total income on allocated income change
@@ -137,7 +135,7 @@ var AllocationModule = (function() {
     // Handle form initialization
     var initForm = function (form, _currency) {
         currency = _currency;
-        initIncomeButtons(form.find('.btn[data-toggle="tooltip"]'));
+        initIncomeButtons(form.find('[data-toggle="tooltip"]'));
         initDefaultIncome(form.find('.default-income'));
         initAllocatedIncome(form.find('.allocated-income'));
         initSubmitForm(form);

@@ -41,126 +41,101 @@
             @endif
         </div>
 
-        <div class='col-md-12 well'>
-            <div class='col-md-4 text-center'>
-                @lang('account.allocation.main.revenueIncome') :
-                <span id="monthly-revenue-income"></span>
-            </div>
-            <div class='col-md-4 text-center'>
-                @lang('account.allocation.main.allocatedIncome') :
-                <span id="monthly-allocated-income"></span>
-            </div>
-            <div class='col-md-4 text-center'>
-                @lang('account.allocation.main.totalIncome') :
-                <span id="monthly-total-income"></span>
-            </div>
-        </div>
+        <table class="table table-striped">
 
-        <div class="panel-body">
+            <thead>
+                <tr>
+                    <th>@lang('operation.fields.envelope_id')</th>
+                    <th class='text-right'>@lang('account.allocation.main.revenueIncome')</th>
+                    <th class='text-right'>@lang('account.allocation.main.allocatedIncome')</th>
+                    <th class='text-right'>@lang('account.allocation.main.totalIncome')</th>
+                </tr>
+            </thead>
+
             @foreach ($account->envelopes as $envelope)
-                <div class='col-md-6'>
-                    <div class="panel panel-default">
+                <tr>
 
-                        <div class="panel-heading">
-                            {!! $envelope !!}
-                            <span class='pull-right'>
-                                <b>
-                                    @lang('account.allocation.main.totalIncome') :
-                                </b>
-                                <span id='total-income-{{$envelope->id}}'></span>
+                    <td>
+                        {!! $envelope !!}
+                    </td>
+
+                    <td>
+                        @if ($revenues->where('envelope_id', $envelope->id)->count())
+                            <div class='input-group pull-right'>
+                                {!! Form::text(
+                                    'revenue-income-'.$envelope->id,
+                                    Html::formatPrice(
+                                        $revenues->where('envelope_id', $envelope->id)->sum('amount'),
+                                        ''
+                                    ),
+                                    [
+                                        'class' => 'revenue-income form-control text-right',
+                                        'data-envelope_id' => $envelope->id,
+                                        'disabled'
+                                    ]
+                                ) !!}
+                                <span class="input-group-addon">
+                                    {{ $account->currency }}
+                                </span>
+                                <span class="input-group-addon"
+                                    data-toggle="tooltip"
+                                    data-title="{{ implode(
+                                        '<br>',
+                                        $revenues->where('envelope_id', $envelope->id)->toNameAndAmountList()
+                                    ) }}"
+                                >
+                                    <span class="fa fa-fw fa-info"></span>
+                                </span>
+                            </div>
+                        @endif
+                    </td>
+
+                    <td>
+                        <div class='input-group pull-right'>
+                            {!! Form::text(
+                                'allocated-income-'.$envelope->id,
+                                isset($incomes[$envelope->id]) ? $incomes[$envelope->id] : 0,
+                                [
+                                    'class' => 'allocated-income form-control text-right',
+                                    'id' => 'allocated-income-'.$envelope->id,
+                                    'placeholder' => trans('envelope.fields.default_income_short').' : '.Html::formatPrice($envelope->default_income, $envelope->currency),
+                                    'data-envelope_id' => $envelope->id,
+                                ]
+                            ) !!}
+                            <span class="input-group-addon">
+                                {{ $account->currency }}
+                            </span>
+                            <span class="default-income input-group-addon"
+                                id="default-income-{{ $envelope->id }}"
+                                data-toggle="tooltip"
+                                data-title="@lang('envelope.fields.default_income') : {{ Html::formatPrice($envelope->default_income, $envelope->currency) }}"
+                                data-envelope_id="{{ $envelope->id }}"
+                                data-value="{{ $envelope->default_income }}"
+                            >
+                                <span class="fa fa-fw"></span>
                             </span>
                         </div>
+                    </td>
 
-                        <ul class="list-group">
+                    <td class='text-right'>
+                        <span id='total-income-{{$envelope->id}}'></span>
+                    </td>
 
-                            @if ($revenues->where('envelope_id', $envelope->id)->count())
-                                <li class="list-group-item">
-                                    <div class='row'>
-                                        <div class="col-xs-8 col-lg-5">
-                                            {!! Form::label(
-                                                'revenue-income-'.$envelope->id,
-                                                trans('account.allocation.main.revenueIncome')
-                                            ) !!}
-                                        </div>
-                                        <div class="col-xs-4 col-lg-2 text-right">
-                                            <button type="button"
-                                                class="btn btn-default btn-sm"
-                                                data-toggle="tooltip"
-                                                data-title="{{ implode(
-                                                    '<br>',
-                                                    $revenues->where('envelope_id', $envelope->id)->toNameAndAmountList()
-                                                ) }}"
-                                            >
-                                                <span class="fa fa-fw fa-info"></span>
-                                            </button>
-                                        </div>
-                                        <div class="col-md-12 col-lg-5">
-                                            <div class='input-group'>
-                                                {!! Form::text(
-                                                    'revenue-income-'.$envelope->id,
-                                                    Html::formatPrice(
-                                                        $revenues->where('envelope_id', $envelope->id)->sum('amount'),
-                                                        ''
-                                                    ),
-                                                    [
-                                                        'class' => 'revenue-income form-control text-right',
-                                                        'data-envelope_id' => $envelope->id,
-                                                        'disabled'
-                                                    ]
-                                                ) !!}
-                                                <span class="input-group-addon">
-                                                    {{ $account->currency }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endif
-
-                            <li class="list-group-item clearfix">
-                                <div class='row'>
-                                    <div class="col-xs-8 col-lg-5">
-                                        {!! Form::label(
-                                            'allocated-income-'.$envelope->id,
-                                            trans('account.allocation.main.allocatedIncome')
-                                        ) !!}
-                                    </div>
-                                    <div class="col-xs-4 col-lg-2 text-right">
-                                        <button type="button"
-                                            id="default-income-{{ $envelope->id }}"
-                                            class="default-income btn btn-default btn-sm"
-                                            data-toggle="tooltip"
-                                            data-title="@lang('envelope.fields.default_income') : {{ Html::formatPrice($envelope->default_income, $envelope->currency) }}"
-                                            data-envelope_id="{{ $envelope->id }}"
-                                            data-value="{{ $envelope->default_income }}"
-                                        >
-                                            <span class="fa fa-fw"></span>
-                                        </button>
-                                    </div>
-                                    <div class="col-md-12 col-lg-5">
-                                        <div class='input-group'>
-                                            {!! Form::text(
-                                                'allocated-income-'.$envelope->id,
-                                                isset($incomes[$envelope->id]) ? $incomes[$envelope->id] : 0,
-                                                [
-                                                    'class' => 'allocated-income form-control text-right',
-                                                    'data-envelope_id' => $envelope->id,
-                                                ]
-                                            ) !!}
-                                            <span class="input-group-addon">
-                                                {{ $account->currency }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
+                </tr>
             @endforeach
-        </div>
+
+            <tfoot>
+                <tr class='active'>
+                    <td>
+                        @lang('account.allocation.main.totalIncome')
+                    </td>
+                    <td class='text-right' id="monthly-revenue-income"></td>
+                    <td class='text-right' id="monthly-allocated-income"></td>
+                    <td class='text-right' id="monthly-total-income"></td>
+                </tr>
+            </tfoot>
+
+        </table>
 
         <div class="panel-footer text-right">
             {!! Form::submit(@trans('app.button.save'), [

@@ -107,7 +107,9 @@ ul.help-block {list-style-type: none;}
 #account-operations-table .panel-footer {font-weight: bold;}
 #envelope-operations-table .panel-footer {font-weight: bold;}
 
-#account-allocation-main .well {font-weight: bold;}
+#account-allocation-main .default-income {cursor: pointer;}
+#account-allocation-main td {vertical-align: middle;}
+#account-allocation-main tfoot {font-weight: bold;}
 
 #account-configuration-users .fa-star {display: inline-block; margin: 6px 5px;}
 

@@ -8,6 +8,7 @@ return [
     'fields' => [
         'name' => "Name",
         'default_income' => "Default monthly revenue",
+        'default_income_short' => "By default",
         'icon' => "Icon",
         'filterIcon' => "Search for an icon",
     ],
