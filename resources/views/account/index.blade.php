@@ -102,7 +102,7 @@
             <li role="presentation" class="{{ $activeTab === 'development' ? 'active' : '' }}">
                 {!! Html::link(
                     '#development',
-                    '<i class="fa fa-fw fa-area-chart"></i> '
+                    '<i class="fa fa-fw fa-line-chart"></i> '
                         .trans('account.development.title'),
                     ['aria-controls' => 'development', 'role' => 'tab', 'data-toggle' => 'tab']
                 ) !!}
