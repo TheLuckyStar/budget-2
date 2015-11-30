@@ -28,6 +28,11 @@ class SummaryController extends AbstractController
                 'negative' => true,
             ],
             [
+                'label' => trans('operation.type.revenue'),
+                'value' => $envelope->revenues()->inPeriod($after, $before)->sum('amount'),
+                'negative' => false,
+            ],
+            [
                 'label' => trans('operation.type.income'),
                 'value' => $envelope->incomes()->inPeriod($after, $before)->sum('amount'),
                 'negative' => false,
