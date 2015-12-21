@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use \Auth;
-use \Config;
-use \Html;
+use App\Envelope;
+use App\Services\Html\DonutChart;
+use Auth;
+use Carbon\Carbon;
+use Config;
+use Html;
 use Illuminate\Http\Request;
 
 class HomeController extends AbstractController
@@ -25,69 +28,52 @@ class HomeController extends AbstractController
             return redirect()->action('AccountController@getIndex', head($accounts));
         }
 
-        // All accounts chart
-        $allAccountsBalance = [];
-        $allAccountsData   = [];
-        $allAccountsColors = [];
-        foreach ($accounts as $account) {
-            $balance = $account->balance;
-
-            if (isset($allAccountsBalance[$account->currency]) === false) {
-                $allAccountsBalance[$account->currency] = 0;
-            }
-            $allAccountsBalance[$account->currency] += $balance;
-
-            $allAccountsData[] = [
-                'label' => $account->name,
-                'value' => abs($balance),
-                'negative' => $balance < 0,
-            ];
-
-            $allAccountsColors[] = Config::get('budget.statusColors.'.$account->status);
-        }
-
-        // All accounts chart
-        $allEnvelopesBalance = [];
-        $allEnvelopesData   = [];
-        $allEnvelopesColors = [];
-        foreach ($accounts as $account) {
-            foreach ($account->envelopes as $envelope) {
-                $balance = $envelope->balance;
-
-                if (isset($allEnvelopesBalance[$account->currency]) === false) {
-                    $allEnvelopesBalance[$account->currency] = 0;
-                }
-                $allEnvelopesBalance[$account->currency] += $balance;
-
-                $allEnvelopesData[] = [
-                    'label' => $account->name.' : '.$envelope->name,
-                    'value' => abs($balance),
-                    'negative' => $balance < 0,
-                ];
-
-                $allEnvelopesColors[] = Config::get('budget.statusColors.'.$envelope->status);
-            }
-        }
-
         // Home page for authenticated users with many accounts
         $data = [
             'accounts' => $accounts,
-            'allAccountsBalance' => array_map(
-                function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
-                $allAccountsBalance, array_keys($allAccountsBalance)
+            'accountsBalance' => $this->getAccountsBalance($accounts),
+            'accountsChart' => DonutChart::forge($accounts, Carbon::today()),
+            'envelopesBalance' => $this->getEnvelopesBalance($accounts),
+            'envelopesChart' => DonutChart::forge(
+                Envelope::whereIn('account_id', $accounts->pluck('id'))->get(),
+                Carbon::today()
             ),
-            'allAccountsData' => json_encode($allAccountsData),
-            'allAccountsColors' => json_encode($allAccountsColors),
-            'allEnvelopesBalance' => array_map(
-                function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
-                $allEnvelopesBalance, array_keys($allEnvelopesBalance)
-            ),
-            'allEnvelopesData' => json_encode($allEnvelopesData),
-            'allEnvelopesColors' => json_encode($allEnvelopesColors),
         ];
 
         // Render account page layout
         return view('home.authenticated', $data);
+    }
+
+    private function getAccountsBalance($accounts) {
+        $balance = [];
+
+        foreach ($accounts as $account) {
+            if (isset($balance[$account->currency]) === false) {
+                $balance[$account->currency] = 0;
+            }
+            $balance[$account->currency] += $account->balance;
+        }
+
+        return array_map(
+            function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
+            $balance, array_keys($balance)
+        );
+    }
+
+    private function getEnvelopesBalance($accounts) {
+        $balance = [];
+
+        foreach ($accounts as $account) {
+            if (isset($balance[$account->currency]) === false) {
+                $balance[$account->currency] = 0;
+            }
+            $balance[$account->currency] += $account->envelopes_balance;
+        }
+
+        return array_map(
+            function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
+            $balance, array_keys($balance)
+        );
     }
 
     public function getDemo() {

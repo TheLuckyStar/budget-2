@@ -27,8 +27,8 @@
     $('#account-envelopes-balance-chart').each(function () {
         $(this).get(0).chart = Morris.Donut({
             element: $(this).attr('id'),
-            data: {!! $data !!},
-            colors: {!! $colors !!},
+            data: {!! json_encode($chart->getData()) !!},
+            colors: {!! json_encode($chart->getColors()) !!},
             formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
             resize: true
         });

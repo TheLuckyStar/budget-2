@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers\Envelope;
 
 use App\Http\Controllers\AbstractController;
+use App\Services\Html\LineChart;
 use Auth;
-use Config;
 use Carbon\Carbon;
 
 class DevelopmentController extends AbstractController
@@ -11,23 +11,13 @@ class DevelopmentController extends AbstractController
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
-        $date->startOfMonth();
-
-        $data = [];
-        for ($d = $date->copy(); $d->month === $date->month && $d->lte(Carbon::now()); $d->addDay()) {
-            $data[] = [
-                'date' => $d->toDateString(),
-                'balance' => $envelope->getBalanceAttribute(null, $d),
-            ];
-        }
 
         $data = [
             'envelope' => $envelope,
             'date' => $date,
             'prevMonth' => $date->copy()->subMonth(),
             'nextMonth' => $date->copy()->addMonth(),
-            'data' => json_encode($data),
-            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
+            'chart' => LineChart::forge($envelope, $date, LineChart::PERIOD_MONTH),
         ];
 
         return view('envelope.development.monthly', $data);
@@ -37,23 +27,13 @@ class DevelopmentController extends AbstractController
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
         $date = is_null($date) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $date);
-        $date->startOfYear();
-
-        $data = [];
-        for ($d = $date->copy(); $d->year === $date->year && $d->lte(Carbon::now()); $d->addMonth()) {
-            $data[] = [
-                'date' => $d->toDateString(),
-                'balance' => $envelope->getBalanceAttribute(null, $d->copy()->endOfMonth()),
-            ];
-        }
 
         $data = [
             'envelope' => $envelope,
             'date' => $date,
             'prevYear' => $date->copy()->subYear(),
             'nextYear' => $date->copy()->addYear(),
-            'data' => json_encode($data),
-            'colors' => json_encode([Config::get('budget.statusColors.primary')]),
+            'chart' => LineChart::forge($envelope, $date, LineChart::PERIOD_YEAR),
         ];
 
         return view('envelope.development.yearly', $data);

@@ -45,7 +45,7 @@
     $('#account-development-envelopes-chart').each(function () {
         $(this).get(0).chart = Morris.Line({
             element: $(this).attr('id'),
-            data: {!! $data !!},
+            data: {!! json_encode($chart->getData()) !!},
             xkey: 'date',
             ykeys: {!! json_encode($account->envelopes->lists('id')) !!},
             labels: {!! json_encode($account->envelopes->lists('name')) !!},

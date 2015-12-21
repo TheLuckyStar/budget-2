@@ -9,7 +9,7 @@
                 'data-target' => '#account-development-yearly',
             ]
         ) !!}
-        {{ $date->formatLocalized('%Y') }}
+        {{ $date->formatLocalized('%B %Y') }} - {{ $date->copy()->addMonths(11)->formatLocalized('%B %Y') }}
         @if ($nextYear->lte(Carbon\Carbon::now()))
             {!! Html::linkAction(
                 'Account\DevelopmentController@getYearly',
@@ -31,15 +31,15 @@
 
     $('#account-development-yearly-chart').get(0).chart = Morris.Line({
         element: 'account-development-yearly-chart',
-        data: {!! $data !!},
+        data: {!! json_encode($chart->getData()) !!},
         xkey: 'date',
         ykeys: [
-            'balance',
+            'value',
         ],
         labels: [
             "@lang('operation.aggregate.balanceEnvelopes')",
         ],
-        lineColors: {!! $colors !!},
+        lineColors: {!! json_encode($chart->getColors()) !!},
         dateFormat: function (date) { return require('moment')(date).format("MMMM"); },
         xLabelFormat: function (date) {return require('moment')(date).format("MMMM"); },
         yLabelFormat: function (val) { return FormatModule.price(val, '{!! $account->currency !!}'); },

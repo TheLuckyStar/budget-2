@@ -31,16 +31,16 @@
 
     $('#account-development-monthly-chart').get(0).chart = Morris.Line({
         element: 'account-development-monthly-chart',
-        data: {!! $data !!},
+        data: {!! json_encode($chart->getData()) !!},
         xkey: 'date',
         ykeys: [
-            'balance',
+            'value',
         ],
         labels: [
             "@lang('operation.aggregate.balanceEnvelopes')",
         ],
         xLabels: 'day',
-        lineColors: {!! $colors !!},
+        lineColors: {!! json_encode($chart->getColors()) !!},
         dateFormat: function (date) { return FormatModule.date(new Date(date)); },
         xLabelFormat: function (date) { return date.getDate(); },
         yLabelFormat: function (val) { return FormatModule.price(val, '{!! $account->currency !!}'); },

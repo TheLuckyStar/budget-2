@@ -5,7 +5,7 @@
         @lang('account.summary.balance.title', ['balance' => Html::formatPrice($account->balance, $account->currency, true)])
     </div>
     <div class="panel-body">
-        @if ($withChartData)
+        @if ($chart->hasData())
             <div id="account-summary-balance-chart"></div>
         @else
             <div class='alert alert-info'>
@@ -26,8 +26,8 @@
     $('#account-summary-balance-chart').each(function () {
         $(this).get(0).chart = Morris.Donut({
             element: $(this).attr('id'),
-            data: {!! $data !!},
-            colors: {!! $colors !!},
+            data: {!! json_encode($chart->getData()) !!},
+            colors: {!! json_encode($chart->getColors()) !!},
             formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
             resize: true
         });

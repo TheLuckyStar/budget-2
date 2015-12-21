@@ -42,7 +42,7 @@
             <div class="panel-heading">
                 <h4>
                     <i class="fa fa-fw fa-pie-chart pull-left"></i>
-                    @lang('home.authenticated.allAccountsTitle', ['balance' => implode(' / ', $allAccountsBalance)])
+                    @lang('home.authenticated.allAccountsTitle', ['balance' => implode(' / ', $accountsBalance)])
                 </h4>
             </div>
             <div class="panel-body">
@@ -56,7 +56,7 @@
             <div class="panel-heading">
                 <h4>
                     <i class="fa fa-fw fa-pie-chart pull-left"></i>
-                    @lang('home.authenticated.allEnvelopesTitle', ['balance' => implode(' / ', $allEnvelopesBalance)])
+                    @lang('home.authenticated.allEnvelopesTitle', ['balance' => implode(' / ', $envelopesBalance)])
                 </h4>
             </div>
             <div class="panel-body">
@@ -72,8 +72,8 @@
     $('#home-authenticated-allaccounts-chart').each(function () {
         $(this).get(0).chart = Morris.Donut({
             element: $(this).attr('id'),
-            data: {!! $allAccountsData !!},
-            colors: {!! $allAccountsColors !!},
+            data: {!! json_encode($accountsChart->getData()) !!},
+            colors: {!! json_encode($accountsChart->getColors()) !!},
             formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
             resize: true
         });
@@ -82,8 +82,8 @@
     $('#home-authenticated-allenvelopes-chart').each(function () {
         $(this).get(0).chart = Morris.Donut({
             element: $(this).attr('id'),
-            data: {!! $allEnvelopesData !!},
-            colors: {!! $allEnvelopesColors !!},
+            data: {!! json_encode($envelopesChart->getData()) !!},
+            colors: {!! json_encode($envelopesChart->getColors()) !!},
             formatter: function (val, data) { return FormatModule.price(data.negative ? -val : val, '{!! $account->currency !!}', true); },
             resize: true
         });
