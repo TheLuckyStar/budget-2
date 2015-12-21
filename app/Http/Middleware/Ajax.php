@@ -19,8 +19,8 @@ class Ajax
         // Throw 404 HTTP error if not an Ajax request
         if (!$request->ajax()) {
             $segments = $request->segments();
-            $ln = array_shift($segments);
-            $url = url().'/'.$ln.$request->path.'#/'.implode('/', $segments);
+            $lang = array_shift($segments);
+            $url = url().'/'.$lang.$request->path.'#/'.implode('/', $segments);
             return redirect($url);
         }
 

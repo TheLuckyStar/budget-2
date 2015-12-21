@@ -32,7 +32,7 @@ class HomeController extends AbstractController
         foreach ($accounts as $account) {
             $balance = $account->balance;
 
-            if (isset($allAccountsBalance[$account->currency]) == false) {
+            if (isset($allAccountsBalance[$account->currency]) === false) {
                 $allAccountsBalance[$account->currency] = 0;
             }
             $allAccountsBalance[$account->currency] += $balance;
@@ -54,7 +54,7 @@ class HomeController extends AbstractController
             foreach ($account->envelopes as $envelope) {
                 $balance = $envelope->balance;
 
-                if (isset($allEnvelopesBalance[$account->currency]) == false) {
+                if (isset($allEnvelopesBalance[$account->currency]) === false) {
                     $allEnvelopesBalance[$account->currency] = 0;
                 }
                 $allEnvelopesBalance[$account->currency] += $balance;

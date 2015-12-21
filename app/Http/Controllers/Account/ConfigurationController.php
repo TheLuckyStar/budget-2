@@ -92,18 +92,18 @@ class ConfigurationController extends AbstractController
             'amount' => 'required|numeric',
         ]);
 
-        $entity_id = null;
+        $entityId = null;
         if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
-            $entity_id = $request->get('envelope_id');
+            $entityId = $request->get('envelope_id');
         } elseif ($request->input('type') === 'outgoingTransfer') {
-            $entity_id = $request->get('to_account_id');
+            $entityId = $request->get('to_account_id');
         } elseif ($request->input('type') === 'incomingTransfer') {
-            $entity_id = $request->get('from_account_id');
+            $entityId = $request->get('from_account_id');
         }
 
         $account->recurringOperations()->create([
             'type' => $request->get('type'),
-            'entity_id' => $entity_id,
+            'entity_id' => $entityId,
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
         ]);
@@ -136,18 +136,18 @@ class ConfigurationController extends AbstractController
             'amount' => 'required|numeric',
         ]);
 
-        $entity_id = null;
+        $entityId = null;
         if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
-            $entity_id = $request->get('envelope_id');
+            $entityId = $request->get('envelope_id');
         } elseif ($request->input('type') === 'outgoingTransfer') {
-            $entity_id = $request->get('to_account_id');
+            $entityId = $request->get('to_account_id');
         } elseif ($request->input('type') === 'incomingTransfer') {
-            $entity_id = $request->get('from_account_id');
+            $entityId = $request->get('from_account_id');
         }
 
         $recurringOperation->fill([
             'type' => $request->get('type'),
-            'entity_id' => $entity_id,
+            'entity_id' => $entityId,
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
         ])->save();

@@ -15,6 +15,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property string $name
  * @property float $default_income
  * @property string $icon
+ * @property App\Account $account
  */
 class Envelope extends Model
 {

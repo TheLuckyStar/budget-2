@@ -14,6 +14,8 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property integer $id
  * @property string $name
  * @property Illuminate\Database\Eloquent\Collection $envelopes
+ * @property Illuminate\Database\Eloquent\Collection $recurringOperations
+ * @property Illuminate\Database\Eloquent\Collection $owner
  */
 class Account extends Model
 {
@@ -172,8 +174,10 @@ class Account extends Model
                 'data-type' => $recurringOperation->type,
                 'data-envelope_id' => $recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue'
                     ? $recurringOperation->entity_id : null,
-                'data-from_account_id' => $recurringOperation->type === 'incomingTransfer' ? $recurringOperation->entity_id : null,
-                'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer' ? $recurringOperation->entity_id : null,
+                'data-from_account_id' => $recurringOperation->type === 'incomingTransfer'
+                    ? $recurringOperation->entity_id : null,
+                'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer'
+                    ? $recurringOperation->entity_id : null,
                 'data-name' => $recurringOperation->name,
                 'data-amount' => $recurringOperation->amount,
             ];

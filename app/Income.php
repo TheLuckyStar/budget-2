@@ -8,6 +8,7 @@ use Html;
  * @property App\Envelope $envelope
  * @property float $amount
  * @property Carbon\Carbon $date
+ * @property string $currency
  */
 class Income extends Operation
 {

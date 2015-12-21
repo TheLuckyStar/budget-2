@@ -78,9 +78,9 @@ class AuthController extends AbstractController
         $response = $this->postLoginIlluminate($request);
 
         if (Auth::check()) {
-            $response->withSuccess(trans('user.login.successMessage', ['username' => Auth::user()->name]));
+            $response->with('success', trans('user.login.successMessage', ['username' => Auth::user()->name]));
         } else {
-            $response->withErrors([trans('user.login.errorMessage')]);
+            $response->with('errors', [trans('user.login.errorMessage')]);
         }
 
         return $response;
@@ -101,7 +101,7 @@ class AuthController extends AbstractController
             $m->subject(trans('user.register.emailSubject'));
         });
 
-        return $response->withSuccess(trans('user.register.successMessage', ['username' => Auth::user()->name]));
+        return $response->with('success', trans('user.register.successMessage', ['username' => Auth::user()->name]));
     }
 
     /**
@@ -112,7 +112,7 @@ class AuthController extends AbstractController
     public function getLogout()
     {
         $response = $this->getLogoutIlluminate();
-        return $response->withSuccess(trans('user.logout.successMessage'));
+        return $response->with('success', trans('user.logout.successMessage'));
     }
 
     /**

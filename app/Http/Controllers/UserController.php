@@ -24,7 +24,7 @@ class UserController extends AbstractController
         ]);
 
         $user->fill($request->only(['name', 'email', 'currency']));
-        if ($request->input('password')) {
+        if (is_string($request->input('password'))) {
             $user->password = bcrypt($request->input('password'));
         }
         $user->save();

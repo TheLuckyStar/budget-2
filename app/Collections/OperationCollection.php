@@ -57,7 +57,11 @@ class OperationCollection extends Collection
 
     public function toNameAndAmountList() {
         return $this->map(function ($operation) {
-            return sprintf("%s : %s", $operation->name, Html::formatPrice($operation->amount, $operation->account->currency));
+            return sprintf(
+                '%s : %s',
+                $operation->name,
+                Html::formatPrice($operation->amount, $operation->account->currency)
+            );
         })->toArray();
     }
 }

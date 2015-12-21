@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property float $amount
  * @property Carbon\Carbon $date
+ * @property string $currency
  */
 class Outcome extends Operation
 {

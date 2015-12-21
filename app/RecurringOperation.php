@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property App\Account $accountEntity
  * @property string $name
  * @property float $amount
+ * @property string $currency
  */
 class RecurringOperation extends Model
 {
@@ -69,7 +70,7 @@ class RecurringOperation extends Model
             ->withTrashed();
     }
 
-    public function getContextAttribute(Account $account) {
+    public function getContextAttribute() {
         if ($this->type === 'outcome' ) {
             return 'danger';
         }
