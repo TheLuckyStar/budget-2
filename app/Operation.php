@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
+/**
+ * @property string $name
+ * @property float $amount
+ * @property Carbon\Carbon $date
+ * @property Carbon\Carbon $created_at
+ * @property App\Account $account
+ */
 class Operation extends Model
 {
     use HasEvents;
