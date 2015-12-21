@@ -4,8 +4,6 @@ use App\Http\Controllers\AbstractController;
 use App\Invitation;
 use App\User;
 use Auth;
-use Carbon\Carbon;
-use Config;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
