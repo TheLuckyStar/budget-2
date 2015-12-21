@@ -73,13 +73,13 @@ class HomeController extends AbstractController
         $data = [
             'accounts' => $accounts,
             'allAccountsBalance' => array_map(
-                function ($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
+                function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
                 $allAccountsBalance, array_keys($allAccountsBalance)
             ),
             'allAccountsData' => json_encode($allAccountsData),
             'allAccountsColors' => json_encode($allAccountsColors),
             'allEnvelopesBalance' => array_map(
-                function ($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
+                function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
                 $allEnvelopesBalance, array_keys($allEnvelopesBalance)
             ),
             'allEnvelopesData' => json_encode($allEnvelopesData),

@@ -1,9 +1,9 @@
 <?php namespace App\Collections;
 
 use App\Income;
-use App\Revenue;
-use App\Outcome;
 use App\Operation;
+use App\Outcome;
+use App\Revenue;
 use App\Transfer;
 use Html;
 use Illuminate\Database\Eloquent\Collection;
@@ -47,7 +47,7 @@ class OperationCollection extends Collection
 
     public function sortByDateThenCreatedAt()
     {
-        return $this->sort(function (Operation $operation1, Operation $operation2) {
+        return $this->sort(function(Operation $operation1, Operation $operation2) {
             if ($operation1->date->eq($operation2->date)) {
                 return $operation2->created_at->diffInSeconds($operation1->created_at, false);
             }
@@ -57,7 +57,7 @@ class OperationCollection extends Collection
     }
 
     public function toNameAndAmountList() {
-        return $this->map(function (Operation $operation) {
+        return $this->map(function(Operation $operation) {
             return sprintf(
                 '%s : %s',
                 $operation->name,

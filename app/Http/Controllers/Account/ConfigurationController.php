@@ -108,7 +108,7 @@ class ConfigurationController extends AbstractController
     }
 
     public function getRecurringOperationUpdate($accountId, $recurringOperationId) {
-        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
 
         $data = [
@@ -120,7 +120,7 @@ class ConfigurationController extends AbstractController
     }
 
     public function postRecurringOperationUpdate(Request $request, $accountId, $recurringOperationId) {
-        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
 
         $this->validate($request, [
@@ -152,7 +152,7 @@ class ConfigurationController extends AbstractController
     }
 
     public function postRecurringOperationDelete($accountId, $recurringOperationId) {
-        $account   = Auth::user()->accounts()->findOrFail($accountId);
+        $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
 
         $recurringOperation->delete();

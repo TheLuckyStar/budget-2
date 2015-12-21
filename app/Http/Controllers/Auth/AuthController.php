@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
 use App\Http\Controllers\AbstractController;
 use App\User;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
@@ -90,7 +90,7 @@ class AuthController extends AbstractController
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postRegister(Request $request)
     {
@@ -107,7 +107,7 @@ class AuthController extends AbstractController
     /**
      * Log the user out of the application.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function getLogout()
     {

@@ -25,7 +25,7 @@ class AllocationController extends AbstractController
             ->inPeriod($startOfMonth, $endOfMonth)
             ->get();
 
-        $incomes     = $account->incomes()
+        $incomes = $account->incomes()
             ->inPeriod($startOfMonth, $endOfMonth)
             ->lists('amount', 'envelope_id')
             ->toArray();

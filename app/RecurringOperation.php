@@ -71,15 +71,15 @@ class RecurringOperation extends Model
     }
 
     public function getContextAttribute() {
-        if ($this->type === 'outcome' ) {
+        if ($this->type === 'outcome') {
             return 'danger';
         }
 
-        if ($this->type === 'revenue' ) {
+        if ($this->type === 'revenue') {
             return 'success';
         }
 
-        if ($this->type === 'outgoingTransfer' ) {
+        if ($this->type === 'outgoingTransfer') {
             return 'warning';
         }
 
