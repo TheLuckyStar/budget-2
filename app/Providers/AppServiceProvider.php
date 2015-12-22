@@ -30,19 +30,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        /**
-         * Set locale from request.
-         * @param  Illuminate\Http\Request $request Request to consider
-         * @return string ISO code of the current language
-         */
         $this->app->bind('findLocale', function() {
-
-            // ISO code from URL
-            $providedByClient = Request::segment(1);
-
             // If compatible ISO code if provided in URL
-            if (in_array($providedByClient, $this->available)) {
-                $this->setLocale($providedByClient);
+            if (in_array(Request::segment(1), $this->available)) {
+                $this->setLocale(Request::segment(1));
                 return App::getLocale();
             }
 
@@ -62,8 +53,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $supportedByClient = explode(',', Request::server('HTTP_ACCEPT_LANGUAGE'));
 
-        array_walk($supportedByClient, function($v) {
-            return substr($v, 0, 2);
+        array_walk($supportedByClient, function($val) {
+            return substr($val, 0, 2);
         });
 
         return $supportedByClient;

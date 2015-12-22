@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers\Envelope;
 
+use App\Envelope;
+use App\Outcome;
+use App\Revenue;
 use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
@@ -54,21 +57,7 @@ class OperationsController extends AbstractController
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        if ($request->input('type') === 'revenue') {
-            $envelope->revenues()->create([
-                'account_id' => $envelope->account_id,
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ]);
-            return;
-        }
-
-        $envelope->outcomes()->create([
-            'name' => $request->get('name'),
-            'amount' => $request->get('amount'),
-            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-        ]);
+        $this->save($request, $envelope);
     }
 
     public function getUpdate($envelopeId, $operationType, $operationId) {
@@ -109,4 +98,40 @@ class OperationsController extends AbstractController
 
         $operation->delete();
     }
+
+    private function save(Request $request, Envelope $envelope, $operation = null) {
+        if ($request->input('type') === 'revenue') {
+            $this->saveRevenue($request, $envelope, $operation);
+        } else if ($request->input('type') === 'outcome') {
+            $this->saveOutcome($request, $operation);
+        }
+    }
+
+    private function saveRevenue(Request $request, Envelope $envelope, $operation = null) {
+        if (is_null($operation)) {
+            $operation = new Revenue();
+        }
+
+        $operation->fill([
+            'envelope_id' => $request->get('envelope_id'),
+            'account_id' => $envelope->account_id,
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
+    }
+
+    private function saveOutcome(Request $request, $operation = null) {
+        if (is_null($operation)) {
+            $operation = new Outcome();
+        }
+
+        $operation->fill([
+            'envelope_id' => $request->get('envelope_id'),
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
+    }
+
 }

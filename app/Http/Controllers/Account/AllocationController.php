@@ -15,20 +15,13 @@ class AllocationController extends AbstractController
     public function getMain($accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $startOfMonth = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $startOfMonth->startOfMonth();
+        $endOfMonth   = $startOfMonth->copy()->endOfMonth();
 
-        $startOfMonth = $month->startOfMonth();
-        $endOfMonth   = $month->copy()->endOfMonth();
-        $prevMonth    = $month->copy()->subMonth()->endOfMonth();
+        $revenues     = $account->revenues()->inPeriod($startOfMonth, $endOfMonth)->get();
 
-        $revenues     = $account->revenues()
-            ->inPeriod($startOfMonth, $endOfMonth)
-            ->get();
-
-        $incomes = $account->incomes()
-            ->inPeriod($startOfMonth, $endOfMonth)
-            ->lists('amount', 'envelope_id')
-            ->toArray();
+        $incomes = $account->incomes()->inPeriod($startOfMonth, $endOfMonth)->lists('amount', 'envelope_id')->toArray();
 
         $data = [
             'account' => $account,
@@ -36,8 +29,8 @@ class AllocationController extends AbstractController
             'revenues' => $revenues,
             'startOfMonth' => $startOfMonth,
             'endOfMonth' => $endOfMonth,
-            'prevMonth' => $prevMonth,
-            'nextMonth' => $month->copy()->addMonth()->startOfMonth(),
+            'prevMonth' => $startOfMonth->copy()->subMonth()->endOfMonth(),
+            'nextMonth' => $startOfMonth->copy()->addMonth()->startOfMonth(),
         ];
 
         return view('account.allocation.main', $data);
@@ -57,9 +50,7 @@ class AllocationController extends AbstractController
                 continue;
             }
 
-            $income         = $envelope->incomes()->firstOrNew(['date' => $month]);
-            $income->amount = $amount;
-            $income->save();
+            $envelope->incomes()->firstOrNew(['date' => $month])->save(['amount' => $amount]);
         }
 
         return redirect()->action(

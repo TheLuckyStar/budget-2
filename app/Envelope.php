@@ -159,25 +159,9 @@ class Envelope extends Model
     }
 
     public function getStatusAttribute($after = null, $before = null) {
-        $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
-        $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
-        $outcome = $this->outcomes()->inPeriod($after, $before)->sum('amount');
+        $balance = $this->getBalanceAttribute($after, $before);
 
-        if ($income == 0 && $revenue == 0) {
-            return $outcome ? 'danger' : 'warning';
-        }
-
-        $ratio = $outcome / ($income + $revenue);
-
-        if ($ratio > 1) {
-            return 'danger';
-        }
-
-        if ($ratio > 0.8) {
-            return 'warning';
-        }
-
-        return 'success';
+        return $balance < 0 ? 'danger' : 'success';
     }
 
     public function getCurrencyAttribute() {

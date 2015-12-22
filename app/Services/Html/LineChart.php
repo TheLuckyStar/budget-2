@@ -79,11 +79,18 @@ class LineChart extends AbstractChart
         }
 
         if ($this->scope instanceof Collection) {
-            $data = [];
-            foreach ($this->scope as $model) {
-                $data[$model->id] = $model->getBalanceAttribute($after, $before);
-            }
-            return $data;
+            return $this->processScopeDataCollection($after, $before);
         }
     }
+
+    protected function processScopeDataCollection($after, $before) {
+        $data = [];
+
+        foreach ($this->scope as $model) {
+            $data[$model->id] = $model->getBalanceAttribute($after, $before);
+        }
+
+        return $data;
+    }
+
 }

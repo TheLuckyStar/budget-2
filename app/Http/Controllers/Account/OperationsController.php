@@ -1,11 +1,10 @@
 <?php namespace App\Http\Controllers\Account;
 
 use App\Account;
-use App\Operation;
+use App\Http\Controllers\AbstractController;
 use App\Outcome;
 use App\Revenue;
 use App\Transfer;
-use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -111,7 +110,7 @@ class OperationsController extends AbstractController
         if ($request->input('type') === 'revenue') {
             $this->saveRevenue($request, $account, $operation);
         } else if ($request->input('type') === 'outcome') {
-            $this->saveOutcome($request, $account, $operation);
+            $this->saveOutcome($request, $operation);
         } else if ($request->input('type') === 'outgoingTransfer') {
             $this->saveOutgoingTransfer($request, $account, $operation);
         } else if ($request->input('type') === 'incomingTransfer') {
@@ -134,7 +133,7 @@ class OperationsController extends AbstractController
     }
 
 
-    public function saveOutcome(Request $request, Account $account, $operation) {
+    public function saveOutcome(Request $request, $operation) {
         if (is_null($operation)) {
             $operation = new Outcome();
         }

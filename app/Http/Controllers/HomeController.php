@@ -7,6 +7,7 @@ use App\Services\Html\DonutChart;
 use Auth;
 use Carbon\Carbon;
 use Html;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class HomeController extends AbstractController
@@ -28,6 +29,10 @@ class HomeController extends AbstractController
         }
 
         // Home page for authenticated users with many accounts
+        return $this->builIndex($accounts);
+    }
+
+    private function builIndex(Collection $accounts) {
         $data = [
             'accounts' => $accounts,
             'accountsBalance' => $this->getAccountsBalance($accounts),
@@ -39,7 +44,6 @@ class HomeController extends AbstractController
             ),
         ];
 
-        // Render account page layout
         return view('home.authenticated', $data);
     }
 

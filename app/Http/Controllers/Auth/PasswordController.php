@@ -106,24 +106,19 @@ class PasswordController extends AbstractController
             'password' => 'required|confirmed',
         ]);
 
-        $credentials = $request->only(
-            'email', 'password', 'password_confirmation', 'token'
-        );
+        $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
 
         $response = Password::reset($credentials, function($user, $password) {
             $this->resetPassword($user, $password);
         });
 
-        switch ($response) {
-            case Password::PASSWORD_RESET:
-                return redirect($this->redirectPath())
-                    ->with('success', trans($response));
-
-            default:
-                return redirect()
-                    ->action('Auth\PasswordController@postReset', $token)
-                    ->withInput($request->only('email'))
-                    ->withErrors([trans($response)]);
+        if ($response == Password::PASSWORD_RESET) {
+            return redirect($this->redirectPath())->with('success', trans($response));
         }
+
+        return redirect()
+            ->action('Auth\PasswordController@postReset', $token)
+            ->withInput($request->only('email'))
+            ->withErrors([trans($response)]);
     }
 }

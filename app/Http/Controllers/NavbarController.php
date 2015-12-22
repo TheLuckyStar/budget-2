@@ -38,14 +38,12 @@ class NavbarController extends AbstractController
 
         $links[] = $this->horizontalAuthenticatedTrashedAccount();
 
-        if (count($links)) {
-            $links[] = Html::linkAction(
-                'AccountController@getAdd',
-                '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
-                [],
-                ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
-            );
-        }
+        $links[] = Html::linkAction(
+            'AccountController@getAdd',
+            '<i class="fa fa-fw fa-plus" title="'.trans('account.add.title').'"></i> ',
+            [],
+            ['class' => 'routable navbar-brand', 'data-target' => '#page-wrapper']
+        );
 
         return $links;
     }
@@ -92,18 +90,9 @@ class NavbarController extends AbstractController
             return [];
         }
 
-        $links = [
-            $account->link(
-                '<i class="fa fa-fw fa-home" title="'.trans('home.authenticated.title').'"></i> '
-                    .trans('account.index.title')
-                    .'<span class="pull-right badge badge-'.$account->envelopes_status.'">'
-                    .Html::formatPrice($account->envelopes_balance, $account->currency)
-                    .'</span>'
-            ),
-        ];
-
+        $links = [];
+        $links[] = $this->verticalAuthenticatedAccountLink($account);
         $links += $this->verticalAuthenticatedNonTrashedEnvelopes($account);
-
         $links[] = $this->verticalTrashedEnvelopes($account);
 
         $links[] = Html::linkAction(
@@ -114,6 +103,16 @@ class NavbarController extends AbstractController
         );
 
         return $links;
+    }
+
+    private function verticalAuthenticatedAccountLink($account) {
+        return $account->link(
+            '<i class="fa fa-fw fa-home" title="'.trans('home.authenticated.title').'"></i> '
+                .trans('account.index.title')
+                .'<span class="pull-right badge badge-'.$account->envelopes_status.'">'
+                .Html::formatPrice($account->envelopes_balance, $account->currency)
+                .'</span>'
+        );
     }
 
     private function verticalAuthenticatedNonTrashedEnvelopes($account) {
@@ -132,20 +131,11 @@ class NavbarController extends AbstractController
     }
 
     private function verticalTrashedEnvelopes($account) {
-        $links = [];
-
         if ($account->trashedEnvelopes->isEmpty()) {
             return null;
         }
 
-        foreach ($account->trashedEnvelopes as $envelope) {
-            $links[] = $envelope->link(
-                $envelope
-                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
-                    .Html::formatPrice($envelope->balance, $envelope->currency)
-                    .'</span>'
-            );
-        }
+        $links = $this->verticalTrashedEnvelopesLinks($account);
 
         return Html::link(
                 '#',
@@ -156,4 +146,20 @@ class NavbarController extends AbstractController
             )
             .Html::ul($links, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
     }
+
+    private function verticalTrashedEnvelopesLinks($account) {
+        $links = [];
+
+        foreach ($account->trashedEnvelopes as $envelope) {
+            $links[] = $envelope->link(
+                $envelope
+                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
+                    .Html::formatPrice($envelope->balance, $envelope->currency)
+                    .'</span>'
+            );
+        }
+
+        return $links;
+    }
+
 }

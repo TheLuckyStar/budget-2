@@ -40,10 +40,19 @@ class RecurringOperation extends Model
     {
         $str = $this->name.' ('.Html::formatPrice($this->amount, $this->currency).')';
 
-        if ($this->type === 'outcome' || ($this->type === 'revenue' && is_int($this->entity_id))) {
+        if ($this->type === 'outcome') {
             return $this->envelopeEntity.' : '.$str;
         }
 
+        if ($this->type === 'revenue' && is_int($this->entity_id)) {
+            return $this->envelopeEntity.' : '.$str;
+        }
+
+        return $this->toStringForTransfer($str);
+    }
+
+    private function toStringForTransfer($str)
+    {
         if ($this->type === 'incomingTransfer') {
             return trans('operation.fields.accountFromPrefix').' '.$this->accountEntity.' : '.$str;
         }

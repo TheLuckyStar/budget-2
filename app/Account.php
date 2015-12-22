@@ -79,36 +79,69 @@ class Account extends Model
 
     public function relatedEvents()
     {
-        return Event::where(function(EloquentBuilder $query) {
+        $query = Event::query();
+
+        $this->relatedEventsAccount($query);
+        $this->relatedEventsEnvelope($query);
+        $this->relatedEventsRevenue($query);
+        $this->relatedEventsTransfer($query);
+        $this->relatedEventsIncome($query);
+        $this->relatedEventsOutcome($query);
+
+        return $query->orderBy('id', 'desc');
+    }
+
+    private function relatedEventsAccount($query) {
+        $query->where(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Account')->where('entity_id', $this->id);
-        })->orWhere(function(EloquentBuilder $query) {
+        });
+    }
+
+    private function relatedEventsEnvelope($query) {
+        $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('envelopes')->where('account_id', $this->id);
             });
-        })->orWhere(function(EloquentBuilder $query) {
+        });
+    }
+
+    private function relatedEventsRevenue($query) {
+        $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
             });
-        })->orWhere(function(EloquentBuilder $query) {
+        });
+    }
+
+    private function relatedEventsTransfer($query) {
+        $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Transfer')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')
                     ->from('transfers')
                     ->where('from_account_id', $this->id)
                     ->orWhere('to_account_id', $this->id);
             });
-        })->orWhere(function(EloquentBuilder $query) {
+        });
+    }
+
+    private function relatedEventsIncome($query) {
+        $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('incomes')->whereIn('envelope_id', function(QueryBuilder $query) {
                     $query->select('id')->from('envelopes')->where('account_id', $this->id);
                 });
             });
-        })->orWhere(function(EloquentBuilder $query) {
+        });
+    }
+
+    private function relatedEventsOutcome($query) {
+        $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('outcomes')->whereIn('envelope_id', function(QueryBuilder $query) {
                     $query->select('id')->from('envelopes')->where('account_id', $this->id);
                 });
             });
-        })->orderBy('id', 'desc');
+        });
     }
 
     public function users() {

@@ -33,7 +33,7 @@ class ConfigurationController extends AbstractController
             return $this->postAttachExistingUser($request, $account);
         }
 
-        return $this->postAttachNewUser($request, $account, $user);
+        return $this->postAttachNewUser($account, $user);
     }
 
     public function postAttachExistingUser(Request $request, Account $account) {
@@ -41,10 +41,10 @@ class ConfigurationController extends AbstractController
             $account->invitations()->create(['email' => $request->input('email')]);
         }
 
-        return redirect()->action('Account\ConfigurationController@getUsers', $account);
+        return redirect()->action('Account\ConfigurationController@getUsers', [$account]);
     }
 
-    public function postAttachNewUser(Request $request, Account $account, User $user) {
+    public function postAttachNewUser(Account $account, User $user) {
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
@@ -54,7 +54,7 @@ class ConfigurationController extends AbstractController
             });
         }
 
-        return redirect()->action('Account\ConfigurationController@getUsers', $account);
+        return redirect()->action('Account\ConfigurationController@getUsers', [$account]);
     }
 
     public function postDetachUser(Request $request, $accountId) {
@@ -150,7 +150,7 @@ class ConfigurationController extends AbstractController
     }
 
     private function getEntityId(Request $request) {
-        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
+        if (in_array($request->input('type'),  ['outcome', 'revenue'])) {
             return $request->get('envelope_id');
         }
 
