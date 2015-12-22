@@ -2,7 +2,6 @@
 
 use App\Account;
 use App\Envelope;
-use Carbon\Carbon;
 use Config;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -13,6 +12,10 @@ class DonutChart extends AbstractChart
         return empty(array_filter(array_pluck($this->data, 'value'))) === false;
     }
 
+
+    /**
+     * @param Carbon\Carbon $date
+     */
     public static function forge($scope, $date) {
         $chart = new self($scope, $date);
 
@@ -27,11 +30,17 @@ class DonutChart extends AbstractChart
 
         if ($this->scope instanceof Account) {
             $this->processAccount($after, $before);
-        } elseif ($this->scope instanceof Envelope) {
+        }
+
+        if ($this->scope instanceof Envelope) {
             $this->processEnvelope($after, $before);
-        } elseif ($this->scope instanceof Collection && $this->scope->first() instanceof Envelope) {
+        }
+
+        if ($this->scope instanceof Collection && $this->scope->first() instanceof Envelope) {
             $this->processEnvelopes($after, $before);
-        } elseif ($this->scope instanceof Collection && $this->scope->first() instanceof Account) {
+        }
+
+        if ($this->scope instanceof Collection && $this->scope->first() instanceof Account) {
             $this->processAccounts($after, $before);
         }
     }

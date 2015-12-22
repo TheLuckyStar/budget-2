@@ -6,7 +6,6 @@ use App\Envelope;
 use App\Services\Html\DonutChart;
 use Auth;
 use Carbon\Carbon;
-use Config;
 use Html;
 use Illuminate\Http\Request;
 
