@@ -107,15 +107,11 @@ class OperationsController extends AbstractController
     }
 
     public function save(Request $request, Account $account, $operation = null) {
-        if ($request->input('type') === 'revenue') {
-            $this->saveRevenue($request, $account, $operation);
-        } else if ($request->input('type') === 'outcome') {
-            $this->saveOutcome($request, $operation);
-        } else if ($request->input('type') === 'outgoingTransfer') {
-            $this->saveOutgoingTransfer($request, $account, $operation);
-        } else if ($request->input('type') === 'incomingTransfer') {
-            $this->saveIncomingTransfer($request, $account, $operation);
+        if ($request->input('type') === 'outcome') {
+            return $this->saveOutcome($request, $operation);
         }
+
+        $this->{'save'.ucfirst($request->input('type'))}($request, $account, $operation);
     }
 
     public function saveRevenue(Request $request, Account $account, $operation) {

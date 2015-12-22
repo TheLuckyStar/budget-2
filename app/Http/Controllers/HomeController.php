@@ -47,6 +47,9 @@ class HomeController extends AbstractController
         return view('home.authenticated', $data);
     }
 
+    /**
+     * @param Collection $accounts
+     */
     private function getAccountsBalance($accounts) {
         $balance = [];
 
@@ -58,11 +61,17 @@ class HomeController extends AbstractController
         }
 
         return array_map(
+            /**
+             * @param Collection $balance
+             */
             function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
             $balance, array_keys($balance)
         );
     }
 
+    /**
+     * @param Collection $accounts
+     */
     private function getEnvelopesBalance($accounts) {
         $balance = [];
 
@@ -74,6 +83,9 @@ class HomeController extends AbstractController
         }
 
         return array_map(
+            /**
+             * @param Collection $balance
+             */
             function($balance, $currency) {return Html::formatPrice($balance, $currency, true); },
             $balance, array_keys($balance)
         );

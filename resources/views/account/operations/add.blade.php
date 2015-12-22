@@ -6,10 +6,10 @@
         <option value="outcome">@lang('operation.type.outcome')</option>
         <option value="incomingTransfer">@lang('operation.type.incomingTransfer')</option>
         <option value="outgoingTransfer">@lang('operation.type.outgoingTransfer')</option>
-        {!! $account->recurringOperationsSelectOptions('revenue') !!}
-        {!! $account->recurringOperationsSelectOptions('outcome') !!}
-        {!! $account->recurringOperationsSelectOptions('incomingTransfer') !!}
-        {!! $account->recurringOperationsSelectOptions('outgoingTransfer') !!}
+        {!! Html::recurringOperationsSelectOptions($account, 'revenue') !!}
+        {!! Html::recurringOperationsSelectOptions($account, 'outcome') !!}
+        {!! Html::recurringOperationsSelectOptions($account, 'incomingTransfer') !!}
+        {!! Html::recurringOperationsSelectOptions($account, 'outgoingTransfer') !!}
     </select>
     @if ($errors->has('type'))
         {!! Html::ul($errors->get('type'), ['class' => 'help-block text-right']) !!}

@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Account;
 
+use App\Account;
 use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
@@ -42,6 +43,15 @@ class AllocationController extends AbstractController
         $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
         $month->startOfMonth();
 
+        $this->save($request, $account, $month);
+
+        return redirect()->action(
+            'Account\AllocationController@getMain',
+            [$accountId, $month->toDateString()]
+        );
+    }
+
+    private function save(Request $request, Account $account, Carbon $month) {
         foreach ($account->envelopes as $envelope) {
             $amount = floatval($request->input('allocated-income-'.$envelope->id, 0));
 
@@ -50,12 +60,10 @@ class AllocationController extends AbstractController
                 continue;
             }
 
-            $envelope->incomes()->firstOrNew(['date' => $month])->save(['amount' => $amount]);
+            $income = $envelope->incomes()->firstOrNew(['date' => $month]);
+            $income->amount = $amount;
+            $income->save();
         }
-
-        return redirect()->action(
-            'Account\AllocationController@getMain',
-            [$accountId, $month->toDateString()]
-        );
     }
+
 }

@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers\Envelope;
 
 use App\Envelope;
+use App\Http\Controllers\AbstractController;
 use App\Outcome;
 use App\Revenue;
-use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -114,7 +114,7 @@ class OperationsController extends AbstractController
 
         $operation->fill([
             'envelope_id' => $request->get('envelope_id'),
-            'account_id' => $envelope->account_id,
+            'account_id' => $envelope->account->id,
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
             'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),

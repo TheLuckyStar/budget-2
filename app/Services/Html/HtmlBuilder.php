@@ -61,4 +61,37 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
 
         return $price;
     }
+
+    public function recurringOperationsSelectOptions($account, $type) {
+        $recurringOperations = $account->recurringOperations->where('type', $type);
+        if ($recurringOperations->isEmpty()) {
+            return '';
+        }
+
+        $options = [];
+        foreach ($recurringOperations as $recurringOperation) {
+            $options[] = $this->recurringOperationsSelectOption($recurringOperation);
+        }
+
+        $attributes = ['label' => trans('operation.type.recurring'.ucfirst($type).'s')];
+        return '<optgroup '.$this->attributes($attributes).'>'.implode('', $options).'</optgroup>';
+    }
+
+    private function recurringOperationsSelectOption($recurringOperation) {
+        $attributes = [
+            'class' => 'recurring_operation',
+            'data-type' => $recurringOperation->type,
+            'data-envelope_id' => $recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue'
+                ? $recurringOperation->entity_id : null,
+            'data-from_account_id' => $recurringOperation->type === 'incomingTransfer'
+                ? $recurringOperation->entity_id : null,
+            'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer'
+                ? $recurringOperation->entity_id : null,
+            'data-name' => $recurringOperation->name,
+            'data-amount' => $recurringOperation->amount,
+        ];
+
+        return '<option '.$this->attributes($attributes).'>'.$recurringOperation.'</option>';
+    }
+
 }

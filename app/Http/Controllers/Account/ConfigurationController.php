@@ -150,7 +150,7 @@ class ConfigurationController extends AbstractController
     }
 
     private function getEntityId(Request $request) {
-        if (in_array($request->input('type'),  ['outcome', 'revenue'])) {
+        if (in_array($request->input('type'), ['outcome', 'revenue'])) {
             return $request->get('envelope_id');
         }
 
