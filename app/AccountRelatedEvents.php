@@ -25,7 +25,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsAccount($query) {
+    private function relatedEventsAccount(EloquentBuilder $query) {
         $query->where(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Account')->where('entity_id', $this->id);
         });
@@ -34,7 +34,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsEnvelope($query) {
+    private function relatedEventsEnvelope(EloquentBuilder $query) {
         $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('envelopes')->where('account_id', $this->id);
@@ -45,7 +45,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsRevenue($query) {
+    private function relatedEventsRevenue(EloquentBuilder $query) {
         $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
@@ -56,7 +56,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsTransfer($query) {
+    private function relatedEventsTransfer(EloquentBuilder $query) {
         $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Transfer')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')
@@ -70,7 +70,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsIncome($query) {
+    private function relatedEventsIncome(EloquentBuilder $query) {
         $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('incomes')->whereIn('envelope_id', function(QueryBuilder $query) {
@@ -83,7 +83,7 @@ trait AccountRelatedEvents
     /**
      * @param EloquentBuilder $query
      */
-    private function relatedEventsOutcome($query) {
+    private function relatedEventsOutcome(EloquentBuilder $query) {
         $query->orWhere(function(EloquentBuilder $query) {
             $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
                 $query->select('id')->from('outcomes')->whereIn('envelope_id', function(QueryBuilder $query) {
