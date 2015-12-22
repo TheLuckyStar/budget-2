@@ -5,7 +5,6 @@ namespace App;
 use App\Collections\OperationCollection;
 use App\Services\Eloquent\HasEvents;
 use Html;
-use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -21,6 +20,7 @@ class Account extends Model
 {
     use SoftDeletes;
     use HasEvents;
+    use AccountRelatedEvents;
 
     /**
      * The attributes that are mass assignable.
@@ -75,91 +75,6 @@ class Account extends Model
         }
 
         return Html::linkAction('AccountController@getIndex', $text, $this, $attributes);
-    }
-
-    public function relatedEvents()
-    {
-        $query = Event::query();
-
-        $this->relatedEventsAccount($query);
-        $this->relatedEventsEnvelope($query);
-        $this->relatedEventsRevenue($query);
-        $this->relatedEventsTransfer($query);
-        $this->relatedEventsIncome($query);
-        $this->relatedEventsOutcome($query);
-
-        return $query->orderBy('id', 'desc');
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsAccount($query) {
-        $query->where(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Account')->where('entity_id', $this->id);
-        });
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsEnvelope($query) {
-        $query->orWhere(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Envelope')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')->from('envelopes')->where('account_id', $this->id);
-            });
-        });
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsRevenue($query) {
-        $query->orWhere(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Revenue')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')->from('revenues')->where('account_id', $this->id)->whereNotNull('date');
-            });
-        });
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsTransfer($query) {
-        $query->orWhere(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Transfer')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')
-                    ->from('transfers')
-                    ->where('from_account_id', $this->id)
-                    ->orWhere('to_account_id', $this->id);
-            });
-        });
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsIncome($query) {
-        $query->orWhere(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Income')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')->from('incomes')->whereIn('envelope_id', function(QueryBuilder $query) {
-                    $query->select('id')->from('envelopes')->where('account_id', $this->id);
-                });
-            });
-        });
-    }
-
-    /**
-     * @param EloquentBuilder $query
-     */
-    private function relatedEventsOutcome($query) {
-        $query->orWhere(function(EloquentBuilder $query) {
-            $query->where('entity_type', 'App\Outcome')->whereIn('entity_id', function(QueryBuilder $query) {
-                $query->select('id')->from('outcomes')->whereIn('envelope_id', function(QueryBuilder $query) {
-                    $query->select('id')->from('envelopes')->where('account_id', $this->id);
-                });
-            });
-        });
     }
 
     public function users() {

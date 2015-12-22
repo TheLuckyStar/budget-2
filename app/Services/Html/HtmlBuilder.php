@@ -81,17 +81,38 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         $attributes = [
             'class' => 'recurring_operation',
             'data-type' => $recurringOperation->type,
-            'data-envelope_id' => $recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue'
-                ? $recurringOperation->entity_id : null,
-            'data-from_account_id' => $recurringOperation->type === 'incomingTransfer'
-                ? $recurringOperation->entity_id : null,
-            'data-to_account_id' => $recurringOperation->type === 'outgoingTransfer'
-                ? $recurringOperation->entity_id : null,
+            'data-envelope_id' => $this->recurringOperationsSelectOptionEnvelopeId($recurringOperation),
+            'data-from_account_id' => $this->recurringOperationsSelectOptionFromAccountId($recurringOperation),
+            'data-to_account_id' => $this->recurringOperationsSelectOptionToAccountId($recurringOperation),
             'data-name' => $recurringOperation->name,
             'data-amount' => $recurringOperation->amount,
         ];
 
         return '<option '.$this->attributes($attributes).'>'.$recurringOperation.'</option>';
+    }
+
+    private function recurringOperationsSelectOptionEnvelopeId($recurringOperation) {
+        if ($recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue') {
+            return $recurringOperation->entity_id;
+        }
+
+        return null;
+    }
+
+    private function recurringOperationsSelectOptionFromAccountId($recurringOperation) {
+        if ($recurringOperation->type === 'incomingTransfer') {
+            return $recurringOperation->entity_id;
+        }
+
+        return null;
+    }
+
+    private function recurringOperationsSelectOptionToAccountId($recurringOperation) {
+        if ($recurringOperation->type === 'outgoingTransfer') {
+            return $recurringOperation->entity_id;
+        }
+
+        return null;
     }
 
 }
