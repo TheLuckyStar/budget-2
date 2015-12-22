@@ -4,7 +4,6 @@ use App\Http\Controllers\AbstractController;
 use App\Services\Html\DonutChart;
 use Auth;
 use Carbon\Carbon;
-use Config;
 
 class SummaryController extends AbstractController
 {

@@ -14,7 +14,7 @@ class DonutChart extends AbstractChart
 
 
     /**
-     * @param Carbon\Carbon $date
+     * @param \Carbon\Carbon $date
      */
     public static function forge($scope, $date) {
         $chart = new self($scope, $date);
