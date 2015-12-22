@@ -35,12 +35,15 @@ class Operation extends Model
     }
 
     public function scopeInPeriod(EloquentBuilder $query, $after = null, $before = null) {
-        if ($after instanceof Carbon === false
-            && $before instanceof Carbon === false) {
+        if ($after instanceof Carbon === false && $before instanceof Carbon === false) {
             return $query;
         }
 
-        $query->where(function(EloquentBuilder $query) use($after, $before) {
+        return $this->buildScopreInPeriode($query, $after, $before);
+    }
+
+    private function buildScopreInPeriode(EloquentBuilder $query, $after, $before) {
+        return $query->where(function(EloquentBuilder $query) use($after, $before) {
             if ($after instanceof Carbon) {
                 $query->where('date', '>=', $after);
             }
@@ -55,7 +58,6 @@ class Operation extends Model
                 });
             }
         });
-
-        return $query;
     }
+
 }

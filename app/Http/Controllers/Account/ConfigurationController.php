@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Account;
 
+use App\Account;
 use App\Http\Controllers\AbstractController;
 use App\Invitation;
 use App\User;
@@ -28,14 +29,22 @@ class ConfigurationController extends AbstractController
         ]);
 
         $user = User::where('email', $request->input('email'))->first();
-
         if (is_null($user)) {
-            if ($account->invitations()->where('email', $request->input('email'))->count() === 0) {
-                $account->invitations()->create(['email' => $request->input('email')]);
-            }
-            return redirect()->action('Account\ConfigurationController@getUsers', $account);
+            return $this->postAttachExistingUser($request, $account);
         }
 
+        return $this->postAttachNewUser($request, $account, $user);
+    }
+
+    public function postAttachExistingUser(Request $request, Account $account) {
+        if ($account->invitations()->where('email', $request->input('email'))->count() === 0) {
+            $account->invitations()->create(['email' => $request->input('email')]);
+        }
+
+        return redirect()->action('Account\ConfigurationController@getUsers', $account);
+    }
+
+    public function postAttachNewUser(Request $request, Account $account, User $user) {
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
@@ -90,18 +99,9 @@ class ConfigurationController extends AbstractController
             'amount' => 'required|numeric',
         ]);
 
-        $entityId = null;
-        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
-            $entityId = $request->get('envelope_id');
-        } elseif ($request->input('type') === 'outgoingTransfer') {
-            $entityId = $request->get('to_account_id');
-        } elseif ($request->input('type') === 'incomingTransfer') {
-            $entityId = $request->get('from_account_id');
-        }
-
         $account->recurringOperations()->create([
             'type' => $request->get('type'),
-            'entity_id' => $entityId,
+            'entity_id' => $this->getEntityId($request),
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
         ]);
@@ -134,18 +134,9 @@ class ConfigurationController extends AbstractController
             'amount' => 'required|numeric',
         ]);
 
-        $entityId = null;
-        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
-            $entityId = $request->get('envelope_id');
-        } elseif ($request->input('type') === 'outgoingTransfer') {
-            $entityId = $request->get('to_account_id');
-        } elseif ($request->input('type') === 'incomingTransfer') {
-            $entityId = $request->get('from_account_id');
-        }
-
         $recurringOperation->fill([
             'type' => $request->get('type'),
-            'entity_id' => $entityId,
+            'entity_id' => $this->getEntityId($request),
             'name' => $request->get('name'),
             'amount' => $request->get('amount'),
         ])->save();
@@ -156,5 +147,21 @@ class ConfigurationController extends AbstractController
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
 
         $recurringOperation->delete();
+    }
+
+    private function getEntityId(Request $request) {
+        if ($request->input('type') === 'outcome' || $request->input('type') === 'revenue') {
+            return $request->get('envelope_id');
+        }
+
+        if ($request->input('type') === 'outgoingTransfer') {
+            return $request->get('to_account_id');
+        }
+
+        if ($request->input('type') === 'incomingTransfer') {
+            return $request->get('from_account_id');
+        }
+
+        return null;
     }
 }

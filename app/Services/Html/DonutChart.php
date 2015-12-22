@@ -36,12 +36,8 @@ class DonutChart extends AbstractChart
             $this->processEnvelope($after, $before);
         }
 
-        if ($this->scope instanceof Collection && $this->scope->first() instanceof Envelope) {
-            $this->processEnvelopes($after, $before);
-        }
-
-        if ($this->scope instanceof Collection && $this->scope->first() instanceof Account) {
-            $this->processAccounts($after, $before);
+        if ($this->scope instanceof Collection) {
+            $this->processCollection($before);
         }
     }
 
@@ -68,21 +64,7 @@ class DonutChart extends AbstractChart
         $this->processScopeIncome($after, $before);
     }
 
-    protected function processEnvelopes($after, $before) {
-        foreach ($this->scope as $model) {
-            $balance = $model->getBalanceAttribute(null, $before);
-
-            $this->data[] = [
-                'label' => $model->name,
-                'value' => abs($balance),
-                'negative' => $balance < 0,
-            ];
-
-            $this->colors[] = Config::get('budget.statusColors.'.$model->getStatusAttribute(null, $before));
-        }
-    }
-
-    protected function processAccounts($after, $before) {
+    protected function processCollection($before) {
         foreach ($this->scope as $model) {
             $balance = $model->getBalanceAttribute(null, $before);
 

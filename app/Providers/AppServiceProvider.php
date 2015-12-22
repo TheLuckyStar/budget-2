@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    private $available = ['en', 'fr'];
+
+
     /**
      * Bootstrap any application services.
      *
@@ -33,32 +37,19 @@ class AppServiceProvider extends ServiceProvider
          */
         $this->app->bind('findLocale', function() {
 
-            // Routes supported by the application
-            $available = ['en', 'fr'];
-
             // ISO code from URL
             $providedByClient = Request::segment(1);
 
             // If compatible ISO code if provided in URL
-            if (in_array($providedByClient, $available)) {
-                setlocale(LC_TIME, $providedByClient.'_FR.utf8');
-                Carbon::setLocale($providedByClient);
-                App::setLocale($providedByClient);
+            if (in_array($providedByClient, $this->available)) {
+                $this->setLocale($providedByClient);
                 return App::getLocale();
             }
 
-            // ISO list from HTTP header
-            $supportedByClient = explode(',', Request::server('HTTP_ACCEPT_LANGUAGE'));
-            array_walk($supportedByClient, function($v) {
-                return substr($v, 0, 2);
-            });
-
             // Search for compatible ISO code in HTTP header
-            foreach ($supportedByClient as $iso) {
-                if (in_array($iso, $available)) {
-                    setlocale(LC_TIME, $iso.'_FR.utf8');
-                    Carbon::setLocale($iso);
-                    App::setLocale($iso);
+            foreach ($this->getSupportedByClient() as $iso) {
+                if (in_array($iso, $this->available)) {
+                    $this->setLocale($iso);
                     break;
                 }
             }
@@ -66,4 +57,23 @@ class AppServiceProvider extends ServiceProvider
             return false;
         });
     }
+
+    private function getSupportedByClient()
+    {
+        $supportedByClient = explode(',', Request::server('HTTP_ACCEPT_LANGUAGE'));
+
+        array_walk($supportedByClient, function($v) {
+            return substr($v, 0, 2);
+        });
+
+        return $supportedByClient;
+    }
+
+    private function setLocale($locale)
+    {
+        setlocale(LC_TIME, $locale.'_'.strtoupper($locale).'.utf8');
+        Carbon::setLocale($locale);
+        App::setLocale($locale);
+    }
+
 }

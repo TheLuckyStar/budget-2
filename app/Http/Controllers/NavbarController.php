@@ -34,24 +34,9 @@ class NavbarController extends AbstractController
             ),
         ];
 
-        foreach (Auth::user()->nontrashedAccounts as $account) {
-            if ($account->trashed() === false) {
-                $links[] = $account->link(null, ['class' => 'routable navbar-brand']);
-            }
-        }
+        $links += $this->horizontalAuthenticatedNonTrashedAccount();
 
-        if (Auth::user()->trashedAccounts()->count()) {
-            $subLinks = [];
-            foreach (Auth::user()->trashedAccounts as $account) {
-                $subLinks[] = $account->link();
-            }
-            $links[] = Html::link(
-                    '#',
-                    '<i class="fa fa-fw fa-archive" title="'.trans('account.delete.title').'"></i>',
-                    ['class' => 'navbar-brand dropdown-toggle', 'data-toggle' => 'dropdown']
-                )
-                .Html::ul($subLinks, ['class' => 'dropdown-menu']);
-        }
+        $links[] = $this->horizontalAuthenticatedTrashedAccount();
 
         if (count($links)) {
             $links[] = Html::linkAction(
@@ -63,6 +48,37 @@ class NavbarController extends AbstractController
         }
 
         return $links;
+    }
+
+    private function horizontalAuthenticatedNonTrashedAccount() {
+        $links = [];
+
+        foreach (Auth::user()->nontrashedAccounts as $account) {
+            if ($account->trashed() === false) {
+                $links[] = $account->link(null, ['class' => 'routable navbar-brand']);
+            }
+        }
+
+        return $links;
+    }
+
+    private function horizontalAuthenticatedTrashedAccount() {
+        $links = [];
+
+        if (Auth::user()->trashedAccounts->isEmpty()) {
+            return null;
+        }
+
+        foreach (Auth::user()->trashedAccounts as $account) {
+            $links[] = $account->link();
+        }
+
+        return Html::link(
+                '#',
+                '<i class="fa fa-fw fa-archive" title="'.trans('account.delete.title').'"></i>',
+                ['class' => 'navbar-brand dropdown-toggle', 'data-toggle' => 'dropdown']
+            )
+            .Html::ul($links, ['class' => 'dropdown-menu']);
     }
 
     private function verticalGuest() {
@@ -86,18 +102,9 @@ class NavbarController extends AbstractController
             ),
         ];
 
-        foreach ($account->nontrashedEnvelopes as $envelope) {
-            $links[] = $envelope->link(
-                $envelope
-                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
-                    .Html::formatPrice($envelope->balance, $envelope->currency)
-                    .'</span>'
-            );
-        }
+        $links += $this->verticalAuthenticatedNonTrashedEnvelopes($account);
 
-        if ($account->trashedEnvelopes()->count()) {
-            $links[] = $this->verticalTrashedEnvelopes($account);
-        }
+        $links[] = $this->verticalTrashedEnvelopes($account);
 
         $links[] = Html::linkAction(
             'EnvelopeController@getAdd',
@@ -109,8 +116,27 @@ class NavbarController extends AbstractController
         return $links;
     }
 
+    private function verticalAuthenticatedNonTrashedEnvelopes($account) {
+        $links = [];
+
+        foreach ($account->nontrashedEnvelopes as $envelope) {
+            $links[] = $envelope->link(
+                $envelope
+                    .'<span class="pull-right badge badge-'.$envelope->status.'">'
+                    .Html::formatPrice($envelope->balance, $envelope->currency)
+                    .'</span>'
+            );
+        }
+
+        return $links;
+    }
+
     private function verticalTrashedEnvelopes($account) {
         $links = [];
+
+        if ($account->trashedEnvelopes->isEmpty()) {
+            return null;
+        }
 
         foreach ($account->trashedEnvelopes as $envelope) {
             $links[] = $envelope->link(

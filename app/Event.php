@@ -67,20 +67,37 @@ class Event extends Model
 
     public function actionForString()
     {
-        if ($this->action == 'update' && $this->field_value_from == '') {
-            return 'set';
+        if ($this->action == 'update') {
+            return $this->actionForStringUpdate();
         }
 
-        if ($this->action == 'update' && $this->field_value_to == '') {
-            return 'clear';
-        }
-
-        if ($this->action == 'delete'
-            && in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
-            return 'archive';
+        if ($this->action == 'delete') {
+            return $this->actionForStringDelete();
         }
 
         return $this->action;
+    }
+
+    public function actionForStringUpdate()
+    {
+        if ($this->field_value_from == '') {
+            return 'set';
+        }
+
+        if ($this->field_value_to == '') {
+            return 'clear';
+        }
+
+        return 'update';
+    }
+
+    public function actionForStringDelete()
+    {
+        if (in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
+            return 'archive';
+        }
+
+        return 'delete';
     }
 
     public function userForString()

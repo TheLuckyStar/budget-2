@@ -1,5 +1,10 @@
 <?php namespace App\Http\Controllers\Account;
 
+use App\Account;
+use App\Operation;
+use App\Outcome;
+use App\Revenue;
+use App\Transfer;
 use App\Http\Controllers\AbstractController;
 use Auth;
 use Carbon\Carbon;
@@ -59,44 +64,7 @@ class OperationsController extends AbstractController
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        if ($request->input('type') === 'revenue') {
-            $account->revenues()->create([
-                'envelope_id' => $request->get('envelope_id') ?: null,
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ]);
-            return;
-        }
-
-        if ($request->input('type') === 'outcome') {
-            $account->envelopes()->findOrFail($request->get('envelope_id'))->outcomes()->create([
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay()
-            ]);
-            return;
-        }
-
-        if ($request->input('type') === 'outgoingTransfer') {
-            $account->outgoingTransfers()->create([
-                'to_account_id' => $request->get('to_account_id'),
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ]);
-            return;
-        }
-
-        if ($request->input('type') === 'incomingTransfer') {
-            $account->incomingTransfers()->create([
-                'from_account_id' => $request->get('from_account_id'),
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ]);
-            return;
-        }
+        $this->save($request, $account);
     }
 
     public function getUpdate($accountId, $operationType, $operationId) {
@@ -129,48 +97,7 @@ class OperationsController extends AbstractController
             'date' => 'required|date_format:d/m/Y',
         ]);
 
-        if ($request->input('type') === 'revenue') {
-            $operation->fill([
-                'envelope_id' => $request->get('envelope_id') ?: null,
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ])->save();
-            return;
-        }
-
-
-        if ($request->input('type') === 'outcome') {
-            $operation->fill([
-                'envelope_id' => $request->get('envelope_id'),
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ])->save();
-            return;
-        }
-
-        if ($request->input('type') === 'outgoingTransfer') {
-            $operation->fill([
-                'from_account_id' => $account->id,
-                'to_account_id' => $request->get('to_account_id'),
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ])->save();
-            return;
-        }
-
-        if ($request->input('type') === 'incomingTransfer') {
-            $operation->fill([
-                'from_account_id' => $request->get('from_account_id'),
-                'to_account_id' => $account->id,
-                'name' => $request->get('name'),
-                'amount' => $request->get('amount'),
-                'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
-            ])->save();
-            return;
-        }
+        $this->save($request, $account, $operation);
     }
 
     public function postDelete($accountId, $operationType, $operationId) {
@@ -178,6 +105,74 @@ class OperationsController extends AbstractController
         $operation = $account->operationType($operationType)->findOrFail($operationId);
 
         $operation->delete();
+    }
+
+    public function save(Request $request, Account $account, $operation = null) {
+        if ($request->input('type') === 'revenue') {
+            $this->saveRevenue($request, $account, $operation);
+        } else if ($request->input('type') === 'outcome') {
+            $this->saveOutcome($request, $account, $operation);
+        } else if ($request->input('type') === 'outgoingTransfer') {
+            $this->saveOutgoingTransfer($request, $account, $operation);
+        } else if ($request->input('type') === 'incomingTransfer') {
+            $this->saveIncomingTransfer($request, $account, $operation);
+        }
+    }
+
+    public function saveRevenue(Request $request, Account $account, $operation) {
+        if (is_null($operation)) {
+            $operation = new Revenue();
+        }
+
+        $operation->fill([
+            'account_id' => $account->id,
+            'envelope_id' => $request->get('envelope_id') ?: null,
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
+    }
+
+
+    public function saveOutcome(Request $request, Account $account, $operation) {
+        if (is_null($operation)) {
+            $operation = new Outcome();
+        }
+
+        $operation->fill([
+            'envelope_id' => $request->get('envelope_id'),
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
+    }
+
+    public function saveOutgoingTransfer(Request $request, Account $account, $operation) {
+        if (is_null($operation)) {
+            $operation = new Transfer();
+        }
+
+        $operation->fill([
+            'from_account_id' => $account->id,
+            'to_account_id' => $request->get('to_account_id'),
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
+    }
+
+    public function saveIncomingTransfer(Request $request, Account $account, $operation) {
+        if (is_null($operation)) {
+            $operation = new Transfer();
+        }
+
+        $operation->fill([
+            'from_account_id' => $request->get('from_account_id'),
+            'to_account_id' => $account->id,
+            'name' => $request->get('name'),
+            'amount' => $request->get('amount'),
+            'date' => Carbon::createFromFormat('d/m/Y', $request->get('date'))->startOfDay(),
+        ])->save();
     }
 
 }

@@ -46,18 +46,18 @@ class AllocationController extends AbstractController
     public function postMain(Request $request, $accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
-        $month        = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
-        $startOfMonth = $month->startOfMonth();
+        $month = is_null($month) ? Carbon::today() : Carbon::createFromFormat('Y-m-d', $month);
+        $month->startOfMonth();
 
         foreach ($account->envelopes as $envelope) {
             $amount = floatval($request->input('allocated-income-'.$envelope->id, 0));
 
             if ($amount === 0.0) {
-                $envelope->incomes()->where('date', $startOfMonth)->delete();
+                $envelope->incomes()->where('date', $month)->delete();
                 continue;
             }
 
-            $income         = $envelope->incomes()->firstOrNew(['date' => $startOfMonth]);
+            $income         = $envelope->incomes()->firstOrNew(['date' => $month]);
             $income->amount = $amount;
             $income->save();
         }

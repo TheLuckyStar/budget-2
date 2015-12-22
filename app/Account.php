@@ -216,25 +216,10 @@ class Account extends Model
     public function operationsInPeriod($after, $before) {
         $operations = new OperationCollection();
 
-        $revenues = $this->revenues()->inPeriod($after, $before)->get();
-        foreach ($revenues as $revenue) {
-            $operations->push($revenue);
-        }
-
-        $outcomes = $this->outcomes()->inPeriod($after, $before)->get();
-        foreach ($outcomes as $outcome) {
-            $operations->push($outcome);
-        }
-
-        $incomingTransfers = $this->incomingTransfers()->inPeriod($after, $before)->get();
-        foreach ($incomingTransfers as $incomingTransfer) {
-            $operations->push($incomingTransfer);
-        }
-
-        $outgoingTransfers = $this->outgoingTransfers()->inPeriod($after, $before)->get();
-        foreach ($outgoingTransfers as $outgoingTransfer) {
-            $operations->push($outgoingTransfer);
-        }
+        $operations = $operations->merge($this->revenues()->inPeriod($after, $before)->get());
+        $operations = $operations->merge($this->outcomes()->inPeriod($after, $before)->get());
+        $operations = $operations->merge($this->incomingTransfers()->inPeriod($after, $before)->get());
+        $operations = $operations->merge($this->outgoingTransfers()->inPeriod($after, $before)->get());
 
         return $operations->sortByDateThenCreatedAt();
     }
