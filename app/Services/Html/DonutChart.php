@@ -27,17 +27,11 @@ class DonutChart extends AbstractChart
 
         if ($this->scope instanceof Account) {
             $this->processAccount($after, $before);
-        }
-
-        if ($this->scope instanceof Envelope) {
+        } elseif ($this->scope instanceof Envelope) {
             $this->processEnvelope($after, $before);
-        }
-
-        if ($this->scope instanceof Collection && $this->scope->first() instanceof Envelope) {
+        } elseif ($this->scope instanceof Collection && $this->scope->first() instanceof Envelope) {
             $this->processEnvelopes($after, $before);
-        }
-
-        if ($this->scope instanceof Collection && $this->scope->first() instanceof Account) {
+        } elseif ($this->scope instanceof Collection && $this->scope->first() instanceof Account) {
             $this->processAccounts($after, $before);
         }
     }
