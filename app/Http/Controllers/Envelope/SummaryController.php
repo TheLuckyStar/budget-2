@@ -5,8 +5,17 @@ use App\Services\Html\DonutChart;
 use Auth;
 use Carbon\Carbon;
 
+/**
+ * Summary tab for envelope
+ */
 class SummaryController extends AbstractController
 {
+
+    /**
+     * Render balance panel with chart
+     * @param  string $envelopeId Envelope primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getBalance($envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
@@ -18,6 +27,11 @@ class SummaryController extends AbstractController
         return view('envelope.summary.balance', $data);
     }
 
+    /**
+     * Render events panel with list
+     * @param  string $envelopeId Envelope primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getEvents($envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 

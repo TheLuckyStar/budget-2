@@ -9,12 +9,17 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+/**
+ * Operations tab for account
+ */
 class OperationsController extends AbstractController
 {
+
     /**
-     * List operations related to one account (second tab)
-     * @param  string $accountId Account ID
-     * @return \Illuminate\View\View View to render
+     * Render panel with navigation and table
+     * @param  string $accountId Account primary key
+     * @param  string|null $month Date within the month to consider (default to current month)
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getTable($accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
@@ -35,6 +40,13 @@ class OperationsController extends AbstractController
         return view('account.operations.table', $data);
     }
 
+    /**
+     * Render table row with operation details
+     * @param  string $accountId Account primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getRow($accountId, $operationType, $operationId) {
         $account   = Auth::user()->accounts()->findOrFail($accountId);
         $operation = $account->operationType($operationType)->findOrFail($operationId);
@@ -47,6 +59,12 @@ class OperationsController extends AbstractController
         return view('account.operations.row', $data);
     }
 
+    /**
+     * Add new operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return void
+     */
     public function postAdd(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -66,6 +84,13 @@ class OperationsController extends AbstractController
         $this->save($request, $account);
     }
 
+    /**
+     * Render table row with operation edit fields
+     * @param  string $accountId Account primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getUpdate($accountId, $operationType, $operationId) {
         $account   = Auth::user()->accounts()->findOrFail($accountId);
         $operation = $account->operationType($operationType)->findOrFail($operationId);
@@ -78,6 +103,14 @@ class OperationsController extends AbstractController
         return view('account.operations.update', $data);
     }
 
+    /**
+     * Update existing operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return void
+     */
     public function postUpdate(Request $request, $accountId, $operationType, $operationId) {
         $account   = Auth::user()->accounts()->findOrFail($accountId);
         $operation = $account->operationType($operationType)->findOrFail($operationId);
@@ -99,6 +132,13 @@ class OperationsController extends AbstractController
         $this->save($request, $account, $operation);
     }
 
+    /**
+     * Delete existing operation
+     * @param  string $accountId Account primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return void
+     */
     public function postDelete($accountId, $operationType, $operationId) {
         $account   = Auth::user()->accounts()->findOrFail($accountId);
         $operation = $account->operationType($operationType)->findOrFail($operationId);
@@ -106,6 +146,13 @@ class OperationsController extends AbstractController
         $operation->delete();
     }
 
+    /**
+     * Save request inputs into account's operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Account $account Account
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     public function save(Request $request, Account $account, $operation = null) {
         if ($request->input('type') === 'outcome') {
             return $this->saveOutcome($request, $operation);
@@ -114,6 +161,13 @@ class OperationsController extends AbstractController
         $this->{'save'.ucfirst($request->input('type'))}($request, $account, $operation);
     }
 
+    /**
+     * Save request inputs into account's revenue
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Account $account Account
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     public function saveRevenue(Request $request, Account $account, $operation) {
         if (is_null($operation)) {
             $operation = new Revenue();
@@ -129,6 +183,12 @@ class OperationsController extends AbstractController
     }
 
 
+    /**
+     * Save request inputs into account's outcome
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     public function saveOutcome(Request $request, $operation) {
         if (is_null($operation)) {
             $operation = new Outcome();
@@ -142,6 +202,13 @@ class OperationsController extends AbstractController
         ])->save();
     }
 
+    /**
+     * Save request inputs into account's outgoing transfer
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Account $account Account
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     public function saveOutgoingTransfer(Request $request, Account $account, $operation) {
         if (is_null($operation)) {
             $operation = new Transfer();
@@ -156,6 +223,13 @@ class OperationsController extends AbstractController
         ])->save();
     }
 
+    /**
+     * Save request inputs into account's incoming transfer
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Account $account Account
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     public function saveIncomingTransfer(Request $request, Account $account, $operation) {
         if (is_null($operation)) {
             $operation = new Transfer();

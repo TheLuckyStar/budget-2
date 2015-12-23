@@ -3,8 +3,16 @@
 use Auth;
 use Illuminate\Http\Request;
 
+/**
+ * User profile page
+ */
 class UserController extends AbstractController
 {
+
+    /**
+     * Render user profile page
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getProfile() {
         $data = [
             'user' => Auth::user(),
@@ -13,6 +21,11 @@ class UserController extends AbstractController
         return view('user.profile', $data);
     }
 
+    /**
+     * Save user profile
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postProfile(Request $request) {
         $user = Auth::user();
 
@@ -32,4 +45,5 @@ class UserController extends AbstractController
         return redirect()->action('UserController@getProfile')
             ->withSuccess(trans('user.profile.successMessage'));
     }
+
 }

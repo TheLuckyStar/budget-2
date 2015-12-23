@@ -6,8 +6,18 @@ use App\Envelope;
 use Auth;
 use Illuminate\Http\Request;
 
+/**
+ * Envelope management page
+ */
 class EnvelopeController extends AbstractController
 {
+
+    /**
+     * Render tabs layout
+     * @param  string $envelopeId Envelope primary key
+     * @param  string $activeTab Name of the active tab
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getView($envelopeId, $activeTab = 'summary') {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
@@ -21,7 +31,8 @@ class EnvelopeController extends AbstractController
 
     /**
      * Render add envelope form
-     * @return Illuminate\Http\Response View to render
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getAdd($accountId) {
         $account = Auth::user()->accounts()->find($accountId);
@@ -38,6 +49,12 @@ class EnvelopeController extends AbstractController
         return view('envelope.add', $data);
     }
 
+    /**
+     * Add new envelope
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postAdd(Request $request, $accountId) {
         $account = Auth::user()->accounts()->find($accountId);
 
@@ -59,11 +76,10 @@ class EnvelopeController extends AbstractController
             ->withSuccess(trans('envelope.add.successMessage', ['envelope' => $envelope]));
     }
 
-
-
     /**
      * Render update envelope form
-     * @return Illuminate\Http\Response View to render
+     * @param  string $envelopeId Envelope primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getUpdate($envelopeId) {
         $envelope = Envelope::withTrashed()->find($envelopeId);
@@ -80,6 +96,12 @@ class EnvelopeController extends AbstractController
         return view('envelope.update', $data);
     }
 
+    /**
+     * Update existing envelope
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $envelopeId Envelope primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postUpdate(Request $request, $envelopeId) {
         $envelope = Envelope::withTrashed()->find($envelopeId);
 
@@ -101,8 +123,11 @@ class EnvelopeController extends AbstractController
             ->withSuccess(trans('envelope.update.successMessage', ['envelope' => $envelope]));
     }
 
-
-
+    /**
+     * Delete existing envelope (the envelope is actually archived)
+     * @param  string $envelopeId Envelope primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function getDelete($envelopeId) {
         $envelope = Envelope::find($envelopeId);
 
@@ -117,8 +142,11 @@ class EnvelopeController extends AbstractController
             ->withSuccess(trans('envelope.delete.successMessage', ['envelope' => $envelope]));
     }
 
-
-
+    /**
+     * Restore archived envelope
+     * @param  string $envelopeId Envelope primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function getRestore($envelopeId) {
         $envelope = Envelope::onlyTrashed()->find($envelopeId);
 

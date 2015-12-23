@@ -9,8 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Mail;
 
+/**
+ * Configuration tab for account
+ */
 class ConfigurationController extends AbstractController
 {
+
+    /**
+     * Render panel with list
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getUsers($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -21,6 +30,12 @@ class ConfigurationController extends AbstractController
         return view('account.configuration.users', $data);
     }
 
+    /**
+     * Attach a user to an account
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postAttachUser(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -30,13 +45,19 @@ class ConfigurationController extends AbstractController
 
         $user = User::where('email', $request->input('email'))->first();
         if (is_null($user)) {
-            return $this->postAttachExistingUser($request, $account);
+            return $this->postAttachNewUser($request, $account);
         }
 
-        return $this->postAttachNewUser($account, $user);
+        return $this->postAttachExistingUser($account, $user);
     }
 
-    public function postAttachExistingUser(Request $request, Account $account) {
+    /**
+     * Attach a new user to an account
+     * @param  \Illuminate\Http\Request $request
+     * @param  App\Account $account Account
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function postAttachNewUser(Request $request, Account $account) {
         if ($account->invitations()->where('email', $request->input('email'))->count() === 0) {
             $account->invitations()->create(['email' => $request->input('email')]);
         }
@@ -44,7 +65,13 @@ class ConfigurationController extends AbstractController
         return redirect()->action('Account\ConfigurationController@getUsers', [$account]);
     }
 
-    public function postAttachNewUser(Account $account, User $user) {
+    /**
+     * Attach an existing user to an account
+     * @param  App\Account $account Account
+     * @param  App\User $user User
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function postAttachExistingUser(Account $account, User $user) {
         if ($user->id != $account->owner()->first()->id
             && $account->guests()->where('user_id', $user->id)->count() === 0) {
             $account->users()->attach($user->id);
@@ -57,6 +84,12 @@ class ConfigurationController extends AbstractController
         return redirect()->action('Account\ConfigurationController@getUsers', [$account]);
     }
 
+    /**
+     * Detach a user from an account
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postDetachUser(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -66,6 +99,12 @@ class ConfigurationController extends AbstractController
         return redirect()->action('Account\ConfigurationController@getUsers', $account);
     }
 
+    /**
+     * Detach an invitation from an account
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postDetachInvitation(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -75,6 +114,11 @@ class ConfigurationController extends AbstractController
         return redirect()->action('Account\ConfigurationController@getUsers', $account);
     }
 
+    /**
+     * Render panel with list
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getRecurringOperations($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -85,6 +129,12 @@ class ConfigurationController extends AbstractController
         return view('account.configuration.recurring_operations', $data);
     }
 
+    /**
+     * Add new recurring operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return void
+     */
     public function postRecurringOperationAdd(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -107,6 +157,12 @@ class ConfigurationController extends AbstractController
         ]);
     }
 
+    /**
+     * Render list item with recurring operation details
+     * @param  string $accountId Account primary key
+     * @param  string $recurringOperationId Recurring operation primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getRecurringOperationUpdate($accountId, $recurringOperationId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
@@ -119,6 +175,13 @@ class ConfigurationController extends AbstractController
         return view('account.configuration.recurring_operations.update', $data);
     }
 
+    /**
+     * Update existing recurring operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @param  string $recurringOperationId Recurring operation primary key
+     * @return void
+     */
     public function postRecurringOperationUpdate(Request $request, $accountId, $recurringOperationId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
@@ -142,6 +205,12 @@ class ConfigurationController extends AbstractController
         ])->save();
     }
 
+    /**
+     * Delete recurring operation
+     * @param  string $accountId Account primary key
+     * @param  string $recurringOperationId Recurring operation primary key
+     * @return void
+     */
     public function postRecurringOperationDelete($accountId, $recurringOperationId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
         $recurringOperation = $account->recurringOperations()->findOrFail($recurringOperationId);
@@ -149,6 +218,11 @@ class ConfigurationController extends AbstractController
         $recurringOperation->delete();
     }
 
+    /**
+     * Get entity id from request based on type
+     * @param  \Illuminate\Http\Request $request
+     * @return string|null
+     */
     private function getEntityId(Request $request) {
         if (in_array($request->input('type'), ['outcome', 'revenue'])) {
             return $request->get('envelope_id');

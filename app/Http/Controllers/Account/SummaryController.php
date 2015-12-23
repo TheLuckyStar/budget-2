@@ -5,9 +5,17 @@ use App\Services\Html\DonutChart;
 use Auth;
 use Carbon\Carbon;
 
+/**
+ * Summary tab for account
+ */
 class SummaryController extends AbstractController
 {
 
+    /**
+     * Render balance panel with chart
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getBalance($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -19,6 +27,11 @@ class SummaryController extends AbstractController
         return view('account.summary.balance', $data);
     }
 
+    /**
+     * Render events panel with chart
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getEnvelopes($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 
@@ -30,6 +43,11 @@ class SummaryController extends AbstractController
         return view('account.summary.envelopes', $data);
     }
 
+    /**
+     * Render events panel with list
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getEvents($accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
 

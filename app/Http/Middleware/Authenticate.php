@@ -5,7 +5,11 @@ namespace App\Http\Middleware;
 use App;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\Request;
 
+/**
+ * Middleware filtering requests to accept only authenticated users.
+ */
 class Authenticate
 {
     /**
@@ -32,7 +36,7 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if ($this->auth->guest()) {
             return redirect()->action('Auth\AuthController@getLogin')->withErrors(trans('app.error.guest'));

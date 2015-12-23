@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+/**
+ * Middleware responsible for formating input from requests.
+ */
 class FormatInput
 {
     /**

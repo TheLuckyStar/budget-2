@@ -4,6 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
+/**
+ * Middleware filtering requests to reject CSRF attacks.
+ */
 class VerifyCsrfToken extends BaseVerifier
 {
     /**

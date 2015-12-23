@@ -4,13 +4,16 @@ use App\Account;
 use Auth;
 use Illuminate\Http\Request;
 
+/**
+ * Account management page
+ */
 class AccountController extends AbstractController
 {
     /**
-     * Render account page
-     * @param  int $accountId Account ID
-     * @param  string $activeTab Name of active tab
-     * @return object
+     * Render tabs layout
+     * @param  string $accountId Account primary key
+     * @param  string $activeTab Name of the active tab
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getIndex($accountId, $activeTab = 'summary') {
         $account = Auth::user()->accounts()->findOrFail($accountId);
@@ -23,15 +26,19 @@ class AccountController extends AbstractController
         return view('account.index', $data);
     }
 
-
     /**
      * Render add account form
-     * @return \Illuminate\View\View View to render
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getAdd() {
         return view('account.add');
     }
 
+    /**
+     * Add new account
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postAdd(Request $request) {
         $this->validate($request, [
             'name' => 'required|string',
@@ -49,11 +56,10 @@ class AccountController extends AbstractController
             ->withSuccess(trans('account.add.successMessage', ['account' => $account]));
     }
 
-
-
     /**
      * Render update account form
-     * @return \Illuminate\View\View View to render
+     * @param  string $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getUpdate($accountId) {
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($accountId);
@@ -65,6 +71,12 @@ class AccountController extends AbstractController
         return view('account.update', $data);
     }
 
+    /**
+     * Udate existing account
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function postUpdate(Request $request, $accountId) {
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($accountId);
 
@@ -82,8 +94,11 @@ class AccountController extends AbstractController
             ->withSuccess(trans('account.update.successMessage', ['account' => $account]));
     }
 
-
-
+    /**
+     * Delete existing account (the account is actually archived)
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function getDelete($accountId) {
         $account = Auth::user()->nontrashedAccounts()->where('owner', true)->findOrFail($accountId);
 
@@ -93,8 +108,11 @@ class AccountController extends AbstractController
             ->withSuccess(trans('account.delete.successMessage', ['account' => $account]));
     }
 
-
-
+    /**
+     * Restore archived account
+     * @param  string $accountId Account primary key
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
     public function getRestore($accountId) {
         $account = Auth::user()->trashedAccounts()->where('owner', true)->findOrFail($accountId);
 

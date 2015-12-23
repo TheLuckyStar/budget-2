@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Auth;
 use Html;
 
+/**
+ * Navbar displayed on all pages.
+ */
 class NavbarController extends AbstractController
 {
 
+    /**
+     * Render navbar displayed on all pages
+     * @param  string|null $accountId Account primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getIndex($accountId = null) {
         $horizontalMenu = Auth::check() ? $this->horizontalAuthenticated() : $this->horizontalGuest();
         $verticalMenu   = Auth::check() ? $this->verticalAuthenticated($accountId) : $this->verticalGuest();
@@ -20,10 +28,18 @@ class NavbarController extends AbstractController
         return view('navbar', $data);
     }
 
+    /**
+     * Horizontal menu for guest users
+     * @return array Links
+     */
     private function horizontalGuest() {
         return [];
     }
 
+    /**
+     * Horizontal menu for authenticated users
+     * @return array Links
+     */
     private function horizontalAuthenticated() {
         $links = [
             Html::linkAction(
@@ -48,6 +64,10 @@ class NavbarController extends AbstractController
         return $links;
     }
 
+    /**
+     * Non trashed account links
+     * @return array Links
+     */
     private function horizontalAuthenticatedNonTrashedAccount() {
         $links = [];
 
@@ -60,6 +80,10 @@ class NavbarController extends AbstractController
         return $links;
     }
 
+    /**
+     * Trashed account links
+     * @return array Links
+     */
     private function horizontalAuthenticatedTrashedAccount() {
         $links = [];
 
@@ -79,10 +103,19 @@ class NavbarController extends AbstractController
             .Html::ul($links, ['class' => 'dropdown-menu']);
     }
 
+    /**
+     * Vertical menu for guest users
+     * @return array Links
+     */
     private function verticalGuest() {
         return [];
     }
 
+    /**
+     * Vertical menu for authenticated users
+     * @param  string $accountId Account primary key
+     * @return array Links
+     */
     private function verticalAuthenticated($accountId) {
         $account = Auth::user()->accounts()->find($accountId);
 
@@ -105,6 +138,11 @@ class NavbarController extends AbstractController
         return $links;
     }
 
+    /**
+     * Account link
+     * @param  \App\Account $account Account
+     * @return string Link
+     */
     private function verticalAuthenticatedAccountLink($account) {
         return $account->link(
             '<i class="fa fa-fw fa-home" title="'.trans('home.authenticated.title').'"></i> '
@@ -115,6 +153,11 @@ class NavbarController extends AbstractController
         );
     }
 
+    /**
+     * Non trashed envelope links
+     * @param  \App\Account $account Account
+     * @return array Links
+     */
     private function verticalAuthenticatedNonTrashedEnvelopes($account) {
         $links = [];
 
@@ -130,6 +173,11 @@ class NavbarController extends AbstractController
         return $links;
     }
 
+    /**
+     * Trashed envelope link
+     * @param  \App\Account $account Account
+     * @return string Links
+     */
     private function verticalTrashedEnvelopes($account) {
         if ($account->trashedEnvelopes->isEmpty()) {
             return null;
@@ -147,6 +195,11 @@ class NavbarController extends AbstractController
             .Html::ul($links, ['id' => 'trashed-envelopes', 'class' => 'collapse']);
     }
 
+    /**
+     * Trashed envelope links
+     * @param  \App\Account $account Account
+     * @return array Links
+     */
     private function verticalTrashedEnvelopesLinks($account) {
         $links = [];
 

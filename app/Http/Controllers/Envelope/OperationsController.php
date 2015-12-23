@@ -8,12 +8,17 @@ use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+/**
+ * Operations tab for envelope
+ */
 class OperationsController extends AbstractController
 {
+
     /**
-     * List operations related to one envelope (second tab)
-     * @param  string $envelopeId Envelope ID
-     * @return Illuminate\Http\Response View to render
+     * Render panel with navigation and table
+     * @param  string $envelopeId Envelope primary key
+     * @param  string|null $month Date within the month to consider (default to current month)
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
      */
     public function getTable($envelopeId, $month = null) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
@@ -34,6 +39,13 @@ class OperationsController extends AbstractController
         return view('envelope.operations.table', $data);
     }
 
+    /**
+     * Render table row with operation details
+     * @param  string $envelopeId Envelope primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getRow($envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
@@ -46,6 +58,12 @@ class OperationsController extends AbstractController
         return view('envelope.operations.row', $data);
     }
 
+    /**
+     * Add new operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $envelopeId Envelope primary key
+     * @return void
+     */
     public function postAdd(Request $request, $envelopeId) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
@@ -60,6 +78,13 @@ class OperationsController extends AbstractController
         $this->save($request, $envelope);
     }
 
+    /**
+     * Render table row with operation edit fields
+     * @param  string $envelopeId Envelope primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getUpdate($envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
@@ -72,6 +97,14 @@ class OperationsController extends AbstractController
         return view('envelope.operations.update', $data);
     }
 
+    /**
+     * Update existing operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  string $envelopeId Envelope primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return void
+     */
     public function postUpdate(Request $request, $envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
@@ -92,6 +125,13 @@ class OperationsController extends AbstractController
         ])->save();
     }
 
+    /**
+     * Delete existing operation
+     * @param  string $envelopeId Envelope primary key
+     * @param  string $operationType Operation type ('income', 'outcome', 'incomingTransfer', 'outgoingTransfer')
+     * @param  string $operationId Operation primary key
+     * @return void
+     */
     public function postDelete($envelopeId, $operationType, $operationId) {
         $envelope  = Auth::user()->envelopes()->findOrFail($envelopeId);
         $operation = $envelope->operationType($operationType)->findOrFail($operationId);
@@ -99,6 +139,13 @@ class OperationsController extends AbstractController
         $operation->delete();
     }
 
+    /**
+     * Save request inputs into envelope's operation
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Envelope $envelope Envelope
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     private function save(Request $request, Envelope $envelope, $operation = null) {
         if ($request->input('type') === 'revenue') {
             $this->saveRevenue($request, $envelope, $operation);
@@ -107,6 +154,13 @@ class OperationsController extends AbstractController
         }
     }
 
+    /**
+     * Save request inputs into envelope's revenue
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Envelope $envelope Envelope
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     private function saveRevenue(Request $request, Envelope $envelope, $operation = null) {
         if (is_null($operation)) {
             $operation = new Revenue();
@@ -121,6 +175,12 @@ class OperationsController extends AbstractController
         ])->save();
     }
 
+    /**
+     * Save request inputs into envelope's outcome
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Operation|null $operation Operation
+     * @return void
+     */
     private function saveOutcome(Request $request, $operation = null) {
         if (is_null($operation)) {
             $operation = new Outcome();

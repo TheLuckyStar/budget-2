@@ -5,8 +5,18 @@ use App\Services\Html\LineChart;
 use Auth;
 use Carbon\Carbon;
 
+/**
+ * Development tab for envelope
+ */
 class DevelopmentController extends AbstractController
 {
+
+    /**
+     * Render monthly panel with navigation and chart
+     * @param  string $envelopeId Envelope primary key
+     * @param  string|null $date Date within the month to consider (default to current month)
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getMonthly($envelopeId, $date = null) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 
@@ -23,6 +33,12 @@ class DevelopmentController extends AbstractController
         return view('envelope.development.monthly', $data);
     }
 
+    /**
+     * Render yearly panel with navigation and chart
+     * @param  string $envelopeId Envelope primary key
+     * @param  string|null $date Date within the year to consider (default to current year)
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     public function getYearly($envelopeId, $date = null) {
         $envelope = Auth::user()->envelopes()->findOrFail($envelopeId);
 

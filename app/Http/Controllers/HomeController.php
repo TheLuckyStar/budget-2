@@ -10,8 +10,17 @@ use Html;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
+/**
+ * Home page for guest and authenticated users.
+ */
 class HomeController extends AbstractController
 {
+
+    /**
+     * Render home page for guest and authenticated users.
+     * @param  \Illuminate\Http\Request $request
+     * @return object View or redirection if relevant
+     */
     public function getIndex(Request $request) {
         $accounts = Auth::user()->nontrashedAccounts->where('deleted_at', null);
 
@@ -28,10 +37,15 @@ class HomeController extends AbstractController
             return redirect()->action('AccountController@getIndex', head($accounts));
         }
 
-        // Home page for authenticated users with many accounts
+        // Home page for authenticated users with several accounts
         return $this->builIndex($accounts);
     }
 
+    /**
+     * Prepare view for authenticated user with several accounts
+     * @param  Collection $accounts Account collection
+     * @return Illuminate\View\View|\Illuminate\Contracts\View\Factory View
+     */
     private function builIndex(Collection $accounts) {
         $data = [
             'accounts' => $accounts,
@@ -48,7 +62,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @param Collection $accounts
+     * Sum account balances with the same currency
+     * @param  Collection $accounts Account collection
+     * @return array Balances indexed by currency
      */
     private function getAccountsBalance($accounts) {
         $balance = [];
@@ -70,7 +86,9 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @param Collection $accounts
+     * Sum account'envelope balances with the same currency
+     * @param  Collection $accounts Account collection
+     * @return array Balances indexed by currency
      */
     private function getEnvelopesBalance($accounts) {
         $balance = [];
@@ -91,7 +109,4 @@ class HomeController extends AbstractController
         );
     }
 
-    public function getDemo() {
-        return redirect()->action('HomeController@getIndex')->withErrors(trans('app.error.demo'));
-    }
 }

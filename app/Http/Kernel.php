@@ -4,6 +4,10 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+/**
+ * Laravel core kernel.
+ * Handle global and local middleware
+ */
 class Kernel extends HttpKernel
 {
     /**

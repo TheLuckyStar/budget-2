@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+/**
+ * Middleware filtering requests to accept only ajax calls
+ */
 class Ajax
 {
     /**

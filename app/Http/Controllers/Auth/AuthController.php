@@ -12,6 +12,9 @@ use Illuminate\Mail\Message;
 use Mail;
 use Validator;
 
+/**
+ * Controller handling authentication actions
+ */
 class AuthController extends AbstractController
 {
     /*

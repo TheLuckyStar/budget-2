@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Password;
 
+/**
+ * Controller handling password reset actions
+ */
 class PasswordController extends AbstractController
 {
     /*
@@ -34,6 +37,7 @@ class PasswordController extends AbstractController
 
     /**
      * Get the e-mail subject line to be used for the reset link email.
+     * @return string E-mail subject
      */
     protected function getEmailSubject()
     {
@@ -96,6 +100,7 @@ class PasswordController extends AbstractController
      * Reset the given user's password.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $token Reset token
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postReset(Request $request, $token)
