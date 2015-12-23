@@ -4,6 +4,7 @@ use Html;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Pattern for operation regularly used
  * @property integer $id
  * @property App\Account $account
  * @property string $type
@@ -51,6 +52,11 @@ class RecurringOperation extends Model
         return $this->toStringForTransfer($str);
     }
 
+    /**
+     * Convert the model to its string representation if it is a transfer.
+     * @param  string $str Transfer
+     * @return string
+     */
     private function toStringForTransfer($str)
     {
         if ($this->type === 'incomingTransfer') {
@@ -64,21 +70,37 @@ class RecurringOperation extends Model
         return $str;
     }
 
+    /**
+     * Query account the recurring operation belongs to
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function account() {
         return $this->belongsTo('App\Account')
             ->withTrashed();
     }
 
+    /**
+     * Query envelope related to recurring operation
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function envelopeEntity() {
         return $this->belongsTo('App\Envelope', 'entity_id')
             ->withTrashed();
     }
 
+    /**
+     * Query account related to recurring operation
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function accountEntity() {
         return $this->belongsTo('App\Account', 'entity_id')
             ->withTrashed();
     }
 
+    /**
+     * Get context color
+     * @return string Context color
+     */
     public function getContextAttribute() {
         if ($this->type === 'outcome') {
             return 'danger';
@@ -95,6 +117,10 @@ class RecurringOperation extends Model
         return 'info';
     }
 
+    /**
+     * Get currency based on account currency
+     * @return string Currency
+     */
     public function getCurrencyAttribute() {
         return $this->account->currency;
     }

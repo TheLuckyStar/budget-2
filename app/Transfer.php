@@ -6,6 +6,7 @@ use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Type of operation increasing an account balance and decreasing another one
  * @property integer $id
  * @property App\Account $accountFrom
  * @property App\Account $accountTo
@@ -43,7 +44,7 @@ class Transfer extends Operation
 
     /**
      * Array of field name to watch for changed on updated event
-     * @var [type]
+     * @var array
      */
     protected $watchedFieldInEvent = [
         'from_account_id',
@@ -68,6 +69,10 @@ class Transfer extends Operation
         ]);
     }
 
+    /**
+     * Get a link to the account operationpage
+     * @return string HTML anchor
+     */
     public function link() {
         return Html::linkAction(
             'AccountController@getIndex',
@@ -77,16 +82,29 @@ class Transfer extends Operation
         );
     }
 
+    /**
+     * Query account the transfer is from
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function accountFrom() {
         return $this->belongsTo('App\Account', 'from_account_id')
             ->withTrashed();
     }
 
+    /**
+     * Query account the transfer is to
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function accountTo() {
         return $this->belongsTo('App\Account', 'to_account_id')
             ->withTrashed();
     }
 
+    /**
+     * Get context color for an account
+     * @param \App\Account $account Account
+     * @return string Context color
+     */
     public function getContextAttribute(Account $account) {
         if ($account->id === $this->accountFrom->id) {
             return 'warning';
@@ -95,6 +113,11 @@ class Transfer extends Operation
         return 'info';
     }
 
+    /**
+     * Get operation type for an account
+     * @param \App\Account $account Account
+     * @return string Type
+     */
     public function getTypeAttribute(Account $account) {
         if ($account->id === $this->accountFrom->id) {
             return 'outgoingTransfer';
@@ -103,6 +126,10 @@ class Transfer extends Operation
         return 'incomingTransfer';
     }
 
+    /**
+     * Get currency based on account currency
+     * @return string Currency
+     */
     public function getCurrencyAttribute() {
         return $this->accountFrom->currency;
     }

@@ -9,6 +9,7 @@ use Illuminate\Mail\Message;
 use Mail;
 
 /**
+ * Link an email address of a non existing user to an existing account
  * @property string $email
  */
 class Invitation extends Model
@@ -28,6 +29,11 @@ class Invitation extends Model
         self::created(__CLASS__.'@inviteFutureUser');
     }
 
+    /**
+     * [inviteFutureUser description]
+     * @param  self $invitation Invitation
+     * @return void
+     */
     public static function inviteFutureUser($invitation) {
         if (Auth::check()) {
             Mail::send(
@@ -50,10 +56,18 @@ class Invitation extends Model
         return $this->email;
     }
 
+    /**
+     * Get a link to the email
+     * @return string HTML anchor
+     */
     public function link() {
         return Html::mailto($this->email, $this).' ('.trans('invitation.helper').')';
     }
 
+    /**
+     * Query account related to invitation
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function account() {
         return $this->belongsTo('App\Account')
             ->withTrashed();

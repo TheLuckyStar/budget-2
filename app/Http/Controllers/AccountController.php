@@ -37,7 +37,7 @@ class AccountController extends AbstractController
     /**
      * Add new account
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postAdd(Request $request) {
         $this->validate($request, [
@@ -75,7 +75,7 @@ class AccountController extends AbstractController
      * Udate existing account
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postUpdate(Request $request, $accountId) {
         $account = Auth::user()->accounts()->where('owner', true)->findOrFail($accountId);
@@ -97,7 +97,7 @@ class AccountController extends AbstractController
     /**
      * Delete existing account (the account is actually archived)
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function getDelete($accountId) {
         $account = Auth::user()->nontrashedAccounts()->where('owner', true)->findOrFail($accountId);
@@ -111,7 +111,7 @@ class AccountController extends AbstractController
     /**
      * Restore archived account
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function getRestore($accountId) {
         $account = Auth::user()->trashedAccounts()->where('owner', true)->findOrFail($accountId);

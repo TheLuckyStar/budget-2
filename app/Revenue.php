@@ -5,6 +5,7 @@ use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Type of operation increasing an account or envelope balance
  * @property integer $id
  * @property App\Account $account
  * @property App\Envelope $envelope
@@ -41,7 +42,7 @@ class Revenue extends Operation
 
     /**
      * Array of field name to watch for changed on updated event
-     * @var [type]
+     * @var array
      */
     protected $watchedFieldInEvent = [
         'name',
@@ -62,6 +63,10 @@ class Revenue extends Operation
         ]);
     }
 
+    /**
+     * Get a link to the account page
+     * @return string HTML anchor
+     */
     public function link() {
         return Html::linkAction(
             'AccountController@getIndex',
@@ -71,24 +76,44 @@ class Revenue extends Operation
         );
     }
 
+    /**
+     * Query account related to revenue
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function account() {
         return $this->belongsTo('App\Account')
             ->withTrashed();
     }
 
+    /**
+     * Query envelope related to revenue
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function envelope() {
         return $this->belongsTo('App\Envelope')
             ->withTrashed();
     }
 
+    /**
+     * Get context color
+     * @return string Context color
+     */
     public function getContextAttribute() {
         return 'success';
     }
 
+    /**
+     * Get operation type
+     * @return string Type
+     */
     public function getTypeAttribute() {
         return 'revenue';
     }
 
+    /**
+     * Get currency based on account currency
+     * @return string Currency
+     */
     public function getCurrencyAttribute() {
         return $this->account->currency;
     }

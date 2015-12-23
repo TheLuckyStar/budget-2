@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
+ * A user able to authenticate and own accounts
  * @property integer $id
  * @property string $name
  * @property string $email
@@ -49,6 +50,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         self::created(__CLASS__.'@processInvitations');
     }
 
+    /**
+     * For each invitation related to the user email, attach the account and delete the invitation
+     * @param  self $user User
+     * @return void
+     */
     public static function processInvitations($user) {
         $invitations = Invitation::where('email', $user->email)->get();
 
@@ -67,10 +73,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->name;
     }
 
+    /**
+     * Link to user email
+     * @return string Html anchor
+     */
     public function link() {
         return Html::mailto($this->email, $this);
     }
 
+    /**
+     * Query accounts related to user (even if not owned by the user)
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function accounts() {
         return $this->belongsToMany('App\Account')
             ->withTrashed()
@@ -80,6 +94,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->orderBy('name');
     }
 
+    /**
+     * Query trashed accounts related to user (even if not owned by the user)
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function trashedAccounts() {
         return $this->belongsToMany('App\Account')
             ->onlyTrashed()
@@ -89,6 +107,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->orderBy('name');
     }
 
+    /**
+     * Query non trashed accounts related to user (even if not owned by the user)
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function nontrashedAccounts() {
         return $this->accounts()
             ->withPivot('owner')
@@ -97,6 +119,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             ->orderBy('name');
     }
 
+    /**
+     * Query envelopes related to accounts related to user (even if not owned by the user)
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function envelopes() {
         return Envelope::whereIn('account_id', function(QueryBuilder $query) {
             $query->select('account_id')

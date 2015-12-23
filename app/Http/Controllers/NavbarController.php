@@ -82,7 +82,7 @@ class NavbarController extends AbstractController
 
     /**
      * Trashed account links
-     * @return array Links
+     * @return array|null Links
      */
     private function horizontalAuthenticatedTrashedAccount() {
         $links = [];

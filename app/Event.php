@@ -7,6 +7,7 @@ use Html;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Record user action for history
  * @property integer $id
  * @property App\User $user
  * @property Illuminate\Database\Eloquent\Model $entity
@@ -42,8 +43,6 @@ class Event extends Model
         'entity_id' => 'integer',
     ];
 
-
-
     /**
      * Convert the model to its string representation.
      * @return string
@@ -65,6 +64,10 @@ class Event extends Model
         ]);
     }
 
+    /**
+     * Get action for translation name
+     * @return string Name
+     */
     public function actionForString()
     {
         if ($this->action == 'update') {
@@ -78,6 +81,10 @@ class Event extends Model
         return $this->action;
     }
 
+    /**
+     * Get action update for translation name
+     * @return string Name
+     */
     public function actionForStringUpdate()
     {
         if ($this->field_value_from == '') {
@@ -91,6 +98,10 @@ class Event extends Model
         return 'update';
     }
 
+    /**
+     * Get action delete for translation name
+     * @return string Name
+     */
     public function actionForStringDelete()
     {
         if (in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->entity))) {
@@ -100,6 +111,10 @@ class Event extends Model
         return 'delete';
     }
 
+    /**
+     * Get string for user name
+     * @return string Name
+     */
     public function userForString()
     {
         if ($this->user->id !== Auth::user()->id) {
@@ -109,6 +124,10 @@ class Event extends Model
         return trans('event.self');
     }
 
+    /**
+     * Get string for field name
+     * @return string Name
+     */
     public function fieldNameForString()
     {
         if ($this->entity instanceof Operation) {
@@ -122,6 +141,10 @@ class Event extends Model
         return trans($key);
     }
 
+    /**
+     * Get string for period
+     * @return string Period
+     */
     public function periodForString()
     {
         if ($this->created_at->diffInHours() === 0) {
@@ -131,17 +154,30 @@ class Event extends Model
         return trans('event.datePrefix').' '.$this->created_at->format(trans('app.date.short'));
     }
 
-
-
+    /**
+     * Query user related to event
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function user() {
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * Query entity related to event
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function entity() {
         return $this->morphTo()
             ->withTrashed();
     }
 
+    /**
+     * Get string for value
+     * @param  object $entity Entity that owns the field
+     * @param  string $fieldName Fieldname whre the value is stored
+     * @param  mixed $value Value
+     * @return string Value
+     */
     public function formatValue($entity, $fieldName, $value) {
 
         if ($fieldName === 'icon') {

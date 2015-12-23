@@ -47,7 +47,7 @@ class AllocationController extends AbstractController
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
      * @param  string|null $month Date within the month to consider (default to current month)
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postMain(Request $request, $accountId, $month = null) {
         $account = Auth::user()->accounts()->findOrFail($accountId);

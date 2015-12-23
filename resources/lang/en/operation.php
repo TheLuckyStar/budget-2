@@ -51,8 +51,6 @@ return [
 
     'type' => [
         'revenue' => 'Revenue',
-        'allocatedRevenue' => 'Allocated revenue',
-        'unallocatedRevenue' => 'Unallocated revenue',
         'income' => 'Allocated revenue',
         'outcome' => 'Outcome',
         'incomingTransfer' => 'Incoming transfer',

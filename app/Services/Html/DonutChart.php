@@ -5,16 +5,25 @@ use App\Envelope;
 use Config;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Build donut chart
+ */
 class DonutChart extends AbstractChart
 {
 
+    /**
+     * Has any relevant data been calculated
+     * @return boolean True if there is some data
+     */
     public function hasData() {
         return empty(array_filter(array_pluck($this->data, 'value'))) === false;
     }
 
-
     /**
-     * @param \Carbon\Carbon $date
+     * Create an instance and process data
+     * @param  object $scope Scope
+     * @param  \Carbon\Carbon $date Date
+     * @return self Line chart instance
      */
     public static function forge($scope, $date) {
         $chart = new self($scope, $date);
@@ -24,6 +33,10 @@ class DonutChart extends AbstractChart
         return $chart;
     }
 
+    /**
+     * Process data and colors
+     * @return void
+     */
     protected function process() {
         $after = $this->date->copy()->startOfMonth();
         $before = $this->date->copy()->endOfMonth();
@@ -41,6 +54,12 @@ class DonutChart extends AbstractChart
         }
     }
 
+    /**
+     * Process data for an account scope
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processAccount($after, $before) {
         $this->colors = array_values(Config::get('budget.statusColors'));
 
@@ -51,6 +70,12 @@ class DonutChart extends AbstractChart
         $this->processScopeRevenue($after, $before);
     }
 
+    /**
+     * Process data for an envelope scope
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processEnvelope($after, $before) {
         $this->colors = [
             Config::get('budget.statusColors.danger'),
@@ -64,6 +89,11 @@ class DonutChart extends AbstractChart
         $this->processScopeIncome($after, $before);
     }
 
+    /**
+     * Process data for an collection scope
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processCollection($before) {
         foreach ($this->scope as $model) {
             $balance = $model->getBalanceAttribute(null, $before);
@@ -78,6 +108,10 @@ class DonutChart extends AbstractChart
         }
     }
 
+    /**
+     * Process data for balance of previous month
+     * @return void
+     */
     protected function processScopePrevMonth() {
         $prevMonth = $this->date->copy()->subMonth()->endOfMonth();
         $prevBalance = $this->scope->getBalanceAttribute(null, $prevMonth);
@@ -92,6 +126,12 @@ class DonutChart extends AbstractChart
             Config::get('budget.statusColors.danger') : Config::get('budget.statusColors.success'));
     }
 
+    /**
+     * Process data for outcome
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processScopeOutome($after, $before) {
         $this->data[] = [
             'label' => trans('operation.type.outcome'),
@@ -100,6 +140,12 @@ class DonutChart extends AbstractChart
         ];
     }
 
+    /**
+     * Process data for outgoing transfer
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processScopeOutgoingTransfer($after, $before) {
         $this->data[] = [
             'label' => trans('operation.type.outgoingTransfer'),
@@ -108,6 +154,12 @@ class DonutChart extends AbstractChart
         ];
     }
 
+    /**
+     * Process data for incoming transfer
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processScopeIncomingTransfer($after, $before) {
         $this->data[] = [
             'label' => trans('operation.type.incomingTransfer'),
@@ -116,6 +168,12 @@ class DonutChart extends AbstractChart
         ];
     }
 
+    /**
+     * Process data for revenue
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processScopeRevenue($after, $before) {
         $this->data[] = [
             'label' => trans('operation.type.revenue'),
@@ -124,6 +182,12 @@ class DonutChart extends AbstractChart
         ];
     }
 
+    /**
+     * Process data for income
+     * @param  \Carbon\Carbon $after Start of month
+     * @param  \Carbon\Carbon $before End of month
+     * @return void
+     */
     protected function processScopeIncome($after, $before) {
         $this->data[] = [
             'label' => trans('operation.type.income'),

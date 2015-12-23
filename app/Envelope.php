@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
+ * Envelope belonging to an account
  * @property integer $id
  * @property string $name
  * @property float $default_income
@@ -45,7 +46,7 @@ class Envelope extends Model
 
     /**
      * Array of field name to watch for changed on updated event
-     * @var [type]
+     * @var array
      */
     protected $watchedFieldInEvent = [
         'name',
@@ -66,6 +67,12 @@ class Envelope extends Model
         return $this->name;
     }
 
+    /**
+     * Get a link to the envelope page
+     * @param  string|null $text Override link text
+     * @param  array  $moreAttributes Additional html attributes
+     * @return string HTML anchor
+     */
     public function link($text = null, $moreAttributes = []) {
         $attributes = ['class' => 'routable', 'data-target' => '#page-wrapper'];
 
@@ -84,6 +91,10 @@ class Envelope extends Model
         return Html::linkAction('EnvelopeController@getView', $text, $this, $attributes);
     }
 
+    /**
+     * Query events related to envelope
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function relatedEvents()
     {
         return Event::where(function(EloquentBuilder $query) {
@@ -103,30 +114,57 @@ class Envelope extends Model
         })->orderBy('id', 'desc');
     }
 
+    /**
+     * Query account related to envelope
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function account() {
         return $this->belongsTo('App\Account')
             ->withTrashed();
     }
 
+    /**
+     * Query incomes related to envelope
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function incomes() {
         return $this->hasMany('App\Income')
             ->orderBy('date');
     }
 
+    /**
+     * Query revenues related to envelope
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function revenues() {
         return $this->hasMany('App\Revenue')
             ->orderBy('date');
     }
 
+    /**
+     * Query outcomes related to envelope
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function outcomes() {
         return $this->hasMany('App\Outcome')
             ->orderBy('date');
     }
 
+    /**
+     * Query operations related to account for a given operation type
+     * @param string $type Operation type (singular form)
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function operationType($type) {
         return $this->{$type.'s'}();
     }
 
+    /**
+     * Get related operations in a given period
+     * @param  \Carbon\Carbon $after Start of period
+     * @param  \Carbon\Carbon $before End of period
+     * @return OperationCollection
+     */
     public function operationsInPeriod($after, $before) {
         $operations = new OperationCollection();
 
@@ -148,6 +186,12 @@ class Envelope extends Model
         return $operations->sortByDateThenCreatedAt();
     }
 
+    /**
+     * Get balance for a given period
+     * @param  \Carbon\Carbon|null $after Start of period
+     * @param  \Carbon\Carbon|null $before End of period
+     * @return float Balance
+     */
     public function getBalanceAttribute($after = null, $before = null) {
         $income  = $this->incomes()->inPeriod($after, $before)->sum('amount');
         $revenue = $this->revenues()->inPeriod($after, $before)->sum('amount');
@@ -158,12 +202,22 @@ class Envelope extends Model
         return floatval($balance);
     }
 
+    /**
+     * Get context color based on balance for a given period
+     * @param  \Carbon\Carbon|null $after Start of period
+     * @param  \Carbon\Carbon|null $before End of period
+     * @return string Context color
+     */
     public function getStatusAttribute($after = null, $before = null) {
         $balance = $this->getBalanceAttribute($after, $before);
 
         return $balance < 0 ? 'danger' : 'success';
     }
 
+    /**
+     * Get currency based on owner currency
+     * @return string Currency
+     */
     public function getCurrencyAttribute() {
         return $this->account->currency;
     }

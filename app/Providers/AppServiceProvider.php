@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Request;
 
+/**
+ * Register application wide services
+ */
 class AppServiceProvider extends ServiceProvider
 {
 
+    /**
+     * List of available locale
+     * @var array
+     */
     private $available = ['en', 'fr'];
 
 
@@ -49,6 +56,10 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Get locales supported by client (from HTTP header)
+     * @return array Supported locales
+     */
     private function getSupportedByClient()
     {
         $supportedByClient = explode(',', Request::server('HTTP_ACCEPT_LANGUAGE'));
@@ -60,6 +71,11 @@ class AppServiceProvider extends ServiceProvider
         return $supportedByClient;
     }
 
+    /**
+     * Set locale to application
+     * @param string $locale Locale
+     * @return void
+     */
     private function setLocale($locale)
     {
         setlocale(LC_TIME, $locale.'_'.strtoupper($locale).'.utf8');

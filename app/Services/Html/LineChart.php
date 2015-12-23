@@ -6,14 +6,26 @@ use Carbon\Carbon;
 use Config;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Build line chart
+ */
 class LineChart extends AbstractChart
 {
     const PERIOD_ANY = 0;
     const PERIOD_MONTH = 1;
     const PERIOD_YEAR = 2;
 
+    /**
+     * Type of period
+     * @var int
+     */
     protected $period;
 
+    /**
+     * Set period attributes and update date to the start of the period
+     * @param int $period Type of period
+     * @return void
+     */
     protected function setPeriod($period) {
         $this->period = $period;
 
@@ -26,6 +38,13 @@ class LineChart extends AbstractChart
         }
     }
 
+    /**
+     * Create an instance and process data
+     * @param  object $scope Scope
+     * @param  \Carbon\Carbon $date Date
+     * @param  int $period Period
+     * @return self Line chart instance
+     */
     public static function forge($scope, $date, $period) {
         $chart = new self($scope, $date);
 
@@ -36,6 +55,10 @@ class LineChart extends AbstractChart
         return $chart;
     }
 
+    /**
+     * Process data and colors
+     * @return void
+     */
     protected function process() {
         $this->colors = [Config::get('budget.statusColors.primary')];
 
@@ -48,6 +71,10 @@ class LineChart extends AbstractChart
         }
     }
 
+    /**
+     * Process data for a month period
+     * @return void
+     */
     protected function processMonth() {
         $date = $this->date->copy();
 
@@ -57,6 +84,10 @@ class LineChart extends AbstractChart
         }
     }
 
+    /**
+     * Process data for a year period
+     * @return void
+     */
     protected function processYear() {
         $date = $this->date->copy()->startOfMonth();
         $count = 0;
@@ -69,6 +100,12 @@ class LineChart extends AbstractChart
         }
     }
 
+    /**
+     * Get data for a given date interval
+     * @param  \Carbon\Carbon $after Start of period
+     * @param  \Carbon\Carbon $before End of period
+     * @return array
+     */
     protected function processScopeData($after, $before) {
         if ($this->scope instanceof Account) {
             return ['value' => $this->scope->getEnvelopesBalanceAttribute($after, $before)];
@@ -83,6 +120,12 @@ class LineChart extends AbstractChart
         }
     }
 
+    /**
+     * Get data for a given date interval for a collection
+     * @param  \Carbon\Carbon $after Start of period
+     * @param  \Carbon\Carbon $before End of period
+     * @return array
+     */
     protected function processScopeDataCollection($after, $before) {
         $data = [];
 

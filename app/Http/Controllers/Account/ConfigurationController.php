@@ -34,7 +34,7 @@ class ConfigurationController extends AbstractController
      * Attach a user to an account
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postAttachUser(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
@@ -55,7 +55,7 @@ class ConfigurationController extends AbstractController
      * Attach a new user to an account
      * @param  \Illuminate\Http\Request $request
      * @param  App\Account $account Account
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postAttachNewUser(Request $request, Account $account) {
         if ($account->invitations()->where('email', $request->input('email'))->count() === 0) {
@@ -69,7 +69,7 @@ class ConfigurationController extends AbstractController
      * Attach an existing user to an account
      * @param  App\Account $account Account
      * @param  App\User $user User
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postAttachExistingUser(Account $account, User $user) {
         if ($user->id != $account->owner()->first()->id
@@ -88,7 +88,7 @@ class ConfigurationController extends AbstractController
      * Detach a user from an account
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postDetachUser(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);
@@ -103,7 +103,7 @@ class ConfigurationController extends AbstractController
      * Detach an invitation from an account
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postDetachInvitation(Request $request, $accountId) {
         $account = Auth::user()->accounts()->findOrFail($accountId);

@@ -2,11 +2,13 @@
 
 use \Collective\Html\HtmlServiceProvider as CollectiveHtmlServiceProvider;
 
+/**
+ * Register html builder classes
+ */
 class HtmlServiceProvider extends CollectiveHtmlServiceProvider {
 
     /**
      * Register the service provider.
-     *
      * @return void
      */
     public function register()
@@ -19,7 +21,6 @@ class HtmlServiceProvider extends CollectiveHtmlServiceProvider {
 
     /**
      * Register the HTML builder instance.
-     *
      * @return void
      */
     protected function registerHtmlBuilder()
@@ -32,7 +33,6 @@ class HtmlServiceProvider extends CollectiveHtmlServiceProvider {
 
     /**
      * Register the form builder instance.
-     *
      * @return void
      */
     protected function registerFormBuilder()
@@ -47,7 +47,6 @@ class HtmlServiceProvider extends CollectiveHtmlServiceProvider {
 
     /**
      * Get the services provided by the provider.
-     *
      * @return array
      */
     public function provides()

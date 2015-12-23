@@ -51,8 +51,6 @@ return [
 
     'type' => [
         'revenue' => 'Revenu',
-        'allocatedRevenue' => 'Revenu alloué',
-        'unallocatedRevenue' => 'Revenu non alloué',
         'income' => 'Revenu alloué',
         'outcome' => 'Dépense',
         'incomingTransfer' => 'Virement entrant',

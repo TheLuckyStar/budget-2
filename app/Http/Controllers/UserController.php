@@ -24,7 +24,7 @@ class UserController extends AbstractController
     /**
      * Save user profile
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postProfile(Request $request) {
         $user = Auth::user();

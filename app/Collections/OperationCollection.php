@@ -8,8 +8,16 @@ use App\Transfer;
 use Html;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Collection of opearaion models
+ */
 class OperationCollection extends Collection
 {
+
+    /**
+     * Get a collection containing only revenues
+     * @return Collection Filtered collection
+     */
     public function filterRevenues()
     {
         return $this->filter(function($operation) {
@@ -17,6 +25,10 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Get a collection containing only incomes
+     * @return Collection Filtered collection
+     */
     public function filterIncomes()
     {
         return $this->filter(function($operation) {
@@ -24,6 +36,10 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Get a collection containing only outcomes
+     * @return Collection Filtered collection
+     */
     public function filterOutcomes()
     {
         return $this->filter(function($operation) {
@@ -31,6 +47,11 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Get a collection containing only incoming transfers for the given account
+     * @param $account \App\Account Account
+     * @return Collection Filtered collection
+     */
     public function filterIncomingTransfers($account)
     {
         return $this->filter(function($operation) use ($account) {
@@ -38,6 +59,11 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Get a collection containing only outgoing transfers for the given account
+     * @param $account \App\Account Account
+     * @return Collection Filtered collection
+     */
     public function filterOutgoingTransfers($account)
     {
         return $this->filter(function($operation) use ($account) {
@@ -45,6 +71,10 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Sort operations by date and then by created at date
+     * @return Collection Filtered collection
+     */
     public function sortByDateThenCreatedAt()
     {
         return $this->sort(function(Operation $operation1, Operation $operation2) {
@@ -56,6 +86,10 @@ class OperationCollection extends Collection
         });
     }
 
+    /**
+     * Get an array of operation name & formatted amount
+     * @return array Array of operations name & amount
+     */
     public function toNameAndAmountList() {
         return $this->map(function(Operation $operation) {
             return sprintf(
@@ -65,4 +99,5 @@ class OperationCollection extends Collection
             );
         })->toArray();
     }
+
 }

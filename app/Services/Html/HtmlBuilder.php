@@ -2,6 +2,9 @@
 
 use \Collective\Html\HtmlBuilder as CollectiveHtmlBuilder;
 
+/**
+ * Helper to build HTML elements
+ */
 class HtmlBuilder extends CollectiveHtmlBuilder {
 
     /**
@@ -62,6 +65,12 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return $price;
     }
 
+    /**
+     * Build optgroup to select recurring operations for a given type related to  a given account
+     * @param  \App\Account $account Account
+     * @param  string $type Type of recurring operation
+     * @return string HTML optgroup element
+     */
     public function recurringOperationsSelectOptions($account, $type) {
         $recurringOperations = $account->recurringOperations->where('type', $type);
         if ($recurringOperations->isEmpty()) {
@@ -77,6 +86,11 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return '<optgroup '.$this->attributes($attributes).'>'.implode('', $options).'</optgroup>';
     }
 
+    /**
+     * Build optgroup for a given recurring operation
+     * @param  \App\RecurringOperation $recurringOperation Recurring operation
+     * @return string HTML option element
+     */
     private function recurringOperationsSelectOption($recurringOperation) {
         $attributes = [
             'class' => 'recurring_operation',
@@ -91,6 +105,11 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return '<option '.$this->attributes($attributes).'>'.$recurringOperation.'</option>';
     }
 
+    /**
+     * Get envelope primary key for recurring operation select option
+     * @param  \App\RecurringOperation $recurringOperation Recurring operation
+     * @return int|null Envelope primary key
+     */
     private function recurringOperationsSelectOptionEnvelopeId($recurringOperation) {
         if ($recurringOperation->type === 'outcome' || $recurringOperation->type === 'revenue') {
             return $recurringOperation->entity_id;
@@ -99,6 +118,11 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return null;
     }
 
+    /**
+     * Get from account primary key for recurring operation select option
+     * @param  \App\RecurringOperation $recurringOperation Recurring operation
+     * @return int|null Account primary key
+     */
     private function recurringOperationsSelectOptionFromAccountId($recurringOperation) {
         if ($recurringOperation->type === 'incomingTransfer') {
             return $recurringOperation->entity_id;
@@ -107,6 +131,11 @@ class HtmlBuilder extends CollectiveHtmlBuilder {
         return null;
     }
 
+    /**
+     * Get to account primary key for recurring operation select option
+     * @param  \App\RecurringOperation $recurringOperation Recurring operation
+     * @return int|null Account primary key
+     */
     private function recurringOperationsSelectOptionToAccountId($recurringOperation) {
         if ($recurringOperation->type === 'outgoingTransfer') {
             return $recurringOperation->entity_id;

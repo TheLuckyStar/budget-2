@@ -122,7 +122,7 @@ class PasswordController extends AbstractController
         }
 
         return redirect()
-            ->action('Auth\PasswordController@postReset', $token)
+            ->action('Auth\PasswordController@postReset', [$token])
             ->withInput($request->only('email'))
             ->withErrors([trans($response)]);
     }

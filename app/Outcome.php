@@ -5,6 +5,7 @@ use Html;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Type of operation decreasing an envelope balance
  * @property integer $id
  * @property App\Envelope $envelope
  * @property string $name
@@ -39,7 +40,7 @@ class Outcome extends Operation
 
     /**
      * Array of field name to watch for changed on updated event
-     * @var [type]
+     * @var array
      */
     protected $watchedFieldInEvent = [
         'envelope_id',
@@ -62,6 +63,10 @@ class Outcome extends Operation
         ]);
     }
 
+    /**
+     * Get a link to the envelope operation page
+     * @return string HTML anchor
+     */
     public function link() {
         return Html::linkAction(
             'EnvelopeController@getView',
@@ -71,19 +76,35 @@ class Outcome extends Operation
         ).' ('.$this->envelope->link().')';
     }
 
+    /**
+     * Query envelope related to outcome
+     * @return \Illuminate\Database\Eloquent\Builder Query
+     */
     public function envelope() {
         return $this->belongsTo('App\Envelope')
             ->withTrashed();
     }
 
+    /**
+     * Get context color
+     * @return string Context color
+     */
     public function getContextAttribute() {
         return 'danger';
     }
 
+    /**
+     * Get operation type
+     * @return string Type
+     */
     public function getTypeAttribute() {
         return 'outcome';
     }
 
+    /**
+     * Get currency based on envelope currency
+     * @return string Currency
+     */
     public function getCurrencyAttribute() {
         return $this->envelope->currency;
     }

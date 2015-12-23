@@ -53,7 +53,7 @@ class EnvelopeController extends AbstractController
      * Add new envelope
      * @param  \Illuminate\Http\Request $request
      * @param  string $accountId Account primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postAdd(Request $request, $accountId) {
         $account = Auth::user()->accounts()->find($accountId);
@@ -100,7 +100,7 @@ class EnvelopeController extends AbstractController
      * Update existing envelope
      * @param  \Illuminate\Http\Request $request
      * @param  string $envelopeId Envelope primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function postUpdate(Request $request, $envelopeId) {
         $envelope = Envelope::withTrashed()->find($envelopeId);
@@ -126,7 +126,7 @@ class EnvelopeController extends AbstractController
     /**
      * Delete existing envelope (the envelope is actually archived)
      * @param  string $envelopeId Envelope primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function getDelete($envelopeId) {
         $envelope = Envelope::find($envelopeId);
@@ -145,7 +145,7 @@ class EnvelopeController extends AbstractController
     /**
      * Restore archived envelope
      * @param  string $envelopeId Envelope primary key
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function getRestore($envelopeId) {
         $envelope = Envelope::onlyTrashed()->find($envelopeId);
