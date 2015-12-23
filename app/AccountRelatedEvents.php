@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
+/**
+ * @property integer $id
+ */
 trait AccountRelatedEvents
 {
 
