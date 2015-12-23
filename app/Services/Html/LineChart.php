@@ -122,8 +122,8 @@ class LineChart extends AbstractChart
 
     /**
      * Get data for a given date interval for a collection
-     * @param  \Carbon\Carbon $after Start of period
-     * @param  \Carbon\Carbon $before End of period
+     * @param  \Carbon\Carbon|null $after Start of period
+     * @param  \Carbon\Carbon|null $before End of period
      * @return array
      */
     protected function processScopeDataCollection($after, $before) {
