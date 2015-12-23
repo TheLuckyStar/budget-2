@@ -54,7 +54,7 @@ class ConfigurationController extends AbstractController
     /**
      * Attach a new user to an account
      * @param  \Illuminate\Http\Request $request
-     * @param  App\Account $account Account
+     * @param  Account $account Account
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postAttachNewUser(Request $request, Account $account) {
@@ -67,8 +67,8 @@ class ConfigurationController extends AbstractController
 
     /**
      * Attach an existing user to an account
-     * @param  App\Account $account Account
-     * @param  App\User $user User
+     * @param  Account $account Account
+     * @param  User $user User
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postAttachExistingUser(Account $account, User $user) {

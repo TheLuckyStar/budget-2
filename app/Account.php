@@ -90,7 +90,7 @@ class Account extends Model
 
     /**
      * Query users related to account
-     * @return \Illuminate\Database\Eloquent\Builder Query
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany Query
      */
     public function users() {
         return $this->belongsToMany('App\User')
@@ -119,7 +119,7 @@ class Account extends Model
 
     /**
      * Query invitations related to account
-     * @return \Illuminate\Database\Eloquent\Builder Query
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany Query
      */
     public function invitations() {
         return $this->hasMany('App\Invitation');
