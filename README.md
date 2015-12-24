@@ -23,6 +23,7 @@ UX, design, logo, translation... any help is welcome !
 - (bank) account sharing (with email invitation for non existant users).
 - multiple envelopes per (bank) account (with account and archiving).
 - overview of current balances (for accounts and envelopes).
+- recurring operations
 - history records by account & envelope (with previous values).
 - monthly and yearly reports (with donut and line charts).
 - internationalization (fully supported : English, French).
@@ -60,4 +61,5 @@ UX, design, logo, translation... any help is welcome !
 	# DB_PASSWORD (mysql password)
 	php artisan migrate
 ```
+- [Set up email driver](https://laravel.com/docs/5.1/mail)
 - Configure your web server to point to ``/var/www/budget/public``
