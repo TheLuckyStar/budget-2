@@ -25,7 +25,7 @@ class HomeController extends AbstractController
         $accounts = Auth::user()->nontrashedAccounts->where('deleted_at', null);
 
         // Redirect for authenticated users with without account
-        if (empty($accounts) === 0) {
+        if ($accounts->isEmpty()) {
             $request->session()->reflash();
             return redirect()->action('AccountController@getAdd')
                 ->withSuccess(trans('account.add.redirectMessage'));

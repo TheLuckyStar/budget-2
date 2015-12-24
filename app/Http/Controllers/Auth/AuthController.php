@@ -83,7 +83,7 @@ class AuthController extends AbstractController
         if (Auth::check()) {
             $response->with('success', trans('user.login.successMessage', ['username' => Auth::user()->name]));
         } else {
-            $response->with('errors', [trans('user.login.errorMessage')]);
+            $response->withErrors([trans('user.login.errorMessage')]);
         }
 
         return $response;
