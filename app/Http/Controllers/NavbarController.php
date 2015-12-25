@@ -50,7 +50,7 @@ class NavbarController extends AbstractController
             ),
         ];
 
-        $links += $this->horizontalAuthenticatedNonTrashedAccount();
+        $links = array_merge($links, $this->horizontalAuthenticatedNonTrashedAccount());
 
         $links[] = $this->horizontalAuthenticatedTrashedAccount();
 
@@ -125,7 +125,7 @@ class NavbarController extends AbstractController
 
         $links = [];
         $links[] = $this->verticalAuthenticatedAccountLink($account);
-        $links += $this->verticalAuthenticatedNonTrashedEnvelopes($account);
+        $links = array_merge($links, $this->verticalAuthenticatedNonTrashedEnvelopes($account));
         $links[] = $this->verticalTrashedEnvelopes($account);
 
         $links[] = Html::linkAction(
