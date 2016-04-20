@@ -11,10 +11,9 @@ module.exports = {
     },
 
     entry: [
-        // 'bootswatch/lumen/bootstrap.css',
         'font-awesome/css/font-awesome.css',
         'scripts/init-vue.js',
-        'styles/bootswatch.less',
+        'styles/bootstrap.less',
     ],
 
     output: {
@@ -38,7 +37,7 @@ module.exports = {
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "url-loader",
+                loader: "file-loader",
                 query: {
                     name: "[name].[ext]",
                 },
