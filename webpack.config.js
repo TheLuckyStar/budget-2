@@ -11,8 +11,10 @@ module.exports = {
     },
 
     entry: [
-        'bootswatch/lumen/bootstrap.css',
+        // 'bootswatch/lumen/bootstrap.css',
+        'font-awesome/css/font-awesome.css',
         'scripts/init-vue.js',
+        'styles/bootswatch.less',
     ],
 
     output: {
@@ -29,6 +31,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 loaders: ['style', 'css'],
+            },
+            {
+                test: /\.less$/,
+                loaders: ['style', 'css', 'less'],
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
