@@ -1,6 +1,8 @@
 
 <template>
 
+    <layout-navbar></layout-navbar>
+
     <router-view></router-view>
 
 </template>

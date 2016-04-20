@@ -5,10 +5,11 @@ var App = require('components/App.vue')
 Vue.use(VueRouter)
 
 // Set options
-VueRouter.hashbang = false
 
 // Create instance
-var router = new VueRouter()
+var router = new VueRouter({
+    hashbang: false,
+})
 
 // Map routes
 router.map({})
