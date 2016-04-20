@@ -11,6 +11,7 @@ module.exports = {
     },
 
     entry: [
+        'bootstrap/dist/css/bootstrap.css',
         'scripts/init-vue.js',
     ],
 
@@ -20,10 +21,30 @@ module.exports = {
     },
 
     module: {
-        loaders: [{
-            test: /\.vue$/,
-            loader: 'vue',
-        }],
+        loaders: [
+            {
+                test: /\.vue$/,
+                loader: 'vue',
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style', 'css'],
+            },
+            {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader",
+                query: {
+                    name: "[name].[ext]",
+                },
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file-loader",
+                query: {
+                    name: "[name].[ext]",
+                },
+            },
+        ],
     },
 
     plugins: [
