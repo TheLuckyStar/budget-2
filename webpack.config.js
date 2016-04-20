@@ -11,7 +11,7 @@ module.exports = {
     },
 
     entry: [
-        'bootstrap/dist/css/bootstrap.css',
+        'bootswatch/lumen/bootstrap.css',
         'scripts/init-vue.js',
     ],
 
