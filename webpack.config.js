@@ -19,6 +19,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'public', 'assets'),
         filename: 'build.js',
+        publicPath: "/assets/",
     },
 
     module: {
@@ -36,14 +37,7 @@ module.exports = {
                 loaders: ['style', 'css', 'less'],
             },
             {
-                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: "file",
-                query: {
-                    name: "[name].[ext]",
-                },
-            },
-            {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                test: /\.(ttf|eot|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "file",
                 query: {
                     name: "[name].[ext]",
