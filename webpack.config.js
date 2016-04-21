@@ -15,6 +15,7 @@ module.exports = {
         'font-awesome/css/font-awesome.css',
         'scripts/init-vue.js',
         'scripts/init-vue-components.js',
+        'scripts/init-vuex.js',
         'styles/bootstrap.less',
         'scripts/init-vue-router.js',
     ],
@@ -54,6 +55,7 @@ module.exports = {
             jQuery: "jquery",
             Vue: "vue",
             VueRouter: "vue-router",
+            Vuex: "vuex",
         }),
     ],
 
