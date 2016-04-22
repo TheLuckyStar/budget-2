@@ -1,15 +1,8 @@
 
-const state = {
-    count: 0,
-}
-
-const mutations = {
-    INCREMENT (state, amount) {
-        state.count = state.count + amount
-    },
-}
+var lang = require('vuex/modules/lang.js')
 
 module.exports = new Vuex.Store({
-    state,
-    mutations,
+    modules: {
+        lang,
+    },
 })

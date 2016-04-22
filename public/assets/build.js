@@ -26261,7 +26261,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/App.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(112)
+	__vue_template__ = __webpack_require__(113)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -26281,22 +26281,135 @@
 
 /***/ },
 /* 109 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = {};
+
+
+	var actions = __webpack_require__(114);
+	var getters = __webpack_require__(110);
+	var store = __webpack_require__(111);
+
+	exports.default = {
+
+	    store: store,
+
+	    created: function created() {
+	        this.setLanguage(navigator.language || navigator.userLanguage);
+	    },
+
+	    vuex: {
+	        actions: {
+	            setLanguage: actions.setLanguage
+	        },
+	        getters: {
+	            language: getters.getLanguage,
+	            text: getters.getText
+	        }
+	    }
+	};
 
 /***/ },
-/* 110 */,
-/* 111 */,
+/* 110 */
+/***/ function(module, exports) {
+
+	
+	exports.getText = function (state) {
+	    return state.texts[state.lang.current]
+	}
+
+	exports.getLanguage = function (state) {
+	    return state.lang.current
+	}
+
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Vuex) {
+	var lang = __webpack_require__(112)
+
+	module.exports = new Vuex.Store({
+	    modules: {
+	        lang,
+	    },
+	})
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(103)))
+
+/***/ },
 /* 112 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n<!-- {{ counterValue }} -->\n\n<router-view></router-view>\n\n";
+	
+	const state = {
+	    current: 'en',
+	    texts: {
+	        en: {
+	            home: {
+	                title: 'Home',
+	            },
+	            accounts: {
+	                title: 'Accounts',
+	            },
+	            envelopes: {
+	                title: 'Envelopes',
+	            },
+	            operations: {
+	                title: 'Operations',
+	            },
+	        },
+	        fr: {
+	            home: {
+	                title: 'Accueil',
+	            },
+	            accounts: {
+	                title: 'Comptes',
+	            },
+	            envelopes: {
+	                title: 'Enveloppes',
+	            },
+	            operations: {
+	                title: 'Opérations',
+	            },
+	        },
+	    },
+	}
+
+	const mutations = {
+	    SET_LANGUAGE(state, language) {
+	        if (state.texts.hasOwnProperty(language)) {
+	            state.current = language
+	        }
+	    },
+	}
+
+	module.exports = {
+	    state,
+	    mutations,
+	}
+
+
+/***/ },
+/* 113 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n{{ language }}\n\n<router-view></router-view>\n\n";
+
+/***/ },
+/* 114 */
+/***/ function(module, exports) {
+
+	
+	exports.setLanguage = function (dispatch, language) {
+	    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
+	}
+
 
 /***/ }
 /******/ ]);

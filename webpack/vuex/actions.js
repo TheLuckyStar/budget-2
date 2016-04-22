@@ -1,4 +1,4 @@
 
-exports.incrementCounter = function ({ dispatch, state }) {
-    dispatch('INCREMENT', 1)
+exports.setLanguage = function (dispatch, language) {
+    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
 }

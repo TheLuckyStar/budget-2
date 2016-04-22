@@ -3,7 +3,7 @@
 
     <layout-navbar></layout-navbar>
 
-    <!-- {{ counterValue }} -->
+    {{ language }}
 
     <router-view></router-view>
 
@@ -13,26 +13,27 @@
 
 <script>
 
-    // var actions = require('vuex/actions.js')
-    // var getters = require('vuex/getters.js')
-    // var store = require('vuex/store.js')
+    var actions = require('vuex/actions.js')
+    var getters = require('vuex/getters.js')
+    var store = require('vuex/store.js')
 
     export default {
-        // store: store,
 
-        // created: function () {
-        //     var component = this
-        //     setInterval(function(){ component.increment(); }, 1000);
-        // },
+        store: store,
 
-        // vuex: {
-        //     actions: {
-        //         increment: actions.incrementCounter,
-        //     },
-        //     getters: {
-        //         counterValue: getters.getCount,
-        //     }
-        // }
+        created: function () {
+            this.setLanguage(navigator.language || navigator.userLanguage)
+        },
+
+        vuex: {
+            actions: {
+                setLanguage: actions.setLanguage,
+            },
+            getters: {
+                language: getters.getLanguage,
+                text: getters.getText,
+            }
+        }
     }
 
 </script>
