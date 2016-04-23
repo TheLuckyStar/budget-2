@@ -3,6 +3,9 @@ const state = {
     current: 'en',
     texts: {
         en: {
+            app: {
+                title: 'Budget',
+            },
             home: {
                 title: 'Home',
             },
@@ -17,6 +20,9 @@ const state = {
             },
         },
         fr: {
+            app: {
+                title: 'Budget',
+            },
             home: {
                 title: 'Accueil',
             },

@@ -48,9 +48,9 @@
 	__webpack_require__(85);
 	__webpack_require__(95);
 	__webpack_require__(98);
-	__webpack_require__(102);
-	__webpack_require__(104);
-	module.exports = __webpack_require__(106);
+	__webpack_require__(100);
+	__webpack_require__(108);
+	module.exports = __webpack_require__(110);
 
 
 /***/ },
@@ -22831,68 +22831,14 @@
 /* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Vue) {
-	Vue.component('layout-navbar', __webpack_require__(99))
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(100)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(101)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), true)
-	  if (!hotAPI.compatible) return
-	  var id = "/home/sel/www/budget/webpack/components/layout/Navbar.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 100 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {};
-
-/***/ },
-/* 101 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container-fluid\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" href=\"#\">Budget</a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/', activeClass: 'active' }\">\n                        Accueil\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        Comptes\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        Envelopes\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        Operations\n                    </a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
-
-/***/ },
-/* 102 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(Vue, Vuex) {
 	// Register object
 	Vue.use(Vuex)
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(103)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(99)))
 
 /***/ },
-/* 103 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -23473,13 +23419,199 @@
 	}));
 
 /***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Vue) {
+	Vue.component('layout-navbar', __webpack_require__(101))
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(102)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(107)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/layout/Navbar.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var actions = __webpack_require__(103);
+	var getters = __webpack_require__(104);
+
+	exports.default = {
+
+	    created: function created() {
+	        this.setLanguage(navigator.language || navigator.userLanguage);
+	    },
+
+	    vuex: {
+	        actions: {
+	            setLanguage: actions.setLanguage
+	        },
+	        getters: {
+	            currentLanguage: getters.getCurrentLanguage,
+	            availableLanguages: getters.getAvailableLanguages,
+	            text: getters.getText
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 103 */
+/***/ function(module, exports) {
+
+	
+	exports.setLanguage = function (dispatch, language) {
+	    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
+	}
+
+
+/***/ },
 /* 104 */
+/***/ function(module, exports) {
+
+	
+	exports.getText = function (state) {
+	    return state.lang.texts[state.lang.current]
+	}
+
+	exports.getCurrentLanguage = function (state) {
+	    return state.lang.current
+	}
+
+	exports.getAvailableLanguages = function (state) {
+	    var languages = []
+
+	    for (var language in state.lang.texts) {
+	        if (state.lang.texts.hasOwnProperty(language)) {
+	            languages.push(language)
+	        }
+	    }
+
+	    return languages
+	}
+
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Vuex) {
+	var lang = __webpack_require__(106)
+
+	module.exports = new Vuex.Store({
+	    modules: {
+	        lang,
+	    },
+	})
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(99)))
+
+/***/ },
+/* 106 */
+/***/ function(module, exports) {
+
+	
+	const state = {
+	    current: 'en',
+	    texts: {
+	        en: {
+	            app: {
+	                title: 'Budget',
+	            },
+	            home: {
+	                title: 'Home',
+	            },
+	            accounts: {
+	                title: 'Accounts',
+	            },
+	            envelopes: {
+	                title: 'Envelopes',
+	            },
+	            operations: {
+	                title: 'Operations',
+	            },
+	        },
+	        fr: {
+	            app: {
+	                title: 'Budget',
+	            },
+	            home: {
+	                title: 'Accueil',
+	            },
+	            accounts: {
+	                title: 'Comptes',
+	            },
+	            envelopes: {
+	                title: 'Enveloppes',
+	            },
+	            operations: {
+	                title: 'Opérations',
+	            },
+	        },
+	    },
+	}
+
+	const mutations = {
+	    SET_LANGUAGE(state, language) {
+	        if (state.texts.hasOwnProperty(language)) {
+	            state.current = language
+	        }
+	    },
+	}
+
+	module.exports = {
+	    state,
+	    mutations,
+	}
+
+
+/***/ },
+/* 107 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container-fluid\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/', activeClass: 'active' }\">\n                        {{ text.home.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"language in availableLanguages\"\n                    :class=\"{ active: language === currentLanguage }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(language)\">{{ language | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+
+/***/ },
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(105);
+	var content = __webpack_require__(109);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -23499,7 +23631,7 @@
 	}
 
 /***/ },
-/* 105 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -23513,11 +23645,11 @@
 
 
 /***/ },
-/* 106 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue, VueRouter) {
-	var App = __webpack_require__(108)
+	var App = __webpack_require__(112)
 
 	// Register router
 	Vue.use(VueRouter)
@@ -23535,10 +23667,10 @@
 	// Start application
 	router.start(App, 'app')
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(107)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(111)))
 
 /***/ },
-/* 107 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -26252,16 +26384,16 @@
 	}));
 
 /***/ },
-/* 108 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(109)
+	__vue_script__ = __webpack_require__(113)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/App.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(113)
+	__vue_template__ = __webpack_require__(114)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -26280,7 +26412,7 @@
 	})()}
 
 /***/ },
-/* 109 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26290,126 +26422,19 @@
 	});
 
 
-	var actions = __webpack_require__(114);
-	var getters = __webpack_require__(110);
-	var store = __webpack_require__(111);
+	var store = __webpack_require__(105);
 
 	exports.default = {
 
-	    store: store,
+	    store: store
 
-	    created: function created() {
-	        this.setLanguage(navigator.language || navigator.userLanguage);
-	    },
-
-	    vuex: {
-	        actions: {
-	            setLanguage: actions.setLanguage
-	        },
-	        getters: {
-	            language: getters.getLanguage,
-	            text: getters.getText
-	        }
-	    }
 	};
-
-/***/ },
-/* 110 */
-/***/ function(module, exports) {
-
-	
-	exports.getText = function (state) {
-	    return state.texts[state.lang.current]
-	}
-
-	exports.getLanguage = function (state) {
-	    return state.lang.current
-	}
-
-
-/***/ },
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(Vuex) {
-	var lang = __webpack_require__(112)
-
-	module.exports = new Vuex.Store({
-	    modules: {
-	        lang,
-	    },
-	})
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(103)))
-
-/***/ },
-/* 112 */
-/***/ function(module, exports) {
-
-	
-	const state = {
-	    current: 'en',
-	    texts: {
-	        en: {
-	            home: {
-	                title: 'Home',
-	            },
-	            accounts: {
-	                title: 'Accounts',
-	            },
-	            envelopes: {
-	                title: 'Envelopes',
-	            },
-	            operations: {
-	                title: 'Operations',
-	            },
-	        },
-	        fr: {
-	            home: {
-	                title: 'Accueil',
-	            },
-	            accounts: {
-	                title: 'Comptes',
-	            },
-	            envelopes: {
-	                title: 'Enveloppes',
-	            },
-	            operations: {
-	                title: 'Opérations',
-	            },
-	        },
-	    },
-	}
-
-	const mutations = {
-	    SET_LANGUAGE(state, language) {
-	        if (state.texts.hasOwnProperty(language)) {
-	            state.current = language
-	        }
-	    },
-	}
-
-	module.exports = {
-	    state,
-	    mutations,
-	}
-
-
-/***/ },
-/* 113 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n{{ language }}\n\n<router-view></router-view>\n\n";
 
 /***/ },
 /* 114 */
 /***/ function(module, exports) {
 
-	
-	exports.setLanguage = function (dispatch, language) {
-	    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
-	}
-
+	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n<router-view></router-view>\n\n";
 
 /***/ }
 /******/ ]);

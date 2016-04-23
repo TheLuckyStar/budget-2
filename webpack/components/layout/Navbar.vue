@@ -17,7 +17,9 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="#">Budget</a>
+                <a class="navbar-brand" v-link="{ path: '/', activeClass: 'active' }">
+                    {{ text.app.title }}
+                </a>
 
             </div>
 
@@ -26,23 +28,30 @@
                 <ul class="nav navbar-nav">
                     <li v-link-active>
                         <a v-link="{ path: '/', activeClass: 'active' }">
-                            Accueil
+                            {{ text.home.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/accounts', activeClass: 'active' }">
-                            Comptes
+                            {{ text.accounts.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/envelopes', activeClass: 'active' }">
-                            Envelopes
+                            {{ text.envelopes.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/operations', activeClass: 'active' }">
-                            Operations
+                            {{ text.operations.title }}
                         </a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li v-for="language in availableLanguages"
+                        :class="{ active: language === currentLanguage }">
+                        <a href="#" v-on:click.prevent="setLanguage(language)">{{ language | uppercase }}</a>
                     </li>
                 </ul>
 
@@ -58,6 +67,26 @@
 
 <script>
 
-    export default {}
+    var actions = require('vuex/actions.js')
+    var getters = require('vuex/getters.js')
+
+    export default {
+
+        created: function () {
+            this.setLanguage(navigator.language || navigator.userLanguage)
+        },
+
+        vuex: {
+            actions: {
+                setLanguage: actions.setLanguage,
+            },
+            getters: {
+                currentLanguage: getters.getCurrentLanguage,
+                availableLanguages: getters.getAvailableLanguages,
+                text: getters.getText,
+            }
+        }
+
+    }
 
 </script>
