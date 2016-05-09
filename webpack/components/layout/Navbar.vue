@@ -27,7 +27,7 @@
 
                 <ul class="nav navbar-nav">
                     <li v-link-active>
-                        <a v-link="{ path: '/', activeClass: 'active' }">
+                        <a v-link="{ path: '/home', activeClass: 'active' }">
                             {{ text.home.title }}
                         </a>
                     </li>

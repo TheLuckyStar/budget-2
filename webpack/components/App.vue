@@ -3,7 +3,9 @@
 
     <layout-navbar></layout-navbar>
 
-    <router-view></router-view>
+    <div class="container-fluid">
+        <router-view></router-view>
+    </div>
 
 </template>
 

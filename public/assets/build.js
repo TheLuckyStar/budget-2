@@ -49,8 +49,8 @@
 	__webpack_require__(95);
 	__webpack_require__(98);
 	__webpack_require__(100);
-	__webpack_require__(108);
-	module.exports = __webpack_require__(110);
+	__webpack_require__(109);
+	module.exports = __webpack_require__(111);
 
 
 /***/ },
@@ -22842,7 +22842,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
-	 * Vuex v0.6.2
+	 * Vuex v0.6.3
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -23001,6 +23001,10 @@
 	      _init.call(this, options);
 	    };
 
+	    /**
+	     * Vuex init hook, injected into each instances init hooks list.
+	     */
+
 	    function vuexInit() {
 	      var options = this.$options;
 	      var store = options.store;
@@ -23037,27 +23041,55 @@
 	        if (actions) {
 	          options.methods = options.methods || {};
 	          for (var _key in actions) {
-	            options.methods[_key] = makeBoundAction(actions[_key], this.$store);
+	            options.methods[_key] = makeBoundAction(this.$store, actions[_key], _key);
 	          }
 	        }
 	      }
 	    }
 
+	    /**
+	     * Setter for all getter properties.
+	     */
+
 	    function setter() {
 	      throw new Error('vuex getter properties are read-only.');
 	    }
 
+	    /**
+	     * Define a Vuex getter on an instance.
+	     *
+	     * @param {Vue} vm
+	     * @param {String} key
+	     * @param {Function} getter
+	     */
+
 	    function defineVuexGetter(vm, key, getter) {
-	      Object.defineProperty(vm, key, {
-	        enumerable: true,
-	        configurable: true,
-	        get: makeComputedGetter(vm.$store, getter),
-	        set: setter
-	      });
+	      if (typeof getter !== 'function') {
+	        console.warn('[vuex] Getter bound to key \'vuex.getters.' + key + '\' is not a function.');
+	      } else {
+	        Object.defineProperty(vm, key, {
+	          enumerable: true,
+	          configurable: true,
+	          get: makeComputedGetter(vm.$store, getter),
+	          set: setter
+	        });
+	      }
 	    }
+
+	    /**
+	     * Make a computed getter, using the same caching mechanism of computed
+	     * properties. In addition, it is cached on the raw getter function using
+	     * the store's unique cache id. This makes the same getter shared
+	     * across all components use the same underlying watcher, and makes
+	     * the getter evaluated only once during every flush.
+	     *
+	     * @param {Store} store
+	     * @param {Function} getter
+	     */
 
 	    function makeComputedGetter(store, getter) {
 	      var id = store._getterCacheId;
+
 	      // cached
 	      if (getter[id]) {
 	        return getter[id];
@@ -23081,7 +23113,18 @@
 	      return computedGetter;
 	    }
 
-	    function makeBoundAction(action, store) {
+	    /**
+	     * Make a bound-to-store version of a raw action function.
+	     *
+	     * @param {Store} store
+	     * @param {Function} action
+	     * @param {String} key
+	     */
+
+	    function makeBoundAction(store, action, key) {
+	      if (typeof action !== 'function') {
+	        console.warn('[vuex] Action bound to key \'vuex.actions.' + key + '\' is not a function.');
+	      }
 	      return function vuexBoundAction() {
 	        for (var _len = arguments.length, args = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
 	          args[_key2] = arguments[_key2];
@@ -23187,22 +23230,19 @@
 	       */
 
 	      value: function dispatch(type) {
-	        var _this2 = this;
-
 	        for (var _len2 = arguments.length, payload = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
 	          payload[_key2 - 1] = arguments[_key2];
 	        }
 
+	        var silent = false;
 	        // compatibility for object actions, e.g. FSA
 	        if ((typeof type === 'undefined' ? 'undefined' : babelHelpers.typeof(type)) === 'object' && type.type && arguments.length === 1) {
-	          payload = [type];
+	          payload = [type.payload];
+	          if (type.silent) silent = true;
 	          type = type.type;
 	        }
 	        var mutation = this._mutations[type];
-	        var prevSnapshot = this._prevSnapshot;
 	        var state = this.state;
-	        var snapshot = void 0,
-	            clonedPayload = void 0;
 	        if (mutation) {
 	          this._dispatching = true;
 	          // apply the mutation
@@ -23214,20 +23254,7 @@
 	            mutation.apply(undefined, [state].concat(babelHelpers.toConsumableArray(payload)));
 	          }
 	          this._dispatching = false;
-	          // invoke middlewares
-	          if (this._needSnapshots) {
-	            snapshot = this._prevSnapshot = deepClone(state);
-	            clonedPayload = deepClone(payload);
-	          }
-	          this._middlewares.forEach(function (m) {
-	            if (m.onMutation) {
-	              if (m.snapshot) {
-	                m.onMutation({ type: type, payload: clonedPayload }, snapshot, prevSnapshot, _this2);
-	              } else {
-	                m.onMutation({ type: type, payload: payload }, state, _this2);
-	              }
-	            }
-	          });
+	          if (!silent) this._applyMiddlewares(type, payload);
 	        } else {
 	          console.warn('[vuex] Unknown mutation: ' + type);
 	        }
@@ -23246,10 +23273,10 @@
 	    }, {
 	      key: 'watch',
 	      value: function watch(expOrFn, cb, options) {
-	        var _this3 = this;
+	        var _this2 = this;
 
 	        return this._vm.$watch(function () {
-	          return typeof expOrFn === 'function' ? expOrFn(_this3.state) : _this3._vm.$get(expOrFn);
+	          return typeof expOrFn === 'function' ? expOrFn(_this2.state) : _this2._vm.$get(expOrFn);
 	        }, cb, options);
 	      }
 
@@ -23283,10 +23310,8 @@
 	    }, {
 	      key: '_setupModuleState',
 	      value: function _setupModuleState(state, modules) {
-	        var setPath = Vue.parsers.path.setPath;
-
 	        Object.keys(modules).forEach(function (key) {
-	          setPath(state, key, modules[key].state || {});
+	          Vue.set(state, key, modules[key].state || {});
 	        });
 	      }
 
@@ -23301,8 +23326,6 @@
 	      key: '_setupModuleMutations',
 	      value: function _setupModuleMutations(updatedModules) {
 	        var modules = this._modules;
-	        var getPath = Vue.parsers.path.getPath;
-
 	        var allMutations = [this._rootMutations];
 	        Object.keys(updatedModules).forEach(function (key) {
 	          modules[key] = updatedModules[key];
@@ -23319,7 +23342,7 @@
 	                args[_key3 - 1] = arguments[_key3];
 	              }
 
-	              original.apply(undefined, [getPath(state, key)].concat(args));
+	              original.apply(undefined, [state[key]].concat(args));
 	            };
 	          });
 	          allMutations.push(mutations);
@@ -23339,12 +23362,12 @@
 	    }, {
 	      key: '_setupMutationCheck',
 	      value: function _setupMutationCheck() {
-	        var _this4 = this;
+	        var _this3 = this;
 
 	        var Watcher = getWatcher(this._vm);
 	        /* eslint-disable no-new */
 	        new Watcher(this._vm, '$data', function () {
-	          if (!_this4._dispatching) {
+	          if (!_this3._dispatching) {
 	            throw new Error('[vuex] Do not mutate vuex store state outside mutation handlers.');
 	          }
 	        }, { deep: true, sync: true });
@@ -23365,7 +23388,7 @@
 	    }, {
 	      key: '_setupMiddlewares',
 	      value: function _setupMiddlewares(middlewares, state) {
-	        var _this5 = this;
+	        var _this4 = this;
 
 	        this._middlewares = [devtoolMiddleware].concat(middlewares);
 	        this._needSnapshots = middlewares.some(function (m) {
@@ -23378,7 +23401,38 @@
 	        // call init hooks
 	        this._middlewares.forEach(function (m) {
 	          if (m.onInit) {
-	            m.onInit(m.snapshot ? initialSnapshot : state, _this5);
+	            m.onInit(m.snapshot ? initialSnapshot : state, _this4);
+	          }
+	        });
+	      }
+
+	      /**
+	       * Apply the middlewares on a given mutation.
+	       *
+	       * @param {String} type
+	       * @param {Array} payload
+	       */
+
+	    }, {
+	      key: '_applyMiddlewares',
+	      value: function _applyMiddlewares(type, payload) {
+	        var _this5 = this;
+
+	        var state = this.state;
+	        var prevSnapshot = this._prevSnapshot;
+	        var snapshot = void 0,
+	            clonedPayload = void 0;
+	        if (this._needSnapshots) {
+	          snapshot = this._prevSnapshot = deepClone(state);
+	          clonedPayload = deepClone(payload);
+	        }
+	        this._middlewares.forEach(function (m) {
+	          if (m.onMutation) {
+	            if (m.snapshot) {
+	              m.onMutation({ type: type, payload: clonedPayload }, snapshot, prevSnapshot, _this5);
+	            } else {
+	              m.onMutation({ type: type, payload: payload }, state, _this5);
+	            }
 	          }
 	        });
 	      }
@@ -23395,6 +23449,10 @@
 	  }();
 
 	  function install(_Vue) {
+	    if (Vue) {
+	      console.warn('[vuex] already installed. Vue.use(Vuex) should be called only once.');
+	      return;
+	    }
 	    Vue = _Vue;
 	    override(Vue);
 	  }
@@ -23424,6 +23482,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {
 	Vue.component('layout-navbar', __webpack_require__(101))
+	Vue.component('layout-sidebar', __webpack_require__(106))
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
@@ -23437,7 +23496,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(107)
+	__vue_template__ = __webpack_require__(105)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -23526,92 +23585,67 @@
 
 /***/ },
 /* 105 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/* WEBPACK VAR INJECTION */(function(Vuex) {
-	var lang = __webpack_require__(106)
-
-	module.exports = new Vuex.Store({
-	    modules: {
-	        lang,
-	    },
-	})
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(99)))
+	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container-fluid\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/home', activeClass: 'active' }\">\n                        {{ text.home.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"language in availableLanguages\"\n                    :class=\"{ active: language === currentLanguage }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(language)\">{{ language | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 106 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	
-	const state = {
-	    current: 'en',
-	    texts: {
-	        en: {
-	            app: {
-	                title: 'Budget',
-	            },
-	            home: {
-	                title: 'Home',
-	            },
-	            accounts: {
-	                title: 'Accounts',
-	            },
-	            envelopes: {
-	                title: 'Envelopes',
-	            },
-	            operations: {
-	                title: 'Operations',
-	            },
-	        },
-	        fr: {
-	            app: {
-	                title: 'Budget',
-	            },
-	            home: {
-	                title: 'Accueil',
-	            },
-	            accounts: {
-	                title: 'Comptes',
-	            },
-	            envelopes: {
-	                title: 'Enveloppes',
-	            },
-	            operations: {
-	                title: 'Opérations',
-	            },
-	        },
-	    },
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(107)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/layout/Sidebar.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(108)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
 	}
-
-	const mutations = {
-	    SET_LANGUAGE(state, language) {
-	        if (state.texts.hasOwnProperty(language)) {
-	            state.current = language
-	        }
-	    },
-	}
-
-	module.exports = {
-	    state,
-	    mutations,
-	}
-
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/layout/Sidebar.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
 
 /***/ },
 /* 107 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container-fluid\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/', activeClass: 'active' }\">\n                        {{ text.home.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"language in availableLanguages\"\n                    :class=\"{ active: language === currentLanguage }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(language)\">{{ language | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+
+	    props: ['entries']
+
+	};
 
 /***/ },
 /* 108 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div v-for=\"entryGroup in entries\" class=\"panel panel-default\">\n\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            {{ entryGroup.title }}\n        </h3>\n    </div>\n\n    <div class=\"list-group\">\n        <a v-for=\"entry in entryGroup.entries\"\n            v-link=\"{ path: entry.route, activeClass: 'active' }\"\n            class=\"list-group-item\">\n            {{ entry.text }}\n        </a>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(109);
+	var content = __webpack_require__(110);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -23631,7 +23665,7 @@
 	}
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -23645,11 +23679,11 @@
 
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue, VueRouter) {
-	var App = __webpack_require__(112)
+	var App = __webpack_require__(113)
 
 	// Register router
 	Vue.use(VueRouter)
@@ -23662,15 +23696,27 @@
 	})
 
 	// Map routes
-	router.map({})
+	router.map({
+	    '/accounts': {
+	        component: __webpack_require__(118),
+	        subRoutes: {
+	            '/balance': {
+	                component: __webpack_require__(121),
+	            },
+	            '/edit/:id': {
+	                component: __webpack_require__(124),
+	            },
+	        },
+	    },
+	})
 
 	// Start application
 	router.start(App, 'app')
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(111)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(112)))
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -26384,16 +26430,16 @@
 	}));
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(113)
+	__vue_script__ = __webpack_require__(114)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/App.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(114)
+	__vue_template__ = __webpack_require__(117)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -26412,7 +26458,7 @@
 	})()}
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26422,7 +26468,7 @@
 	});
 
 
-	var store = __webpack_require__(105);
+	var store = __webpack_require__(115);
 
 	exports.default = {
 
@@ -26431,10 +26477,237 @@
 	};
 
 /***/ },
-/* 114 */
+/* 115 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(Vuex) {
+	var lang = __webpack_require__(116)
+
+	module.exports = new Vuex.Store({
+	    modules: {
+	        lang,
+	    },
+	})
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(99)))
+
+/***/ },
+/* 116 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n<router-view></router-view>\n\n";
+	
+	const state = {
+	    current: 'en',
+	    texts: {
+	        en: {
+	            app: {
+	                title: 'Budget',
+	            },
+	            home: {
+	                title: 'Home',
+	            },
+	            accounts: {
+	                title: 'Accounts',
+	            },
+	            envelopes: {
+	                title: 'Envelopes',
+	            },
+	            operations: {
+	                title: 'Operations',
+	            },
+	        },
+	        fr: {
+	            app: {
+	                title: 'Budget',
+	            },
+	            home: {
+	                title: 'Accueil',
+	            },
+	            accounts: {
+	                title: 'Comptes',
+	            },
+	            envelopes: {
+	                title: 'Enveloppes',
+	            },
+	            operations: {
+	                title: 'Opérations',
+	            },
+	        },
+	    },
+	}
+
+	const mutations = {
+	    SET_LANGUAGE(state, language) {
+	        if (state.texts.hasOwnProperty(language)) {
+	            state.current = language
+	        }
+	    },
+	}
+
+	module.exports = {
+	    state,
+	    mutations,
+	}
+
+
+/***/ },
+/* 117 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n<div class=\"container-fluid\">\n    <router-view></router-view>\n</div>\n\n";
+
+/***/ },
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(119)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/accounts/index.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(120)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/accounts/index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 119 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+
+	    data: function data() {
+	        return {
+	            reportEntries: {
+	                title: 'Rapports',
+	                entries: [{
+	                    text: 'Solde',
+	                    route: '/accounts/balance'
+	                }]
+	            },
+	            recordEntries: {
+	                title: "Liste des comptes",
+	                entries: []
+	            }
+	        };
+	    }
+
+	};
+
+/***/ },
+/* 120 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div class=\"col-lg-2 col-md-3 col-sm-4\">\n    <layout-sidebar :entries=\"[reportEntries, recordEntries]\"></layout-sidebar>\n</div>\n\n<div class=\"col-lg-10 col-md-9 col-sm-8\">\n    <router-view></router-view>\n</div>\n\n";
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(122)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/accounts/balance.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(123)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/accounts/balance.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 122 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {};
+
+/***/ },
+/* 123 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\nBalance\n\n";
+
+/***/ },
+/* 124 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(125)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/accounts/edit.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(126)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/accounts/edit.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 125 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {};
+
+/***/ },
+/* 126 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\nEdit\n\n";
 
 /***/ }
 /******/ ]);

@@ -12,7 +12,19 @@ var router = new VueRouter({
 })
 
 // Map routes
-router.map({})
+router.map({
+    '/accounts': {
+        component: require('components/accounts/index.vue'),
+        subRoutes: {
+            '/balance': {
+                component: require('components/accounts/balance.vue'),
+            },
+            '/edit/:id': {
+                component: require('components/accounts/edit.vue'),
+            },
+        },
+    },
+})
 
 // Start application
 router.start(App, 'app')
