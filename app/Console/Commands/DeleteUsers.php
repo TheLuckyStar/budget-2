@@ -43,80 +43,87 @@ class DeleteUsers extends Command
         $query = DB::table('incomes');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $envelopeQuery = DB::table('envelopes')->select('id')->where('account_id', 'IN', $accountQuery);
-            $query->where('envelope_id', 'IN', $envelopeQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $envelopeQuery = DB::table('envelopes')->select('id')->whereNotIn('account_id', $accountQuery);
+            $query->whereIn('envelope_id', $envelopeQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' incomes deleted');
     }
 
     private function deleteOutcomes($exceptUser) {
         $query = DB::table('outcomes');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $envelopeQuery = DB::table('envelopes')->select('id')->where('account_id', 'IN', $accountQuery);
-            $query->where('envelope_id', 'IN', $envelopeQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $envelopeQuery = DB::table('envelopes')->select('id')->whereNotIn('account_id', $accountQuery);
+            $query->whereIn('envelope_id', $envelopeQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' outcomes deleted');
     }
 
     private function deleteRecurringOperations($exceptUser) {
         $query = DB::table('recurring_operations');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $query->where('account_id', 'IN', $accountQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $query->whereNotIn('account_id', $accountQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' recurring operations deleted');
     }
 
     private function deleteRevenues($exceptUser) {
         $query = DB::table('revenues');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $envelopeQuery = DB::table('envelopes')->select('id')->where('account_id', 'IN', $accountQuery);
-            $query->where('account_id', 'IN', $accountQuery);
-            $query->orWhere('envelope_id', 'IN', $envelopeQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $envelopeQuery = DB::table('envelopes')->select('id')->whereNotIn('account_id', $accountQuery);
+            $query->whereNotIn('account_id', $accountQuery);
+            $query->orWhereNotIn('envelope_id', $envelopeQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' revenues deleted');
     }
 
     private function deleteTransfers($exceptUser) {
         $query = DB::table('transfers');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $query->where('from_account_id', 'IN', $accountQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $query->whereNotIn('from_account_id', $accountQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' transfers deleted');
     }
 
     private function deleteEnvelopes($exceptUser) {
         $query = DB::table('envelopes');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $query->where('account_id', 'IN', $accountQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $query->whereNotIn('account_id', $accountQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' envelopes deleted');
     }
 
     private function deleteAccounts($exceptUser) {
         $query = DB::table('accounts');
 
         if (is_numeric($exceptUser)) {
-            $accountQuery = DB::table('accounts_users')->select('account_id')->where('user_id', '<>', $exceptUser);
-            $query->where('id', 'IN', $accountQuery);
+            $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
+            $query->whereNotIn('id', $accountQuery);
         }
 
-        $query->delete();
+        $count = $query->delete();
+        $this->output->writeln('<info>UserDelete:</info> '.$count.' accounts deleted');
     }
 }
