@@ -16,8 +16,9 @@ module.exports = {
         'scripts/init-vue.js',
         'scripts/init-vuex.js',
         'scripts/init-vue-components.js',
-        'styles/bootstrap.less',
+        'scripts/init-vue-resource.js',
         'scripts/init-vue-router.js',
+        'styles/bootstrap.less',
     ],
 
     output: {
@@ -54,6 +55,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             jQuery: "jquery",
             Vue: "vue",
+            VueResource: "vue-resource",
             VueRouter: "vue-router",
             Vuex: "vuex",
         }),

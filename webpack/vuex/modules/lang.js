@@ -1,39 +1,85 @@
 
 const state = {
-    current: 'en',
+    current: null,
     texts: {
         en: {
             app: {
                 title: 'Budget',
+                submit: 'Save',
             },
             home: {
-                title: 'Home',
+                page: {
+                    title: 'Home',
+                },
             },
             accounts: {
-                title: 'Accounts',
+                page: {
+                    title: 'Accounts',
+                },
+                report: {
+                    section: {
+                        title: 'Report',
+                    },
+                    balance: {
+                        title: 'Balances',
+                    },
+                },
+                edit: {
+                    title: 'Edit',
+                    fulltitle: 'Edit account',
+                    name: 'Name',
+                    currency: 'Currency',
+                },
             },
             envelopes: {
-                title: 'Envelopes',
+                page: {
+                    title: 'Envelopes',
+                },
             },
             operations: {
-                title: 'Operations',
+                page: {
+                    title: 'Operations',
+                },
             },
         },
         fr: {
             app: {
                 title: 'Budget',
+                submit: 'Enregistrer',
             },
             home: {
-                title: 'Accueil',
+                page: {
+                    title: 'Accueil',
+                },
             },
             accounts: {
-                title: 'Comptes',
+                page: {
+                    title: 'Comptes',
+                },
+                report: {
+                    section: {
+                        title: 'Analyser',
+                    },
+                    balance: {
+                        title: 'Soldes',
+                    },
+                },
+                edit: {
+                    title: 'Modifier',
+                    fulltitle: 'Modifier le compte',
+                    name: 'Nom',
+                    currency: 'Devise',
+                },
             },
             envelopes: {
-                title: 'Enveloppes',
+                page: {
+                    title: 'Enveloppes',
+                },
             },
             operations: {
-                title: 'Opérations',
+                page: {
+                    title: 'Opérations',
+                },
             },
         },
     },
@@ -41,9 +87,10 @@ const state = {
 
 const mutations = {
     SET_LANGUAGE(state, language) {
-        if (state.texts.hasOwnProperty(language)) {
-            state.current = language
+        if (state.texts.hasOwnProperty(language) === false) {
+            language = 'en'
         }
+        state.current = language
     },
 }
 

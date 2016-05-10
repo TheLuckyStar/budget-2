@@ -15,26 +15,46 @@
 
 <script>
 
+    var getters = require('vuex/getters.js')
+
     export default {
 
-        data: function() {
-            return {
-                reportEntries: {
-                    title: 'Rapports',
+        computed: {
+
+            reportEntries: function () {
+                return {
+                    title: this.text.accounts.report.section.title,
                     entries: [
                         {
-                            text: 'Solde',
-                            route: '/accounts/balance',
+                            text: this.text.accounts.report.balance.title,
+                            route: '/accounts/report/balance',
                         },
                     ],
-                },
-                recordEntries: {
-                    title: "Liste des comptes",
+                }
+            },
+
+            recordEntries: function () {
+                var recordEntries = {
+                    title: this.text.accounts.edit.title,
                     entries: [],
                 }
-            }
+                for (var i = 0; i < this.accounts.length; ++i) {
+                    recordEntries.entries.push({
+                        text: this.accounts[i].name,
+                        route: '/accounts/edit/' + this.accounts[i].id,
+                    })
+                }
+                return recordEntries
+            },
+
+        },
+
+        vuex: {
+            getters: {
+                accounts: getters.getAccounts,
+                text: getters.getText,
+            },
         },
 
     }
-
 </script>

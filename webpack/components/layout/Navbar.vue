@@ -28,22 +28,22 @@
                 <ul class="nav navbar-nav">
                     <li v-link-active>
                         <a v-link="{ path: '/home', activeClass: 'active' }">
-                            {{ text.home.title }}
+                            {{ text.home.page.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/accounts', activeClass: 'active' }">
-                            {{ text.accounts.title }}
+                            {{ text.accounts.page.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/envelopes', activeClass: 'active' }">
-                            {{ text.envelopes.title }}
+                            {{ text.envelopes.page.title }}
                         </a>
                     </li>
                     <li v-link-active>
                         <a v-link="{ path: '/operations', activeClass: 'active' }">
-                            {{ text.operations.title }}
+                            {{ text.operations.page.title }}
                         </a>
                     </li>
                 </ul>
@@ -84,8 +84,8 @@
                 currentLanguage: getters.getCurrentLanguage,
                 availableLanguages: getters.getAvailableLanguages,
                 text: getters.getText,
-            }
-        }
+            },
+        },
 
     }
 

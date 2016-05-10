@@ -14,3 +14,5 @@
 $app->get('/', function () use ($app) {
     return view('home');
 });
+
+$app->get('accounts', 'Accounts@index');

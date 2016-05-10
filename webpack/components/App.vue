@@ -13,11 +13,22 @@
 
 <script>
 
+    var actions = require('vuex/actions.js')
     var store = require('vuex/store.js')
 
     export default {
 
         store: store,
+
+        created: function () {
+            this.refreshAccounts()
+        },
+
+        vuex: {
+            actions: {
+                refreshAccounts: actions.refreshAccounts,
+            },
+        },
 
     }
 

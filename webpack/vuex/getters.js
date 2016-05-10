@@ -1,4 +1,8 @@
 
+/**
+ * Lang store
+ */
+
 exports.getText = function (state) {
     return state.lang.texts[state.lang.current]
 }
@@ -17,4 +21,14 @@ exports.getAvailableLanguages = function (state) {
     }
 
     return languages
+}
+
+
+
+/**
+ * Remote store
+ */
+
+exports.getAccounts = function (state) {
+    return state.remote.accounts
 }
