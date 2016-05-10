@@ -51,7 +51,7 @@
 	__webpack_require__(100);
 	__webpack_require__(109);
 	__webpack_require__(134);
-	module.exports = __webpack_require__(151);
+	module.exports = __webpack_require__(170);
 
 
 /***/ },
@@ -23770,7 +23770,7 @@
 /* 108 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div v-for=\"entryGroup in entries\" class=\"panel panel-default\">\n\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            {{ entryGroup.title }}\n        </h3>\n    </div>\n\n    <div class=\"list-group\">\n        <a v-for=\"entry in entryGroup.entries\"\n            v-link=\"{ path: entry.route, activeClass: 'active' }\"\n            class=\"list-group-item\">\n            {{ entry.text }}\n        </a>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div v-for=\"entryGroup in entries\" class=\"panel panel-default\">\n\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            <a v-if=\"entryGroup.route\"\n                v-link=\"{ path: entryGroup.route, activeClass: 'active' }\">\n                {{ entryGroup.title }}\n            </a>\n            <template v-else>\n                {{ entryGroup.title }}\n            </template>\n        </h3>\n    </div>\n\n    <div class=\"list-group\">\n        <a v-for=\"entry in entryGroup.entries\"\n            v-link=\"{ path: entry.route, activeClass: 'active' }\"\n            class=\"list-group-item\">\n            {{ entry.text }}\n        </a>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 109 */
@@ -25434,10 +25434,13 @@
 	        component: __webpack_require__(142),
 	        subRoutes: {
 	            '/report/balance': {
-	                component: __webpack_require__(145),
+	                component: __webpack_require__(164),
 	            },
 	            '/edit/:account_id': {
-	                component: __webpack_require__(148),
+	                component: __webpack_require__(167),
+	            },
+	            '/create': {
+	                component: __webpack_require__(167),
 	            },
 	        },
 	    },
@@ -28283,9 +28286,11 @@
 	                },
 	                edit: {
 	                    title: 'Edit',
-	                    fulltitle: 'Edit account',
 	                    name: 'Name',
 	                    currency: 'Currency',
+	                },
+	                create: {
+	                    title: 'New account',
 	                },
 	            },
 	            envelopes: {
@@ -28323,9 +28328,11 @@
 	                },
 	                edit: {
 	                    title: 'Modifier',
-	                    fulltitle: 'Modifier le compte',
 	                    name: 'Nom',
 	                    currency: 'Devise',
+	                },
+	                create: {
+	                    title: 'Nouveau compte',
 	                },
 	            },
 	            envelopes: {
@@ -28394,7 +28401,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(144)
+	__vue_template__ = __webpack_require__(163)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28451,6 +28458,13 @@
 	                });
 	            }
 	            return recordEntries;
+	        },
+
+	        createEntries: function createEntries() {
+	            return {
+	                title: this.text.accounts.create.title,
+	                route: '/accounts/create'
+	            };
 	        }
 
 	    },
@@ -28465,22 +28479,41 @@
 	};
 
 /***/ },
-/* 144 */
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div class=\"col-lg-2 col-md-3 col-sm-4\">\n    <layout-sidebar :entries=\"[reportEntries, recordEntries]\"></layout-sidebar>\n</div>\n\n<div class=\"col-lg-10 col-md-9 col-sm-8\">\n    <router-view></router-view>\n</div>\n\n";
+	module.exports = "\n\n<div class=\"col-lg-2 col-md-3 col-sm-4\">\n    <layout-sidebar :entries=\"[reportEntries, recordEntries, createEntries]\"></layout-sidebar>\n</div>\n\n<div class=\"col-lg-10 col-md-9 col-sm-8\">\n    <router-view></router-view>\n</div>\n\n";
 
 /***/ },
-/* 145 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(146)
+	__vue_script__ = __webpack_require__(165)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/report/balance.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(147)
+	__vue_template__ = __webpack_require__(166)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28499,7 +28532,7 @@
 	})()}
 
 /***/ },
-/* 146 */
+/* 165 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28510,22 +28543,22 @@
 	exports.default = {};
 
 /***/ },
-/* 147 */
+/* 166 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\nBalance\n\n";
 
 /***/ },
-/* 148 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(149)
+	__vue_script__ = __webpack_require__(168)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/edit.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(150)
+	__vue_template__ = __webpack_require__(169)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28544,7 +28577,7 @@
 	})()}
 
 /***/ },
-/* 149 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28558,8 +28591,17 @@
 
 	exports.default = {
 
+	    data: function data() {
+	        return {
+	            new_account: {}
+	        };
+	    },
+
 	    computed: {
 	        account: function account() {
+	            if (this.$route.params.account_id === undefined) {
+	                return this.new_account;
+	            }
 	            return this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id);
 	        }
 	    },
@@ -28574,19 +28616,19 @@
 	};
 
 /***/ },
-/* 150 */
+/* 169 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.edit.fulltitle }} {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"account.name\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"account.currency\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ $route.params.account_id ? text.accounts.edit.title : text.accounts.create.title }}\n            {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"account.name\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"account.currency\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
-/* 151 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(152);
+	var content = __webpack_require__(171);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -28606,7 +28648,7 @@
 	}
 
 /***/ },
-/* 152 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();

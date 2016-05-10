@@ -2,7 +2,7 @@
 <template>
 
     <div class="col-lg-2 col-md-3 col-sm-4">
-        <layout-sidebar :entries="[reportEntries, recordEntries]"></layout-sidebar>
+        <layout-sidebar :entries="[reportEntries, recordEntries, createEntries]"></layout-sidebar>
     </div>
 
     <div class="col-lg-10 col-md-9 col-sm-8">
@@ -45,6 +45,13 @@
                     })
                 }
                 return recordEntries
+            },
+
+            createEntries: function () {
+                return {
+                    title: this.text.accounts.create.title,
+                    route: '/accounts/create',
+                }
             },
 
         },

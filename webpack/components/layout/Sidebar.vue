@@ -5,7 +5,13 @@
 
         <div class="panel-heading">
             <h3 class="panel-title">
-                {{ entryGroup.title }}
+                <a v-if="entryGroup.route"
+                    v-link="{ path: entryGroup.route, activeClass: 'active' }">
+                    {{ entryGroup.title }}
+                </a>
+                <template v-else>
+                    {{ entryGroup.title }}
+                </template>
             </h3>
         </div>
 

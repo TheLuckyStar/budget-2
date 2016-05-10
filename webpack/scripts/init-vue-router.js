@@ -23,6 +23,9 @@ router.map({
             '/edit/:account_id': {
                 component: require('components/accounts/edit.vue'),
             },
+            '/create': {
+                component: require('components/accounts/edit.vue'),
+            },
         },
     },
 })

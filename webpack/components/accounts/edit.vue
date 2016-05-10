@@ -6,7 +6,8 @@
         <fieldset>
 
             <legend>
-                {{ text.accounts.edit.fulltitle }} {{ account.name }}
+                {{ $route.params.account_id ? text.accounts.edit.title : text.accounts.create.title }}
+                {{ account.name }}
             </legend>
 
             <div class="form-group">
@@ -49,8 +50,17 @@
 
     export default {
 
+        data: function () {
+            return {
+                new_account: {},
+            }
+        },
+
         computed: {
             account: function () {
+                if (this.$route.params.account_id === undefined) {
+                    return this.new_account
+                }
                 return this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id)
             },
         },

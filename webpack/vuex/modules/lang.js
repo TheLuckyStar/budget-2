@@ -26,9 +26,11 @@ const state = {
                 },
                 edit: {
                     title: 'Edit',
-                    fulltitle: 'Edit account',
                     name: 'Name',
                     currency: 'Currency',
+                },
+                create: {
+                    title: 'New account',
                 },
             },
             envelopes: {
@@ -66,9 +68,11 @@ const state = {
                 },
                 edit: {
                     title: 'Modifier',
-                    fulltitle: 'Modifier le compte',
                     name: 'Nom',
                     currency: 'Devise',
+                },
+                create: {
+                    title: 'Nouveau compte',
                 },
             },
             envelopes: {
