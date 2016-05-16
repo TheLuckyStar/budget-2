@@ -16,3 +16,5 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('accounts', 'Accounts@index');
+$app->post('accounts', 'Accounts@store');
+$app->put('accounts/{id}', 'Accounts@update');

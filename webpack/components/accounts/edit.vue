@@ -1,12 +1,12 @@
 
 <template>
 
-    <form class="form-horizontal">
+    <form v-on:submit.prevent="onSubmit" class="form-horizontal">
 
         <fieldset>
 
             <legend>
-                {{ $route.params.account_id ? text.accounts.edit.title : text.accounts.create.title }}
+                {{ account.id ? text.accounts.edit.title : text.accounts.create.title }}
                 {{ account.name }}
             </legend>
 
@@ -15,7 +15,7 @@
                     {{ text.accounts.edit.name }}
                 </label>
                 <div class="col-lg-10 col-md-9 col-sm-8">
-                    <input type="text" class="form-control" id="input-account-name" v-model="account.name">
+                    <input type="text" class="form-control" id="input-account-name" v-model="name" lazy>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
                     {{ text.accounts.edit.currency }}
                 </label>
                 <div class="col-lg-10 col-md-9 col-sm-8">
-                    <input type="text" class="form-control" id="input-account-currency" v-model="account.currency">
+                    <input type="text" class="form-control" id="input-account-currency" v-model="currency" lazy>
                 </div>
             </div>
 
@@ -46,26 +46,51 @@
 
 <script>
 
+    var actions = require('vuex/actions.js')
     var getters = require('vuex/getters.js')
 
     export default {
 
         data: function () {
             return {
-                new_account: {},
+                account: {},
+                name: null,
+                currency: null,
             }
         },
 
-        computed: {
-            account: function () {
-                if (this.$route.params.account_id === undefined) {
-                    return this.new_account
+        route: {
+            data: function (transition) {
+                this.setData()
+            },
+        },
+
+        watch: {
+            accounts: function () {
+                this.setData()
+            },
+        },
+
+        methods: {
+            setData: function () {
+                this.account = this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id)
+                this.name = this.account.name
+                this.currency = this.account.currency
+            },
+            onSubmit: function () {
+                if (this.account.id) {
+                    this.updateAccount(this.account.id, this)
+                } else {
+                    this.saveAccount(this)
                 }
-                return this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id)
             },
         },
 
         vuex: {
+            actions: {
+                updateAccount: actions.updateAccount,
+                saveAccount: actions.saveAccount,
+            },
             getters: {
                 accounts: getters.getAccounts,
                 text: getters.getText,

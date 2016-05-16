@@ -12809,6 +12809,7 @@
 	    }
 	    return {}
 	})
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
 /***/ },
@@ -23669,17 +23670,52 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {
-	exports.setLanguage = function (dispatch, language) {
-	    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
+	actions = {
+
+	    setLanguage: function (dispatch, language) {
+	        dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
+	    },
+
+	    refreshAccounts: function (dispatch, callback) {
+	        Vue.resource('accounts').get().then(function (response) {
+	            dispatch.dispatch('SET_ACCOUNTS', response.data)
+	            if (callback) {
+	                callback()
+	            }
+	        }, function (response) {
+	            console.log(response)
+	        });
+	    },
+
+	    saveAccount: function (dispatch, data) {
+	        var attributes = {
+	            name: data.name,
+	            currency: data.currency,
+	        }
+	        Vue.resource('accounts').save({}, attributes).then(function (response) {
+	            actions.refreshAccounts(dispatch, function() {
+	                location.hash = '#accounts/edit/'+response.data.id;
+	            })
+	        }, function (response) {
+	            console.log(response)
+	        });
+	    },
+
+	    updateAccount: function (dispatch, id, data) {
+	        var attributes = {
+	            name: data.name,
+	            currency: data.currency,
+	        }
+	        Vue.resource('accounts/'+id).update({}, attributes).then(function (response) {
+	            actions.refreshAccounts(dispatch)
+	        }, function (response) {
+	            console.log(response)
+	        });
+	    },
+
 	}
 
-	exports.refreshAccounts = function (dispatch, language) {
-	    Vue.resource('accounts').get().then(function (response) {
-	        dispatch.dispatch('SET_ACCOUNTS', response.data)
-	    }, function (response) {
-	        console.log(response)
-	    });
-	}
+	module.exports = actions
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
@@ -28574,26 +28610,51 @@
 	});
 
 
+	var actions = __webpack_require__(103);
 	var getters = __webpack_require__(104);
 
 	exports.default = {
 
 	    data: function data() {
 	        return {
-	            new_account: {}
+	            account: {},
+	            name: null,
+	            currency: null
 	        };
 	    },
 
-	    computed: {
-	        account: function account() {
-	            if (this.$route.params.account_id === undefined) {
-	                return this.new_account;
+	    route: {
+	        data: function data(transition) {
+	            this.setData();
+	        }
+	    },
+
+	    watch: {
+	        accounts: function accounts() {
+	            this.setData();
+	        }
+	    },
+
+	    methods: {
+	        setData: function setData() {
+	            this.account = this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id);
+	            this.name = this.account.name;
+	            this.currency = this.account.currency;
+	        },
+	        onSubmit: function onSubmit() {
+	            if (this.account.id) {
+	                this.updateAccount(this.account.id, this);
+	            } else {
+	                this.saveAccount(this);
 	            }
-	            return this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id);
 	        }
 	    },
 
 	    vuex: {
+	        actions: {
+	            updateAccount: actions.updateAccount,
+	            saveAccount: actions.saveAccount
+	        },
 	        getters: {
 	            accounts: getters.getAccounts,
 	            text: getters.getText
@@ -28606,7 +28667,7 @@
 /* 150 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ $route.params.account_id ? text.accounts.edit.title : text.accounts.create.title }}\n            {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"account.name\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"account.currency\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ account.id ? text.accounts.edit.title : text.accounts.create.title }}\n            {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 151 */
