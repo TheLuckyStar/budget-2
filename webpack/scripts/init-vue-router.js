@@ -12,7 +12,7 @@ var router = new VueRouter({
 // Map routes
 router.map({
     '/home': {
-        component: { template: 'Home' },
+        component: { template: '<div>Home</div>' },
     },
     '/accounts': {
         component: require('components/accounts/index.vue'),

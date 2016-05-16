@@ -51,7 +51,7 @@
 	__webpack_require__(100);
 	__webpack_require__(109);
 	__webpack_require__(134);
-	module.exports = __webpack_require__(170);
+	module.exports = __webpack_require__(151);
 
 
 /***/ },
@@ -12816,7 +12816,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, Vue, jQuery) {/*!
-	 * Vue.js v1.0.22
+	 * Vue.js v1.0.24
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -13953,8 +13953,9 @@
 	 */
 
 	function inDoc(node) {
-	  var doc = document.documentElement;
-	  var parent = node && node.parentNode;
+	  if (!node) return false;
+	  var doc = node.ownerDocument.documentElement;
+	  var parent = node.parentNode;
 	  return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 	}
 
@@ -15828,19 +15829,26 @@
 	 */
 
 	function flushBatcherQueue() {
-	  runBatcherQueue(queue);
-	  queue.length = 0;
-	  runBatcherQueue(userQueue);
-	  // user watchers triggered more internal watchers
-	  if (queue.length) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    _again = false;
+
 	    runBatcherQueue(queue);
+	    runBatcherQueue(userQueue);
+	    // user watchers triggered more watchers,
+	    // keep flushing until it depletes
+	    if (queue.length) {
+	      _again = true;
+	      continue _function;
+	    }
+	    // dev tool hook
+	    /* istanbul ignore if */
+	    if (devtools && config.devtools) {
+	      devtools.emit('flush');
+	    }
+	    resetBatcherState();
 	  }
-	  // dev tool hook
-	  /* istanbul ignore if */
-	  if (devtools && config.devtools) {
-	    devtools.emit('flush');
-	  }
-	  resetBatcherState();
 	}
 
 	/**
@@ -15866,6 +15874,7 @@
 	      }
 	    }
 	  }
+	  queue.length = 0;
 	}
 
 	/**
@@ -20585,7 +20594,7 @@
 	    var node = nodes[i];
 	    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
 	      parent.removeChild(node);
-	      node = parseTemplate(node);
+	      node = parseTemplate(node, true);
 	    }
 	    frag.appendChild(node);
 	  }
@@ -22821,7 +22830,7 @@
 
 	installGlobalAPI(Vue);
 
-	Vue.version = '1.0.22';
+	Vue.version = '1.0.24';
 
 	// devtools global hook
 	/* istanbul ignore next */
@@ -22851,9 +22860,6 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -23770,7 +23776,7 @@
 /* 108 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div v-for=\"entryGroup in entries\" class=\"panel panel-default\">\n\n    <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">\n            <a v-if=\"entryGroup.route\"\n                v-link=\"{ path: entryGroup.route, activeClass: 'active' }\">\n                {{ entryGroup.title }}\n            </a>\n            <template v-else>\n                {{ entryGroup.title }}\n            </template>\n        </h3>\n    </div>\n\n    <div class=\"list-group\">\n        <a v-for=\"entry in entryGroup.entries\"\n            v-link=\"{ path: entry.route, activeClass: 'active' }\"\n            class=\"list-group-item\">\n            {{ entry.text }}\n        </a>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\">\n\n        <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">\n                <a v-if=\"entryGroup.route\"\n                    v-link=\"{ path: entryGroup.route, activeClass: 'active' }\">\n                    {{ entryGroup.title }}\n                </a>\n                <template v-else>\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\">\n            <a v-for=\"entry in entryGroup.entries\"\n                v-link=\"{ path: entry.route, activeClass: 'active' }\"\n                class=\"list-group-item\">\n                {{ entry.text }}\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 109 */
@@ -25428,19 +25434,19 @@
 	// Map routes
 	router.map({
 	    '/home': {
-	        component: { template: 'Home' },
+	        component: { template: '<div>Home</div>' },
 	    },
 	    '/accounts': {
 	        component: __webpack_require__(142),
 	        subRoutes: {
 	            '/report/balance': {
-	                component: __webpack_require__(164),
+	                component: __webpack_require__(145),
 	            },
 	            '/edit/:account_id': {
-	                component: __webpack_require__(167),
+	                component: __webpack_require__(148),
 	            },
 	            '/create': {
-	                component: __webpack_require__(167),
+	                component: __webpack_require__(148),
 	            },
 	        },
 	    },
@@ -28389,7 +28395,7 @@
 /* 141 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<layout-navbar></layout-navbar>\n\n<div class=\"container-fluid\">\n    <router-view></router-view>\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <layout-navbar></layout-navbar>\n\n    <div class=\"container-fluid\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 142 */
@@ -28401,7 +28407,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(163)
+	__vue_template__ = __webpack_require__(144)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28479,41 +28485,22 @@
 	};
 
 /***/ },
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */
+/* 144 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div class=\"col-lg-2 col-md-3 col-sm-4\">\n    <layout-sidebar :entries=\"[reportEntries, recordEntries, createEntries]\"></layout-sidebar>\n</div>\n\n<div class=\"col-lg-10 col-md-9 col-sm-8\">\n    <router-view></router-view>\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-2 col-md-3 col-sm-4\">\n        <layout-sidebar :entries=\"[reportEntries, recordEntries, createEntries]\"></layout-sidebar>\n    </div>\n\n    <div class=\"col-lg-10 col-md-9 col-sm-8\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 164 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(165)
+	__vue_script__ = __webpack_require__(146)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/report/balance.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(166)
+	__vue_template__ = __webpack_require__(147)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28532,7 +28519,7 @@
 	})()}
 
 /***/ },
-/* 165 */
+/* 146 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28543,22 +28530,22 @@
 	exports.default = {};
 
 /***/ },
-/* 166 */
+/* 147 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\nBalance\n\n";
 
 /***/ },
-/* 167 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(168)
+	__vue_script__ = __webpack_require__(149)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/edit.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(169)
+	__vue_template__ = __webpack_require__(150)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -28577,7 +28564,7 @@
 	})()}
 
 /***/ },
-/* 168 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28616,19 +28603,19 @@
 	};
 
 /***/ },
-/* 169 */
+/* 150 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<form class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ $route.params.account_id ? text.accounts.edit.title : text.accounts.create.title }}\n            {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"account.name\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"account.currency\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
-/* 170 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(171);
+	var content = __webpack_require__(152);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -28648,7 +28635,7 @@
 	}
 
 /***/ },
-/* 171 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();

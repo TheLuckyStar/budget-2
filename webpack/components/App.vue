@@ -1,10 +1,14 @@
 
 <template>
 
-    <layout-navbar></layout-navbar>
+    <div>
 
-    <div class="container-fluid">
-        <router-view></router-view>
+        <layout-navbar></layout-navbar>
+
+        <div class="container-fluid">
+            <router-view></router-view>
+        </div>
+
     </div>
 
 </template>
