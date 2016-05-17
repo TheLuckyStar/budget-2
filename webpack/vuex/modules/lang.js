@@ -6,6 +6,7 @@ const state = {
             app: {
                 title: 'Budget',
                 enable: 'Enable',
+                disable: 'Disable',
                 submit: 'Save',
             },
             home: {
@@ -17,24 +18,19 @@ const state = {
                 page: {
                     title: 'Accounts',
                 },
-                report: {
-                    section: {
-                        title: 'Report',
-                    },
-                    balance: {
-                        title: 'Balances',
-                    },
+                enabled: {
+                    title: 'Enabled accounts',
                 },
-                edit: {
-                    title: 'Edit',
+                disabled: {
+                    title: 'Disabled accounts',
+                },
+                new: {
+                    title: 'New account',
+                },
+                form: {
+                    title: 'Account details',
                     name: 'Name',
                     currency: 'Currency',
-                },
-                enable: {
-                    title: 'Enable',
-                },
-                create: {
-                    title: 'New account',
                 },
             },
             envelopes: {
@@ -52,6 +48,7 @@ const state = {
             app: {
                 title: 'Budget',
                 enable: 'Activer',
+                disable: 'Désactiver',
                 submit: 'Enregistrer',
             },
             home: {
@@ -63,24 +60,19 @@ const state = {
                 page: {
                     title: 'Comptes',
                 },
-                report: {
-                    section: {
-                        title: 'Analyser',
-                    },
-                    balance: {
-                        title: 'Soldes',
-                    },
+                enabled: {
+                    title: 'Comptes activés',
                 },
-                edit: {
-                    title: 'Modifier',
+                disabled: {
+                    title: 'Comptes désactivés',
+                },
+                new: {
+                    title: 'Nouveau compte',
+                },
+                form: {
+                    title: 'Informations du compte',
                     name: 'Nom',
                     currency: 'Devise',
-                },
-                enable: {
-                    title: 'Activer',
-                },
-                create: {
-                    title: 'Nouveau compte',
                 },
             },
             envelopes: {

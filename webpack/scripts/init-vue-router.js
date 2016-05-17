@@ -17,17 +17,14 @@ router.map({
     '/accounts': {
         component: require('components/accounts/index.vue'),
         subRoutes: {
-            '/report/balance': {
-                component: require('components/accounts/report/balance.vue'),
+            '/all': {
+                component: require('components/accounts/all.vue'),
             },
-            '/edit/:account_id': {
-                component: require('components/accounts/edit.vue'),
+            '/one/:account_id': {
+                component: require('components/accounts/one.vue'),
             },
-            '/enable/:account_id': {
-                component: require('components/accounts/enable.vue'),
-            },
-            '/create': {
-                component: require('components/accounts/edit.vue'),
+            '/new': {
+                component: require('components/accounts/new.vue'),
             },
         },
     },
@@ -36,8 +33,7 @@ router.map({
 router.redirect({
   '*': '/',
   '/': '/home',
-  '/accounts': '/accounts/report',
-  '/accounts/report': '/accounts/report/balance',
+  '/accounts': '/accounts/all',
 })
 
 // Start application

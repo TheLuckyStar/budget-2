@@ -1,7 +1,9 @@
 
 <template>
 
-    Balance
+    <div>
+        Balance
+    </div>
 
 </template>
 

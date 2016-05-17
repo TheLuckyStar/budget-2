@@ -27,11 +27,10 @@ class Accounts extends Controller
         $this->validate($request, [
             'name' => 'max:255|unique:accounts,name,'.$id,
             'currency' => 'max:3',
-            'deleted_at' => 'date',
         ]);
 
-        $account = Account::onlyTrashed()->findOrFail($id);
-        $account->fill($request->only('name', 'currency'));
+        $account = Account::withTrashed()->findOrFail($id);
+        $account->fill($request->all());
         $account->save();
 
         return $account;

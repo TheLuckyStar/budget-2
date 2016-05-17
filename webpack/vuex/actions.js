@@ -19,7 +19,7 @@ actions = {
     saveAccount: function (dispatch, attributes) {
         Vue.resource('accounts').save({}, attributes).then(function (response) {
             actions.refreshAccounts(dispatch, function() {
-                location.hash = '#accounts/edit/'+response.data.id;
+                location.hash = '#accounts/one/'+response.data.id;
             })
         }, function (response) {
             console.log(response)

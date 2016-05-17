@@ -21,5 +21,5 @@ class Account extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'currency'];
+    protected $fillable = ['name', 'currency', 'deleted_at'];
 }

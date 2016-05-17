@@ -4,7 +4,7 @@
     <div>
 
         <div class="col-lg-2 col-md-3 col-sm-4">
-            <layout-sidebar :entries="[reportMenu, editMenu, enableMenu, createMenu]"></layout-sidebar>
+            <layout-sidebar :entries="entries"></layout-sidebar>
         </div>
 
         <div class="col-lg-10 col-md-9 col-sm-8">
@@ -25,50 +25,51 @@
 
         computed: {
 
-            reportMenu: function () {
+            entries: function () {
+                return [
+                    this.enabledAccountsMenu,
+                    this.disabledAccountsMenu,
+                    this.newAccountMenu
+                ].filter(function(val) {
+                    return val !== null;
+                })
+            },
+
+            enabledAccountsMenu: function () {
+                if (this.enabledAccounts.length === 0) {
+                    return null
+                }
                 return {
-                    title: this.text.accounts.report.section.title,
-                    entries: [
-                        {
-                            text: this.text.accounts.report.balance.title,
-                            route: '/accounts/report/balance',
-                        },
-                    ],
+                    title: this.text.accounts.enabled.title,
+                    route: '/accounts/all',
+                    entries: this.enabledAccounts.map(function (account) {
+                        return {
+                            text: account.name,
+                            route: '/accounts/one/' + account.id,
+                        }
+                    }),
                 }
             },
 
-            editMenu: function () {
-                var recordEntries = {
-                    title: this.text.accounts.edit.title,
-                    entries: [],
+            disabledAccountsMenu: function () {
+                if (this.disabledAccounts.length === 0) {
+                    return null
                 }
-                for (var i = 0; i < this.enabledAccounts.length; ++i) {
-                    recordEntries.entries.push({
-                        text: this.enabledAccounts[i].name,
-                        route: '/accounts/edit/' + this.enabledAccounts[i].id,
-                    })
-                }
-                return recordEntries
-            },
-
-            enableMenu: function () {
-                var recordEntries = {
-                    title: this.text.accounts.enable.title,
-                    entries: [],
-                }
-                for (var i = 0; i < this.disabledAccounts.length; ++i) {
-                    recordEntries.entries.push({
-                        text: this.disabledAccounts[i].name,
-                        route: '/accounts/enable/' + this.disabledAccounts[i].id,
-                    })
-                }
-                return recordEntries
-            },
-
-            createMenu: function () {
                 return {
-                    title: this.text.accounts.create.title,
-                    route: '/accounts/create',
+                    title: this.text.accounts.disabled.title,
+                    entries: this.disabledAccounts.map(function (account) {
+                        return {
+                            text: account.name,
+                            route: '/accounts/one/' + account.id,
+                        }
+                    }),
+                }
+            },
+
+            newAccountMenu: function () {
+                return {
+                    title: this.text.accounts.new.title,
+                    route: '/accounts/new',
                 }
             },
 

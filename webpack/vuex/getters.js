@@ -12,15 +12,7 @@ exports.getCurrentLanguage = function (state) {
 }
 
 exports.getAvailableLanguages = function (state) {
-    var languages = []
-
-    for (var language in state.lang.texts) {
-        if (state.lang.texts.hasOwnProperty(language)) {
-            languages.push(language)
-        }
-    }
-
-    return languages
+    return Object.keys(state.lang.texts)
 }
 
 
@@ -28,6 +20,10 @@ exports.getAvailableLanguages = function (state) {
 /**
  * Remote store
  */
+
+exports.getAccounts = function (state) {
+    return state.remote.accounts
+}
 
 exports.getEnabledAccounts = function (state) {
     return state.remote.accounts.filter(function (account) {
