@@ -37,6 +37,20 @@ exports.state = {
                 page: {
                     title: 'Envelopes',
                 },
+                enabled: {
+                    title: 'Enabled envelopes',
+                },
+                disabled: {
+                    title: 'Disabled envelopes',
+                },
+                new: {
+                    title: 'New envelope',
+                },
+                form: {
+                    title: 'Envelope details',
+                    name: 'Name',
+                    icon: 'Icon',
+                },
             },
             operations: {
                 page: {
@@ -78,6 +92,20 @@ exports.state = {
             envelopes: {
                 page: {
                     title: 'Enveloppes',
+                },
+                enabled: {
+                    title: 'Enveloppes activées',
+                },
+                disabled: {
+                    title: 'Enveloppes désactivées',
+                },
+                new: {
+                    title: 'Nouvelle enveloppe',
+                },
+                form: {
+                    title: "Informations de l'enveloppe",
+                    name: 'Nom',
+                    icon: 'Icône',
                 },
             },
             operations: {

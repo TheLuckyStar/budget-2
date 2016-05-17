@@ -41,3 +41,38 @@ exports.updateAccount = function (dispatch, id, attributes) {
         console.log(response)
     })
 }
+
+
+
+/**
+ * Remote store : envelopes
+ */
+
+exports.refreshEnvelopes = function (dispatch, callback) {
+    Vue.resource('envelopes').get().then(function (response) {
+        dispatch.dispatch('SET_ENVELOPES', response.data)
+        if (callback) {
+            callback()
+        }
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+exports.saveEnvelope = function (dispatch, attributes) {
+    Vue.resource('envelopes').save({}, attributes).then(function (response) {
+        exports.refreshEnvelopes(dispatch, function() {
+            location.hash = '#envelopes/one/'+response.data.id
+        })
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+exports.updateEnvelope = function (dispatch, id, attributes) {
+    Vue.resource('envelopes/'+id).update({}, attributes).then(function (response) {
+        exports.refreshEnvelopes(dispatch)
+    }, function (response) {
+        console.log(response)
+    })
+}

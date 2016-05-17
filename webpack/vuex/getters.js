@@ -36,3 +36,25 @@ exports.getDisabledAccounts = function (state) {
         return account.deleted_at !== null;
     })
 }
+
+
+
+/**
+ * Remote store : envelopes
+ */
+
+exports.getEnvelopes = function (state) {
+    return state.remote.envelopes
+}
+
+exports.getEnabledEnvelopes = function (state) {
+    return state.remote.envelopes.filter(function (envelope) {
+        return envelope.deleted_at === null;
+    })
+}
+
+exports.getDisabledEnvelopes = function (state) {
+    return state.remote.envelopes.filter(function (envelope) {
+        return envelope.deleted_at !== null;
+    })
+}

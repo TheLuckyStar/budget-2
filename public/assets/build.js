@@ -51,7 +51,7 @@
 	__webpack_require__(100);
 	__webpack_require__(112);
 	__webpack_require__(137);
-	module.exports = __webpack_require__(266);
+	module.exports = __webpack_require__(284);
 
 
 /***/ },
@@ -23713,6 +23713,41 @@
 	    })
 	}
 
+
+
+	/**
+	 * Remote store : envelopes
+	 */
+
+	exports.refreshEnvelopes = function (dispatch, callback) {
+	    Vue.resource('envelopes').get().then(function (response) {
+	        dispatch.dispatch('SET_ENVELOPES', response.data)
+	        if (callback) {
+	            callback()
+	        }
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
+	exports.saveEnvelope = function (dispatch, attributes) {
+	    Vue.resource('envelopes').save({}, attributes).then(function (response) {
+	        exports.refreshEnvelopes(dispatch, function() {
+	            location.hash = '#envelopes/one/'+response.data.id
+	        })
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
+	exports.updateEnvelope = function (dispatch, id, attributes) {
+	    Vue.resource('envelopes/'+id).update({}, attributes).then(function (response) {
+	        exports.refreshEnvelopes(dispatch)
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
 /***/ },
@@ -23755,6 +23790,28 @@
 	exports.getDisabledAccounts = function (state) {
 	    return state.remote.accounts.filter(function (account) {
 	        return account.deleted_at !== null;
+	    })
+	}
+
+
+
+	/**
+	 * Remote store : envelopes
+	 */
+
+	exports.getEnvelopes = function (state) {
+	    return state.remote.envelopes
+	}
+
+	exports.getEnabledEnvelopes = function (state) {
+	    return state.remote.envelopes.filter(function (envelope) {
+	        return envelope.deleted_at === null;
+	    })
+	}
+
+	exports.getDisabledEnvelopes = function (state) {
+	    return state.remote.envelopes.filter(function (envelope) {
+	        return envelope.deleted_at !== null;
 	    })
 	}
 
@@ -25746,6 +25803,20 @@
 	            },
 	            '/new': {
 	                component: __webpack_require__(263),
+	            },
+	        },
+	    },
+	    '/envelopes': {
+	        component: __webpack_require__(266),
+	        subRoutes: {
+	            '/all': {
+	                component: __webpack_require__(269),
+	            },
+	            '/one/:envelope_id': {
+	                component: __webpack_require__(272),
+	            },
+	            '/new': {
+	                component: __webpack_require__(281),
 	            },
 	        },
 	    },
@@ -28515,22 +28586,11 @@
 	});
 
 
-	var actions = __webpack_require__(103);
 	var store = __webpack_require__(141);
 
 	exports.default = {
 
-	    store: store,
-
-	    created: function created() {
-	        this.refreshAccounts();
-	    },
-
-	    vuex: {
-	        actions: {
-	            refreshAccounts: actions.refreshAccounts
-	        }
-	    }
+	    store: store
 
 	};
 
@@ -28601,6 +28661,20 @@
 	                page: {
 	                    title: 'Envelopes',
 	                },
+	                enabled: {
+	                    title: 'Enabled envelopes',
+	                },
+	                disabled: {
+	                    title: 'Disabled envelopes',
+	                },
+	                new: {
+	                    title: 'New envelope',
+	                },
+	                form: {
+	                    title: 'Envelope details',
+	                    name: 'Name',
+	                    icon: 'Icon',
+	                },
 	            },
 	            operations: {
 	                page: {
@@ -28642,6 +28716,20 @@
 	            envelopes: {
 	                page: {
 	                    title: 'Enveloppes',
+	                },
+	                enabled: {
+	                    title: 'Enveloppes activées',
+	                },
+	                disabled: {
+	                    title: 'Enveloppes désactivées',
+	                },
+	                new: {
+	                    title: 'Nouvelle enveloppe',
+	                },
+	                form: {
+	                    title: "Informations de l'enveloppe",
+	                    name: 'Nom',
+	                    icon: 'Icône',
 	                },
 	            },
 	            operations: {
@@ -28728,6 +28816,7 @@
 	});
 
 
+	var actions = __webpack_require__(103);
 	var getters = __webpack_require__(104);
 
 	exports.default = {
@@ -28780,7 +28869,14 @@
 
 	    },
 
+	    created: function created() {
+	        this.refreshAccounts();
+	    },
+
 	    vuex: {
+	        actions: {
+	            refreshAccounts: actions.refreshAccounts
+	        },
 	        getters: {
 	            enabledAccounts: getters.getEnabledAccounts,
 	            disabledAccounts: getters.getDisabledAccounts,
@@ -42945,10 +43041,477 @@
 /* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(267)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/index.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(268)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var actions = __webpack_require__(103);
+	var getters = __webpack_require__(104);
+
+	exports.default = {
+
+	    computed: {
+
+	        entries: function entries() {
+	            return [this.enabledEnvelopesMenu, this.disabledEnvelopesMenu, this.newEnvelopeMenu].filter(function (val) {
+	                return val !== null;
+	            });
+	        },
+
+	        enabledEnvelopesMenu: function enabledEnvelopesMenu() {
+	            if (this.enabledEnvelopes.length === 0) {
+	                return null;
+	            }
+	            return {
+	                title: this.text.envelopes.enabled.title,
+	                route: '/envelopes/all',
+	                entries: this.enabledEnvelopes.map(function (envelope) {
+	                    return {
+	                        text: envelope.name,
+	                        route: '/envelopes/one/' + envelope.id
+	                    };
+	                })
+	            };
+	        },
+
+	        disabledEnvelopesMenu: function disabledEnvelopesMenu() {
+	            if (this.disabledEnvelopes.length === 0) {
+	                return null;
+	            }
+	            return {
+	                title: this.text.envelopes.disabled.title,
+	                entries: this.disabledEnvelopes.map(function (envelope) {
+	                    return {
+	                        text: envelope.name,
+	                        route: '/envelopes/one/' + envelope.id
+	                    };
+	                })
+	            };
+	        },
+
+	        newEnvelopeMenu: function newEnvelopeMenu() {
+	            return {
+	                title: this.text.envelopes.new.title,
+	                route: '/envelopes/new'
+	            };
+	        }
+
+	    },
+
+	    created: function created() {
+	        this.refreshEnvelopes();
+	    },
+
+	    vuex: {
+	        actions: {
+	            refreshEnvelopes: actions.refreshEnvelopes
+	        },
+	        getters: {
+	            enabledEnvelopes: getters.getEnabledEnvelopes,
+	            disabledEnvelopes: getters.getDisabledEnvelopes,
+	            text: getters.getText
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-2 col-md-3 col-sm-4\">\n        <layout-sidebar :entries=\"entries\"></layout-sidebar>\n    </div>\n\n    <div class=\"col-lg-10 col-md-9 col-sm-8\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(270)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/all.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(271)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/all.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var getters = __webpack_require__(104);
+
+	exports.default = {
+
+	    vuex: {
+	        getters: {
+	            envelopes: getters.getEnvelopes
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 271 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div>\n    {{ envelopes }}\n</div>\n\n";
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(273)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(280)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/one.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var getters = __webpack_require__(104);
+	var EnvelopesForm = __webpack_require__(274);
+	var EnvelopesReportsBalance = __webpack_require__(277);
+
+	exports.default = {
+
+	    data: function data() {
+	        return {
+	            envelope_id: null
+	        };
+	    },
+
+	    route: {
+	        data: function data() {
+	            this.envelope_id = this.$route.params.envelope_id;
+	        }
+	    },
+
+	    computed: {
+	        envelope: function envelope() {
+	            return this.$options.filters.find(this.envelopes, 'id', this.envelope_id);
+	        }
+	    },
+
+	    vuex: {
+	        getters: {
+	            envelopes: getters.getEnvelopes
+	        }
+	    },
+
+	    components: {
+	        EnvelopesForm: EnvelopesForm,
+	        EnvelopesReportsBalance: EnvelopesReportsBalance
+	    }
+
+	};
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(275)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(276)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/form.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var actions = __webpack_require__(103);
+	var getters = __webpack_require__(104);
+
+	exports.default = {
+
+	    props: ['envelope'],
+
+	    data: function data() {
+	        return {
+	            name: null,
+	            icon: null
+	        };
+	    },
+
+	    watch: {
+	        envelope: function envelope() {
+	            this.name = this.envelope.name;
+	            this.icon = this.envelope.icon;
+	        }
+	    },
+
+	    methods: {
+	        onSubmit: function onSubmit() {
+	            var attributes = {
+	                name: this.name,
+	                icon: this.icon
+	            };
+	            if (this.envelope.id) {
+	                this.updateEnvelope(this.envelope.id, attributes);
+	            } else {
+	                this.saveEnvelope(attributes);
+	            }
+	        },
+	        onEnable: function onEnable() {
+	            var attributes = {
+	                deleted_at: null
+	            };
+	            this.updateEnvelope(this.envelope.id, attributes);
+	        },
+	        onDisable: function onDisable() {
+	            var attributes = {
+	                deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
+	            };
+	            this.updateEnvelope(this.envelope.id, attributes);
+	        }
+	    },
+
+	    vuex: {
+	        actions: {
+	            updateEnvelope: actions.updateEnvelope,
+	            saveEnvelope: actions.saveEnvelope
+	        },
+	        getters: {
+	            text: getters.getText
+	        }
+	    }
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(155)))
+
+/***/ },
+/* 276 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ envelope.id ? text.envelopes.form.title : text.envelopes.new.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-sm-12 text-right\">\n                <button v-if=\"envelope.deleted_at === null\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n                <button v-if=\"envelope.deleted_at !== null\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success pull-left\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"envelope.deleted_at === null && envelope.id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning pull-left\">\n                    {{ text.app.disable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(278)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/reports/balance.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(279)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/reports/balance.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 278 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {};
+
+/***/ },
+/* 279 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div>\n    Balance\n</div>\n\n";
+
+/***/ },
+/* 280 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(282)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(283)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/envelopes/new.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var EnvelopesForm = __webpack_require__(274);
+
+	exports.default = {
+
+	    data: function data() {
+	        return {
+	            envelope: {
+	                deleted_at: null
+	            }
+	        };
+	    },
+
+	    components: {
+	        EnvelopesForm: EnvelopesForm
+	    }
+
+	};
+
+/***/ },
+/* 283 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<div class=\"col-md-12\">\n    <envelopes-form :envelope=\"envelope\"></envelopes-form>\n</div>\n\n";
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(267);
+	var content = __webpack_require__(285);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -42968,7 +43531,7 @@
 	}
 
 /***/ },
-/* 267 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();

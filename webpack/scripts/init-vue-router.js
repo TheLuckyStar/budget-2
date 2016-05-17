@@ -28,6 +28,20 @@ router.map({
             },
         },
     },
+    '/envelopes': {
+        component: require('components/envelopes/index.vue'),
+        subRoutes: {
+            '/all': {
+                component: require('components/envelopes/all.vue'),
+            },
+            '/one/:envelope_id': {
+                component: require('components/envelopes/one.vue'),
+            },
+            '/new': {
+                component: require('components/envelopes/new.vue'),
+            },
+        },
+    },
 })
 
 router.redirect({
