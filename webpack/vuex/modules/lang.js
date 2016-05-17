@@ -1,5 +1,5 @@
 
-const state = {
+exports.state = {
     current: null,
     texts: {
         en: {
@@ -89,16 +89,11 @@ const state = {
     },
 }
 
-const mutations = {
+exports.mutations = {
     SET_LANGUAGE(state, language) {
         if (state.texts.hasOwnProperty(language) === false) {
             language = 'en'
         }
         state.current = language
     },
-}
-
-module.exports = {
-    state,
-    mutations,
 }

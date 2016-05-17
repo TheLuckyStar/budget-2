@@ -23670,44 +23670,48 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {
-	actions = {
+	/**
+	 * Lang store
+	 */
 
-	    setLanguage: function (dispatch, language) {
-	        dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
-	    },
-
-	    refreshAccounts: function (dispatch, callback) {
-	        Vue.resource('accounts').get().then(function (response) {
-	            dispatch.dispatch('SET_ACCOUNTS', response.data)
-	            if (callback) {
-	                callback()
-	            }
-	        }, function (response) {
-	            console.log(response)
-	        });
-	    },
-
-	    saveAccount: function (dispatch, attributes) {
-	        Vue.resource('accounts').save({}, attributes).then(function (response) {
-	            actions.refreshAccounts(dispatch, function() {
-	                location.hash = '#accounts/one/'+response.data.id;
-	            })
-	        }, function (response) {
-	            console.log(response)
-	        });
-	    },
-
-	    updateAccount: function (dispatch, id, attributes) {
-	        Vue.resource('accounts/'+id).update({}, attributes).then(function (response) {
-	            actions.refreshAccounts(dispatch)
-	        }, function (response) {
-	            console.log(response)
-	        });
-	    },
-
+	exports.setLanguage = function (dispatch, language) {
+	    dispatch.dispatch('SET_LANGUAGE', language.substr(0, 2))
 	}
 
-	module.exports = actions
+
+
+	/**
+	 * Remote store : accounts
+	 */
+
+	exports.refreshAccounts = function (dispatch, callback) {
+	    Vue.resource('accounts').get().then(function (response) {
+	        dispatch.dispatch('SET_ACCOUNTS', response.data)
+	        if (callback) {
+	            callback()
+	        }
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
+	exports.saveAccount = function (dispatch, attributes) {
+	    Vue.resource('accounts').save({}, attributes).then(function (response) {
+	        exports.refreshAccounts(dispatch, function() {
+	            location.hash = '#accounts/one/'+response.data.id
+	        })
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
+	exports.updateAccount = function (dispatch, id, attributes) {
+	    Vue.resource('accounts/'+id).update({}, attributes).then(function (response) {
+	        exports.refreshAccounts(dispatch)
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
@@ -23735,7 +23739,7 @@
 
 
 	/**
-	 * Remote store
+	 * Remote store : accounts
 	 */
 
 	exports.getAccounts = function (state) {
@@ -28559,7 +28563,7 @@
 /***/ function(module, exports) {
 
 	
-	const state = {
+	exports.state = {
 	    current: null,
 	    texts: {
 	        en: {
@@ -28649,7 +28653,7 @@
 	    },
 	}
 
-	const mutations = {
+	exports.mutations = {
 	    SET_LANGUAGE(state, language) {
 	        if (state.texts.hasOwnProperty(language) === false) {
 	            language = 'en'
@@ -28658,30 +28662,24 @@
 	    },
 	}
 
-	module.exports = {
-	    state,
-	    mutations,
-	}
-
 
 /***/ },
 /* 143 */
 /***/ function(module, exports) {
 
 	
-	const state = {
+	exports.state = {
 	    accounts: [],
+	    envelopes: [],
 	}
 
-	const mutations = {
+	exports.mutations = {
 	    SET_ACCOUNTS(state, accounts) {
 	        state.accounts = accounts
 	    },
-	}
-
-	module.exports = {
-	    state,
-	    mutations,
+	    SET_ENVELOPES(state, envelopes) {
+	        state.envelopes = envelopes
+	    },
 	}
 
 

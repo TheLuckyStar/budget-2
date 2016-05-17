@@ -1,15 +1,14 @@
 
-const state = {
+exports.state = {
     accounts: [],
+    envelopes: [],
 }
 
-const mutations = {
+exports.mutations = {
     SET_ACCOUNTS(state, accounts) {
         state.accounts = accounts
     },
-}
-
-module.exports = {
-    state,
-    mutations,
+    SET_ENVELOPES(state, envelopes) {
+        state.envelopes = envelopes
+    },
 }

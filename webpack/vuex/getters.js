@@ -18,7 +18,7 @@ exports.getAvailableLanguages = function (state) {
 
 
 /**
- * Remote store
+ * Remote store : accounts
  */
 
 exports.getAccounts = function (state) {
