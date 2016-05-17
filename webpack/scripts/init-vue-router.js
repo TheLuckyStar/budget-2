@@ -48,6 +48,7 @@ router.redirect({
   '*': '/',
   '/': '/home',
   '/accounts': '/accounts/all',
+  '/envelopes': '/envelopes/all',
 })
 
 // Start application

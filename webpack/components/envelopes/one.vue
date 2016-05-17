@@ -3,6 +3,13 @@
 
     <div>
 
+        <h1>
+            <i class="fa {{ envelope.icon }}"></i>
+            {{ envelope.name }}
+        </h1>
+
+        <hr>
+
         <div class="col-lg-3 col-md-6">
             <envelopes-form :envelope="envelope"></envelopes-form>
         </div>

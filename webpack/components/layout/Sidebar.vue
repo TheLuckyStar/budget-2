@@ -21,7 +21,7 @@
                 <a v-for="entry in entryGroup.entries"
                     v-link="{ path: entry.route, activeClass: 'active' }"
                     class="list-group-item">
-                    {{ entry.text }}
+                    {{{ entry.text }}}
                 </a>
             </div>
 

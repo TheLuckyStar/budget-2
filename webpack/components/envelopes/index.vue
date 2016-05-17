@@ -45,7 +45,7 @@
                     route: '/envelopes/all',
                     entries: this.enabledEnvelopes.map(function (envelope) {
                         return {
-                            text: envelope.name,
+                            text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
                         }
                     }),
@@ -60,7 +60,7 @@
                     title: this.text.envelopes.disabled.title,
                     entries: this.disabledEnvelopes.map(function (envelope) {
                         return {
-                            text: envelope.name,
+                            text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
                         }
                     }),

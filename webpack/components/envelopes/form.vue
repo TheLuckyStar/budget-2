@@ -6,7 +6,7 @@
         <fieldset>
 
             <legend>
-                {{ envelope.id ? text.envelopes.form.title : text.envelopes.new.title }}
+                {{ text.envelopes.form.title }}
             </legend>
 
             <div class="form-group">

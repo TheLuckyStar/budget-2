@@ -24132,7 +24132,7 @@
 /* 111 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div _v-d5b59300=\"\">\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\" _v-d5b59300=\"\">\n\n        <div class=\"panel-heading\" v-link-active=\"\" _v-d5b59300=\"\">\n            <h3 class=\"panel-title\" _v-d5b59300=\"\">\n                <a v-if=\"entryGroup.route\" v-link=\"{ path: entryGroup.route, activeClass: 'active'&nbsp;}\" _v-d5b59300=\"\">\n                    {{ entryGroup.title }}\n                </a>\n                <template v-else=\"\">\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\" _v-d5b59300=\"\">\n            <a v-for=\"entry in entryGroup.entries\" v-link=\"{ path: entry.route, activeClass: 'active'&nbsp;}\" class=\"list-group-item\" _v-d5b59300=\"\">\n                {{ entry.text&nbsp;}}\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div _v-d5b59300=\"\">\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\" _v-d5b59300=\"\">\n\n        <div class=\"panel-heading\" v-link-active=\"\" _v-d5b59300=\"\">\n            <h3 class=\"panel-title\" _v-d5b59300=\"\">\n                <a v-if=\"entryGroup.route\" v-link=\"{ path: entryGroup.route, activeClass: 'active'&nbsp;}\" _v-d5b59300=\"\">\n                    {{ entryGroup.title }}\n                </a>\n                <template v-else=\"\">\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\" _v-d5b59300=\"\">\n            <a v-for=\"entry in entryGroup.entries\" v-link=\"{ path: entry.route, activeClass: 'active'&nbsp;}\" class=\"list-group-item\" _v-d5b59300=\"\">\n                {{{ entry.text&nbsp;}}}\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 112 */
@@ -25826,6 +25826,7 @@
 	  '*': '/',
 	  '/': '/home',
 	  '/accounts': '/accounts/all',
+	  '/envelopes': '/envelopes/all',
 	})
 
 	// Start application
@@ -28652,7 +28653,7 @@
 	                    title: 'New account',
 	                },
 	                form: {
-	                    title: 'Account details',
+	                    title: 'Details',
 	                    name: 'Name',
 	                    currency: 'Currency',
 	                },
@@ -28671,7 +28672,7 @@
 	                    title: 'New envelope',
 	                },
 	                form: {
-	                    title: 'Envelope details',
+	                    title: 'Details',
 	                    name: 'Name',
 	                    icon: 'Icon',
 	                },
@@ -28708,7 +28709,7 @@
 	                    title: 'Nouveau compte',
 	                },
 	                form: {
-	                    title: 'Informations du compte',
+	                    title: 'Informations',
 	                    name: 'Nom',
 	                    currency: 'Devise',
 	                },
@@ -28727,7 +28728,7 @@
 	                    title: 'Nouvelle enveloppe',
 	                },
 	                form: {
-	                    title: "Informations de l'enveloppe",
+	                    title: "Informations",
 	                    name: 'Nom',
 	                    icon: 'Icône',
 	                },
@@ -28937,7 +28938,8 @@
 
 	    vuex: {
 	        getters: {
-	            accounts: getters.getAccounts
+	            accounts: getters.getAccounts,
+	            text: getters.getText
 	        }
 	    }
 
@@ -28947,7 +28949,7 @@
 /* 150 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n    {{ accounts }}\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.accounts.enabled.title }}\n    </h1>\n\n    <hr>\n\n    {{ accounts }}\n\n</div>\n\n";
 
 /***/ },
 /* 151 */
@@ -42921,7 +42923,7 @@
 /* 258 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ account.id ? text.accounts.form.title : text.accounts.new.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"account.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy :disabled=\"account.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-sm-12 text-right\">\n                <button v-if=\"account.deleted_at === null\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n                <button v-if=\"account.deleted_at !== null\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success pull-left\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"account.deleted_at === null && account.id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning pull-left\">\n                    {{ text.app.disable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"account.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy :disabled=\"account.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-sm-12 text-right\">\n                <button v-if=\"account.deleted_at === null\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n                <button v-if=\"account.deleted_at !== null\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success pull-left\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"account.deleted_at === null && account.id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning pull-left\">\n                    {{ text.app.disable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 259 */
@@ -42972,7 +42974,7 @@
 /* 262 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <accounts-reports-balance :account=\"account\"></accounts-reports-balance>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 263 */
@@ -43013,6 +43015,7 @@
 	});
 
 
+	var getters = __webpack_require__(104);
 	var AccountsForm = __webpack_require__(153);
 
 	exports.default = {
@@ -43025,6 +43028,12 @@
 	        };
 	    },
 
+	    vuex: {
+	        getters: {
+	            text: getters.getText
+	        }
+	    },
+
 	    components: {
 	        AccountsForm: AccountsForm
 	    }
@@ -43035,7 +43044,7 @@
 /* 265 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div class=\"col-md-12\">\n    <accounts-form :account=\"account\"></accounts-form>\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.accounts.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-12\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 266 */
@@ -43098,7 +43107,7 @@
 	                route: '/envelopes/all',
 	                entries: this.enabledEnvelopes.map(function (envelope) {
 	                    return {
-	                        text: envelope.name,
+	                        text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' + envelope.name,
 	                        route: '/envelopes/one/' + envelope.id
 	                    };
 	                })
@@ -43113,7 +43122,7 @@
 	                title: this.text.envelopes.disabled.title,
 	                entries: this.disabledEnvelopes.map(function (envelope) {
 	                    return {
-	                        text: envelope.name,
+	                        text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' + envelope.name,
 	                        route: '/envelopes/one/' + envelope.id
 	                    };
 	                })
@@ -43197,7 +43206,8 @@
 
 	    vuex: {
 	        getters: {
-	            envelopes: getters.getEnvelopes
+	            envelopes: getters.getEnvelopes,
+	            text: getters.getText
 	        }
 	    }
 
@@ -43207,7 +43217,7 @@
 /* 271 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n    {{ envelopes }}\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    {{ envelopes }}\n\n</div>\n\n";
 
 /***/ },
 /* 272 */
@@ -43388,7 +43398,7 @@
 /* 276 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ envelope.id ? text.envelopes.form.title : text.envelopes.new.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-sm-12 text-right\">\n                <button v-if=\"envelope.deleted_at === null\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n                <button v-if=\"envelope.deleted_at !== null\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success pull-left\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"envelope.deleted_at === null && envelope.id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning pull-left\">\n                    {{ text.app.disable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-lg-3 col-md-4 col-sm-5 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-lg-9 col-md-8 col-sm-7\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"envelope.deleted_at !== null\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-sm-12 text-right\">\n                <button v-if=\"envelope.deleted_at === null\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n                <button v-if=\"envelope.deleted_at !== null\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success pull-left\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"envelope.deleted_at === null && envelope.id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning pull-left\">\n                    {{ text.app.disable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 277 */
@@ -43439,7 +43449,7 @@
 /* 280 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n    <div class=\"col-lg-3 col-md-6\">\n        <envelopes-reports-balance :envelope=\"envelope\"></envelopes-reports-balance>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 281 */
@@ -43480,6 +43490,7 @@
 	});
 
 
+	var getters = __webpack_require__(104);
 	var EnvelopesForm = __webpack_require__(274);
 
 	exports.default = {
@@ -43492,6 +43503,12 @@
 	        };
 	    },
 
+	    vuex: {
+	        getters: {
+	            text: getters.getText
+	        }
+	    },
+
 	    components: {
 	        EnvelopesForm: EnvelopesForm
 	    }
@@ -43502,7 +43519,7 @@
 /* 283 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div class=\"col-md-12\">\n    <envelopes-form :envelope=\"envelope\"></envelopes-form>\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.envelopes.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-12\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 284 */

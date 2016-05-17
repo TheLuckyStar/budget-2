@@ -3,6 +3,12 @@
 
     <div>
 
+        <h1>
+            {{ account.name }}
+        </h1>
+
+        <hr>
+
         <div class="col-lg-3 col-md-6">
             <accounts-form :account="account"></accounts-form>
         </div>

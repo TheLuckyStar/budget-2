@@ -6,7 +6,7 @@
         <fieldset>
 
             <legend>
-                {{ account.id ? text.accounts.form.title : text.accounts.new.title }}
+                {{ text.accounts.form.title }}
             </legend>
 
             <div class="form-group">

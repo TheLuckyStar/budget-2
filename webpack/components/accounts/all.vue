@@ -2,7 +2,15 @@
 <template>
 
     <div>
+
+        <h1>
+            {{ text.accounts.enabled.title }}
+        </h1>
+
+        <hr>
+
         {{ accounts }}
+
     </div>
 
 </template>
@@ -18,6 +26,7 @@
         vuex: {
             getters: {
                 accounts: getters.getAccounts,
+                text: getters.getText,
             },
         },
 

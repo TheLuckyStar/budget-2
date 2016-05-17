@@ -28,7 +28,7 @@ exports.state = {
                     title: 'New account',
                 },
                 form: {
-                    title: 'Account details',
+                    title: 'Details',
                     name: 'Name',
                     currency: 'Currency',
                 },
@@ -47,7 +47,7 @@ exports.state = {
                     title: 'New envelope',
                 },
                 form: {
-                    title: 'Envelope details',
+                    title: 'Details',
                     name: 'Name',
                     icon: 'Icon',
                 },
@@ -84,7 +84,7 @@ exports.state = {
                     title: 'Nouveau compte',
                 },
                 form: {
-                    title: 'Informations du compte',
+                    title: 'Informations',
                     name: 'Nom',
                     currency: 'Devise',
                 },
@@ -103,7 +103,7 @@ exports.state = {
                     title: 'Nouvelle enveloppe',
                 },
                 form: {
-                    title: "Informations de l'enveloppe",
+                    title: "Informations",
                     name: 'Nom',
                     icon: 'Icône',
                 },

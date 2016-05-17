@@ -2,7 +2,15 @@
 <template>
 
     <div>
+
+        <h1>
+            {{ text.envelopes.enabled.title }}
+        </h1>
+
+        <hr>
+
         {{ envelopes }}
+
     </div>
 
 </template>
@@ -18,6 +26,7 @@
         vuex: {
             getters: {
                 envelopes: getters.getEnvelopes,
+                text: getters.getText,
             },
         },
 
