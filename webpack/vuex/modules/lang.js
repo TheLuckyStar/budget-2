@@ -5,6 +5,7 @@ const state = {
         en: {
             app: {
                 title: 'Budget',
+                enable: 'Enable',
                 submit: 'Save',
             },
             home: {
@@ -29,6 +30,9 @@ const state = {
                     name: 'Name',
                     currency: 'Currency',
                 },
+                enable: {
+                    title: 'Enable',
+                },
                 create: {
                     title: 'New account',
                 },
@@ -47,6 +51,7 @@ const state = {
         fr: {
             app: {
                 title: 'Budget',
+                enable: 'Activer',
                 submit: 'Enregistrer',
             },
             home: {
@@ -70,6 +75,9 @@ const state = {
                     title: 'Modifier',
                     name: 'Nom',
                     currency: 'Devise',
+                },
+                enable: {
+                    title: 'Activer',
                 },
                 create: {
                     title: 'Nouveau compte',

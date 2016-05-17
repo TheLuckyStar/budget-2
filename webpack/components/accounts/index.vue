@@ -4,7 +4,7 @@
     <div>
 
         <div class="col-lg-2 col-md-3 col-sm-4">
-            <layout-sidebar :entries="[reportEntries, recordEntries, createEntries]"></layout-sidebar>
+            <layout-sidebar :entries="[reportMenu, editMenu, enableMenu, createMenu]"></layout-sidebar>
         </div>
 
         <div class="col-lg-10 col-md-9 col-sm-8">
@@ -25,7 +25,7 @@
 
         computed: {
 
-            reportEntries: function () {
+            reportMenu: function () {
                 return {
                     title: this.text.accounts.report.section.title,
                     entries: [
@@ -37,21 +37,35 @@
                 }
             },
 
-            recordEntries: function () {
+            editMenu: function () {
                 var recordEntries = {
                     title: this.text.accounts.edit.title,
                     entries: [],
                 }
-                for (var i = 0; i < this.accounts.length; ++i) {
+                for (var i = 0; i < this.enabledAccounts.length; ++i) {
                     recordEntries.entries.push({
-                        text: this.accounts[i].name,
-                        route: '/accounts/edit/' + this.accounts[i].id,
+                        text: this.enabledAccounts[i].name,
+                        route: '/accounts/edit/' + this.enabledAccounts[i].id,
                     })
                 }
                 return recordEntries
             },
 
-            createEntries: function () {
+            enableMenu: function () {
+                var recordEntries = {
+                    title: this.text.accounts.enable.title,
+                    entries: [],
+                }
+                for (var i = 0; i < this.disabledAccounts.length; ++i) {
+                    recordEntries.entries.push({
+                        text: this.disabledAccounts[i].name,
+                        route: '/accounts/enable/' + this.disabledAccounts[i].id,
+                    })
+                }
+                return recordEntries
+            },
+
+            createMenu: function () {
                 return {
                     title: this.text.accounts.create.title,
                     route: '/accounts/create',
@@ -62,7 +76,8 @@
 
         vuex: {
             getters: {
-                accounts: getters.getAccounts,
+                enabledAccounts: getters.getEnabledAccounts,
+                disabledAccounts: getters.getDisabledAccounts,
                 text: getters.getText,
             },
         },

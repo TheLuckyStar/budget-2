@@ -51,7 +51,7 @@
 	__webpack_require__(100);
 	__webpack_require__(112);
 	__webpack_require__(137);
-	module.exports = __webpack_require__(154);
+	module.exports = __webpack_require__(260);
 
 
 /***/ },
@@ -23681,11 +23681,7 @@
 	        });
 	    },
 
-	    saveAccount: function (dispatch, data) {
-	        var attributes = {
-	            name: data.name,
-	            currency: data.currency,
-	        }
+	    saveAccount: function (dispatch, attributes) {
 	        Vue.resource('accounts').save({}, attributes).then(function (response) {
 	            actions.refreshAccounts(dispatch, function() {
 	                location.hash = '#accounts/edit/'+response.data.id;
@@ -23695,11 +23691,7 @@
 	        });
 	    },
 
-	    updateAccount: function (dispatch, id, data) {
-	        var attributes = {
-	            name: data.name,
-	            currency: data.currency,
-	        }
+	    updateAccount: function (dispatch, id, attributes) {
 	        Vue.resource('accounts/'+id).update({}, attributes).then(function (response) {
 	            actions.refreshAccounts(dispatch)
 	        }, function (response) {
@@ -23748,8 +23740,16 @@
 	 * Remote store
 	 */
 
-	exports.getAccounts = function (state) {
-	    return state.remote.accounts
+	exports.getEnabledAccounts = function (state) {
+	    return state.remote.accounts.filter(function (account) {
+	        return account.deleted_at === null;
+	    })
+	}
+
+	exports.getDisabledAccounts = function (state) {
+	    return state.remote.accounts.filter(function (account) {
+	        return account.deleted_at !== null;
+	    })
 	}
 
 
@@ -25737,6 +25737,9 @@
 	            },
 	            '/edit/:account_id': {
 	                component: __webpack_require__(151),
+	            },
+	            '/enable/:account_id': {
+	                component: __webpack_require__(154),
 	            },
 	            '/create': {
 	                component: __webpack_require__(151),
@@ -28564,6 +28567,7 @@
 	        en: {
 	            app: {
 	                title: 'Budget',
+	                enable: 'Enable',
 	                submit: 'Save',
 	            },
 	            home: {
@@ -28588,6 +28592,9 @@
 	                    name: 'Name',
 	                    currency: 'Currency',
 	                },
+	                enable: {
+	                    title: 'Enable',
+	                },
 	                create: {
 	                    title: 'New account',
 	                },
@@ -28606,6 +28613,7 @@
 	        fr: {
 	            app: {
 	                title: 'Budget',
+	                enable: 'Activer',
 	                submit: 'Enregistrer',
 	            },
 	            home: {
@@ -28629,6 +28637,9 @@
 	                    title: 'Modifier',
 	                    name: 'Nom',
 	                    currency: 'Devise',
+	                },
+	                enable: {
+	                    title: 'Activer',
 	                },
 	                create: {
 	                    title: 'Nouveau compte',
@@ -28735,7 +28746,7 @@
 
 	    computed: {
 
-	        reportEntries: function reportEntries() {
+	        reportMenu: function reportMenu() {
 	            return {
 	                title: this.text.accounts.report.section.title,
 	                entries: [{
@@ -28745,21 +28756,35 @@
 	            };
 	        },
 
-	        recordEntries: function recordEntries() {
+	        editMenu: function editMenu() {
 	            var recordEntries = {
 	                title: this.text.accounts.edit.title,
 	                entries: []
 	            };
-	            for (var i = 0; i < this.accounts.length; ++i) {
+	            for (var i = 0; i < this.enabledAccounts.length; ++i) {
 	                recordEntries.entries.push({
-	                    text: this.accounts[i].name,
-	                    route: '/accounts/edit/' + this.accounts[i].id
+	                    text: this.enabledAccounts[i].name,
+	                    route: '/accounts/edit/' + this.enabledAccounts[i].id
 	                });
 	            }
 	            return recordEntries;
 	        },
 
-	        createEntries: function createEntries() {
+	        enableMenu: function enableMenu() {
+	            var recordEntries = {
+	                title: this.text.accounts.enable.title,
+	                entries: []
+	            };
+	            for (var i = 0; i < this.disabledAccounts.length; ++i) {
+	                recordEntries.entries.push({
+	                    text: this.disabledAccounts[i].name,
+	                    route: '/accounts/enable/' + this.disabledAccounts[i].id
+	                });
+	            }
+	            return recordEntries;
+	        },
+
+	        createMenu: function createMenu() {
 	            return {
 	                title: this.text.accounts.create.title,
 	                route: '/accounts/create'
@@ -28770,7 +28795,8 @@
 
 	    vuex: {
 	        getters: {
-	            accounts: getters.getAccounts,
+	            enabledAccounts: getters.getEnabledAccounts,
+	            disabledAccounts: getters.getDisabledAccounts,
 	            text: getters.getText
 	        }
 	    }
@@ -28781,7 +28807,7 @@
 /* 147 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-2 col-md-3 col-sm-4\">\n        <layout-sidebar :entries=\"[reportEntries, recordEntries, createEntries]\"></layout-sidebar>\n    </div>\n\n    <div class=\"col-lg-10 col-md-9 col-sm-8\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <div class=\"col-lg-2 col-md-3 col-sm-4\">\n        <layout-sidebar :entries=\"[reportMenu, editMenu, enableMenu, createMenu]\"></layout-sidebar>\n    </div>\n\n    <div class=\"col-lg-10 col-md-9 col-sm-8\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 148 */
@@ -28887,22 +28913,26 @@
 	    },
 
 	    watch: {
-	        accounts: function accounts() {
+	        enabledAccounts: function enabledAccounts() {
 	            this.setData();
 	        }
 	    },
 
 	    methods: {
 	        setData: function setData() {
-	            this.account = this.$options.filters.find(this.accounts, 'id', this.$route.params.account_id);
+	            this.account = this.$options.filters.find(this.enabledAccounts, 'id', this.$route.params.account_id);
 	            this.name = this.account.name;
 	            this.currency = this.account.currency;
 	        },
 	        onSubmit: function onSubmit() {
+	            var attributes = {
+	                name: this.name,
+	                currency: this.currency
+	            };
 	            if (this.account.id) {
-	                this.updateAccount(this.account.id, this);
+	                this.updateAccount(this.account.id, attributes);
 	            } else {
-	                this.saveAccount(this);
+	                this.saveAccount(attributes);
 	            }
 	        }
 	    },
@@ -28913,7 +28943,7 @@
 	            saveAccount: actions.saveAccount
 	        },
 	        getters: {
-	            accounts: getters.getAccounts,
+	            enabledAccounts: getters.getEnabledAccounts,
 	            text: getters.getText
 	        }
 	    }
@@ -28930,10 +28960,187 @@
 /* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(155)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] webpack/components/accounts/enable.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(259)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), true)
+	  if (!hotAPI.compatible) return
+	  var id = "/home/sel/www/budget/webpack/components/accounts/enable.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 155 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var actions = __webpack_require__(103);
+	var getters = __webpack_require__(104);
+
+	exports.default = {
+
+	    computed: {
+	        account: function account() {
+	            return this.$options.filters.find(this.disabledAccounts, 'id', this.$route.params.account_id);
+	        }
+	    },
+
+	    methods: {
+	        onSubmit: function onSubmit() {
+	            this.updateAccount(this.account.id, { deleted_at: null });
+	        }
+	    },
+
+	    vuex: {
+	        actions: {
+	            updateAccount: actions.updateAccount
+	        },
+	        getters: {
+	            disabledAccounts: getters.getDisabledAccounts,
+	            text: getters.getText
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.enable.title }}\n            {{ account.name }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.name }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"account.name\" disabled>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-lg-2 col-md-3 col-sm-4 control-label\">\n                {{ text.accounts.edit.currency }}\n            </label>\n            <div class=\"col-lg-10 col-md-9 col-sm-8\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" disabled>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-lg-10 col-lg-offset-2 text-right\">\n                <button type=\"submit\" class=\"btn btn-primary\">\n                    {{ text.app.enable }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(155);
+	var content = __webpack_require__(261);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -28953,7 +29160,7 @@
 	}
 
 /***/ },
-/* 155 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();

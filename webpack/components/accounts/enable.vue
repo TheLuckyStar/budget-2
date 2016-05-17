@@ -6,7 +6,7 @@
         <fieldset>
 
             <legend>
-                {{ account.id ? text.accounts.edit.title : text.accounts.create.title }}
+                {{ text.accounts.enable.title }}
                 {{ account.name }}
             </legend>
 
@@ -15,7 +15,7 @@
                     {{ text.accounts.edit.name }}
                 </label>
                 <div class="col-lg-10 col-md-9 col-sm-8">
-                    <input type="text" class="form-control" id="input-account-name" v-model="name" lazy>
+                    <input type="text" class="form-control" id="input-account-name" v-model="account.name" disabled>
                 </div>
             </div>
 
@@ -24,14 +24,14 @@
                     {{ text.accounts.edit.currency }}
                 </label>
                 <div class="col-lg-10 col-md-9 col-sm-8">
-                    <input type="text" class="form-control" id="input-account-currency" v-model="currency" lazy>
+                    <input type="text" class="form-control" id="input-account-currency" v-model="currency" disabled>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2 text-right">
                     <button type="submit" class="btn btn-primary">
-                        {{ text.app.submit }}
+                        {{ text.app.enable }}
                     </button>
                 </div>
             </div>
@@ -51,52 +51,24 @@
 
     export default {
 
-        data: function () {
-            return {
-                account: {},
-                name: null,
-                currency: null,
-            }
-        },
-
-        route: {
-            data: function (transition) {
-                this.setData()
-            },
-        },
-
-        watch: {
-            enabledAccounts: function () {
-                this.setData()
+        computed: {
+            account: function () {
+                return this.$options.filters.find(this.disabledAccounts, 'id', this.$route.params.account_id)
             },
         },
 
         methods: {
-            setData: function () {
-                this.account = this.$options.filters.find(this.enabledAccounts, 'id', this.$route.params.account_id)
-                this.name = this.account.name
-                this.currency = this.account.currency
-            },
             onSubmit: function () {
-                var attributes = {
-                    name: this.name,
-                    currency: this.currency,
-                }
-                if (this.account.id) {
-                    this.updateAccount(this.account.id, attributes)
-                } else {
-                    this.saveAccount(attributes)
-                }
+                this.updateAccount(this.account.id, { deleted_at: null })
             },
         },
 
         vuex: {
             actions: {
                 updateAccount: actions.updateAccount,
-                saveAccount: actions.saveAccount,
             },
             getters: {
-                enabledAccounts: getters.getEnabledAccounts,
+                disabledAccounts: getters.getDisabledAccounts,
                 text: getters.getText,
             },
         },

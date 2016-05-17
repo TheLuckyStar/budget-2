@@ -29,6 +29,14 @@ exports.getAvailableLanguages = function (state) {
  * Remote store
  */
 
-exports.getAccounts = function (state) {
-    return state.remote.accounts
+exports.getEnabledAccounts = function (state) {
+    return state.remote.accounts.filter(function (account) {
+        return account.deleted_at === null;
+    })
+}
+
+exports.getDisabledAccounts = function (state) {
+    return state.remote.accounts.filter(function (account) {
+        return account.deleted_at !== null;
+    })
 }

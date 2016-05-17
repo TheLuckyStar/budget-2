@@ -9,7 +9,7 @@ class Accounts extends Controller
 {
     public function index()
     {
-        return Account::get();
+        return Account::withTrashed()->get();
     }
 
     public function store(Request $request)
@@ -25,11 +25,12 @@ class Accounts extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:accounts,name,'.$id,
-            'currency' => 'required|max:3',
+            'name' => 'max:255|unique:accounts,name,'.$id,
+            'currency' => 'max:3',
+            'deleted_at' => 'date',
         ]);
 
-        $account = Account::findOrFail($id);
+        $account = Account::onlyTrashed()->findOrFail($id);
         $account->fill($request->only('name', 'currency'));
         $account->save();
 

@@ -16,11 +16,7 @@ actions = {
         });
     },
 
-    saveAccount: function (dispatch, data) {
-        var attributes = {
-            name: data.name,
-            currency: data.currency,
-        }
+    saveAccount: function (dispatch, attributes) {
         Vue.resource('accounts').save({}, attributes).then(function (response) {
             actions.refreshAccounts(dispatch, function() {
                 location.hash = '#accounts/edit/'+response.data.id;
@@ -30,11 +26,7 @@ actions = {
         });
     },
 
-    updateAccount: function (dispatch, id, data) {
-        var attributes = {
-            name: data.name,
-            currency: data.currency,
-        }
+    updateAccount: function (dispatch, id, attributes) {
         Vue.resource('accounts/'+id).update({}, attributes).then(function (response) {
             actions.refreshAccounts(dispatch)
         }, function (response) {
