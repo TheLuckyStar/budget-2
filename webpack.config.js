@@ -54,6 +54,7 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             jQuery: "jquery",
+            moment: "moment",
             Vue: "vue",
             VueResource: "vue-resource",
             VueRouter: "vue-router",
