@@ -5,7 +5,7 @@
 
         <div v-for="entryGroup in entries" class="panel panel-default">
 
-            <div class="panel-heading">
+            <div class="panel-heading" v-link-active>
                 <h3 class="panel-title">
                     <a v-if="entryGroup.route"
                         v-link="{ path: entryGroup.route, activeClass: 'active' }">
@@ -42,3 +42,15 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .panel-heading.active {
+        color: #fff;
+        background-color: #158CBA;
+        border-color: #158CBA;
+    }
+
+</style>
