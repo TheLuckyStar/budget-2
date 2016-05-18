@@ -1,13 +1,13 @@
 
 <template>
 
-    <div>
+    <div class="row">
 
-        <div class="col-lg-2 col-md-3 col-sm-4">
+        <div class="col-md-3 col-sm-4">
             <layout-sidebar :entries="entries"></layout-sidebar>
         </div>
 
-        <div class="col-lg-10 col-md-9 col-sm-8">
+        <div class="col-md-9 col-sm-8">
             <router-view></router-view>
         </div>
 
@@ -47,6 +47,8 @@
                         return {
                             text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
+                            badge: envelope.balance,
+                            badgeColor: envelope.balance < 0 ? 'danger' : 'success',
                         }
                     }),
                 }
@@ -62,6 +64,8 @@
                         return {
                             text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
+                            badge: envelope.balance,
+                            badgeColor: envelope.balance < 0 ? 'danger' : 'success',
                         }
                     }),
                 }

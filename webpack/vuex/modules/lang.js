@@ -35,10 +35,6 @@ exports.state = {
                 situation: {
                     title: 'Situation',
                 },
-                balance: {
-                    title: 'Balance',
-                    labels: ["Red", "Green", "Yellow"],
-                },
             },
             envelopes: {
                 page: {
@@ -57,6 +53,9 @@ exports.state = {
                     title: 'Details',
                     name: 'Name',
                     icon: 'Icon',
+                },
+                situation: {
+                    title: 'Situation',
                 },
             },
             operations: {
@@ -98,10 +97,6 @@ exports.state = {
                 situation: {
                     title: 'Situation',
                 },
-                balance: {
-                    title: 'Solde',
-                    labels: ["Red", "Green", "Yellow"],
-                },
             },
             envelopes: {
                 page: {
@@ -121,6 +116,9 @@ exports.state = {
                     name: 'Nom',
                     icon: 'Icône',
                 },
+                situation: {
+                    title: 'Situation',
+                },
             },
             operations: {
                 page: {
@@ -137,5 +135,6 @@ exports.mutations = {
             language = 'en'
         }
         state.current = language
+        moment.locale(language)
     },
 }

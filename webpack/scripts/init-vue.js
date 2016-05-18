@@ -11,3 +11,7 @@ Vue.filter('find', function (data, field, value) {
     }
     return {}
 })
+
+Vue.filter('fullDate', function (date) {
+    return moment(date).format('LL')
+})

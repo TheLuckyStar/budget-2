@@ -29,22 +29,22 @@
 
             <div class="form-group">
                 <div class="col-xs-12 text-right">
-                    <button v-if="envelope.deleted_at === null"
-                        type="submit"
-                        class="btn btn-primary">
-                        {{ text.app.submit }}
-                    </button>
                     <button v-if="envelope.deleted_at !== null"
                         @click="onEnable"
                         type="button"
-                        class="btn btn-success pull-left">
+                        class="btn btn-success">
                         {{ text.app.enable }}
                     </button>
                     <button v-if="envelope.deleted_at === null && envelope.id"
                         @click="onDisable"
                         type="button"
-                        class="btn btn-warning pull-left">
+                        class="btn btn-warning">
                         {{ text.app.disable }}
+                    </button>
+                    <button v-if="envelope.deleted_at === null"
+                        type="submit"
+                        class="btn btn-primary">
+                        {{ text.app.submit }}
                     </button>
                 </div>
             </div>

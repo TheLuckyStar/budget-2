@@ -11,19 +11,16 @@
         <hr>
 
         <div class="col-md-6">
+            <layout-card :color="envelope.balance < 0 ? 'danger' : 'success'"
+                icon="fa-balance-scale"
+                :title="text.envelopes.situation.title"
+                :text="envelope.balance"
+                :comment="$options.filters.fullDate(date)"
+            ></layout-card>
+        </div>
+
+        <div class="col-md-6">
             <envelopes-form :envelope="envelope"></envelopes-form>
-        </div>
-
-        <div class="col-md-6">
-            <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
-        </div>
-
-        <div class="col-md-6">
-            <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
-        </div>
-
-        <div class="col-md-6">
-            <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
         </div>
 
     </div>
@@ -43,6 +40,7 @@
         data: function () {
             return {
                 envelope_id: null,
+                date: moment(),
             }
         },
 
@@ -58,9 +56,17 @@
             },
         },
 
+        watch: {
+            currentLanguage: function() {
+                this.date = moment.unix(this.date.unix())
+            },
+        },
+
         vuex: {
             getters: {
                 envelopes: getters.getEnvelopes,
+                currentLanguage: getters.getCurrentLanguage,
+                text: getters.getText,
             },
         },
 

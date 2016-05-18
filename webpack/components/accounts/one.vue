@@ -13,8 +13,8 @@
             <layout-card color="primary"
                 icon="fa-balance-scale"
                 :title="text.accounts.situation.title"
-                text="1000.00 €"
-                :comment="text.accounts.balance.title"
+                :text="account.balance"
+                :comment="$options.filters.fullDate(date)"
             ></layout-card>
         </div>
 
@@ -39,6 +39,7 @@
         data: function () {
             return {
                 account_id: null,
+                date: moment(),
             }
         },
 
@@ -57,8 +58,15 @@
             },
         },
 
+        watch: {
+            currentLanguage: function() {
+                this.date = moment.unix(this.date.unix())
+            },
+        },
+
         vuex: {
             getters: {
+                currentLanguage: getters.getCurrentLanguage,
                 accounts: getters.getAccounts,
                 text: getters.getText,
             },

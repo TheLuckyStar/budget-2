@@ -22,6 +22,9 @@
                     v-link="{ path: entry.route, activeClass: 'active' }"
                     class="list-group-item">
                     {{{ entry.text }}}
+                    <span class="badge badge-{{ entry.badgeColor }} pull-right" v-if="entry.badge">
+                        {{ entry.badge }}
+                    </span>
                 </a>
             </div>
 
