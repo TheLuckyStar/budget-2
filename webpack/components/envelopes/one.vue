@@ -10,19 +10,19 @@
 
         <hr>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <envelopes-form :envelope="envelope"></envelopes-form>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
         </div>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <envelopes-reports-balance :envelope="envelope"></envelopes-reports-balance>
         </div>
 

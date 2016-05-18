@@ -10,25 +10,25 @@
             </legend>
 
             <div class="form-group">
-                <label for="input-account-name" class="col-lg-3 col-md-4 col-sm-5 control-label">
+                <label for="input-account-name" class="col-xs-3 control-label">
                     {{ text.accounts.form.name }}
                 </label>
-                <div class="col-lg-9 col-md-8 col-sm-7">
+                <div class="col-xs-9">
                     <input type="text" class="form-control" id="input-account-name" v-model="name" lazy :disabled="account.deleted_at !== null">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="input-account-currency" class="col-lg-3 col-md-4 col-sm-5 control-label">
+                <label for="input-account-currency" class="col-xs-3 control-label">
                     {{ text.accounts.form.currency }}
                 </label>
-                <div class="col-lg-9 col-md-8 col-sm-7">
+                <div class="col-xs-9">
                     <input type="text" class="form-control" id="input-account-currency" v-model="currency" lazy :disabled="account.deleted_at !== null">
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-sm-12 text-right">
+                <div class="col-xs-12 text-right">
                     <button v-if="account.deleted_at === null"
                         type="submit"
                         class="btn btn-primary">

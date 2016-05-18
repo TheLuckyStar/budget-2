@@ -10,25 +10,25 @@
             </legend>
 
             <div class="form-group">
-                <label for="input-envelope-name" class="col-lg-3 col-md-4 col-sm-5 control-label">
+                <label for="input-envelope-name" class="col-xs-3 control-label">
                     {{ text.envelopes.form.name }}
                 </label>
-                <div class="col-lg-9 col-md-8 col-sm-7">
+                <div class="col-xs-9">
                     <input type="text" class="form-control" id="input-envelope-name" v-model="name" lazy :disabled="envelope.deleted_at !== null">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="input-envelope-icon" class="col-lg-3 col-md-4 col-sm-5 control-label">
+                <label for="input-envelope-icon" class="col-xs-3 control-label">
                     {{ text.envelopes.form.icon }}
                 </label>
-                <div class="col-lg-9 col-md-8 col-sm-7">
+                <div class="col-xs-9">
                     <input type="text" class="form-control" id="input-envelope-icon" v-model="icon" lazy :disabled="envelope.deleted_at !== null">
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-sm-12 text-right">
+                <div class="col-xs-12 text-right">
                     <button v-if="envelope.deleted_at === null"
                         type="submit"
                         class="btn btn-primary">

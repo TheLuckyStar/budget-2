@@ -9,7 +9,7 @@
 
         <hr>
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <layout-card color="primary"
                 icon="fa-balance-scale"
                 :title="text.accounts.situation.title"
@@ -19,15 +19,8 @@
         </div>
 
 
-        <div class="col-lg-3 col-md-6">
+        <div class="col-md-6">
             <accounts-form :account="account"></accounts-form>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <chart-pie :title="text.accounts.balance.title"
-                :labels="text.accounts.balance.labels"
-                :data="balanceData"
-                :colors="['danger', 'success', 'warning']"></chart-pie>
         </div>
 
     </div>

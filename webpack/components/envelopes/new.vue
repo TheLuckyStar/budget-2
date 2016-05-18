@@ -9,7 +9,7 @@
 
         <hr>
 
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <envelopes-form :envelope="envelope"></envelopes-form>
         </div>
 
