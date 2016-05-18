@@ -32,6 +32,13 @@ exports.state = {
                     name: 'Name',
                     currency: 'Currency',
                 },
+                situation: {
+                    title: 'Situation',
+                },
+                balance: {
+                    title: 'Balance',
+                    labels: ["Red", "Green", "Yellow"],
+                },
             },
             envelopes: {
                 page: {
@@ -87,6 +94,13 @@ exports.state = {
                     title: 'Informations',
                     name: 'Nom',
                     currency: 'Devise',
+                },
+                situation: {
+                    title: 'Situation',
+                },
+                balance: {
+                    title: 'Solde',
+                    labels: ["Red", "Green", "Yellow"],
                 },
             },
             envelopes: {

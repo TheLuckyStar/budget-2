@@ -10,19 +10,24 @@
         <hr>
 
         <div class="col-lg-3 col-md-6">
+            <layout-card color="primary"
+                icon="fa-balance-scale"
+                :title="text.accounts.situation.title"
+                text="1000.00 €"
+                :comment="text.accounts.balance.title"
+            ></layout-card>
+        </div>
+
+
+        <div class="col-lg-3 col-md-6">
             <accounts-form :account="account"></accounts-form>
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <accounts-reports-balance :account="account"></accounts-reports-balance>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <accounts-reports-balance :account="account"></accounts-reports-balance>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <accounts-reports-balance :account="account"></accounts-reports-balance>
+            <chart-pie :title="text.accounts.balance.title"
+                :labels="text.accounts.balance.labels"
+                :data="balanceData"
+                :colors="['danger', 'success', 'warning']"></chart-pie>
         </div>
 
     </div>
@@ -35,7 +40,6 @@
 
     var getters = require('vuex/getters.js')
     var AccountsForm = require('components/accounts/form.vue')
-    var AccountsReportsBalance = require('components/accounts/reports/balance.vue')
 
     export default {
 
@@ -55,17 +59,20 @@
             account: function () {
                 return this.$options.filters.find(this.accounts, 'id', this.account_id)
             },
+            balanceData: function () {
+                return [300, 50, 100]
+            },
         },
 
         vuex: {
             getters: {
                 accounts: getters.getAccounts,
+                text: getters.getText,
             },
         },
 
         components: {
             AccountsForm,
-            AccountsReportsBalance,
         },
 
     }
