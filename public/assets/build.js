@@ -12817,7 +12817,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, Vue, jQuery) {/*!
-	 * Vue.js v1.0.24
+	 * Vue.js v1.0.22
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -13954,9 +13954,8 @@
 	 */
 
 	function inDoc(node) {
-	  if (!node) return false;
-	  var doc = node.ownerDocument.documentElement;
-	  var parent = node.parentNode;
+	  var doc = document.documentElement;
+	  var parent = node && node.parentNode;
 	  return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 	}
 
@@ -15830,26 +15829,19 @@
 	 */
 
 	function flushBatcherQueue() {
-	  var _again = true;
-
-	  _function: while (_again) {
-	    _again = false;
-
+	  runBatcherQueue(queue);
+	  queue.length = 0;
+	  runBatcherQueue(userQueue);
+	  // user watchers triggered more internal watchers
+	  if (queue.length) {
 	    runBatcherQueue(queue);
-	    runBatcherQueue(userQueue);
-	    // user watchers triggered more watchers,
-	    // keep flushing until it depletes
-	    if (queue.length) {
-	      _again = true;
-	      continue _function;
-	    }
-	    // dev tool hook
-	    /* istanbul ignore if */
-	    if (devtools && config.devtools) {
-	      devtools.emit('flush');
-	    }
-	    resetBatcherState();
 	  }
+	  // dev tool hook
+	  /* istanbul ignore if */
+	  if (devtools && config.devtools) {
+	    devtools.emit('flush');
+	  }
+	  resetBatcherState();
 	}
 
 	/**
@@ -15875,7 +15867,6 @@
 	      }
 	    }
 	  }
-	  queue.length = 0;
 	}
 
 	/**
@@ -20595,7 +20586,7 @@
 	    var node = nodes[i];
 	    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
 	      parent.removeChild(node);
-	      node = parseTemplate(node, true);
+	      node = parseTemplate(node);
 	    }
 	    frag.appendChild(node);
 	  }
@@ -22831,7 +22822,7 @@
 
 	installGlobalAPI(Vue);
 
-	Vue.version = '1.0.24';
+	Vue.version = '1.0.22';
 
 	// devtools global hook
 	/* istanbul ignore next */
@@ -22861,6 +22852,9 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
