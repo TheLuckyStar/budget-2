@@ -18,9 +18,12 @@
             ></layout-card>
         </div>
 
-
         <div class="col-md-6">
             <accounts-form :account="account"></accounts-form>
+        </div>
+
+        <div class="col-md-12">
+            <accounts-development :account="account"></accounts-development>
         </div>
 
     </div>
@@ -32,6 +35,7 @@
 <script>
 
     var getters = require('vuex/getters.js')
+    var AccountsDevelopment = require('components/accounts/development.vue')
     var AccountsForm = require('components/accounts/form.vue')
 
     export default {
@@ -53,9 +57,6 @@
             account: function () {
                 return this.$options.filters.find(this.accounts, 'id', this.account_id)
             },
-            balanceData: function () {
-                return [300, 50, 100]
-            },
         },
 
         watch: {
@@ -73,6 +74,7 @@
         },
 
         components: {
+            AccountsDevelopment,
             AccountsForm,
         },
 

@@ -3,7 +3,7 @@
 
     <fieldset>
 
-        <legend>
+        <legend v-if="title">
             {{ title }}
         </legend>
 
@@ -19,7 +19,7 @@
 
     export default {
 
-        props: ['title', 'labels', 'data', 'colors'],
+        props: ['title', 'data', 'type'],
 
         data: function () {
             return {
@@ -35,17 +35,15 @@
         },
 
         ready: function() {
-            this.chart = new Chart(this.$el.children[1], {
-                type: 'pie',
-                data: {
-                    labels: this.labels,
-                    datasets: [{
-                        data: this.data,
-                        backgroundColor: this.colors.map(function (value) {
-                            return this.backgroundColor[value]
-                        }, this),
-                    }],
-                },
+            this.data.datasets = this.data.datasets.map(function (item) {
+                item.backgroundColor = item.backgroundColor.map(function (value) {
+                    return this.backgroundColor[value]
+                }, this)
+                return item
+            }, this)
+            this.chart = new Chart(this.$el.lastElementChild, {
+                type: this.type,
+                data: this.data,
             })
         },
 

@@ -23,6 +23,10 @@
             <envelopes-form :envelope="envelope"></envelopes-form>
         </div>
 
+        <div class="col-md-12">
+            <envelopes-development :envelope="envelope"></envelopes-development>
+        </div>
+
     </div>
 
 </template>
@@ -32,8 +36,8 @@
 <script>
 
     var getters = require('vuex/getters.js')
+    var EnvelopesDevelopment = require('components/envelopes/development.vue')
     var EnvelopesForm = require('components/envelopes/form.vue')
-    var EnvelopesReportsBalance = require('components/envelopes/reports/balance.vue')
 
     export default {
 
@@ -71,8 +75,8 @@
         },
 
         components: {
+            EnvelopesDevelopment,
             EnvelopesForm,
-            EnvelopesReportsBalance,
         },
 
     }

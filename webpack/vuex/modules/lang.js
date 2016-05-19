@@ -35,6 +35,13 @@ exports.state = {
                 situation: {
                     title: 'Situation',
                 },
+                development: {
+                    title: 'Development',
+                    labels: ['Green', 'Yellow', 'Red'],
+                    monthly: 'Monthly',
+                    yearly: 'Yearly',
+                    anytime: 'Anytime',
+                },
             },
             envelopes: {
                 page: {
@@ -56,6 +63,13 @@ exports.state = {
                 },
                 situation: {
                     title: 'Situation',
+                },
+                development: {
+                    title: 'Development',
+                    labels: ['Green', 'Yellow', 'Red'],
+                    monthly: 'Monthly',
+                    yearly: 'Yearly',
+                    anytime: 'Anytime',
                 },
             },
             operations: {
@@ -97,6 +111,13 @@ exports.state = {
                 situation: {
                     title: 'Situation',
                 },
+                development: {
+                    title: 'Évolution',
+                    labels: ['Vert', 'Jaune', 'Rouge'],
+                    monthly: 'Monthly',
+                    yearly: 'Yearly',
+                    anytime: 'Anytime',
+                },
             },
             envelopes: {
                 page: {
@@ -118,6 +139,13 @@ exports.state = {
                 },
                 situation: {
                     title: 'Situation',
+                },
+                development: {
+                    title: 'Évolution',
+                    labels: ['Vert', 'Jaune', 'Rouge'],
+                    monthly: 'Monthly',
+                    yearly: 'Yearly',
+                    anytime: 'Anytime',
                 },
             },
             operations: {
