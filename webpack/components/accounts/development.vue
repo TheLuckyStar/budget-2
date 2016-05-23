@@ -34,7 +34,7 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="pie" :data="balanceData"></layout-chart>
+                <layout-chart type="line" :labels="balanceLabels" :data="balanceData"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
@@ -62,14 +62,23 @@
         props: ['account'],
 
         computed: {
+            balanceLabels: function () {
+                return this.text.accounts.development.labels
+            },
             balanceData: function () {
-                return  {
-                    labels: this.text.accounts.development.labels,
-                    datasets: [{
+                return  [
+                    // {
+                    //     data: [300, 50, 100],
+                    //     backgroundColor: ['success', 'warning', 'danger'],
+                    // },
+                    {
                         data: [300, 50, 100],
-                        backgroundColor: ['success', 'warning', 'danger'],
-                    }],
-                }
+                        backgroundColor: 'success',
+                    }, {
+                        data: [350, 1000, 500],
+                        backgroundColor: 'warning',
+                    },
+                ]
             },
         },
 

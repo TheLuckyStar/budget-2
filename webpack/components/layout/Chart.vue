@@ -19,7 +19,7 @@
 
     export default {
 
-        props: ['title', 'data', 'type'],
+        props: ['title', 'labels', 'data', 'type'],
 
         data: function () {
             return {
@@ -35,16 +35,53 @@
         },
 
         ready: function() {
-            this.data.datasets = this.data.datasets.map(function (item) {
-                item.backgroundColor = item.backgroundColor.map(function (value) {
-                    return this.backgroundColor[value]
-                }, this)
-                return item
-            }, this)
             this.chart = new Chart(this.$el.lastElementChild, {
                 type: this.type,
-                data: this.data,
+                data: {
+                    labels: this.labels,
+                    datasets: this.datasets,
+                },
             })
+        },
+
+        computed: {
+            datasets: function () {
+                return this.data.map(this.formatDataset, this)
+            },
+        },
+
+        methods: {
+
+            formatDataset: function (input) {
+                var output = {}
+
+                Object.keys(input).forEach(function (key) {
+                    output[key] = input[key]
+                })
+
+                Object.keys(input).filter(this.filterColors).forEach(function (key) {
+                    output[key] = this.formatColors(input[key])
+                }, this)
+
+                return output
+            },
+
+            filterColors: function(key) {
+                return key === 'backgroundColor'
+            },
+
+            formatColors: function(colors) {
+                if (colors instanceof Array) {
+                    return colors.map(this.formatColor)
+                }
+
+                return this.formatColor(colors)
+            },
+
+            formatColor: function (color) {
+                return this.backgroundColor[color]
+            },
+
         },
 
     }
