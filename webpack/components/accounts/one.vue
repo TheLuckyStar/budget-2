@@ -34,6 +34,7 @@
 
 <script>
 
+    var actions = require('vuex/actions.js')
     var getters = require('vuex/getters.js')
     var AccountsDevelopment = require('components/accounts/development.vue')
     var AccountsForm = require('components/accounts/form.vue')
@@ -49,13 +50,7 @@
 
         route: {
             data: function () {
-                this.account_id = this.$route.params.account_id
-            },
-        },
-
-        computed: {
-            account: function () {
-                return this.$options.filters.find(this.accounts, 'id', this.account_id)
+                this.setCurrentAccount(this.$route.params.account_id)
             },
         },
 
@@ -66,9 +61,12 @@
         },
 
         vuex: {
+            actions: {
+                setCurrentAccount: actions.setCurrentAccount,
+            },
             getters: {
                 currentLanguage: getters.getCurrentLanguage,
-                accounts: getters.getAccounts,
+                account: getters.getCurrentAccount,
                 text: getters.getText,
             },
         },

@@ -35,6 +35,7 @@
 
 <script>
 
+    var actions = require('vuex/actions.js')
     var getters = require('vuex/getters.js')
     var EnvelopesDevelopment = require('components/envelopes/development.vue')
     var EnvelopesForm = require('components/envelopes/form.vue')
@@ -50,13 +51,7 @@
 
         route: {
             data: function () {
-                this.envelope_id = this.$route.params.envelope_id
-            },
-        },
-
-        computed: {
-            envelope: function () {
-                return this.$options.filters.find(this.envelopes, 'id', this.envelope_id)
+                this.setCurrentEnvelope(this.$route.params.envelope_id)
             },
         },
 
@@ -67,6 +62,9 @@
         },
 
         vuex: {
+            actions: {
+                setCurrentAccount: actions.setCurrentAccount,
+            },
             getters: {
                 envelopes: getters.getEnvelopes,
                 currentLanguage: getters.getCurrentLanguage,
