@@ -12,7 +12,6 @@
             <li role="presentation" class="active">
                 <a href="#monthly" aria-controls="monthly" role="tab" data-toggle="tab">
                     {{ text.accounts.development.monthly }}
-
                 </a>
             </li>
 
@@ -34,7 +33,7 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="line" :labels="balanceLabels" :data="balanceData"></layout-chart>
+                <layout-chart type="line" :labels="monthlyLabels" :data="monthlyData"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
@@ -59,26 +58,31 @@
 
     export default {
 
-        mixins: [mixins.vuex],
+        mixins: [mixins.vuex, mixins.moment],
 
         computed: {
 
-            balanceLabels: function () {
-                return this.text.accounts.development.labels
+            monthlyLabels: function () {
+                if (this.language) {
+                    var tmp = undefined
+                }
+                return this.listDaysInMonth(this.developmentDate)
             },
 
-            balanceData: function () {
+            monthlyData: function () {
                 return  [
-                    // {
-                    //     data: [300, 50, 100],
-                    //     backgroundColor: ['success', 'warning', 'danger'],
-                    // },
                     {
-                        data: [300, 50, 100],
+                        label: this.text.accounts.development.labels[0],
+                        data: this.accountDevelopment.monthly.balance,
+                        backgroundColor: 'primary',
+                    }, {
+                        label: this.text.accounts.development.labels[1],
+                        data: this.accountDevelopment.monthly.revenues,
                         backgroundColor: 'success',
                     }, {
-                        data: [350, 1000, 500],
-                        backgroundColor: 'warning',
+                        label: this.text.accounts.development.labels[2],
+                        data: this.accountDevelopment.monthly.outcomes,
+                        backgroundColor: 'danger',
                     },
                 ]
             },

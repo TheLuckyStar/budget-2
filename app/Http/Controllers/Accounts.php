@@ -35,4 +35,15 @@ class Accounts extends Controller
 
         return $account;
     }
+
+    public function development(Request $request, $id)
+    {
+        $account = Account::withTrashed()->findOrFail($id);
+
+        return [
+            'monthly' => $account->getMonthlyDevelopmentAttribute($request->date),
+            // 'yearly' => $account->getMonthlyDevelopmentAttribute($request->date),
+            // 'anytime' => $account->getMonthlyDevelopmentAttribute($request->date),
+        ];
+    }
 }

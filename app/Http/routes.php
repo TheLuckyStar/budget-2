@@ -18,6 +18,7 @@ $app->get('/', function () use ($app) {
 $app->get('accounts', 'Accounts@index');
 $app->post('accounts', 'Accounts@store');
 $app->put('accounts/{id}', 'Accounts@update');
+$app->get('accounts/development/{id}', 'Accounts@development');
 
 $app->get('envelopes', 'Envelopes@index');
 $app->post('envelopes', 'Envelopes@store');

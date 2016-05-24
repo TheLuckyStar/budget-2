@@ -3,6 +3,7 @@ exports.state = {
     language: null,
     account_id: {},
     envelope_id: {},
+    developmentDate: moment(),
 }
 
 exports.mutations = {

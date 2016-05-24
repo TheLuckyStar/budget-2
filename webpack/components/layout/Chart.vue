@@ -7,7 +7,7 @@
             {{ title }}
         </legend>
 
-        <canvas width="400" height="400"></canvas>
+        <canvas></canvas>
 
     </fieldset>
 
@@ -34,23 +34,27 @@
             }
         },
 
-        ready: function() {
-            this.chart = new Chart(this.$el.lastElementChild, {
-                type: this.type,
-                data: {
-                    labels: this.labels,
-                    datasets: this.datasets,
-                },
-            })
-        },
-
-        computed: {
-            datasets: function () {
-                return this.data.map(this.formatDataset, this)
+        watch: {
+            data: function () {
+                this.drawChart()
             },
         },
 
         methods: {
+
+            drawChart: function () {
+                this.chart = new Chart(this.$el.lastElementChild, {
+                    type: this.type,
+                    data: {
+                        labels: this.labels,
+                        datasets: this.formatDatasets(this.data),
+                    },
+                })
+            },
+
+            formatDatasets: function (datasets) {
+                return datasets.map(this.formatDataset, this)
+            },
 
             formatDataset: function (input) {
                 var output = {}

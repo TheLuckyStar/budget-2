@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,8 +32,37 @@ abstract class Container extends Model
     }
 
     /**
-     * Calculate current container balance
-     * @return float Current balance
+     * Calculate container balance for the given date
+     * @return float Container balance
      */
-    abstract public function getBalanceAttribute();
+    abstract public function getBalanceAttribute($date = null);
+
+    /**
+     * Generate metric development for the given month
+     * @return array List of balances
+     */
+    public function getMonthlyDevelopmentAttribute($date = null)
+    {
+        $output = [];
+
+        if (is_null($date)) {
+            $date = Carbon::now();
+        } elseif (is_string($date)) {
+            $date = Carbon::parse($date);
+        }
+
+        for ($date->startOfMonth(); $date->month === $date->copy()->addDay(1)->month; $date->addDay(1)) {
+            foreach ($this->getDailySnapshotAttribute($date) as $key => $val) {
+                $output[$key][] = $val;
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * Calculate container main metrics for the given day
+     * @return array Container metrics
+     */
+    abstract public function getDailySnapshotAttribute($date = null);
 }

@@ -1,6 +1,6 @@
 
 /**
- * Lang store
+ * App store
  */
 
 exports.getCurrentLanguage = function (state) {
@@ -25,6 +25,10 @@ exports.getCurrentEnvelope = function (state) {
         return {}
     }
     return envelopes[0]
+}
+
+exports.getDevelopmentDate = function (state) {
+    return state.app.developmentDate
 }
 
 
@@ -61,6 +65,10 @@ exports.getDisabledAccounts = function (state) {
     return state.remote.accounts.filter(function (account) {
         return account.deleted_at !== null;
     })
+}
+
+exports.getAccountDevelopment = function (state) {
+    return state.remote.accountDevelopment
 }
 
 

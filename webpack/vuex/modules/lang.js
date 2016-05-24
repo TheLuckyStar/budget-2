@@ -35,7 +35,7 @@ exports.state = {
             },
             development: {
                 title: 'Development',
-                labels: ['Green', 'Yellow', 'Red'],
+                labels: ['Balance', 'Revenues', 'Outcomes'],
                 monthly: 'Monthly',
                 yearly: 'Yearly',
                 anytime: 'Anytime',
@@ -111,7 +111,7 @@ exports.state = {
             },
             development: {
                 title: 'Évolution',
-                labels: ['Vert', 'Jaune', 'Rouge'],
+                labels: ['Solde', 'Revenus', 'Dépenses'],
                 monthly: 'Mensuel',
                 yearly: 'Annuel',
                 anytime: 'Depuis toujours',
