@@ -19,10 +19,11 @@
 
 <script>
 
-    var actions = require('vuex/actions.js')
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
+
+        mixins: [mixins.vuex],
 
         computed: {
 
@@ -82,16 +83,6 @@
             this.refreshAccounts()
         },
 
-        vuex: {
-            actions: {
-                refreshAccounts: actions.refreshAccounts,
-            },
-            getters: {
-                enabledAccounts: getters.getEnabledAccounts,
-                disabledAccounts: getters.getDisabledAccounts,
-                text: getters.getText,
-            },
-        },
-
     }
+
 </script>

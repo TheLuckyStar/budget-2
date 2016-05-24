@@ -19,10 +19,11 @@
 
 <script>
 
-    var actions = require('vuex/actions.js')
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
+
+        mixins: [mixins.vuex],
 
         computed: {
 
@@ -84,16 +85,6 @@
             this.refreshEnvelopes()
         },
 
-        vuex: {
-            actions: {
-                refreshEnvelopes: actions.refreshEnvelopes,
-            },
-            getters: {
-                enabledEnvelopes: getters.getEnabledEnvelopes,
-                disabledEnvelopes: getters.getDisabledEnvelopes,
-                text: getters.getText,
-            },
-        },
-
     }
+
 </script>

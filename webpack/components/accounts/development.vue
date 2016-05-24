@@ -55,16 +55,18 @@
 
 <script>
 
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
 
-        props: ['account'],
+        mixins: [mixins.vuex],
 
         computed: {
+
             balanceLabels: function () {
                 return this.text.accounts.development.labels
             },
+
             balanceData: function () {
                 return  [
                     // {
@@ -80,12 +82,7 @@
                     },
                 ]
             },
-        },
 
-        vuex: {
-            getters: {
-                text: getters.getText,
-            },
         },
 
     }

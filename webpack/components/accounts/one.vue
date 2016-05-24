@@ -34,16 +34,16 @@
 
 <script>
 
-    var actions = require('vuex/actions.js')
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
     var AccountsDevelopment = require('components/accounts/development.vue')
     var AccountsForm = require('components/accounts/form.vue')
 
     export default {
 
+        mixins: [mixins.vuex],
+
         data: function () {
             return {
-                account_id: null,
                 date: moment(),
             }
         },
@@ -57,17 +57,6 @@
         watch: {
             currentLanguage: function() {
                 this.date = moment.unix(this.date.unix())
-            },
-        },
-
-        vuex: {
-            actions: {
-                setCurrentAccount: actions.setCurrentAccount,
-            },
-            getters: {
-                currentLanguage: getters.getCurrentLanguage,
-                account: getters.getCurrentAccount,
-                text: getters.getText,
             },
         },
 

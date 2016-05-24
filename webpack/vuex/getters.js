@@ -47,7 +47,7 @@ exports.getAvailableLanguages = function (state) {
  * Remote store : accounts
  */
 
-exports.getAccounts = function (state) {
+exports.getAllAccounts = function (state) {
     return state.remote.accounts
 }
 
@@ -69,7 +69,7 @@ exports.getDisabledAccounts = function (state) {
  * Remote store : envelopes
  */
 
-exports.getEnvelopes = function (state) {
+exports.getAllEnvelopes = function (state) {
     return state.remote.envelopes
 }
 

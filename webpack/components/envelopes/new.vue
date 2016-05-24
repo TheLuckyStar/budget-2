@@ -10,7 +10,7 @@
         <hr>
 
         <div class="col-xs-12">
-            <envelopes-form :envelope="envelope"></envelopes-form>
+            <envelopes-form :envelope="{}"></envelopes-form>
         </div>
 
     </div>
@@ -21,24 +21,12 @@
 
 <script>
 
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
     var EnvelopesForm = require('components/envelopes/form.vue')
 
     export default {
 
-        data: function () {
-            return {
-                envelope: {
-                    deleted_at: null,
-                },
-            }
-        },
-
-        vuex: {
-            getters: {
-                text: getters.getText,
-            },
-        },
+        mixins: [mixins.vuex],
 
         components: {
             EnvelopesForm,

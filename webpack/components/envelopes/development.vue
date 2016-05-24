@@ -34,7 +34,7 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="pie" :data="balanceData"></layout-chart>
+                <layout-chart type="line" :labels="balanceLabels" :data="balanceData"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
@@ -55,28 +55,34 @@
 
 <script>
 
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
 
-        props: ['envelope'],
+        mixins: [mixins.vuex],
 
         computed: {
-            balanceData: function () {
-                return  {
-                    labels: this.text.envelopes.development.labels,
-                    datasets: [{
-                        data: [300, 50, 100],
-                        backgroundColor: ['success', 'warning', 'danger'],
-                    }],
-                }
-            },
-        },
 
-        vuex: {
-            getters: {
-                text: getters.getText,
+            balanceLabels: function () {
+                return this.text.envelopes.development.labels
             },
+
+            balanceData: function () {
+                return  [
+                    // {
+                    //     data: [300, 50, 100],
+                    //     backgroundColor: ['success', 'warning', 'danger'],
+                    // },
+                    {
+                        data: [300, 50, 100],
+                        backgroundColor: 'success',
+                    }, {
+                        data: [350, 1000, 500],
+                        backgroundColor: 'warning',
+                    },
+                ]
+            },
+
         },
 
     }

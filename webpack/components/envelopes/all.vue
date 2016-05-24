@@ -19,17 +19,10 @@
 
 <script>
 
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
-
-        vuex: {
-            getters: {
-                envelopes: getters.getEnvelopes,
-                text: getters.getText,
-            },
-        },
-
+        mixins: [mixins.vuex],
     }
 
 </script>

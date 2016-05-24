@@ -35,16 +35,16 @@
 
 <script>
 
-    var actions = require('vuex/actions.js')
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
     var EnvelopesDevelopment = require('components/envelopes/development.vue')
     var EnvelopesForm = require('components/envelopes/form.vue')
 
     export default {
 
+        mixins: [mixins.vuex],
+
         data: function () {
             return {
-                envelope_id: null,
                 date: moment(),
             }
         },
@@ -58,17 +58,6 @@
         watch: {
             currentLanguage: function() {
                 this.date = moment.unix(this.date.unix())
-            },
-        },
-
-        vuex: {
-            actions: {
-                setCurrentAccount: actions.setCurrentAccount,
-            },
-            getters: {
-                envelopes: getters.getEnvelopes,
-                currentLanguage: getters.getCurrentLanguage,
-                text: getters.getText,
             },
         },
 

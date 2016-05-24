@@ -15,9 +15,8 @@ exports.mutations = {
         state.account_id = account_id
     },
 
-    SET_CURRENT_ENVELOPES(state, envelope_id) {
+    SET_CURRENT_ENVELOPE(state, envelope_id) {
         state.envelope_id = envelope_id
-        // getters.getEnvelopes().filter(function (envelope) { return envelope.id == account_id})[0]
     },
 
 }
