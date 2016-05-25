@@ -12,11 +12,31 @@ class Envelope extends Container
     protected $fillable = ['name', 'icon', 'deleted_at'];
 
     /**
-     * Calculate current container balance
-     * @return float Current balance
+     * Get the outcomes for the envelope.
      */
-    public function getBalanceAttribute()
+    public function outcomes()
     {
-        return -1024.4;
+        return $this->hasMany(Outcome::class);
+    }
+
+    /**
+     * Calculate envelope balance at the given date
+     * @return float Account balance
+     */
+    public function getBalanceAttribute($date = null)
+    {
+        $date = Carbon::startOfDay($date);
+
+        return 1024.3;
+    }
+
+    /**
+     * Calculate main envelope metrics for the given day
+     * @return array Account metrics
+     */
+    public function getDailySnapshotAttribute($date = null)
+    {
+        return [
+        ];
     }
 }

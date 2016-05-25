@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Carbon\Carbon;
+use App\Factories\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -45,16 +45,14 @@ abstract class Container extends Model
     {
         $output = [];
 
-        if (is_null($date)) {
-            $date = Carbon::now();
-        } elseif (is_string($date)) {
-            $date = Carbon::parse($date);
-        }
+        $start = Carbon::startOfMonth($date);
+        $end = Carbon::endOfMonth($date);
 
-        for ($date->startOfMonth(); $date->month === $date->copy()->addDay(1)->month; $date->addDay(1)) {
-            foreach ($this->getDailySnapshotAttribute($date) as $key => $val) {
+        while ($start->lte($end)) {
+            foreach ($this->getDailySnapshotAttribute($start) as $key => $val) {
                 $output[$key][] = $val;
             }
+            $start->addDay(1);
         }
 
         return $output;

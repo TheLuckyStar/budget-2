@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Carbon\Carbon;
+use App\Factories\Carbon;
 
 class Account extends Container
 {
@@ -14,66 +14,85 @@ class Account extends Container
     protected $fillable = ['name', 'currency', 'deleted_at'];
 
     /**
+     * Get the revenues for the account.
+     */
+    public function revenues()
+    {
+        return $this->hasMany(Revenue::class);
+    }
+
+    /**
+     * Get the outcomes for the account.
+     */
+    public function outcomes()
+    {
+        return $this->hasMany(Outcome::class);
+    }
+
+    /**
      * Calculate account balance at the given date
      * @return float Account balance
      */
     public function getBalanceAttribute($date = null)
     {
-        if (is_null($date)) {
-            $date = Carbon::now();
-        } elseif (is_string($date)) {
-            $date = Carbon::parse($date);
-        }
+        $revenues = $this->getRevenuesAttribute(null, $date);
+        $outcomes = $this->getOutcomesAttribute(null, $date);
 
-        $date->startOfDay();
-
-        return 1024.3;
+        return $revenues - $outcomes;
     }
 
     /**
-     * Calculate account revenues for the given date
+     * Calculate account revenues for the given period
      * @return float Account balance
      */
-    public function getRevenuesAttribute($date = null)
+    public function getRevenuesAttribute($dateFrom = null, $dateTo = null)
     {
-        if (is_null($date)) {
-            $date = Carbon::now();
-        } elseif (is_string($date)) {
-            $date = Carbon::parse($date);
+        $query = $this->revenues()
+            ->select(app('db')->raw('SUM(amount) as total'));
+
+        if ($dateFrom) {
+            $query->where('date', '>=', $dateFrom);
         }
 
-        $date->startOfDay();
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
 
-        return 1024.3;
+        return intval($query->get()[0]['total']);
     }
 
     /**
-     * Calculate account outcomes for the given date
+     * Calculate account outcomes for the given period
      * @return float Account balance
      */
-    public function getOutcomesAttribute($date = null)
+    public function getOutcomesAttribute($dateFrom = null, $dateTo = null)
     {
-        if (is_null($date)) {
-            $date = Carbon::now();
-        } elseif (is_string($date)) {
-            $date = Carbon::parse($date);
+        $query = $this->outcomes()
+            ->select(app('db')->raw('SUM(amount) as total'));
+
+        if ($dateFrom) {
+            $query->where('date', '>=', $dateFrom);
         }
 
-        $date->startOfDay();
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
 
-        return 1024.3;
+        return intval($query->get()[0]['total']);
     }
 
     /**
-     * Calculate account main metrics for the given day
+     * Calculate main account metrics for the given day
      * @return array Account metrics
      */
     public function getDailySnapshotAttribute($date = null)
     {
+        $date = Carbon::startOfDay($date);
+
         return [
             'balance' => $this->getBalanceAttribute($date),
-            'revenues' => $this->getRevenuesAttribute($date),
-            'outcomes' => $this->getOutcomesAttribute($date),
+            'revenues' => $this->getRevenuesAttribute($date, $date),
+            'outcomes' => $this->getOutcomesAttribute($date, $date),
         ];
     }
 }
