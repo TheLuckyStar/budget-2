@@ -43,8 +43,12 @@ exports.moment = {
         listDaysInMonth: function (date) {
             list = []
 
-            for (date.startOf('month'); date.month() === moment(date).add(1, 'day').month(); date.add(1, 'day')) {
-                list.push(this.$options.filters.fullDate(date))
+            var start = moment(date).startOf('month')
+            var end = moment(start).endOf('month')
+
+            while (start.isSameOrBefore(end)) {
+                list.push(this.$options.filters.fullDate(start))
+                start.add(1, 'day')
             }
 
             return list

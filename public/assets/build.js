@@ -12811,7 +12811,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, Vue, jQuery) {/*!
-	 * Vue.js v1.0.24
+	 * Vue.js v1.0.22
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -13948,9 +13948,8 @@
 	 */
 
 	function inDoc(node) {
-	  if (!node) return false;
-	  var doc = node.ownerDocument.documentElement;
-	  var parent = node.parentNode;
+	  var doc = document.documentElement;
+	  var parent = node && node.parentNode;
 	  return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 	}
 
@@ -15824,26 +15823,19 @@
 	 */
 
 	function flushBatcherQueue() {
-	  var _again = true;
-
-	  _function: while (_again) {
-	    _again = false;
-
+	  runBatcherQueue(queue);
+	  queue.length = 0;
+	  runBatcherQueue(userQueue);
+	  // user watchers triggered more internal watchers
+	  if (queue.length) {
 	    runBatcherQueue(queue);
-	    runBatcherQueue(userQueue);
-	    // user watchers triggered more watchers,
-	    // keep flushing until it depletes
-	    if (queue.length) {
-	      _again = true;
-	      continue _function;
-	    }
-	    // dev tool hook
-	    /* istanbul ignore if */
-	    if (devtools && config.devtools) {
-	      devtools.emit('flush');
-	    }
-	    resetBatcherState();
 	  }
+	  // dev tool hook
+	  /* istanbul ignore if */
+	  if (devtools && config.devtools) {
+	    devtools.emit('flush');
+	  }
+	  resetBatcherState();
 	}
 
 	/**
@@ -15869,7 +15861,6 @@
 	      }
 	    }
 	  }
-	  queue.length = 0;
 	}
 
 	/**
@@ -20589,7 +20580,7 @@
 	    var node = nodes[i];
 	    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
 	      parent.removeChild(node);
-	      node = parseTemplate(node, true);
+	      node = parseTemplate(node);
 	    }
 	    frag.appendChild(node);
 	  }
@@ -22825,7 +22816,7 @@
 
 	installGlobalAPI(Vue);
 
-	Vue.version = '1.0.24';
+	Vue.version = '1.0.22';
 
 	// devtools global hook
 	/* istanbul ignore next */
@@ -22855,6 +22846,9 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -48095,7 +48089,7 @@
 /* 275 */
 /***/ function(module, exports) {
 
-	var core = module.exports = {version: '2.3.0'};
+	var core = module.exports = {version: '2.4.0'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
@@ -53504,8 +53498,12 @@
 	        listDaysInMonth: function (date) {
 	            list = []
 
-	            for (date.startOf('month'); date.month() === moment(date).add(1, 'day').month(); date.add(1, 'day')) {
-	                list.push(this.$options.filters.fullDate(date))
+	            var start = moment(date).startOf('month')
+	            var end = moment(start).endOf('month')
+
+	            while (start.isSameOrBefore(end)) {
+	                list.push(this.$options.filters.fullDate(start))
+	                start.add(1, 'day')
 	            }
 
 	            return list
