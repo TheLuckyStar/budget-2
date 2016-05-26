@@ -43,7 +43,6 @@ class Accounts extends Controller
         return [
             'monthly' => $account->getMonthlyDevelopmentAttribute($request->date),
             // 'yearly' => $account->getMonthlyDevelopmentAttribute($request->date),
-            // 'anytime' => $account->getMonthlyDevelopmentAttribute($request->date),
         ];
     }
 }

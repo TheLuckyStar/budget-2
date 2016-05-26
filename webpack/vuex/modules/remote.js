@@ -12,11 +12,6 @@ exports.state = {
             revenues: [],
             outcomes: [],
         },
-        anytime: {
-            balance: [],
-            revenues: [],
-            outcomes: [],
-        },
     },
     envelopes: [],
 }

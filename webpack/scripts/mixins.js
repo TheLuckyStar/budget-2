@@ -15,6 +15,7 @@ exports.vuex = {
             refreshEnvelopes: actions.refreshEnvelopes,
             saveEnvelope: actions.saveEnvelope,
             updateEnvelope: actions.updateEnvelope,
+            setDevelopementDate: actions.setDevelopementDate,
         },
 
         getters: {

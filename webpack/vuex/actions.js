@@ -12,6 +12,7 @@ exports.setLanguage = function ({ dispatch, state }, language) {
 
     moment.locale(language)
     dispatch('SET_LANGUAGE', language)
+    dispatch('SET_DEVELOPMENT_DATE', moment(state.app.developmentDate.toDate()))
     document.title = state.lang[language].app.title
 }
 
@@ -22,6 +23,11 @@ exports.setCurrentAccount = function ({ dispatch, state }, account_id) {
 
 exports.setCurrentEnvelope = function ({ dispatch, state }, envelope_id) {
     dispatch('SET_CURRENT_ENVELOPE', envelope_id)
+}
+
+exports.setDevelopementDate = function ({ dispatch, state }, developmentDate) {
+    dispatch('SET_DEVELOPMENT_DATE', moment(developmentDate))
+    exports.refreshAccountDevelopment({ dispatch, state })
 }
 
 

@@ -21,26 +21,34 @@
                 </a>
             </li>
 
-            <li role="presentation">
-                <a href="#anytime" aria-controls="anytime" role="tab" data-toggle="tab">
-                    {{ text.accounts.development.anytime }}
-
-                </a>
-            </li>
-
         </ul>
 
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="line" :labels="monthlyLabels" :data="monthlyData"></layout-chart>
+                <div class="text-center">
+                    <ul class="nav nav-pills nav-justified">
+                        <li>
+                            <a v-on:click.stop="setDevelopementDate(prevMonth)">
+                                {{ prevMonth | fullMonth }}
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                {{ developmentDate | fullMonth }}
+                            </a>
+                        </li>
+                        <li>
+                            <a v-on:click.stop="setDevelopementDate(nextMonth)">
+                                {{ nextMonth | fullMonth }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <layout-chart type="line" :labels="listDaysInMonth(developmentDate)" :data="monthlyData"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
-
-            </div>
-
-            <div role="tabpanel" class="tab-pane" id="anytime">
 
             </div>
 
@@ -62,11 +70,12 @@
 
         computed: {
 
-            monthlyLabels: function () {
-                if (this.language) {
-                    var tmp = undefined
-                }
-                return this.listDaysInMonth(this.developmentDate)
+            prevMonth: function () {
+                return moment(this.developmentDate).subtract(1, 'month')
+            },
+
+            nextMonth: function () {
+                return moment(this.developmentDate).add(1, 'month')
             },
 
             monthlyData: function () {
@@ -74,15 +83,15 @@
                     {
                         label: this.text.accounts.development.labels[0],
                         data: this.accountDevelopment.monthly.balance,
-                        backgroundColor: 'primary',
+                        borderColor: 'primary',
                     }, {
                         label: this.text.accounts.development.labels[1],
                         data: this.accountDevelopment.monthly.revenues,
-                        backgroundColor: 'success',
+                        borderColor: 'success',
                     }, {
                         label: this.text.accounts.development.labels[2],
                         data: this.accountDevelopment.monthly.outcomes,
-                        backgroundColor: 'danger',
+                        borderColor: 'danger',
                     },
                 ]
             },

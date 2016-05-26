@@ -12800,10 +12800,20 @@
 	// Enable debugging
 	Vue.config.debug = true
 
-	// Format date to locale
+	// Format date to localized date, month and year
 	Vue.filter('fullDate', function (date) {
 	    return moment(date).format('LL')
 	})
+
+	// Format date to localized month and year
+	Vue.filter('fullMonth', function (date) {
+	    var date = moment(date)
+	    var month = moment.localeData().months(date)
+	    month = month.charAt(0).toUpperCase() + month.slice(1)
+	    var year = date.year()
+	    return month + ' ' + year
+	})
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(98)))
 
 /***/ },
@@ -37748,7 +37758,7 @@
 	    data: function data() {
 	        return {
 	            chart: null,
-	            backgroundColor: {
+	            colors: {
 	                default: '#E7E9ED',
 	                success: '#4BC0C0',
 	                info: '#36A2EB',
@@ -37758,23 +37768,27 @@
 	        };
 	    },
 
+	    ready: function ready() {
+	        this.chart = new Chart(this.$el.lastElementChild, {
+	            type: this.type,
+	            data: {
+	                labels: [],
+	                datasets: []
+	            }
+	        });
+	    },
+
 	    watch: {
 	        data: function data() {
-	            this.drawChart();
+	            this.chart.data.labels = this.labels;
+	            this.chart.data.datasets = this.formatDatasets(this.data);
+	            this.chart.update();
 	        }
 	    },
 
 	    methods: {
 
-	        drawChart: function drawChart() {
-	            this.chart = new Chart(this.$el.lastElementChild, {
-	                type: this.type,
-	                data: {
-	                    labels: this.labels,
-	                    datasets: this.formatDatasets(this.data)
-	                }
-	            });
-	        },
+	        drawChart: function drawChart() {},
 
 	        formatDatasets: function formatDatasets(datasets) {
 	            return datasets.map(this.formatDataset, this);
@@ -37795,7 +37809,7 @@
 	        },
 
 	        filterColors: function filterColors(key) {
-	            return key === 'backgroundColor';
+	            return key === 'backgroundColor' || key === 'borderColor';
 	        },
 
 	        formatColors: function formatColors(colors) {
@@ -37807,7 +37821,7 @@
 	        },
 
 	        formatColor: function formatColor(color) {
-	            return this.backgroundColor[color];
+	            return this.colors[color];
 	        }
 
 	    }
@@ -48334,6 +48348,7 @@
 
 	    moment.locale(language)
 	    dispatch('SET_LANGUAGE', language)
+	    dispatch('SET_DEVELOPMENT_DATE', moment(state.app.developmentDate.toDate()))
 	    document.title = state.lang[language].app.title
 	}
 
@@ -48344,6 +48359,11 @@
 
 	exports.setCurrentEnvelope = function ({ dispatch, state }, envelope_id) {
 	    dispatch('SET_CURRENT_ENVELOPE', envelope_id)
+	}
+
+	exports.setDevelopementDate = function ({ dispatch, state }, developmentDate) {
+	    dispatch('SET_DEVELOPMENT_DATE', moment(developmentDate))
+	    exports.refreshAccountDevelopment({ dispatch, state })
 	}
 
 
@@ -53133,6 +53153,10 @@
 	        state.envelope_id = envelope_id
 	    },
 
+	    SET_DEVELOPMENT_DATE(state, developmentDate) {
+	        state.developmentDate = developmentDate
+	    },
+
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
@@ -53181,7 +53205,6 @@
 	                labels: ['Balance', 'Revenues', 'Outcomes'],
 	                monthly: 'Monthly',
 	                yearly: 'Yearly',
-	                anytime: 'Anytime',
 	            },
 	        },
 	        envelopes: {
@@ -53210,7 +53233,6 @@
 	                labels: ['Green', 'Yellow', 'Red'],
 	                monthly: 'Monthly',
 	                yearly: 'Yearly',
-	                anytime: 'Anytime',
 	            },
 	        },
 	        operations: {
@@ -53255,9 +53277,8 @@
 	            development: {
 	                title: 'Évolution',
 	                labels: ['Solde', 'Revenus', 'Dépenses'],
-	                monthly: 'Mensuel',
-	                yearly: 'Annuel',
-	                anytime: 'Depuis toujours',
+	                monthly: 'Mensuelle',
+	                yearly: 'Annuelle',
 	            },
 	        },
 	        envelopes: {
@@ -53284,9 +53305,8 @@
 	            development: {
 	                title: 'Évolution',
 	                labels: ['Vert', 'Jaune', 'Rouge'],
-	                monthly: 'Monthly',
-	                yearly: 'Yearly',
-	                anytime: 'Anytime',
+	                monthly: 'Mensuelle',
+	                yearly: 'Annuelle',
 	            },
 	        },
 	        operations: {
@@ -53312,11 +53332,6 @@
 	            outcomes: [],
 	        },
 	        yearly: {
-	            balance: [],
-	            revenues: [],
-	            outcomes: [],
-	        },
-	        anytime: {
 	            balance: [],
 	            revenues: [],
 	            outcomes: [],
@@ -53470,6 +53485,7 @@
 	            refreshEnvelopes: actions.refreshEnvelopes,
 	            saveEnvelope: actions.saveEnvelope,
 	            updateEnvelope: actions.updateEnvelope,
+	            setDevelopementDate: actions.setDevelopementDate,
 	        },
 
 	        getters: {
@@ -53676,7 +53692,7 @@
 /* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -53691,38 +53707,40 @@
 
 	    computed: {
 
-	        monthlyLabels: function monthlyLabels() {
-	            if (this.language) {
-	                var tmp = undefined;
-	            }
-	            return this.listDaysInMonth(this.developmentDate);
+	        prevMonth: function prevMonth() {
+	            return moment(this.developmentDate).subtract(1, 'month');
+	        },
+
+	        nextMonth: function nextMonth() {
+	            return moment(this.developmentDate).add(1, 'month');
 	        },
 
 	        monthlyData: function monthlyData() {
 	            return [{
 	                label: this.text.accounts.development.labels[0],
 	                data: this.accountDevelopment.monthly.balance,
-	                backgroundColor: 'primary'
+	                borderColor: 'primary'
 	            }, {
 	                label: this.text.accounts.development.labels[1],
 	                data: this.accountDevelopment.monthly.revenues,
-	                backgroundColor: 'success'
+	                borderColor: 'success'
 	            }, {
 	                label: this.text.accounts.development.labels[2],
 	                data: this.accountDevelopment.monthly.outcomes,
-	                backgroundColor: 'danger'
+	                borderColor: 'danger'
 	            }];
 	        }
 
 	    }
 
 	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
 
 /***/ },
 /* 344 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<fieldset>\n\n    <legend>\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\">\n\n        <li role=\"presentation\" class=\"active\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.monthly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.yearly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#anytime\" aria-controls=\"anytime\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.anytime }}\n\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\">\n            <layout-chart type=\"line\" :labels=\"monthlyLabels\" :data=\"monthlyData\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\">\n\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"anytime\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n<fieldset>\n\n    <legend>\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\">\n\n        <li role=\"presentation\" class=\"active\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.monthly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.yearly }}\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\">\n            <div class=\"text-center\">\n                <ul class=\"nav nav-pills nav-justified\">\n                    <li>\n                        <a v-on:click.stop=\"setDevelopementDate(prevMonth)\">\n                            {{ prevMonth | fullMonth }}\n                        </a>\n                    </li>\n                    <li class=\"active\">\n                        <a href=\"#\">\n                            {{ developmentDate | fullMonth }}\n                        </a>\n                    </li>\n                    <li>\n                        <a v-on:click.stop=\"setDevelopementDate(nextMonth)\">\n                            {{ nextMonth | fullMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </div>\n            <layout-chart type=\"line\" :labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 345 */
@@ -54192,7 +54210,7 @@
 /* 362 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<fieldset>\n\n    <legend>\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\">\n\n        <li role=\"presentation\" class=\"active\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.envelopes.development.monthly }}\n\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.envelopes.development.yearly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#anytime\" aria-controls=\"anytime\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.envelopes.development.anytime }}\n\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\">\n            <layout-chart type=\"line\" :labels=\"balanceLabels\" :data=\"balanceData\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\">\n\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"anytime\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n<fieldset>\n\n    <legend>\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\">\n\n        <li role=\"presentation\" class=\"active\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.envelopes.development.monthly }}\n\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.envelopes.development.yearly }}\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\">\n            <layout-chart type=\"line\" :labels=\"balanceLabels\" :data=\"balanceData\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 363 */

@@ -20,4 +20,8 @@ exports.mutations = {
         state.envelope_id = envelope_id
     },
 
+    SET_DEVELOPMENT_DATE(state, developmentDate) {
+        state.developmentDate = developmentDate
+    },
+
 }

@@ -24,7 +24,7 @@
         data: function () {
             return {
                 chart: null,
-                backgroundColor: {
+                colors: {
                     default: '#E7E9ED',
                     success: '#4BC0C0',
                     info: '#36A2EB',
@@ -34,22 +34,27 @@
             }
         },
 
+        ready: function () {
+            this.chart = new Chart(this.$el.lastElementChild, {
+                type: this.type,
+                data: {
+                    labels: [],
+                    datasets: [],
+                },
+            })
+        },
+
         watch: {
             data: function () {
-                this.drawChart()
+                this.chart.data.labels = this.labels
+                this.chart.data.datasets = this.formatDatasets(this.data)
+                this.chart.update()
             },
         },
 
         methods: {
 
             drawChart: function () {
-                this.chart = new Chart(this.$el.lastElementChild, {
-                    type: this.type,
-                    data: {
-                        labels: this.labels,
-                        datasets: this.formatDatasets(this.data),
-                    },
-                })
             },
 
             formatDatasets: function (datasets) {
@@ -71,7 +76,7 @@
             },
 
             filterColors: function(key) {
-                return key === 'backgroundColor'
+                return key === 'backgroundColor' || key === 'borderColor'
             },
 
             formatColors: function(colors) {
@@ -83,7 +88,7 @@
             },
 
             formatColor: function (color) {
-                return this.backgroundColor[color]
+                return this.colors[color]
             },
 
         },

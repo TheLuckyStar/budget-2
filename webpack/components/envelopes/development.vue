@@ -22,13 +22,6 @@
                 </a>
             </li>
 
-            <li role="presentation">
-                <a href="#anytime" aria-controls="anytime" role="tab" data-toggle="tab">
-                    {{ text.envelopes.development.anytime }}
-
-                </a>
-            </li>
-
         </ul>
 
         <div class="tab-content">
@@ -38,10 +31,6 @@
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
-
-            </div>
-
-            <div role="tabpanel" class="tab-pane" id="anytime">
 
             </div>
 
