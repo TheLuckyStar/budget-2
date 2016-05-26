@@ -76,7 +76,7 @@
             },
 
             filterColors: function(key) {
-                return key === 'backgroundColor' || key === 'borderColor'
+                return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor'
             },
 
             formatColors: function(colors) {
@@ -88,7 +88,11 @@
             },
 
             formatColor: function (color) {
-                return this.colors[color]
+                if (this.colors.hasOwnProperty(color)) {
+                    return this.colors[color]
+                }
+
+                return color
             },
 
         },

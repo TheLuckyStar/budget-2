@@ -48,7 +48,7 @@ exports.moment = {
             var end = moment(start).endOf('month')
 
             while (start.isSameOrBefore(end)) {
-                list.push(this.$options.filters.fullDate(start))
+                list.push(this.$options.filters.formatLongDay(start))
                 start.add(1, 'day')
             }
 

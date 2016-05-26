@@ -29,23 +29,23 @@
                 <div class="text-center">
                     <ul class="nav nav-pills nav-justified">
                         <li>
-                            <a v-on:click.stop="setDevelopementDate(prevMonth)">
-                                {{ prevMonth | fullMonth }}
-                            </a>
+                            <button v-on:click.stop="setDevelopementDate(prevMonth)" class="btn btn-default">
+                                {{ prevMonth | formatLongMonth }}
+                            </button>
                         </li>
                         <li class="active">
-                            <a href="#">
-                                {{ developmentDate | fullMonth }}
+                            <a v-on:click.stop>
+                                {{ developmentDate | formatLongMonth }}
                             </a>
                         </li>
                         <li>
-                            <a v-on:click.stop="setDevelopementDate(nextMonth)">
-                                {{ nextMonth | fullMonth }}
-                            </a>
+                            <button v-on:click.stop="setDevelopementDate(nextMonth)" class="btn btn-default">
+                                {{ nextMonth | formatLongMonth }}
+                            </button>
                         </li>
                     </ul>
                 </div>
-                <layout-chart type="line" :labels="listDaysInMonth(developmentDate)" :data="monthlyData"></layout-chart>
+                <layout-chart type="line" :labels="listDaysInMonth(developmentDate)" :data="monthlyData" :fill="false"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
@@ -83,15 +83,38 @@
                     {
                         label: this.text.accounts.development.labels[0],
                         data: this.accountDevelopment.monthly.balance,
-                        borderColor: 'primary',
+                        borderColor: 'default',
+                        backgroundColor: 'default',
+                        fillColor: 'white',
+                        fill: false,
                     }, {
                         label: this.text.accounts.development.labels[1],
                         data: this.accountDevelopment.monthly.revenues,
                         borderColor: 'success',
+                        backgroundColor: 'success',
+                        fillColor: 'white',
+                        fill: false,
                     }, {
                         label: this.text.accounts.development.labels[2],
+                        data: this.accountDevelopment.monthly.incomingTransfers,
+                        borderColor: 'info',
+                        backgroundColor: 'info',
+                        fillColor: 'white',
+                        fill: false,
+                    }, {
+                        label: this.text.accounts.development.labels[3],
+                        data: this.accountDevelopment.monthly.outgoingTransfers,
+                        borderColor: 'warning',
+                        backgroundColor: 'warning',
+                        fillColor: 'white',
+                        fill: false,
+                    }, {
+                        label: this.text.accounts.development.labels[4],
                         data: this.accountDevelopment.monthly.outcomes,
                         borderColor: 'danger',
+                        backgroundColor: 'danger',
+                        fillColor: 'white',
+                        fill: false,
                     },
                 ]
             },
@@ -101,3 +124,17 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .tab-pane {
+        padding: 20px;
+    }
+
+    .nav-pills {
+        margin-bottom: 20px;
+    }
+
+</style>

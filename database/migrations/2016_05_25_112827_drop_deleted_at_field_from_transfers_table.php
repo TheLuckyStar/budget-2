@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropDeletedAtFieldFromOutcomesTable extends Migration
+class DropDeletedAtFieldFromTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class DropDeletedAtFieldFromOutcomesTable extends Migration
      */
     public function up()
     {
-        Schema::table('outcomes', function (Blueprint $table) {
+        Schema::table('transfers', function (Blueprint $table) {
             app('db')->table($table->getTable())->whereNotNull('deleted_at')->delete();
             $table->dropColumn('deleted_at');
         });
@@ -25,7 +25,7 @@ class DropDeletedAtFieldFromOutcomesTable extends Migration
      */
     public function down()
     {
-        Schema::table('outcomes', function (Blueprint $table) {
+        Schema::table('transfers', function (Blueprint $table) {
             $table->softDeletes();
         });
     }

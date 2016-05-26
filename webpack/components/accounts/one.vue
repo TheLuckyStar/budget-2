@@ -14,7 +14,7 @@
                 icon="fa-balance-scale"
                 :title="text.accounts.situation.title"
                 :text="account.balance"
-                :comment="$options.filters.fullDate(date)"
+                :comment="$options.filters.formatLongDate(date)"
             ></layout-card>
         </div>
 

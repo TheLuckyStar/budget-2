@@ -12801,12 +12801,21 @@
 	Vue.config.debug = true
 
 	// Format date to localized date, month and year
-	Vue.filter('fullDate', function (date) {
+	Vue.filter('formatLongDate', function (date) {
 	    return moment(date).format('LL')
 	})
 
+	// Format date to localized day and date
+	Vue.filter('formatLongDay', function (date) {
+	    var date = moment(date)
+	    var day = moment.localeData().weekdays(date)
+	    day = day.charAt(0).toUpperCase() + day.slice(1)
+	    var date = date.date()
+	    return day + ' ' + date
+	})
+
 	// Format date to localized month and year
-	Vue.filter('fullMonth', function (date) {
+	Vue.filter('formatLongMonth', function (date) {
 	    var date = moment(date)
 	    var month = moment.localeData().months(date)
 	    month = month.charAt(0).toUpperCase() + month.slice(1)
@@ -12821,7 +12830,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, Vue, jQuery) {/*!
-	 * Vue.js v1.0.22
+	 * Vue.js v1.0.24
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -13958,8 +13967,9 @@
 	 */
 
 	function inDoc(node) {
-	  var doc = document.documentElement;
-	  var parent = node && node.parentNode;
+	  if (!node) return false;
+	  var doc = node.ownerDocument.documentElement;
+	  var parent = node.parentNode;
 	  return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 	}
 
@@ -15833,19 +15843,26 @@
 	 */
 
 	function flushBatcherQueue() {
-	  runBatcherQueue(queue);
-	  queue.length = 0;
-	  runBatcherQueue(userQueue);
-	  // user watchers triggered more internal watchers
-	  if (queue.length) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    _again = false;
+
 	    runBatcherQueue(queue);
+	    runBatcherQueue(userQueue);
+	    // user watchers triggered more watchers,
+	    // keep flushing until it depletes
+	    if (queue.length) {
+	      _again = true;
+	      continue _function;
+	    }
+	    // dev tool hook
+	    /* istanbul ignore if */
+	    if (devtools && config.devtools) {
+	      devtools.emit('flush');
+	    }
+	    resetBatcherState();
 	  }
-	  // dev tool hook
-	  /* istanbul ignore if */
-	  if (devtools && config.devtools) {
-	    devtools.emit('flush');
-	  }
-	  resetBatcherState();
 	}
 
 	/**
@@ -15871,6 +15888,7 @@
 	      }
 	    }
 	  }
+	  queue.length = 0;
 	}
 
 	/**
@@ -20590,7 +20608,7 @@
 	    var node = nodes[i];
 	    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
 	      parent.removeChild(node);
-	      node = parseTemplate(node);
+	      node = parseTemplate(node, true);
 	    }
 	    frag.appendChild(node);
 	  }
@@ -22826,7 +22844,7 @@
 
 	installGlobalAPI(Vue);
 
-	Vue.version = '1.0.22';
+	Vue.version = '1.0.24';
 
 	// devtools global hook
 	/* istanbul ignore next */
@@ -22856,9 +22874,6 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -37809,7 +37824,7 @@
 	        },
 
 	        filterColors: function filterColors(key) {
-	            return key === 'backgroundColor' || key === 'borderColor';
+	            return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor';
 	        },
 
 	        formatColors: function formatColors(colors) {
@@ -37821,7 +37836,11 @@
 	        },
 
 	        formatColor: function formatColor(color) {
-	            return this.colors[color];
+	            if (this.colors.hasOwnProperty(color)) {
+	                return this.colors[color];
+	            }
+
+	            return color;
 	        }
 
 	    }
@@ -48103,7 +48122,7 @@
 /* 275 */
 /***/ function(module, exports) {
 
-	var core = module.exports = {version: '2.4.0'};
+	var core = module.exports = {version: '2.3.0'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
@@ -53202,7 +53221,7 @@
 	            },
 	            development: {
 	                title: 'Development',
-	                labels: ['Balance', 'Revenues', 'Outcomes'],
+	                labels: ['Balance', 'Revenues', 'Incoming transfers', 'Outgoing transfers', 'Outcomes'],
 	                monthly: 'Monthly',
 	                yearly: 'Yearly',
 	            },
@@ -53276,7 +53295,7 @@
 	            },
 	            development: {
 	                title: 'Évolution',
-	                labels: ['Solde', 'Revenus', 'Dépenses'],
+	                labels: ['Solde', 'Revenus', 'Virements entrants', 'Virement sortants', 'Dépenses'],
 	                monthly: 'Mensuelle',
 	                yearly: 'Annuelle',
 	            },
@@ -53330,11 +53349,15 @@
 	            balance: [],
 	            revenues: [],
 	            outcomes: [],
+	            incomingTransfers: [],
+	            outgoingTransfers: [],
 	        },
 	        yearly: {
 	            balance: [],
 	            revenues: [],
 	            outcomes: [],
+	            incomingTransfers: [],
+	            outgoingTransfers: [],
 	        },
 	    },
 	    envelopes: [],
@@ -53518,7 +53541,7 @@
 	            var end = moment(start).endOf('month')
 
 	            while (start.isSameOrBefore(end)) {
-	                list.push(this.$options.filters.fullDate(start))
+	                list.push(this.$options.filters.formatLongDay(start))
 	                start.add(1, 'day')
 	            }
 
@@ -53665,12 +53688,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
+	__webpack_require__(374)
 	__vue_script__ = __webpack_require__(343)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/accounts/development.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(344)
+	__vue_template__ = __webpack_require__(376)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -53719,15 +53743,38 @@
 	            return [{
 	                label: this.text.accounts.development.labels[0],
 	                data: this.accountDevelopment.monthly.balance,
-	                borderColor: 'primary'
+	                borderColor: 'default',
+	                backgroundColor: 'default',
+	                fillColor: 'white',
+	                fill: false
 	            }, {
 	                label: this.text.accounts.development.labels[1],
 	                data: this.accountDevelopment.monthly.revenues,
-	                borderColor: 'success'
+	                borderColor: 'success',
+	                backgroundColor: 'success',
+	                fillColor: 'white',
+	                fill: false
 	            }, {
 	                label: this.text.accounts.development.labels[2],
+	                data: this.accountDevelopment.monthly.incomingTransfers,
+	                borderColor: 'info',
+	                backgroundColor: 'info',
+	                fillColor: 'white',
+	                fill: false
+	            }, {
+	                label: this.text.accounts.development.labels[3],
+	                data: this.accountDevelopment.monthly.outgoingTransfers,
+	                borderColor: 'warning',
+	                backgroundColor: 'warning',
+	                fillColor: 'white',
+	                fill: false
+	            }, {
+	                label: this.text.accounts.development.labels[4],
 	                data: this.accountDevelopment.monthly.outcomes,
-	                borderColor: 'danger'
+	                borderColor: 'danger',
+	                backgroundColor: 'danger',
+	                fillColor: 'white',
+	                fill: false
 	            }];
 	        }
 
@@ -53737,12 +53784,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
 
 /***/ },
-/* 344 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<fieldset>\n\n    <legend>\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\">\n\n        <li role=\"presentation\" class=\"active\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.monthly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\">\n                {{ text.accounts.development.yearly }}\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\">\n            <div class=\"text-center\">\n                <ul class=\"nav nav-pills nav-justified\">\n                    <li>\n                        <a v-on:click.stop=\"setDevelopementDate(prevMonth)\">\n                            {{ prevMonth | fullMonth }}\n                        </a>\n                    </li>\n                    <li class=\"active\">\n                        <a href=\"#\">\n                            {{ developmentDate | fullMonth }}\n                        </a>\n                    </li>\n                    <li>\n                        <a v-on:click.stop=\"setDevelopementDate(nextMonth)\">\n                            {{ nextMonth | fullMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </div>\n            <layout-chart type=\"line\" :labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
-
-/***/ },
+/* 344 */,
 /* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -53848,7 +53890,7 @@
 /* 348 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card color=\"primary\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.fullDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card color=\"primary\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 349 */
@@ -54318,7 +54360,7 @@
 /* 366 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.fullDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 367 */
@@ -54417,6 +54459,54 @@
 
 	// exports
 
+
+/***/ },
+/* 372 */,
+/* 373 */,
+/* 374 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(375);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-11308b7b&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-11308b7b&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 375 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n.tab-pane[_v-11308b7b] {\n    padding: 20px;\n}\n\n.nav-pills[_v-11308b7b] {\n    margin-bottom: 20px;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 376 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<fieldset _v-11308b7b=\"\">\n\n    <legend _v-11308b7b=\"\">\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-11308b7b=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-11308b7b=\"\">\n            <a href=\"#monthly\" aria-controls=\"monthly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                {{ text.accounts.development.monthly }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-11308b7b=\"\">\n            <a href=\"#yearly\" aria-controls=\"yearly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                {{ text.accounts.development.yearly }}\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-11308b7b=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-11308b7b=\"\">\n            <div class=\"text-center\" _v-11308b7b=\"\">\n                <ul class=\"nav nav-pills nav-justified\" _v-11308b7b=\"\">\n                    <li _v-11308b7b=\"\">\n                        <button v-on:click.stop=\"setDevelopementDate(prevMonth)\" class=\"btn btn-default\" _v-11308b7b=\"\">\n                            {{ prevMonth | formatLongMonth }}\n                        </button>\n                    </li>\n                    <li class=\"active\" _v-11308b7b=\"\">\n                        <a v-on:click.stop=\"\" _v-11308b7b=\"\">\n                            {{ developmentDate | formatLongMonth }}\n                        </a>\n                    </li>\n                    <li _v-11308b7b=\"\">\n                        <button v-on:click.stop=\"setDevelopementDate(nextMonth)\" class=\"btn btn-default\" _v-11308b7b=\"\">\n                            {{ nextMonth | formatLongMonth }}\n                        </button>\n                    </li>\n                </ul>\n            </div>\n            <layout-chart type=\"line\" :labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :fill=\"false\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-11308b7b=\"\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ }
 /******/ ]);

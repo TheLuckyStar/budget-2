@@ -15,7 +15,7 @@
                 icon="fa-balance-scale"
                 :title="text.envelopes.situation.title"
                 :text="envelope.balance"
-                :comment="$options.filters.fullDate(date)"
+                :comment="$options.filters.formatLongDate(date)"
             ></layout-card>
         </div>
 

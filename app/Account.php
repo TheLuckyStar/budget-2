@@ -30,6 +30,22 @@ class Account extends Container
     }
 
     /**
+     * Get the incoming transfers for the account.
+     */
+    public function incomingTransfers()
+    {
+        return $this->hasMany(Transfer::class, 'to_account_id');
+    }
+
+    /**
+     * Get the outgoing transfers for the account.
+     */
+    public function outgoingTransfers()
+    {
+        return $this->hasMany(Transfer::class, 'from_account_id');
+    }
+
+    /**
      * Calculate account balance at the given date
      * @return float Account balance
      */
@@ -37,8 +53,10 @@ class Account extends Container
     {
         $revenues = $this->getRevenuesAttribute(null, $date);
         $outcomes = $this->getOutcomesAttribute(null, $date);
+        $incomingTransfers = $this->getIncomingTransfersAttribute(null, $date);
+        $outgoingTransfers = $this->getOutgoingTransfersAttribute(null, $date);
 
-        return $revenues - $outcomes;
+        return round($revenues + $incomingTransfers - $outcomes - $outgoingTransfers, 2);
     }
 
     /**
@@ -50,15 +68,18 @@ class Account extends Container
         $query = $this->revenues()
             ->select(app('db')->raw('SUM(amount) as total'));
 
-        if ($dateFrom) {
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('date', [$dateFrom, $dateTo]);
+        } else if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
+        } else if ($dateTo) {
+            $query->where(function ($query) use($dateTo) {
+                $query->where('date', '<=', $dateTo);
+                $query->orWhere('date', null);
+            });
         }
 
-        if ($dateTo) {
-            $query->where('date', '<=', $dateTo);
-        }
-
-        return intval($query->get()[0]['total']);
+        return floatval($query->get()[0]['total']);
     }
 
     /**
@@ -78,7 +99,47 @@ class Account extends Container
             $query->where('date', '<=', $dateTo);
         }
 
-        return intval($query->get()[0]['total']);
+        return floatval($query->get()[0]['total']);
+    }
+
+    /**
+     * Calculate account incoming tranfers for the given period
+     * @return float Account incoming transfers
+     */
+    public function getIncomingTransfersAttribute($dateFrom = null, $dateTo = null)
+    {
+        $query = $this->incomingTransfers()
+            ->select(app('db')->raw('SUM(amount) as total'));
+
+        if ($dateFrom) {
+            $query->where('date', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
+
+        return floatval($query->get()[0]['total']);
+    }
+
+    /**
+     * Calculate account outgoing tranfers for the given period
+     * @return float Account outgoing transfers
+     */
+    public function getOutgoingTransfersAttribute($dateFrom = null, $dateTo = null)
+    {
+        $query = $this->outgoingTransfers()
+            ->select(app('db')->raw('SUM(amount) as total'));
+
+        if ($dateFrom) {
+            $query->where('date', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
+
+        return floatval($query->get()[0]['total']);
     }
 
     /**
@@ -93,6 +154,8 @@ class Account extends Container
             'balance' => $this->getBalanceAttribute($date),
             'revenues' => $this->getRevenuesAttribute($date, $date),
             'outcomes' => $this->getOutcomesAttribute($date, $date),
+            'incomingTransfers' => $this->getIncomingTransfersAttribute($date, $date),
+            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($date, $date),
         ];
     }
 }

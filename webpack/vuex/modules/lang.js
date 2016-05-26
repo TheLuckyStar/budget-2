@@ -35,7 +35,7 @@ exports.state = {
             },
             development: {
                 title: 'Development',
-                labels: ['Balance', 'Revenues', 'Outcomes'],
+                labels: ['Balance', 'Revenues', 'Incoming transfers', 'Outgoing transfers', 'Outcomes'],
                 monthly: 'Monthly',
                 yearly: 'Yearly',
             },
@@ -109,7 +109,7 @@ exports.state = {
             },
             development: {
                 title: 'Évolution',
-                labels: ['Solde', 'Revenus', 'Dépenses'],
+                labels: ['Solde', 'Revenus', 'Virements entrants', 'Virement sortants', 'Dépenses'],
                 monthly: 'Mensuelle',
                 yearly: 'Annuelle',
             },
