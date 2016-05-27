@@ -18,6 +18,18 @@ exports.state = {
         },
     },
     envelopes: [],
+    envelopeDevelopment: {
+        monthly: {
+            balance: [],
+            incomes: [],
+            outcomes: [],
+        },
+        yearly: {
+            balance: [],
+            incomes: [],
+            outcomes: [],
+        },
+    },
 }
 
 exports.mutations = {
@@ -32,6 +44,10 @@ exports.mutations = {
 
     SET_ENVELOPES(state, envelopes) {
         state.envelopes = envelopes
+    },
+
+    SET_ENVELOPE_DEVELOPMENT(state, development) {
+        state.envelopeDevelopment = development
     },
 
 }

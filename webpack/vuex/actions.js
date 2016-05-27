@@ -23,11 +23,13 @@ exports.setCurrentAccount = function ({ dispatch, state }, account_id) {
 
 exports.setCurrentEnvelope = function ({ dispatch, state }, envelope_id) {
     dispatch('SET_CURRENT_ENVELOPE', envelope_id)
+    exports.refreshEnvelopeDevelopment({ dispatch, state })
 }
 
-exports.setDevelopementDate = function ({ dispatch, state }, developmentDate) {
+exports.setDevelopmentDate = function ({ dispatch, state }, developmentDate) {
     dispatch('SET_DEVELOPMENT_DATE', moment(developmentDate))
     exports.refreshAccountDevelopment({ dispatch, state })
+    exports.refreshEnvelopeDevelopment({ dispatch, state })
 }
 
 
@@ -105,6 +107,16 @@ exports.saveEnvelope = function ({ dispatch, state }, attributes) {
 exports.updateEnvelope = function ({ dispatch, state }, id, attributes) {
     Vue.resource('envelopes/'+id).update({}, attributes).then(function (response) {
         exports.refreshEnvelopes({ dispatch, state })
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
+    var attributes = { envelope_id: state.app.envelope_id }
+    var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
+    Vue.resource('envelopes/development{/envelope_id}').get(attributes, item).then(function (response) {
+        dispatch('SET_ENVELOPE_DEVELOPMENT', response.data)
     }, function (response) {
         console.log(response)
     })

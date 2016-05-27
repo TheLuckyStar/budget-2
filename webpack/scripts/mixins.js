@@ -16,7 +16,7 @@ exports.vuex = {
             refreshEnvelopes: actions.refreshEnvelopes,
             saveEnvelope: actions.saveEnvelope,
             updateEnvelope: actions.updateEnvelope,
-            setDevelopementDate: actions.setDevelopementDate,
+            setDevelopmentDate: actions.setDevelopmentDate,
         },
 
         getters: {
@@ -32,6 +32,7 @@ exports.vuex = {
             envelopes: getters.getAllEnvelopes,
             enabledEnvelopes: getters.getEnabledEnvelopes,
             disabledEnvelopes: getters.getDisabledEnvelopes,
+            envelopeDevelopment: getters.getEnvelopeDevelopment,
             developmentDate: getters.getDevelopmentDate,
         },
 
@@ -73,4 +74,27 @@ exports.moment = {
 
     },
 
+}
+
+exports.development = {
+
+    computed: {
+
+        prevMonth: function () {
+            return moment(this.developmentDate).subtract(1, 'month')
+        },
+
+        nextMonth: function () {
+            return moment(this.developmentDate).add(1, 'month')
+        },
+
+        prevYear: function () {
+            return moment(this.developmentDate).subtract(1, 'year')
+        },
+
+        nextYear: function () {
+            return moment(this.developmentDate).add(1, 'year')
+        },
+
+    },
 }

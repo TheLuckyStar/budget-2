@@ -61,7 +61,7 @@ exports.state = {
             },
             development: {
                 title: 'Development',
-                labels: ['Green', 'Yellow', 'Red'],
+                labels: ['Balance', 'Direct revenues', 'Allocated revenues', 'Outcomes'],
             },
         },
         operations: {
@@ -131,7 +131,7 @@ exports.state = {
             },
             development: {
                 title: 'Évolution',
-                labels: ['Vert', 'Jaune', 'Rouge'],
+                labels: ['Solde', 'Revenus directs', 'Revenus alloués', 'Dépenses'],
             },
         },
         operations: {

@@ -15,7 +15,7 @@ class Envelopes extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:accounts',
+            'name' => 'required|max:255|unique:envelopes',
             'icon' => 'max:255',
         ]);
 
@@ -25,14 +25,24 @@ class Envelopes extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'max:255|unique:accounts,name,'.$id,
+            'name' => 'max:255|unique:envelopes,name,'.$id,
             'icon' => 'max:255',
         ]);
 
-        $account = Envelope::withTrashed()->findOrFail($id);
-        $account->fill($request->all());
-        $account->save();
+        $envelope = Envelope::withTrashed()->findOrFail($id);
+        $envelope->fill($request->all());
+        $envelope->save();
 
-        return $account;
+        return $envelope;
+    }
+
+    public function development(Request $request, $id)
+    {
+        $envelope = Envelope::withTrashed()->findOrFail($id);
+
+        return [
+            'monthly' => $envelope->getMonthlyDevelopmentAttribute($request->date),
+            'yearly' => $envelope->getYearlyDevelopmentAttribute($request->date),
+        ];
     }
 }

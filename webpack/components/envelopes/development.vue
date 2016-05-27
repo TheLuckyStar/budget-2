@@ -10,15 +10,26 @@
         <ul class="nav nav-tabs" role="tablist">
 
             <li role="presentation" class="active">
-                <a href="#monthly" aria-controls="monthly" role="tab" data-toggle="tab">
-                    {{ text.envelopes.development.monthly }}
-
+                <a href="#monthly" role="tab" data-toggle="tab">
+                    <span v-on:click.prevent="setDevelopmentDate(prevMonth)" class="btn-link" :title="prevMonth | formatLongMonth">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    {{ developmentDate | formatLongMonth }}
+                    <span v-on:click.prevent="setDevelopmentDate(nextMonth)" class="btn-link" :title="nextMonth | formatLongMonth">
+                        <i class="fa fa-chevron-right"></i>
+                    </span>
                 </a>
             </li>
 
             <li role="presentation">
-                <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
-                    {{ text.envelopes.development.yearly }}
+                <a href="#yearly" role="tab" data-toggle="tab">
+                    <span v-on:click.prevent="setDevelopmentDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    {{ developmentDate | formatYear }}
+                    <span v-on:click.prevent="setDevelopmentDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
+                        <i class="fa fa-chevron-right"></i>
+                    </span>
                 </a>
             </li>
 
@@ -27,11 +38,11 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="line" :labels="balanceLabels" :data="balanceData"></layout-chart>
+                <layout-chart type="line" :chart-labels="listDaysInMonth(developmentDate)" :data="monthlyData" :data-labels="text.envelopes.development.labels"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
-
+                <layout-chart type="line" :chart-labels="listMonthsInYear(developmentDate)" :data="yearlyData" :data-labels="text.envelopes.development.labels"></layout-chart>
             </div>
 
         </div>
@@ -48,26 +59,50 @@
 
     export default {
 
-        mixins: [mixins.vuex],
+        mixins: [mixins.vuex, mixins.moment, mixins.development],
 
         computed: {
 
-            balanceLabels: function () {
-                return this.text.envelopes.development.labels
-            },
-
-            balanceData: function () {
+            monthlyData: function () {
                 return  [
-                    // {
-                    //     data: [300, 50, 100],
-                    //     backgroundColor: ['success', 'warning', 'danger'],
-                    // },
                     {
-                        data: [300, 50, 100],
+                        data: this.envelopeDevelopment.monthly.balance,
+                        borderColor: 'default',
+                        backgroundColor: 'default',
+                    }, {
+                        data: this.envelopeDevelopment.monthly.revenues,
+                        borderColor: 'success',
                         backgroundColor: 'success',
                     }, {
-                        data: [350, 1000, 500],
-                        backgroundColor: 'warning',
+                        data: this.envelopeDevelopment.monthly.incomes,
+                        borderColor: 'info',
+                        backgroundColor: 'info',
+                    }, {
+                        data: this.envelopeDevelopment.monthly.outcomes,
+                        borderColor: 'danger',
+                        backgroundColor: 'danger',
+                    },
+                ]
+            },
+
+            yearlyData: function () {
+                return  [
+                    {
+                        data: this.envelopeDevelopment.yearly.balance,
+                        borderColor: 'default',
+                        backgroundColor: 'default',
+                    }, {
+                        data: this.envelopeDevelopment.yearly.revenues,
+                        borderColor: 'success',
+                        backgroundColor: 'success',
+                    }, {
+                        data: this.envelopeDevelopment.yearly.incomes,
+                        borderColor: 'info',
+                        backgroundColor: 'info',
+                    }, {
+                        data: this.envelopeDevelopment.yearly.outcomes,
+                        borderColor: 'danger',
+                        backgroundColor: 'danger',
                     },
                 ]
             },
@@ -77,3 +112,23 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .tab-pane {
+        padding: 20px;
+    }
+
+    .btn-link {
+        cursor: pointer;
+        padding: 0px 5px;
+        visibility: hidden;
+    }
+
+    .active .btn-link {
+        visibility: visible;
+    }
+
+</style>

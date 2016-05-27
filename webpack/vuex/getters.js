@@ -92,3 +92,7 @@ exports.getDisabledEnvelopes = function (state) {
         return envelope.deleted_at !== null;
     })
 }
+
+exports.getEnvelopeDevelopment = function (state) {
+    return state.remote.envelopeDevelopment
+}

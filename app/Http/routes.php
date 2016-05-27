@@ -23,3 +23,4 @@ $app->get('accounts/development/{id}', 'Accounts@development');
 $app->get('envelopes', 'Envelopes@index');
 $app->post('envelopes', 'Envelopes@store');
 $app->put('envelopes/{id}', 'Envelopes@update');
+$app->get('envelopes/development/{id}', 'Envelopes@development');

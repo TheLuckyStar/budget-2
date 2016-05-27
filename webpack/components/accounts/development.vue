@@ -11,11 +11,11 @@
 
             <li role="presentation" class="active">
                 <a href="#monthly" role="tab" data-toggle="tab">
-                    <span v-on:click.prevent="setDevelopementDate(prevMonth)" class="btn-link" :title="prevMonth | formatLongMonth">
+                    <span v-on:click.prevent="setDevelopmentDate(prevMonth)" class="btn-link" :title="prevMonth | formatLongMonth">
                         <i class="fa fa-chevron-left"></i>
                     </span>
                     {{ developmentDate | formatLongMonth }}
-                    <span v-on:click.prevent="setDevelopementDate(nextMonth)" class="btn-link" :title="nextMonth | formatLongMonth">
+                    <span v-on:click.prevent="setDevelopmentDate(nextMonth)" class="btn-link" :title="nextMonth | formatLongMonth">
                         <i class="fa fa-chevron-right"></i>
                     </span>
                 </a>
@@ -23,11 +23,11 @@
 
             <li role="presentation">
                 <a href="#yearly" role="tab" data-toggle="tab">
-                    <span v-on:click.prevent="setDevelopementDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
+                    <span v-on:click.prevent="setDevelopmentDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
                         <i class="fa fa-chevron-left"></i>
                     </span>
                     {{ developmentDate | formatYear }}
-                    <span v-on:click.prevent="setDevelopementDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
+                    <span v-on:click.prevent="setDevelopmentDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
                         <i class="fa fa-chevron-right"></i>
                     </span>
                 </a>
@@ -59,17 +59,9 @@
 
     export default {
 
-        mixins: [mixins.vuex, mixins.moment],
+        mixins: [mixins.vuex, mixins.moment, mixins.development],
 
         computed: {
-
-            prevMonth: function () {
-                return moment(this.developmentDate).subtract(1, 'month')
-            },
-
-            nextMonth: function () {
-                return moment(this.developmentDate).add(1, 'month')
-            },
 
             monthlyData: function () {
                 return  [
@@ -121,14 +113,6 @@
                         backgroundColor: 'danger',
                     },
                 ]
-            },
-
-            prevYear: function () {
-                return moment(this.developmentDate).subtract(1, 'year')
-            },
-
-            nextYear: function () {
-                return moment(this.developmentDate).add(1, 'year')
             },
 
         },

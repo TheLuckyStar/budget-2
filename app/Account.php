@@ -61,7 +61,7 @@ class Account extends Container
 
     /**
      * Calculate account revenues for the given period
-     * @return float Account balance
+     * @return float Account revenues
      */
     public function getRevenuesAttribute($dateFrom = null, $dateTo = null)
     {
@@ -84,7 +84,7 @@ class Account extends Container
 
     /**
      * Calculate account outcomes for the given period
-     * @return float Account balance
+     * @return float Account outcomes
      */
     public function getOutcomesAttribute($dateFrom = null, $dateTo = null)
     {
