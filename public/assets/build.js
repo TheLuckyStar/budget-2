@@ -53357,9 +53357,9 @@
 
 /***/ },
 /* 331 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	
+	/* WEBPACK VAR INJECTION */(function(Vue) {
 	exports.state = {
 	    accounts: [],
 	    accountDevelopment: {
@@ -53396,7 +53396,7 @@
 	exports.mutations = {
 
 	    SET_ACCOUNTS(state, accounts) {
-	        state.accounts = accounts
+	        state.accounts = Vue.options.filters.orderBy(accounts, 'name')
 	    },
 
 	    SET_ACCOUNT_DEVELOPMENT(state, development) {
@@ -53404,7 +53404,7 @@
 	    },
 
 	    SET_ENVELOPES(state, envelopes) {
-	        state.envelopes = envelopes
+	        state.envelopes = Vue.options.filters.orderBy(envelopes, 'name')
 	    },
 
 	    SET_ENVELOPE_DEVELOPMENT(state, development) {
@@ -53413,6 +53413,7 @@
 
 	}
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
 /***/ },
 /* 332 */

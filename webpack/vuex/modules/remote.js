@@ -35,7 +35,7 @@ exports.state = {
 exports.mutations = {
 
     SET_ACCOUNTS(state, accounts) {
-        state.accounts = accounts
+        state.accounts = Vue.options.filters.orderBy(accounts, 'name')
     },
 
     SET_ACCOUNT_DEVELOPMENT(state, development) {
@@ -43,7 +43,7 @@ exports.mutations = {
     },
 
     SET_ENVELOPES(state, envelopes) {
-        state.envelopes = envelopes
+        state.envelopes = Vue.options.filters.orderBy(envelopes, 'name')
     },
 
     SET_ENVELOPE_DEVELOPMENT(state, development) {
