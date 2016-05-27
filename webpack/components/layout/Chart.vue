@@ -19,7 +19,7 @@
 
     export default {
 
-        props: ['title', 'labels', 'data', 'type'],
+        props: ['title', 'chartLabels', 'data', 'dataLabels', 'type'],
 
         data: function () {
             return {
@@ -30,6 +30,12 @@
                     info: '#36A2EB',
                     warning: '#FFCE56',
                     danger: '#FF6384',
+                },
+                defaultData: {
+                    line: {
+                        fill: false,
+                        fillColor: 'white',
+                    },
                 },
             }
         },
@@ -46,23 +52,30 @@
 
         watch: {
             data: function () {
-                this.chart.data.labels = this.labels
+                this.chart.data.labels = this.chartLabels
                 this.chart.data.datasets = this.formatDatasets(this.data)
+                this.chart.update()
+            },
+            chartLabels: function () {
+                this.chart.data.labels = this.chartLabels
                 this.chart.update()
             },
         },
 
         methods: {
 
-            drawChart: function () {
-            },
-
             formatDatasets: function (datasets) {
                 return datasets.map(this.formatDataset, this)
             },
 
-            formatDataset: function (input) {
-                var output = {}
+            formatDataset: function (input, index) {
+                var output = {
+                    label: this.dataLabels[index],
+                }
+
+                Object.keys(this.defaultData[this.type]).forEach(function (key) {
+                    output[key] = this.defaultData[this.type][key]
+                }, this)
 
                 Object.keys(input).forEach(function (key) {
                     output[key] = input[key]
@@ -77,6 +90,10 @@
 
             filterColors: function(key) {
                 return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor'
+            },
+
+            filterDefaultData: function(key) {
+                return this.defaultData[this.type].hasOwnProperty(key)
             },
 
             formatColors: function(colors) {

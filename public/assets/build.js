@@ -12823,6 +12823,11 @@
 	    return month + ' ' + year
 	})
 
+	// Format date to year
+	Vue.filter('formatYear', function (date) {
+	    return moment(date).year()
+	})
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(98)))
 
 /***/ },
@@ -37762,7 +37767,7 @@
 
 	exports.default = {
 
-	    props: ['title', 'labels', 'data', 'type'],
+	    props: ['title', 'chartLabels', 'data', 'dataLabels', 'type'],
 
 	    data: function data() {
 	        return {
@@ -37773,6 +37778,12 @@
 	                info: '#36A2EB',
 	                warning: '#FFCE56',
 	                danger: '#FF6384'
+	            },
+	            defaultData: {
+	                line: {
+	                    fill: false,
+	                    fillColor: 'white'
+	                }
 	            }
 	        };
 	    },
@@ -37789,22 +37800,30 @@
 
 	    watch: {
 	        data: function data() {
-	            this.chart.data.labels = this.labels;
+	            this.chart.data.labels = this.chartLabels;
 	            this.chart.data.datasets = this.formatDatasets(this.data);
+	            this.chart.update();
+	        },
+	        chartLabels: function chartLabels() {
+	            this.chart.data.labels = this.chartLabels;
 	            this.chart.update();
 	        }
 	    },
 
 	    methods: {
 
-	        drawChart: function drawChart() {},
-
 	        formatDatasets: function formatDatasets(datasets) {
 	            return datasets.map(this.formatDataset, this);
 	        },
 
-	        formatDataset: function formatDataset(input) {
-	            var output = {};
+	        formatDataset: function formatDataset(input, index) {
+	            var output = {
+	                label: this.dataLabels[index]
+	            };
+
+	            (0, _keys2.default)(this.defaultData[this.type]).forEach(function (key) {
+	                output[key] = this.defaultData[this.type][key];
+	            }, this);
 
 	            (0, _keys2.default)(input).forEach(function (key) {
 	                output[key] = input[key];
@@ -37819,6 +37838,10 @@
 
 	        filterColors: function filterColors(key) {
 	            return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor';
+	        },
+
+	        filterDefaultData: function filterDefaultData(key) {
+	            return this.defaultData[this.type].hasOwnProperty(key);
 	        },
 
 	        formatColors: function formatColors(colors) {
@@ -48321,25 +48344,11 @@
 	});
 
 
-	var actions = __webpack_require__(291);
-	var getters = __webpack_require__(292);
+	var mixins = __webpack_require__(335);
 
 	exports.default = {
 
-	    created: function created() {
-	        this.setLanguage(navigator.language || navigator.userLanguage);
-	    },
-
-	    vuex: {
-	        actions: {
-	            setLanguage: actions.setLanguage
-	        },
-	        getters: {
-	            currentLanguage: getters.getCurrentLanguage,
-	            availableLanguages: getters.getAvailableLanguages,
-	            text: getters.getText
-	        }
-	    }
+	    mixins: [mixins.vuex]
 
 	};
 
@@ -48565,7 +48574,7 @@
 /* 293 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/home', activeClass: 'active' }\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"language in availableLanguages\"\n                    :class=\"{ active: language === currentLanguage }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(language)\">{{ language | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/home', activeClass: 'active' }\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"lang in availableLanguages\"\n                    :class=\"{ active: lang === language }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\">{{ lang | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 294 */
@@ -53110,11 +53119,18 @@
 	});
 
 
+	var mixins = __webpack_require__(335);
 	var store = __webpack_require__(328);
 
 	exports.default = {
 
-	    store: store
+	    store: store,
+
+	    mixins: [mixins.vuex],
+
+	    created: function created() {
+	        this.setLanguage(navigator.language || navigator.userLanguage);
+	    }
 
 	};
 
@@ -53486,6 +53502,7 @@
 	    vuex: {
 
 	        actions: {
+	            setLanguage: actions.setLanguage,
 	            refreshAccounts: actions.refreshAccounts,
 	            setCurrentAccount: actions.setCurrentAccount,
 	            saveAccount: actions.saveAccount,
@@ -53499,6 +53516,7 @@
 
 	        getters: {
 	            language: getters.getCurrentLanguage,
+	            availableLanguages: getters.getAvailableLanguages,
 	            text: getters.getText,
 	            account: getters.getCurrentAccount,
 	            accounts: getters.getAllAccounts,
@@ -53529,6 +53547,20 @@
 	            while (start.isSameOrBefore(end)) {
 	                list.push(this.$options.filters.formatLongDay(start))
 	                start.add(1, 'day')
+	            }
+
+	            return list
+	        },
+
+	        listMonthsInYear: function (date) {
+	            list = []
+
+	            var start = moment(date).startOf('year')
+	            var end = moment(start).endOf('year')
+
+	            while (start.isSameOrBefore(end)) {
+	                list.push(this.$options.filters.formatLongMonth(start))
+	                start.add(1, 'month')
 	            }
 
 	            return list
@@ -53649,6 +53681,34 @@
 	        };
 	    },
 
+	    computed: {
+
+	        balanceColor: function balanceColor() {
+	            if (this.account.balance > 0) {
+	                return 'success';
+	            }
+
+	            if (this.account.balance < 0) {
+	                return 'danger';
+	            }
+
+	            return 'primary';
+	        },
+
+	        balanceIcon: function balanceIcon() {
+	            if (this.account.balance > 0) {
+	                return 'fa-thumbs-up';
+	            }
+
+	            if (this.account.balance < 0) {
+	                return 'fa-thumbs-down';
+	            }
+
+	            return 'fa-balance-scale';
+	        }
+
+	    },
+
 	    route: {
 	        data: function data() {
 	            this.setCurrentAccount(this.$route.params.account_id);
@@ -53656,7 +53716,7 @@
 	    },
 
 	    watch: {
-	        currentLanguage: function currentLanguage() {
+	        language: function language() {
 	            this.date = moment.unix(this.date.unix());
 	        }
 	    },
@@ -53767,41 +53827,58 @@
 
 	        monthlyData: function monthlyData() {
 	            return [{
-	                label: this.text.accounts.development.labels[0],
 	                data: this.accountDevelopment.monthly.balance,
 	                borderColor: 'default',
-	                backgroundColor: 'default',
-	                fillColor: 'white',
-	                fill: false
+	                backgroundColor: 'default'
 	            }, {
-	                label: this.text.accounts.development.labels[1],
 	                data: this.accountDevelopment.monthly.revenues,
 	                borderColor: 'success',
-	                backgroundColor: 'success',
-	                fillColor: 'white',
-	                fill: false
+	                backgroundColor: 'success'
 	            }, {
-	                label: this.text.accounts.development.labels[2],
 	                data: this.accountDevelopment.monthly.incomingTransfers,
 	                borderColor: 'info',
-	                backgroundColor: 'info',
-	                fillColor: 'white',
-	                fill: false
+	                backgroundColor: 'info'
 	            }, {
-	                label: this.text.accounts.development.labels[3],
 	                data: this.accountDevelopment.monthly.outgoingTransfers,
 	                borderColor: 'warning',
-	                backgroundColor: 'warning',
-	                fillColor: 'white',
-	                fill: false
+	                backgroundColor: 'warning'
 	            }, {
-	                label: this.text.accounts.development.labels[4],
 	                data: this.accountDevelopment.monthly.outcomes,
 	                borderColor: 'danger',
-	                backgroundColor: 'danger',
-	                fillColor: 'white',
-	                fill: false
+	                backgroundColor: 'danger'
 	            }];
+	        },
+
+	        yearlyData: function yearlyData() {
+	            return [{
+	                data: this.accountDevelopment.yearly.balance,
+	                borderColor: 'default',
+	                backgroundColor: 'default'
+	            }, {
+	                data: this.accountDevelopment.yearly.revenues,
+	                borderColor: 'success',
+	                backgroundColor: 'success'
+	            }, {
+	                data: this.accountDevelopment.yearly.incomingTransfers,
+	                borderColor: 'info',
+	                backgroundColor: 'info'
+	            }, {
+	                data: this.accountDevelopment.yearly.outgoingTransfers,
+	                borderColor: 'warning',
+	                backgroundColor: 'warning'
+	            }, {
+	                data: this.accountDevelopment.yearly.outcomes,
+	                borderColor: 'danger',
+	                backgroundColor: 'danger'
+	            }];
+	        },
+
+	        prevYear: function prevYear() {
+	            return moment(this.developmentDate).subtract(1, 'year');
+	        },
+
+	        nextYear: function nextYear() {
+	            return moment(this.developmentDate).add(1, 'year');
 	        }
 
 	    }
@@ -53813,7 +53890,7 @@
 /* 346 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<fieldset _v-11308b7b=\"\">\n\n    <legend _v-11308b7b=\"\">\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-11308b7b=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-11308b7b=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                <span v-on:click.prevent=\"setDevelopementDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-11308b7b=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopementDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-11308b7b=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-11308b7b=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                {{ text.accounts.development.yearly }}\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-11308b7b=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-11308b7b=\"\">\n            <layout-chart type=\"line\" :labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :fill=\"false\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-11308b7b=\"\">\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n<fieldset _v-11308b7b=\"\">\n\n    <legend _v-11308b7b=\"\">\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-11308b7b=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-11308b7b=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                <span v-on:click.prevent=\"setDevelopementDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-11308b7b=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopementDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-11308b7b=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-11308b7b=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                <span v-on:click.prevent=\"setDevelopementDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-11308b7b=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopementDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-11308b7b=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-11308b7b=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-11308b7b=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.accounts.development.labels\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-11308b7b=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.accounts.development.labels\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 347 */
@@ -53915,13 +53992,13 @@
 /* 349 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 350 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card color=\"primary\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"balanceColor\"\n            :icon=\"balanceIcon\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 351 */
@@ -54201,7 +54278,7 @@
 	    },
 
 	    watch: {
-	        currentLanguage: function currentLanguage() {
+	        language: function language() {
 	            this.date = moment.unix(this.date.unix());
 	        }
 	    },
@@ -54385,13 +54462,13 @@
 /* 367 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 368 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            icon=\"fa-balance-scale\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 369 */

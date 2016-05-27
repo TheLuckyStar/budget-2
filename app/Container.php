@@ -39,7 +39,7 @@ abstract class Container extends Model
 
     /**
      * Generate metric development for the given month
-     * @return array List of balances
+     * @return array List of snapshots
      */
     public function getMonthlyDevelopmentAttribute($date = null)
     {
@@ -59,8 +59,35 @@ abstract class Container extends Model
     }
 
     /**
+     * Generate metric development for the given year
+     * @return array List of snapshots
+     */
+    public function getYearlyDevelopmentAttribute($date = null)
+    {
+        $output = [];
+
+        $start = Carbon::startOfYear($date);
+        $end = Carbon::endOfYear($date);
+
+        while ($start->lte($end)) {
+            foreach ($this->getMonthlySnapshotAttribute($start) as $key => $val) {
+                $output[$key][] = $val;
+            }
+            $start->addMonth(1);
+        }
+
+        return $output;
+    }
+
+    /**
      * Calculate container main metrics for the given day
      * @return array Container metrics
      */
     abstract public function getDailySnapshotAttribute($date = null);
+
+    /**
+     * Calculate container main metrics for the given month
+     * @return array Container metrics
+     */
+    abstract public function getMonthlySnapshotAttribute($date = null);
 }

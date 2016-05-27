@@ -17,11 +17,18 @@
 
 <script>
 
+    var mixins = require('scripts/mixins.js')
     var store = require('vuex/store.js')
 
     export default {
 
         store: store,
+
+        mixins: [mixins.vuex],
+
+        created: function () {
+            this.setLanguage(navigator.language || navigator.userLanguage)
+        },
 
     }
 

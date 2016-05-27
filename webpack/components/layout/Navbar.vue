@@ -49,9 +49,9 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li v-for="language in availableLanguages"
-                        :class="{ active: language === currentLanguage }">
-                        <a href="#" v-on:click.prevent="setLanguage(language)">{{ language | uppercase }}</a>
+                    <li v-for="lang in availableLanguages"
+                        :class="{ active: lang === language }">
+                        <a href="#" v-on:click.prevent="setLanguage(lang)">{{ lang | uppercase }}</a>
                     </li>
                 </ul>
 
@@ -67,25 +67,11 @@
 
 <script>
 
-    var actions = require('vuex/actions.js')
-    var getters = require('vuex/getters.js')
+    var mixins = require('scripts/mixins.js')
 
     export default {
 
-        created: function () {
-            this.setLanguage(navigator.language || navigator.userLanguage)
-        },
-
-        vuex: {
-            actions: {
-                setLanguage: actions.setLanguage,
-            },
-            getters: {
-                currentLanguage: getters.getCurrentLanguage,
-                availableLanguages: getters.getAvailableLanguages,
-                text: getters.getText,
-            },
-        },
+        mixins: [mixins.vuex],
 
     }
 

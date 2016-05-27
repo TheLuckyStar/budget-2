@@ -32,4 +32,14 @@ class Carbon
     {
         return static::create($date)->endOfMonth();
     }
+
+    static public function startOfYear($date)
+    {
+        return static::create($date)->startOfYear();
+    }
+
+    static public function endOfYear($date)
+    {
+        return static::create($date)->endOfYear();
+    }
 }

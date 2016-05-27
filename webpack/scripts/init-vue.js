@@ -24,3 +24,8 @@ Vue.filter('formatLongMonth', function (date) {
     var year = date.year()
     return month + ' ' + year
 })
+
+// Format date to year
+Vue.filter('formatYear', function (date) {
+    return moment(date).year()
+})

@@ -158,4 +158,22 @@ class Account extends Container
             'outgoingTransfers' => $this->getOutgoingTransfersAttribute($date, $date),
         ];
     }
+
+    /**
+     * Calculate account main metrics for the given month
+     * @return array Account metrics
+     */
+    public function getMonthlySnapshotAttribute($date = null)
+    {
+        $dateFrom = Carbon::startOfMonth($date);
+        $dateTo = Carbon::endOfMonth($date);
+
+        return [
+            'balance' => $this->getBalanceAttribute($dateTo),
+            'revenues' => $this->getRevenuesAttribute($dateFrom, $dateTo),
+            'outcomes' => $this->getOutcomesAttribute($dateFrom, $dateTo),
+            'incomingTransfers' => $this->getIncomingTransfersAttribute($dateFrom, $dateTo),
+            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($dateFrom, $dateTo),
+        ];
+    }
 }

@@ -12,7 +12,7 @@
 
         <div class="col-md-6">
             <layout-card :color="envelope.balance < 0 ? 'danger' : 'success'"
-                icon="fa-balance-scale"
+                :icon="envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
                 :title="text.envelopes.situation.title"
                 :text="envelope.balance"
                 :comment="$options.filters.formatLongDate(date)"
@@ -56,7 +56,7 @@
         },
 
         watch: {
-            currentLanguage: function() {
+            language: function() {
                 this.date = moment.unix(this.date.unix())
             },
         },

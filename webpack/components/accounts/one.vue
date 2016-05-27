@@ -10,8 +10,8 @@
         <hr>
 
         <div class="col-md-6">
-            <layout-card color="primary"
-                icon="fa-balance-scale"
+            <layout-card :color="balanceColor"
+                :icon="balanceIcon"
                 :title="text.accounts.situation.title"
                 :text="account.balance"
                 :comment="$options.filters.formatLongDate(date)"
@@ -48,6 +48,34 @@
             }
         },
 
+        computed: {
+
+            balanceColor: function () {
+                if (this.account.balance > 0) {
+                    return 'success'
+                }
+
+                if (this.account.balance < 0) {
+                    return 'danger'
+                }
+
+                return 'primary'
+            },
+
+            balanceIcon: function () {
+                if (this.account.balance > 0) {
+                    return 'fa-thumbs-up'
+                }
+
+                if (this.account.balance < 0) {
+                    return 'fa-thumbs-down'
+                }
+
+                return 'fa-balance-scale'
+            },
+
+        },
+
         route: {
             data: function () {
                 this.setCurrentAccount(this.$route.params.account_id)
@@ -55,7 +83,7 @@
         },
 
         watch: {
-            currentLanguage: function() {
+            language: function() {
                 this.date = moment.unix(this.date.unix())
             },
         },

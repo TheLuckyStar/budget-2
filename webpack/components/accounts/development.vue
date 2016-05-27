@@ -23,7 +23,13 @@
 
             <li role="presentation">
                 <a href="#yearly" role="tab" data-toggle="tab">
-                    {{ text.accounts.development.yearly }}
+                    <span v-on:click.prevent="setDevelopementDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    {{ developmentDate | formatYear }}
+                    <span v-on:click.prevent="setDevelopementDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
+                        <i class="fa fa-chevron-right"></i>
+                    </span>
                 </a>
             </li>
 
@@ -32,11 +38,11 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="line" :labels="listDaysInMonth(developmentDate)" :data="monthlyData" :fill="false"></layout-chart>
+                <layout-chart type="line" :chart-labels="listDaysInMonth(developmentDate)" :data="monthlyData" :data-labels="text.accounts.development.labels"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="yearly">
-
+                <layout-chart type="line" :chart-labels="listMonthsInYear(developmentDate)" :data="yearlyData" :data-labels="text.accounts.development.labels"></layout-chart>
             </div>
 
         </div>
@@ -68,42 +74,61 @@
             monthlyData: function () {
                 return  [
                     {
-                        label: this.text.accounts.development.labels[0],
                         data: this.accountDevelopment.monthly.balance,
                         borderColor: 'default',
                         backgroundColor: 'default',
-                        fillColor: 'white',
-                        fill: false,
                     }, {
-                        label: this.text.accounts.development.labels[1],
                         data: this.accountDevelopment.monthly.revenues,
                         borderColor: 'success',
                         backgroundColor: 'success',
-                        fillColor: 'white',
-                        fill: false,
                     }, {
-                        label: this.text.accounts.development.labels[2],
                         data: this.accountDevelopment.monthly.incomingTransfers,
                         borderColor: 'info',
                         backgroundColor: 'info',
-                        fillColor: 'white',
-                        fill: false,
                     }, {
-                        label: this.text.accounts.development.labels[3],
                         data: this.accountDevelopment.monthly.outgoingTransfers,
                         borderColor: 'warning',
                         backgroundColor: 'warning',
-                        fillColor: 'white',
-                        fill: false,
                     }, {
-                        label: this.text.accounts.development.labels[4],
                         data: this.accountDevelopment.monthly.outcomes,
                         borderColor: 'danger',
                         backgroundColor: 'danger',
-                        fillColor: 'white',
-                        fill: false,
                     },
                 ]
+            },
+
+            yearlyData: function () {
+                return  [
+                    {
+                        data: this.accountDevelopment.yearly.balance,
+                        borderColor: 'default',
+                        backgroundColor: 'default',
+                    }, {
+                        data: this.accountDevelopment.yearly.revenues,
+                        borderColor: 'success',
+                        backgroundColor: 'success',
+                    }, {
+                        data: this.accountDevelopment.yearly.incomingTransfers,
+                        borderColor: 'info',
+                        backgroundColor: 'info',
+                    }, {
+                        data: this.accountDevelopment.yearly.outgoingTransfers,
+                        borderColor: 'warning',
+                        backgroundColor: 'warning',
+                    }, {
+                        data: this.accountDevelopment.yearly.outcomes,
+                        borderColor: 'danger',
+                        backgroundColor: 'danger',
+                    },
+                ]
+            },
+
+            prevYear: function () {
+                return moment(this.developmentDate).subtract(1, 'year')
+            },
+
+            nextYear: function () {
+                return moment(this.developmentDate).add(1, 'year')
             },
 
         },

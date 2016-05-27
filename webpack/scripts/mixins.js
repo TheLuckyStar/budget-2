@@ -7,6 +7,7 @@ exports.vuex = {
     vuex: {
 
         actions: {
+            setLanguage: actions.setLanguage,
             refreshAccounts: actions.refreshAccounts,
             setCurrentAccount: actions.setCurrentAccount,
             saveAccount: actions.saveAccount,
@@ -20,6 +21,7 @@ exports.vuex = {
 
         getters: {
             language: getters.getCurrentLanguage,
+            availableLanguages: getters.getAvailableLanguages,
             text: getters.getText,
             account: getters.getCurrentAccount,
             accounts: getters.getAllAccounts,
@@ -50,6 +52,20 @@ exports.moment = {
             while (start.isSameOrBefore(end)) {
                 list.push(this.$options.filters.formatLongDay(start))
                 start.add(1, 'day')
+            }
+
+            return list
+        },
+
+        listMonthsInYear: function (date) {
+            list = []
+
+            var start = moment(date).startOf('year')
+            var end = moment(start).endOf('year')
+
+            while (start.isSameOrBefore(end)) {
+                list.push(this.$options.filters.formatLongMonth(start))
+                start.add(1, 'month')
             }
 
             return list

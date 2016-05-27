@@ -32,18 +32,18 @@
                     <button v-if="deleted_at && id"
                         @click="onEnable"
                         type="button"
-                        class="btn btn-success">
+                        class="btn btn-success btn-sm">
                         {{ text.app.enable }}
                     </button>
                     <button v-if="! deleted_at && id"
                         @click="onDisable"
                         type="button"
-                        class="btn btn-warning">
+                        class="btn btn-warning btn-sm">
                         {{ text.app.disable }}
                     </button>
                     <button v-if="! deleted_at"
                         type="submit"
-                        class="btn btn-primary">
+                        class="btn btn-primary btn-sm">
                         {{ text.app.submit }}
                     </button>
                 </div>
