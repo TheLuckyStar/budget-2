@@ -36,8 +36,6 @@ exports.state = {
             development: {
                 title: 'Development',
                 labels: ['Balance', 'Revenues', 'Incoming transfers', 'Outgoing transfers', 'Outcomes'],
-                monthly: 'Monthly',
-                yearly: 'Yearly',
             },
         },
         envelopes: {
@@ -64,8 +62,6 @@ exports.state = {
             development: {
                 title: 'Development',
                 labels: ['Green', 'Yellow', 'Red'],
-                monthly: 'Monthly',
-                yearly: 'Yearly',
             },
         },
         operations: {
@@ -110,8 +106,6 @@ exports.state = {
             development: {
                 title: 'Évolution',
                 labels: ['Solde', 'Revenus', 'Virements entrants', 'Virement sortants', 'Dépenses'],
-                monthly: 'Mensuelle',
-                yearly: 'Annuelle',
             },
         },
         envelopes: {
@@ -138,8 +132,6 @@ exports.state = {
             development: {
                 title: 'Évolution',
                 labels: ['Vert', 'Jaune', 'Rouge'],
-                monthly: 'Mensuelle',
-                yearly: 'Annuelle',
             },
         },
         operations: {

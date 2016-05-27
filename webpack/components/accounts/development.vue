@@ -10,13 +10,19 @@
         <ul class="nav nav-tabs" role="tablist">
 
             <li role="presentation" class="active">
-                <a href="#monthly" aria-controls="monthly" role="tab" data-toggle="tab">
-                    {{ text.accounts.development.monthly }}
+                <a href="#monthly" role="tab" data-toggle="tab">
+                    <span v-on:click.prevent="setDevelopementDate(prevMonth)" class="btn-link" :title="prevMonth | formatLongMonth">
+                        <i class="fa fa-chevron-left"></i>
+                    </span>
+                    {{ developmentDate | formatLongMonth }}
+                    <span v-on:click.prevent="setDevelopementDate(nextMonth)" class="btn-link" :title="nextMonth | formatLongMonth">
+                        <i class="fa fa-chevron-right"></i>
+                    </span>
                 </a>
             </li>
 
             <li role="presentation">
-                <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
+                <a href="#yearly" role="tab" data-toggle="tab">
                     {{ text.accounts.development.yearly }}
                 </a>
             </li>
@@ -26,25 +32,6 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="monthly">
-                <div class="text-center">
-                    <ul class="nav nav-pills nav-justified">
-                        <li>
-                            <button v-on:click.stop="setDevelopementDate(prevMonth)" class="btn btn-default">
-                                {{ prevMonth | formatLongMonth }}
-                            </button>
-                        </li>
-                        <li class="active">
-                            <a v-on:click.stop>
-                                {{ developmentDate | formatLongMonth }}
-                            </a>
-                        </li>
-                        <li>
-                            <button v-on:click.stop="setDevelopementDate(nextMonth)" class="btn btn-default">
-                                {{ nextMonth | formatLongMonth }}
-                            </button>
-                        </li>
-                    </ul>
-                </div>
                 <layout-chart type="line" :labels="listDaysInMonth(developmentDate)" :data="monthlyData" :fill="false"></layout-chart>
             </div>
 
@@ -133,8 +120,14 @@
         padding: 20px;
     }
 
-    .nav-pills {
-        margin-bottom: 20px;
+    .btn-link {
+        cursor: pointer;
+        padding: 0px 5px;
+        visibility: hidden;
+    }
+
+    .active .btn-link {
+        visibility: visible;
     }
 
 </style>
