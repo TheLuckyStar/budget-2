@@ -37773,6 +37773,7 @@
 	        return {
 	            chart: null,
 	            frontColors: {
+	                primary: 'rgb(21, 140, 186, 1)',
 	                default: 'rgba(231, 233, 237, 1)',
 	                success: 'rgba(75, 192, 192, 1)',
 	                info: 'rgba(54, 162, 235, 1)',
@@ -37780,6 +37781,7 @@
 	                danger: 'rgba(255, 99, 132, 1)'
 	            },
 	            backColors: {
+	                primary: 'rgba(21, 140, 186, 0.2)',
 	                default: 'rgba(231, 233, 237, 0.2)',
 	                success: 'rgba(75, 192, 192, 0.2)',
 	                info: 'rgba(54, 162, 235, 0.2)',
@@ -37793,8 +37795,8 @@
 	        this.chart = new Chart(this.$el.lastElementChild, {
 	            type: this.type,
 	            data: {
-	                labels: [],
-	                datasets: []
+	                labels: this.chartLabels,
+	                datasets: this.formatDatasets(this.data)
 	            }
 	        });
 	    },
@@ -53489,11 +53491,13 @@
 	    envelopeDevelopment: {
 	        monthly: {
 	            balance: [],
+	            revenues: [],
 	            incomes: [],
 	            outcomes: [],
 	        },
 	        yearly: {
 	            balance: [],
+	            revenues: [],
 	            incomes: [],
 	            outcomes: [],
 	        },
@@ -54230,7 +54234,7 @@
 /* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -54246,12 +54250,7 @@
 	    computed: {
 	        balancesData: function balancesData() {
 	            return [{
-	                backgroundColor: "rgba(179,181,198,0.2)",
-	                borderColor: "rgba(179,181,198,1)",
-	                pointBackgroundColor: "rgba(179,181,198,1)",
-	                pointBorderColor: "#fff",
-	                pointHoverBackgroundColor: "#fff",
-	                pointHoverBorderColor: "rgba(179,181,198,1)",
+	                color: 'primary',
 	                data: this.enabledEnvelopes.map(function (envelope) {
 	                    return envelope.balance;
 	                })

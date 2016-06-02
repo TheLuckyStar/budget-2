@@ -25,6 +25,7 @@
             return {
                 chart: null,
                 frontColors: {
+                    primary: 'rgb(21, 140, 186, 1)',
                     default: 'rgba(231, 233, 237, 1)',
                     success: 'rgba(75, 192, 192, 1)',
                     info: 'rgba(54, 162, 235, 1)',
@@ -32,6 +33,7 @@
                     danger: 'rgba(255, 99, 132, 1)',
                 },
                 backColors: {
+                    primary: 'rgba(21, 140, 186, 0.2)',
                     default: 'rgba(231, 233, 237, 0.2)',
                     success: 'rgba(75, 192, 192, 0.2)',
                     info: 'rgba(54, 162, 235, 0.2)',
@@ -45,8 +47,8 @@
             this.chart = new Chart(this.$el.lastElementChild, {
                 type: this.type,
                 data: {
-                    labels: [],
-                    datasets: [],
+                    labels: this.chartLabels,
+                    datasets: this.formatDatasets(this.data),
                 },
             })
         },
