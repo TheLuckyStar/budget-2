@@ -68,6 +68,9 @@ exports.updateAccount = function ({ dispatch, state }, id, attributes) {
 }
 
 exports.refreshAccountDevelopment = function ({ dispatch, state }) {
+    if (state.app.account_id === null) {
+        return
+    }
     var attributes = { account_id: state.app.account_id }
     var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
     Vue.resource('accounts/development{/account_id}').get(attributes, item).then(function (response) {
@@ -113,6 +116,9 @@ exports.updateEnvelope = function ({ dispatch, state }, id, attributes) {
 }
 
 exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
+    if (state.app.envelope_id === null) {
+        return
+    }
     var attributes = { envelope_id: state.app.envelope_id }
     var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
     Vue.resource('envelopes/development{/envelope_id}').get(attributes, item).then(function (response) {
