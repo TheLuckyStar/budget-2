@@ -49,9 +49,9 @@
 	__webpack_require__(95);
 	__webpack_require__(201);
 	__webpack_require__(203);
-	__webpack_require__(299);
-	__webpack_require__(324);
-	module.exports = __webpack_require__(372);
+	__webpack_require__(300);
+	__webpack_require__(325);
+	module.exports = __webpack_require__(374);
 
 
 /***/ },
@@ -37407,7 +37407,7 @@
 	Vue.component('layout-card', __webpack_require__(204))
 	Vue.component('layout-chart', __webpack_require__(210))
 	Vue.component('layout-navbar', __webpack_require__(289))
-	Vue.component('layout-sidebar', __webpack_require__(294))
+	Vue.component('layout-sidebar', __webpack_require__(295))
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
@@ -37772,18 +37772,19 @@
 	    data: function data() {
 	        return {
 	            chart: null,
-	            colors: {
-	                default: '#E7E9ED',
-	                success: '#4BC0C0',
-	                info: '#36A2EB',
-	                warning: '#FFCE56',
-	                danger: '#FF6384'
+	            frontColors: {
+	                default: 'rgba(231, 233, 237, 1)',
+	                success: 'rgba(75, 192, 192, 1)',
+	                info: 'rgba(54, 162, 235, 1)',
+	                warning: 'rgba(255, 206, 86, 1)',
+	                danger: 'rgba(255, 99, 132, 1)'
 	            },
-	            defaultData: {
-	                line: {
-	                    fill: false,
-	                    fillColor: 'white'
-	                }
+	            backColors: {
+	                default: 'rgba(231, 233, 237, 0.2)',
+	                success: 'rgba(75, 192, 192, 0.2)',
+	                info: 'rgba(54, 162, 235, 0.2)',
+	                warning: 'rgba(255, 206, 86, 0.2)',
+	                danger: 'rgba(255, 99, 132, 0.2)'
 	            }
 	        };
 	    },
@@ -37821,43 +37822,17 @@
 	                label: this.dataLabels[index]
 	            };
 
-	            (0, _keys2.default)(this.defaultData[this.type]).forEach(function (key) {
-	                output[key] = this.defaultData[this.type][key];
-	            }, this);
-
 	            (0, _keys2.default)(input).forEach(function (key) {
 	                output[key] = input[key];
 	            });
 
-	            (0, _keys2.default)(input).filter(this.filterColors).forEach(function (key) {
-	                output[key] = this.formatColors(input[key]);
-	            }, this);
+	            output.backgroundColor = this.backColors[output.color];
+	            output.borderColor = this.frontColors[output.color];
+	            output.pointBorderColor = this.frontColors[output.color];
+	            output.pointBackgroundColor = this.backColors[output.color];
+	            output.pointHoverBackgroundColor = this.frontColors[output.color];
 
 	            return output;
-	        },
-
-	        filterColors: function filterColors(key) {
-	            return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor';
-	        },
-
-	        filterDefaultData: function filterDefaultData(key) {
-	            return this.defaultData[this.type].hasOwnProperty(key);
-	        },
-
-	        formatColors: function formatColors(colors) {
-	            if (colors instanceof Array) {
-	                return colors.map(this.formatColor);
-	            }
-
-	            return this.formatColor(colors);
-	        },
-
-	        formatColor: function formatColor(color) {
-	            if (this.colors.hasOwnProperty(color)) {
-	                return this.colors[color];
-	            }
-
-	            return color;
 	        }
 
 	    }
@@ -48315,7 +48290,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(293)
+	__vue_template__ = __webpack_require__(294)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -48344,7 +48319,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -48354,6 +48329,114 @@
 
 /***/ },
 /* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(moment) {
+	var actions = __webpack_require__(292)
+	var getters = __webpack_require__(293)
+
+	exports.vuex = {
+
+	    vuex: {
+
+	        actions: {
+	            setLanguage: actions.setLanguage,
+	            refreshAccounts: actions.refreshAccounts,
+	            setCurrentAccount: actions.setCurrentAccount,
+	            saveAccount: actions.saveAccount,
+	            updateAccount: actions.updateAccount,
+	            setCurrentEnvelope: actions.setCurrentEnvelope,
+	            refreshEnvelopes: actions.refreshEnvelopes,
+	            saveEnvelope: actions.saveEnvelope,
+	            updateEnvelope: actions.updateEnvelope,
+	            setDevelopmentDate: actions.setDevelopmentDate,
+	        },
+
+	        getters: {
+	            language: getters.getCurrentLanguage,
+	            availableLanguages: getters.getAvailableLanguages,
+	            text: getters.getText,
+	            account: getters.getCurrentAccount,
+	            accounts: getters.getAllAccounts,
+	            enabledAccounts: getters.getEnabledAccounts,
+	            disabledAccounts: getters.getDisabledAccounts,
+	            accountDevelopment: getters.getAccountDevelopment,
+	            envelope: getters.getCurrentEnvelope,
+	            envelopes: getters.getAllEnvelopes,
+	            enabledEnvelopes: getters.getEnabledEnvelopes,
+	            disabledEnvelopes: getters.getDisabledEnvelopes,
+	            envelopeDevelopment: getters.getEnvelopeDevelopment,
+	            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
+	            developmentDate: getters.getDevelopmentDate,
+	        },
+
+	    },
+
+	}
+
+	exports.moment = {
+
+	    methods: {
+
+	        listDaysInMonth: function (date) {
+	            list = []
+
+	            var start = moment(date).startOf('month')
+	            var end = moment(start).endOf('month')
+
+	            while (start.isSameOrBefore(end)) {
+	                list.push(this.$options.filters.formatLongDay(start))
+	                start.add(1, 'day')
+	            }
+
+	            return list
+	        },
+
+	        listMonthsInYear: function (date) {
+	            list = []
+
+	            var start = moment(date).startOf('year')
+	            var end = moment(start).endOf('year')
+
+	            while (start.isSameOrBefore(end)) {
+	                list.push(this.$options.filters.formatLongMonth(start))
+	                start.add(1, 'month')
+	            }
+
+	            return list
+	        },
+
+	    },
+
+	}
+
+	exports.development = {
+
+	    computed: {
+
+	        prevMonth: function () {
+	            return moment(this.developmentDate).subtract(1, 'month')
+	        },
+
+	        nextMonth: function () {
+	            return moment(this.developmentDate).add(1, 'month')
+	        },
+
+	        prevYear: function () {
+	            return moment(this.developmentDate).subtract(1, 'year')
+	        },
+
+	        nextYear: function () {
+	            return moment(this.developmentDate).add(1, 'year')
+	        },
+
+	    },
+	}
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
+
+/***/ },
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(moment, Vue) {
@@ -48426,6 +48509,9 @@
 	}
 
 	exports.refreshAccountDevelopment = function ({ dispatch, state }) {
+	    if (state.app.account_id === null) {
+	        return
+	    }
 	    var attributes = { account_id: state.app.account_id }
 	    var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
 	    Vue.resource('accounts/development{/account_id}').get(attributes, item).then(function (response) {
@@ -48471,6 +48557,9 @@
 	}
 
 	exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
+	    if (state.app.envelope_id === null) {
+	        return
+	    }
 	    var attributes = { envelope_id: state.app.envelope_id }
 	    var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
 	    Vue.resource('envelopes/development{/envelope_id}').get(attributes, item).then(function (response) {
@@ -48483,7 +48572,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98), __webpack_require__(96)))
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports) {
 
 	
@@ -48585,25 +48674,35 @@
 	    return state.remote.envelopeDevelopment
 	}
 
+	exports.getEnabledEnvelopesBalance = function (state) {
+	    var balance = 0
+
+	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+	        balance += envelope.balance
+	    })
+
+	    return balance
+	}
+
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/home', activeClass: 'active' }\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"lang in availableLanguages\"\n                    :class=\"{ active: lang === language }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\">{{ lang | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(295)
-	__vue_script__ = __webpack_require__(297)
+	__webpack_require__(296)
+	__vue_script__ = __webpack_require__(298)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/layout/Sidebar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(298)
+	__vue_template__ = __webpack_require__(299)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -48622,13 +48721,13 @@
 	})()}
 
 /***/ },
-/* 295 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(296);
+	var content = __webpack_require__(297);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(207)(content, {});
@@ -48648,7 +48747,7 @@
 	}
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -48662,7 +48761,7 @@
 
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -48677,13 +48776,13 @@
 	};
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div _v-d5b59300=\"\">\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\" _v-d5b59300=\"\">\n\n        <div class=\"panel-heading\" v-link-active=\"\" _v-d5b59300=\"\">\n            <h3 class=\"panel-title\" _v-d5b59300=\"\">\n                <a v-if=\"entryGroup.route\" v-link=\"{ path: entryGroup.route, activeClass: 'active'&nbsp;}\" _v-d5b59300=\"\">\n                    {{ entryGroup.title }}\n                </a>\n                <template v-else=\"\">\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\" _v-d5b59300=\"\">\n            <a v-for=\"entry in entryGroup.entries\" v-link=\"{ path: entry.route, activeClass: 'active'&nbsp;}\" class=\"list-group-item\" _v-d5b59300=\"\">\n                {{{ entry.text&nbsp;}}}\n                <span class=\"badge badge-{{ entry.badgeColor }} pull-right\" v-if=\"entry.badge\" _v-d5b59300=\"\">\n                    {{ entry.badge }}\n                </span>\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue, VueResource) {
@@ -48693,10 +48792,10 @@
 	// Set root endpoint
 	// Vue.http.options.root = '/api';
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(300)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(301)))
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {/**
@@ -48705,16 +48804,16 @@
 
 	function install(Vue) {
 
-	    var _ = __webpack_require__(301);
+	    var _ = __webpack_require__(302);
 
 	    _.config = Vue.config;
 	    _.warning = Vue.util.warn;
 	    _.nextTick = Vue.util.nextTick;
 
-	    Vue.url = __webpack_require__(302);
-	    Vue.http = __webpack_require__(308);
-	    Vue.resource = __webpack_require__(323);
-	    Vue.Promise = __webpack_require__(310);
+	    Vue.url = __webpack_require__(303);
+	    Vue.http = __webpack_require__(309);
+	    Vue.resource = __webpack_require__(324);
+	    Vue.Promise = __webpack_require__(311);
 
 	    Object.defineProperties(Vue.prototype, {
 
@@ -48756,7 +48855,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports) {
 
 	/**
@@ -48884,14 +48983,14 @@
 
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Service for URL templating.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 	var ie = document.documentMode;
 	var el = document.createElement('a');
 
@@ -48927,10 +49026,10 @@
 	 */
 
 	Url.transforms = [
-	    __webpack_require__(303),
-	    __webpack_require__(305),
+	    __webpack_require__(304),
 	    __webpack_require__(306),
-	    __webpack_require__(307)
+	    __webpack_require__(307),
+	    __webpack_require__(308)
 	];
 
 	/**
@@ -49020,14 +49119,14 @@
 
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * URL Template (RFC 6570) Transform.
 	 */
 
-	var UrlTemplate = __webpack_require__(304);
+	var UrlTemplate = __webpack_require__(305);
 
 	module.exports = function (options) {
 
@@ -49042,7 +49141,7 @@
 
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports) {
 
 	/**
@@ -49198,14 +49297,14 @@
 
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Legacy Transform.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = function (options, next) {
 
@@ -49250,14 +49349,14 @@
 
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Query Parameter Transform.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = function (options, next) {
 
@@ -49280,14 +49379,14 @@
 
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Root Prefix Transform.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = function (options, next) {
 
@@ -49302,17 +49401,17 @@
 
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Service for sending network requests.
 	 */
 
-	var _ = __webpack_require__(301);
-	var Client = __webpack_require__(309);
-	var Promise = __webpack_require__(310);
-	var interceptor = __webpack_require__(313);
+	var _ = __webpack_require__(302);
+	var Client = __webpack_require__(310);
+	var Promise = __webpack_require__(311);
+	var interceptor = __webpack_require__(314);
 	var jsonType = {'Content-Type': 'application/json'};
 
 	function Http(url, options) {
@@ -49365,13 +49464,13 @@
 	};
 
 	Http.interceptors = [
-	    __webpack_require__(314),
 	    __webpack_require__(315),
 	    __webpack_require__(316),
-	    __webpack_require__(318),
+	    __webpack_require__(317),
 	    __webpack_require__(319),
 	    __webpack_require__(320),
-	    __webpack_require__(321)
+	    __webpack_require__(321),
+	    __webpack_require__(322)
 	];
 
 	Http.headers = {
@@ -49406,16 +49505,16 @@
 
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Base client.
 	 */
 
-	var _ = __webpack_require__(301);
-	var Promise = __webpack_require__(310);
-	var xhrClient = __webpack_require__(312);
+	var _ = __webpack_require__(302);
+	var Promise = __webpack_require__(311);
+	var xhrClient = __webpack_require__(313);
 
 	module.exports = function (request) {
 
@@ -49477,15 +49576,15 @@
 
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Promise adapter.
 	 */
 
-	var _ = __webpack_require__(301);
-	var PromiseObj = window.Promise || __webpack_require__(311);
+	var _ = __webpack_require__(302);
+	var PromiseObj = window.Promise || __webpack_require__(312);
 
 	function Promise(executor, context) {
 
@@ -49592,14 +49691,14 @@
 
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	var RESOLVED = 0;
 	var REJECTED = 1;
@@ -49777,15 +49876,15 @@
 
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * XMLHttp client.
 	 */
 
-	var _ = __webpack_require__(301);
-	var Promise = __webpack_require__(310);
+	var _ = __webpack_require__(302);
+	var Promise = __webpack_require__(311);
 
 	module.exports = function (request) {
 	    return new Promise(function (resolve) {
@@ -49833,15 +49932,15 @@
 
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Interceptor factory.
 	 */
 
-	var _ = __webpack_require__(301);
-	var Promise = __webpack_require__(310);
+	var _ = __webpack_require__(302);
+	var Promise = __webpack_require__(311);
 
 	module.exports = function (handler, vm) {
 
@@ -49884,14 +49983,14 @@
 
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Before Interceptor.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = {
 
@@ -49908,7 +50007,7 @@
 
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports) {
 
 	/**
@@ -49944,14 +50043,14 @@
 
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * JSONP Interceptor.
 	 */
 
-	var jsonpClient = __webpack_require__(317);
+	var jsonpClient = __webpack_require__(318);
 
 	module.exports = {
 
@@ -49968,15 +50067,15 @@
 
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * JSONP client.
 	 */
 
-	var _ = __webpack_require__(301);
-	var Promise = __webpack_require__(310);
+	var _ = __webpack_require__(302);
+	var Promise = __webpack_require__(311);
 
 	module.exports = function (request) {
 	    return new Promise(function (resolve) {
@@ -50022,7 +50121,7 @@
 
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports) {
 
 	/**
@@ -50045,14 +50144,14 @@
 
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Mime Interceptor.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = {
 
@@ -50087,14 +50186,14 @@
 
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Header Interceptor.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	module.exports = {
 
@@ -50119,15 +50218,15 @@
 
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * CORS Interceptor.
 	 */
 
-	var _ = __webpack_require__(301);
-	var xdrClient = __webpack_require__(322);
+	var _ = __webpack_require__(302);
+	var xdrClient = __webpack_require__(323);
 	var xhrCors = 'withCredentials' in new XMLHttpRequest();
 	var originUrl = _.url.parse(location.href);
 
@@ -50162,15 +50261,15 @@
 
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * XDomain client (Internet Explorer).
 	 */
 
-	var _ = __webpack_require__(301);
-	var Promise = __webpack_require__(310);
+	var _ = __webpack_require__(302);
+	var Promise = __webpack_require__(311);
 
 	module.exports = function (request) {
 	    return new Promise(function (resolve) {
@@ -50205,14 +50304,14 @@
 
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Service for interacting with RESTful services.
 	 */
 
-	var _ = __webpack_require__(301);
+	var _ = __webpack_require__(302);
 
 	function Resource(url, params, actions, options) {
 
@@ -50321,11 +50420,11 @@
 
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue, VueRouter) {
-	var App = __webpack_require__(326)
+	var App = __webpack_require__(327)
 
 	// Register router
 	Vue.use(VueRouter)
@@ -50341,7 +50440,7 @@
 	        component: { template: '<div>Home</div>' },
 	    },
 	    '/accounts': {
-	        component: __webpack_require__(333),
+	        component: __webpack_require__(334),
 	        subRoutes: {
 	            '/all': {
 	                component: __webpack_require__(337),
@@ -50364,7 +50463,7 @@
 	                component: __webpack_require__(360),
 	            },
 	            '/new': {
-	                component: __webpack_require__(369),
+	                component: __webpack_require__(371),
 	            },
 	        },
 	    },
@@ -50380,10 +50479,10 @@
 	// Start application
 	router.start(App, 'app')
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(325)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(326)))
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*!
@@ -53097,16 +53196,16 @@
 	}));
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(327)
+	__vue_script__ = __webpack_require__(328)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/App.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(332)
+	__vue_template__ = __webpack_require__(333)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -53125,7 +53224,7 @@
 	})()}
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53135,8 +53234,8 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
-	var store = __webpack_require__(328);
+	var mixins = __webpack_require__(291);
+	var store = __webpack_require__(329);
 
 	exports.default = {
 
@@ -53151,13 +53250,13 @@
 	};
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vuex) {
-	var app = __webpack_require__(329)
-	var lang = __webpack_require__(330)
-	var remote = __webpack_require__(331)
+	var app = __webpack_require__(330)
+	var lang = __webpack_require__(331)
+	var remote = __webpack_require__(332)
 
 	store = new Vuex.Store({
 	    modules: {
@@ -53173,14 +53272,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(202)))
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(moment) {
 	exports.state = {
 	    language: null,
-	    account_id: {},
-	    envelope_id: {},
+	    account_id: null,
+	    envelope_id: null,
 	    developmentDate: moment(),
 	}
 
@@ -53207,7 +53306,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports) {
 
 	
@@ -53270,6 +53369,10 @@
 	            },
 	            situation: {
 	                title: 'Situation',
+	            },
+	            balances: {
+	                title: 'Situation in details',
+	                labels: ['Balance'],
 	            },
 	            development: {
 	                title: 'Development',
@@ -53341,6 +53444,10 @@
 	            situation: {
 	                title: 'Situation',
 	            },
+	            balances: {
+	                title: 'Détail de la situation',
+	                labels: ['Solde'],
+	            },
 	            development: {
 	                title: 'Évolution',
 	                labels: ['Solde', 'Revenus directs', 'Revenus alloués', 'Dépenses'],
@@ -53356,7 +53463,7 @@
 
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {
@@ -53416,17 +53523,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div>\n\n    <layout-navbar></layout-navbar>\n\n    <div class=\"container\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(334)
+	__vue_script__ = __webpack_require__(335)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
@@ -53450,7 +53557,7 @@
 	})()}
 
 /***/ },
-/* 334 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53460,7 +53567,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -53523,113 +53630,6 @@
 	};
 
 /***/ },
-/* 335 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(moment) {
-	var actions = __webpack_require__(291)
-	var getters = __webpack_require__(292)
-
-	exports.vuex = {
-
-	    vuex: {
-
-	        actions: {
-	            setLanguage: actions.setLanguage,
-	            refreshAccounts: actions.refreshAccounts,
-	            setCurrentAccount: actions.setCurrentAccount,
-	            saveAccount: actions.saveAccount,
-	            updateAccount: actions.updateAccount,
-	            setCurrentEnvelope: actions.setCurrentEnvelope,
-	            refreshEnvelopes: actions.refreshEnvelopes,
-	            saveEnvelope: actions.saveEnvelope,
-	            updateEnvelope: actions.updateEnvelope,
-	            setDevelopmentDate: actions.setDevelopmentDate,
-	        },
-
-	        getters: {
-	            language: getters.getCurrentLanguage,
-	            availableLanguages: getters.getAvailableLanguages,
-	            text: getters.getText,
-	            account: getters.getCurrentAccount,
-	            accounts: getters.getAllAccounts,
-	            enabledAccounts: getters.getEnabledAccounts,
-	            disabledAccounts: getters.getDisabledAccounts,
-	            accountDevelopment: getters.getAccountDevelopment,
-	            envelope: getters.getCurrentEnvelope,
-	            envelopes: getters.getAllEnvelopes,
-	            enabledEnvelopes: getters.getEnabledEnvelopes,
-	            disabledEnvelopes: getters.getDisabledEnvelopes,
-	            envelopeDevelopment: getters.getEnvelopeDevelopment,
-	            developmentDate: getters.getDevelopmentDate,
-	        },
-
-	    },
-
-	}
-
-	exports.moment = {
-
-	    methods: {
-
-	        listDaysInMonth: function (date) {
-	            list = []
-
-	            var start = moment(date).startOf('month')
-	            var end = moment(start).endOf('month')
-
-	            while (start.isSameOrBefore(end)) {
-	                list.push(this.$options.filters.formatLongDay(start))
-	                start.add(1, 'day')
-	            }
-
-	            return list
-	        },
-
-	        listMonthsInYear: function (date) {
-	            list = []
-
-	            var start = moment(date).startOf('year')
-	            var end = moment(start).endOf('year')
-
-	            while (start.isSameOrBefore(end)) {
-	                list.push(this.$options.filters.formatLongMonth(start))
-	                start.add(1, 'month')
-	            }
-
-	            return list
-	        },
-
-	    },
-
-	}
-
-	exports.development = {
-
-	    computed: {
-
-	        prevMonth: function () {
-	            return moment(this.developmentDate).subtract(1, 'month')
-	        },
-
-	        nextMonth: function () {
-	            return moment(this.developmentDate).add(1, 'month')
-	        },
-
-	        prevYear: function () {
-	            return moment(this.developmentDate).subtract(1, 'year')
-	        },
-
-	        nextYear: function () {
-	            return moment(this.developmentDate).add(1, 'year')
-	        },
-
-	    },
-	}
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
-
-/***/ },
 /* 336 */
 /***/ function(module, exports) {
 
@@ -53674,7 +53674,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 	    mixins: [mixins.vuex]
@@ -53725,7 +53725,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 	var AccountsDevelopment = __webpack_require__(342);
 	var AccountsForm = __webpack_require__(347);
 
@@ -53867,7 +53867,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -53878,48 +53878,38 @@
 	        monthlyData: function monthlyData() {
 	            return [{
 	                data: this.accountDevelopment.monthly.balance,
-	                borderColor: 'default',
-	                backgroundColor: 'default'
+	                color: 'default'
 	            }, {
 	                data: this.accountDevelopment.monthly.revenues,
-	                borderColor: 'success',
-	                backgroundColor: 'success'
+	                color: 'success'
 	            }, {
 	                data: this.accountDevelopment.monthly.incomingTransfers,
-	                borderColor: 'info',
-	                backgroundColor: 'info'
+	                color: 'info'
 	            }, {
 	                data: this.accountDevelopment.monthly.outgoingTransfers,
-	                borderColor: 'warning',
-	                backgroundColor: 'warning'
+	                color: 'warning'
 	            }, {
 	                data: this.accountDevelopment.monthly.outcomes,
-	                borderColor: 'danger',
-	                backgroundColor: 'danger'
+	                color: 'danger'
 	            }];
 	        },
 
 	        yearlyData: function yearlyData() {
 	            return [{
 	                data: this.accountDevelopment.yearly.balance,
-	                borderColor: 'default',
-	                backgroundColor: 'default'
+	                color: 'default'
 	            }, {
 	                data: this.accountDevelopment.yearly.revenues,
-	                borderColor: 'success',
-	                backgroundColor: 'success'
+	                color: 'success'
 	            }, {
 	                data: this.accountDevelopment.yearly.incomingTransfers,
-	                borderColor: 'info',
-	                backgroundColor: 'info'
+	                color: 'info'
 	            }, {
 	                data: this.accountDevelopment.yearly.outgoingTransfers,
-	                borderColor: 'warning',
-	                backgroundColor: 'warning'
+	                color: 'warning'
 	            }, {
 	                data: this.accountDevelopment.yearly.outcomes,
-	                borderColor: 'danger',
-	                backgroundColor: 'danger'
+	                color: 'danger'
 	            }];
 	        }
 
@@ -53972,7 +53962,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -54080,7 +54070,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 	var AccountsForm = __webpack_require__(347);
 
 	exports.default = {
@@ -54138,7 +54128,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -54240,24 +54230,47 @@
 /* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
-	    mixins: [mixins.vuex]
+
+	    mixins: [mixins.vuex],
+
+	    computed: {
+	        balancesData: function balancesData() {
+	            return [{
+	                backgroundColor: "rgba(179,181,198,0.2)",
+	                borderColor: "rgba(179,181,198,1)",
+	                pointBackgroundColor: "rgba(179,181,198,1)",
+	                pointBorderColor: "#fff",
+	                pointHoverBackgroundColor: "#fff",
+	                pointHoverBorderColor: "rgba(179,181,198,1)",
+	                data: this.enabledEnvelopes.map(function (envelope) {
+	                    return envelope.balance;
+	                })
+	            }];
+	        },
+	        balancesLabels: function balancesLabels() {
+	            return this.enabledEnvelopes.map(function (envelope) {
+	                return envelope.name;
+	            });
+	        }
+	    }
+
 	};
 
 /***/ },
 /* 359 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    {{ envelopes }}\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 360 */
@@ -54269,7 +54282,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(368)
+	__vue_template__ = __webpack_require__(370)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54298,9 +54311,9 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 	var EnvelopesDevelopment = __webpack_require__(362);
-	var EnvelopesForm = __webpack_require__(365);
+	var EnvelopesForm = __webpack_require__(367);
 
 	exports.default = {
 
@@ -54337,13 +54350,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(378)
-	__vue_script__ = __webpack_require__(363)
+	__webpack_require__(363)
+	__vue_script__ = __webpack_require__(365)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(380)
+	__vue_template__ = __webpack_require__(366)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54365,6 +54378,46 @@
 /* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(364);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 364 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n.tab-pane[_v-21377fb6] {\n    padding: 20px;\n}\n\n.btn-link[_v-21377fb6] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-21377fb6] {\n    visibility: visible;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 365 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -54372,7 +54425,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -54383,40 +54436,32 @@
 	        monthlyData: function monthlyData() {
 	            return [{
 	                data: this.envelopeDevelopment.monthly.balance,
-	                borderColor: 'default',
-	                backgroundColor: 'default'
+	                color: 'default'
 	            }, {
 	                data: this.envelopeDevelopment.monthly.revenues,
-	                borderColor: 'success',
-	                backgroundColor: 'success'
+	                color: 'success'
 	            }, {
 	                data: this.envelopeDevelopment.monthly.incomes,
-	                borderColor: 'info',
-	                backgroundColor: 'info'
+	                color: 'info'
 	            }, {
 	                data: this.envelopeDevelopment.monthly.outcomes,
-	                borderColor: 'danger',
-	                backgroundColor: 'danger'
+	                color: 'danger'
 	            }];
 	        },
 
 	        yearlyData: function yearlyData() {
 	            return [{
 	                data: this.envelopeDevelopment.yearly.balance,
-	                borderColor: 'default',
-	                backgroundColor: 'default'
+	                color: 'default'
 	            }, {
 	                data: this.envelopeDevelopment.yearly.revenues,
-	                borderColor: 'success',
-	                backgroundColor: 'success'
+	                color: 'success'
 	            }, {
 	                data: this.envelopeDevelopment.yearly.incomes,
-	                borderColor: 'info',
-	                backgroundColor: 'info'
+	                color: 'info'
 	            }, {
 	                data: this.envelopeDevelopment.yearly.outcomes,
-	                borderColor: 'danger',
-	                backgroundColor: 'danger'
+	                color: 'danger'
 	            }];
 	        }
 
@@ -54425,17 +54470,22 @@
 	};
 
 /***/ },
-/* 364 */,
-/* 365 */
+/* 366 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<fieldset _v-21377fb6=\"\">\n\n    <legend _v-21377fb6=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-21377fb6=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-21377fb6=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-21377fb6=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-21377fb6=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+
+/***/ },
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(366)
+	__vue_script__ = __webpack_require__(368)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(367)
+	__vue_template__ = __webpack_require__(369)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54454,7 +54504,7 @@
 	})()}
 
 /***/ },
-/* 366 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(moment) {"use strict";
@@ -54464,7 +54514,7 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
+	var mixins = __webpack_require__(291);
 
 	exports.default = {
 
@@ -54522,28 +54572,28 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
 
 /***/ },
-/* 367 */
+/* 369 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
-/* 368 */
+/* 370 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.situation.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 369 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(370)
+	__vue_script__ = __webpack_require__(372)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(371)
+	__vue_template__ = __webpack_require__(373)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54562,7 +54612,7 @@
 	})()}
 
 /***/ },
-/* 370 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54572,8 +54622,8 @@
 	});
 
 
-	var mixins = __webpack_require__(335);
-	var EnvelopesForm = __webpack_require__(365);
+	var mixins = __webpack_require__(291);
+	var EnvelopesForm = __webpack_require__(367);
 
 	exports.default = {
 
@@ -54586,19 +54636,19 @@
 	};
 
 /***/ },
-/* 371 */
+/* 373 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.envelopes.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <envelopes-form :envelope=\"{}\"></envelopes-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 372 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(373);
+	var content = __webpack_require__(375);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -54618,7 +54668,7 @@
 	}
 
 /***/ },
-/* 373 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -54630,56 +54680,6 @@
 
 	// exports
 
-
-/***/ },
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(379);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(207)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 379 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n.tab-pane[_v-21377fb6] {\n    padding: 20px;\n}\n\n.btn-link[_v-21377fb6] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-21377fb6] {\n    visibility: visible;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 380 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<fieldset _v-21377fb6=\"\">\n\n    <legend _v-21377fb6=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-21377fb6=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-21377fb6=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-21377fb6=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-21377fb6=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ }
 /******/ ]);

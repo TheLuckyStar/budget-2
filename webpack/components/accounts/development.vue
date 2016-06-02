@@ -67,24 +67,19 @@
                 return  [
                     {
                         data: this.accountDevelopment.monthly.balance,
-                        borderColor: 'default',
-                        backgroundColor: 'default',
+                        color: 'default',
                     }, {
                         data: this.accountDevelopment.monthly.revenues,
-                        borderColor: 'success',
-                        backgroundColor: 'success',
+                        color: 'success',
                     }, {
                         data: this.accountDevelopment.monthly.incomingTransfers,
-                        borderColor: 'info',
-                        backgroundColor: 'info',
+                        color: 'info',
                     }, {
                         data: this.accountDevelopment.monthly.outgoingTransfers,
-                        borderColor: 'warning',
-                        backgroundColor: 'warning',
+                        color: 'warning',
                     }, {
                         data: this.accountDevelopment.monthly.outcomes,
-                        borderColor: 'danger',
-                        backgroundColor: 'danger',
+                        color: 'danger',
                     },
                 ]
             },
@@ -93,24 +88,19 @@
                 return  [
                     {
                         data: this.accountDevelopment.yearly.balance,
-                        borderColor: 'default',
-                        backgroundColor: 'default',
+                        color: 'default',
                     }, {
                         data: this.accountDevelopment.yearly.revenues,
-                        borderColor: 'success',
-                        backgroundColor: 'success',
+                        color: 'success',
                     }, {
                         data: this.accountDevelopment.yearly.incomingTransfers,
-                        borderColor: 'info',
-                        backgroundColor: 'info',
+                        color: 'info',
                     }, {
                         data: this.accountDevelopment.yearly.outgoingTransfers,
-                        borderColor: 'warning',
-                        backgroundColor: 'warning',
+                        color: 'warning',
                     }, {
                         data: this.accountDevelopment.yearly.outcomes,
-                        borderColor: 'danger',
-                        backgroundColor: 'danger',
+                        color: 'danger',
                     },
                 ]
             },

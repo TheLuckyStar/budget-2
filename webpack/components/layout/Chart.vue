@@ -24,18 +24,19 @@
         data: function () {
             return {
                 chart: null,
-                colors: {
-                    default: '#E7E9ED',
-                    success: '#4BC0C0',
-                    info: '#36A2EB',
-                    warning: '#FFCE56',
-                    danger: '#FF6384',
+                frontColors: {
+                    default: 'rgba(231, 233, 237, 1)',
+                    success: 'rgba(75, 192, 192, 1)',
+                    info: 'rgba(54, 162, 235, 1)',
+                    warning: 'rgba(255, 206, 86, 1)',
+                    danger: 'rgba(255, 99, 132, 1)',
                 },
-                defaultData: {
-                    line: {
-                        fill: false,
-                        fillColor: 'white',
-                    },
+                backColors: {
+                    default: 'rgba(231, 233, 237, 0.2)',
+                    success: 'rgba(75, 192, 192, 0.2)',
+                    info: 'rgba(54, 162, 235, 0.2)',
+                    warning: 'rgba(255, 206, 86, 0.2)',
+                    danger: 'rgba(255, 99, 132, 0.2)',
                 },
             }
         },
@@ -73,43 +74,17 @@
                     label: this.dataLabels[index],
                 }
 
-                Object.keys(this.defaultData[this.type]).forEach(function (key) {
-                    output[key] = this.defaultData[this.type][key]
-                }, this)
-
                 Object.keys(input).forEach(function (key) {
                     output[key] = input[key]
                 })
 
-                Object.keys(input).filter(this.filterColors).forEach(function (key) {
-                    output[key] = this.formatColors(input[key])
-                }, this)
+                output.backgroundColor = this.backColors[output.color]
+                output.borderColor = this.frontColors[output.color]
+                output.pointBorderColor = this.frontColors[output.color]
+                output.pointBackgroundColor = this.backColors[output.color]
+                output.pointHoverBackgroundColor = this.frontColors[output.color]
 
                 return output
-            },
-
-            filterColors: function(key) {
-                return key === 'backgroundColor' || key === 'borderColor' || key === 'pointBackgroundColor'
-            },
-
-            filterDefaultData: function(key) {
-                return this.defaultData[this.type].hasOwnProperty(key)
-            },
-
-            formatColors: function(colors) {
-                if (colors instanceof Array) {
-                    return colors.map(this.formatColor)
-                }
-
-                return this.formatColor(colors)
-            },
-
-            formatColor: function (color) {
-                if (this.colors.hasOwnProperty(color)) {
-                    return this.colors[color]
-                }
-
-                return color
             },
 
         },

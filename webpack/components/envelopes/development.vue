@@ -67,20 +67,16 @@
                 return  [
                     {
                         data: this.envelopeDevelopment.monthly.balance,
-                        borderColor: 'default',
-                        backgroundColor: 'default',
+                        color: 'default',
                     }, {
                         data: this.envelopeDevelopment.monthly.revenues,
-                        borderColor: 'success',
-                        backgroundColor: 'success',
+                        color: 'success',
                     }, {
                         data: this.envelopeDevelopment.monthly.incomes,
-                        borderColor: 'info',
-                        backgroundColor: 'info',
+                        color: 'info',
                     }, {
                         data: this.envelopeDevelopment.monthly.outcomes,
-                        borderColor: 'danger',
-                        backgroundColor: 'danger',
+                        color: 'danger',
                     },
                 ]
             },
@@ -89,20 +85,16 @@
                 return  [
                     {
                         data: this.envelopeDevelopment.yearly.balance,
-                        borderColor: 'default',
-                        backgroundColor: 'default',
+                        color: 'default',
                     }, {
                         data: this.envelopeDevelopment.yearly.revenues,
-                        borderColor: 'success',
-                        backgroundColor: 'success',
+                        color: 'success',
                     }, {
                         data: this.envelopeDevelopment.yearly.incomes,
-                        borderColor: 'info',
-                        backgroundColor: 'info',
+                        color: 'info',
                     }, {
                         data: this.envelopeDevelopment.yearly.outcomes,
-                        borderColor: 'danger',
-                        backgroundColor: 'danger',
+                        color: 'danger',
                     },
                 ]
             },
