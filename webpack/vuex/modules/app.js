@@ -1,8 +1,8 @@
 
 exports.state = {
     language: null,
-    account_id: {},
-    envelope_id: {},
+    account_id: null,
+    envelope_id: null,
     developmentDate: moment(),
 }
 

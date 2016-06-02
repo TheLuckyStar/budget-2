@@ -9,7 +9,18 @@
 
         <hr>
 
-        {{ envelopes }}
+        <div class="col-md-6">
+            <layout-card :color="enabledEnvelopesBalance < 0 ? 'danger' : 'success'"
+                :icon="enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
+                :title="text.envelopes.situation.title"
+                :text="enabledEnvelopesBalance"
+                :comment="$options.filters.formatLongDate(date)"
+            ></layout-card>
+        </div>
+
+        <div class="col-md-12">
+            <layout-chart type="radar" :title="text.envelopes.balances.title" :chart-labels="balancesLabels" :data="balancesData" :data-labels="text.envelopes.balances.labels"></layout-chart>
+        </div>
 
     </div>
 
@@ -22,7 +33,27 @@
     var mixins = require('scripts/mixins.js')
 
     export default {
+
         mixins: [mixins.vuex],
+
+        computed: {
+            balancesData: function () {
+                return [
+                    {
+                        color: 'primary',
+                        data: this.enabledEnvelopes.map(function (envelope) {
+                            return envelope.balance
+                        }),
+                    },
+                ]
+            },
+            balancesLabels: function () {
+                return this.enabledEnvelopes.map(function (envelope) {
+                    return envelope.name
+                })
+            },
+        },
+
     }
 
 </script>

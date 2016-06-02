@@ -59,6 +59,10 @@ exports.state = {
             situation: {
                 title: 'Situation',
             },
+            balances: {
+                title: 'Situation in details',
+                labels: ['Balance'],
+            },
             development: {
                 title: 'Development',
                 labels: ['Balance', 'Direct revenues', 'Allocated revenues', 'Outcomes'],
@@ -128,6 +132,10 @@ exports.state = {
             },
             situation: {
                 title: 'Situation',
+            },
+            balances: {
+                title: 'Détail de la situation',
+                labels: ['Solde'],
             },
             development: {
                 title: 'Évolution',

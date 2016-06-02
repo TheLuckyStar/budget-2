@@ -96,3 +96,13 @@ exports.getDisabledEnvelopes = function (state) {
 exports.getEnvelopeDevelopment = function (state) {
     return state.remote.envelopeDevelopment
 }
+
+exports.getEnabledEnvelopesBalance = function (state) {
+    var balance = 0
+
+    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+        balance += envelope.balance
+    })
+
+    return balance
+}

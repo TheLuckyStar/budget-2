@@ -33,6 +33,7 @@ exports.vuex = {
             enabledEnvelopes: getters.getEnabledEnvelopes,
             disabledEnvelopes: getters.getDisabledEnvelopes,
             envelopeDevelopment: getters.getEnvelopeDevelopment,
+            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
             developmentDate: getters.getDevelopmentDate,
         },
 
