@@ -48,6 +48,17 @@ exports.getAvailableLanguages = function (state) {
 
 
 /**
+ * Remote store : currencies
+ */
+
+exports.getCurrencies = function (state) {
+    return state.remote.currencies
+}
+
+
+
+
+/**
  * Remote store : accounts
  */
 

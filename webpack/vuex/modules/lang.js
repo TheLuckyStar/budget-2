@@ -12,6 +12,12 @@ exports.state = {
                 title: 'Home',
             },
         },
+        currencies: {
+            form: {
+                add: 'New currency',
+                name: 'New currency name',
+            },
+        },
         accounts: {
             page: {
                 title: 'Accounts',
@@ -29,6 +35,7 @@ exports.state = {
                 title: 'Details',
                 name: 'Name',
                 currency: 'Currency',
+                currencyHelper: 'Currency can not be changed.',
             },
             situation: {
                 title: 'Situation',
@@ -86,6 +93,12 @@ exports.state = {
                 title: 'Accueil',
             },
         },
+        currencies: {
+            form: {
+                add: 'Nouvelle devise',
+                name: 'Nom de la nouvelle devise',
+            },
+        },
         accounts: {
             page: {
                 title: 'Comptes',
@@ -103,6 +116,7 @@ exports.state = {
                 title: 'Informations',
                 name: 'Nom',
                 currency: 'Devise',
+                currencyHelper: 'La devise n\'est plus modifiable.',
             },
             situation: {
                 title: 'Situation',

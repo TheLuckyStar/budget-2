@@ -15,6 +15,8 @@ $app->get('/', function () use ($app) {
     return view('home');
 });
 
+$app->get('currencies', 'Currencies@index');
+
 $app->get('accounts', 'Accounts@index');
 $app->post('accounts', 'Accounts@store');
 $app->put('accounts/{id}', 'Accounts@update');

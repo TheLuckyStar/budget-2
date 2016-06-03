@@ -35,6 +35,23 @@ exports.setDevelopmentDate = function ({ dispatch, state }, developmentDate) {
 
 
 /**
+ * Remote store : currencies
+ */
+
+exports.refreshCurrencies = function ({ dispatch, state }, callback) {
+    Vue.resource('currencies').get().then(function (response) {
+        dispatch('SET_CURRENCIES', response.data)
+        if (callback) {
+            callback()
+        }
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+
+
+/**
  * Remote store : accounts
  */
 
@@ -44,6 +61,7 @@ exports.refreshAccounts = function ({ dispatch, state }, callback) {
         if (callback) {
             callback()
         }
+        exports.refreshCurrencies({ dispatch, state })
     }, function (response) {
         console.log(response)
     })
@@ -87,6 +105,7 @@ exports.refreshAccountDevelopment = function ({ dispatch, state }) {
  */
 
 exports.refreshEnvelopes = function ({ dispatch, state }, callback) {
+    exports.refreshCurrencies({ dispatch, state })
     Vue.resource('envelopes').get().then(function (response) {
         dispatch('SET_ENVELOPES', response.data)
         if (callback) {

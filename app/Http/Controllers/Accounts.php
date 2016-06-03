@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Account;
+use App\Currency;
 use Illuminate\Http\Request;
 
 class Accounts extends Controller
@@ -16,21 +17,27 @@ class Accounts extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:255|unique:accounts',
-            'currency' => 'required|max:3',
+            'currency_id' => 'numeric|exists:currencies,id',
+            'currency_name' => 'required_without:currency_id|max:3|unique:currencies,name',
         ]);
 
-        return Account::create($request->only('name', 'currency'));
+        if ($request->has('currency_id')) {
+            $currency_id = $request->currency_id;
+        } else {
+            $currency_id = Currency::create(['name' => $request->currency_name])->id;
+        }
+
+        return Account::create(['name' => $request->name, 'currency_id' => $currency_id]);
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'max:255|unique:accounts,name,'.$id,
-            'currency' => 'max:3',
         ]);
 
         $account = Account::withTrashed()->findOrFail($id);
-        $account->fill($request->all());
+        $account->fill($request->only('name'));
         $account->save();
 
         return $account;

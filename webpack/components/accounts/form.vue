@@ -19,11 +19,27 @@
             </div>
 
             <div class="form-group">
-                <label for="input-account-currency" class="col-xs-3 control-label">
+                <label for="input-account-currency_id" class="col-xs-3 control-label">
                     {{ text.accounts.form.currency }}
                 </label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="input-account-currency" v-model="currency" lazy :disabled="deleted_at">
+                    <select type="text" class="form-control" id="input-account-currency_id" v-model="currency_id" lazy :disabled="id != null">
+                        <option v-for="currency in currencies" :value="currency.id">
+                            {{ currency.name }}
+                        </option>
+                        <option :value="-1">
+                            {{ text.currencies.form.add }}
+                        </option>
+                    </select>
+                    <span v-if="id != null && ! deleted_at" class="help-block">
+                        {{ text.accounts.form.currencyHelper }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-offset-3 col-xs-9">
+                    <input v-if="currency_id == -1" type="text" class="form-control" id="input-account-currency_name" v-model="currency_name" :placeholder="text.currencies.form.name" lazy>
                 </div>
             </div>
 
@@ -69,7 +85,8 @@
             return {
                 id: null,
                 name: null,
-                currency: null,
+                currency_id: null,
+                currency_name: null,
                 deleted_at: null,
             }
         },
@@ -78,7 +95,8 @@
             account: function () {
                 this.id = this.account.id
                 this.name = this.account.name
-                this.currency = this.account.currency
+                this.currency_id = this.account.currency_id
+                this.currency_name = null
                 this.deleted_at = this.account.deleted_at
             },
         },
@@ -88,7 +106,8 @@
             onSubmit: function () {
                 var attributes = {
                     name: this.name,
-                    currency: this.currency,
+                    currency_id: this.currency_id != -1 ? this.currency_id : null,
+                    currency_name: this.currency_name,
                 }
                 if (this.account.id) {
                     this.updateAccount(this.account.id, attributes)

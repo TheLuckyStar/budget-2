@@ -11,7 +11,7 @@ class Account extends Container
      *
      * @var array
      */
-    protected $fillable = ['name', 'deleted_at'];
+    protected $fillable = ['name', 'currency_id', 'deleted_at'];
 
     /**
      * Get the currency for the account.

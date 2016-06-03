@@ -28,6 +28,10 @@
 
         mixins: [mixins.vuex],
 
+        ready: function () {
+            this.setCurrentEnvelope(null)
+        },
+
         components: {
             EnvelopesForm,
         },

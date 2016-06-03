@@ -1,5 +1,6 @@
 
 exports.state = {
+    currencies: [],
     accounts: [],
     accountDevelopment: {
         monthly: {
@@ -35,6 +36,10 @@ exports.state = {
 }
 
 exports.mutations = {
+
+    SET_CURRENCIES(state, currencies) {
+        state.currencies = Vue.options.filters.orderBy(currencies, 'name')
+    },
 
     SET_ACCOUNTS(state, accounts) {
         state.accounts = Vue.options.filters.orderBy(accounts, 'name')

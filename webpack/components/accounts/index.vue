@@ -45,12 +45,13 @@
                     title: this.text.accounts.enabled.title,
                     route: '/accounts/all',
                     entries: this.enabledAccounts.map(function (account) {
+                        var currency = this.currencies.filter(function (currency) { return account.currency_id == currency.id })[0]
                         return {
                             title: account.name,
                             route: '/accounts/one/' + account.id,
-                            badge: account.currency,
+                            badge: currency ? currency.name : null,
                         }
-                    }),
+                    }, this),
                 }
             },
 
@@ -61,12 +62,13 @@
                 return {
                     title: this.text.accounts.disabled.title,
                     entries: this.disabledAccounts.map(function (account) {
+                        var currency = this.currencies.filter(function (currency) { return account.currency_id == currency.id })[0]
                         return {
                             title: account.name,
                             route: '/accounts/one/' + account.id,
-                            badge: account.currency,
+                            badge: currency ? currency.name : null,
                         }
-                    }),
+                    }, this),
                 }
             },
 

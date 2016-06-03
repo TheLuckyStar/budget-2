@@ -48343,6 +48343,7 @@
 
 	        actions: {
 	            setLanguage: actions.setLanguage,
+	            refreshCurrencies: actions.refreshCurrencies,
 	            refreshAccounts: actions.refreshAccounts,
 	            setCurrentAccount: actions.setCurrentAccount,
 	            saveAccount: actions.saveAccount,
@@ -48358,6 +48359,7 @@
 	            language: getters.getCurrentLanguage,
 	            availableLanguages: getters.getAvailableLanguages,
 	            text: getters.getText,
+	            currencies: getters.getCurrencies,
 	            account: getters.getCurrentAccount,
 	            accounts: getters.getAllAccounts,
 	            enabledAccounts: getters.getEnabledAccounts,
@@ -48478,6 +48480,23 @@
 
 
 	/**
+	 * Remote store : currencies
+	 */
+
+	exports.refreshCurrencies = function ({ dispatch, state }, callback) {
+	    Vue.resource('currencies').get().then(function (response) {
+	        dispatch('SET_CURRENCIES', response.data)
+	        if (callback) {
+	            callback()
+	        }
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
+
+
+	/**
 	 * Remote store : accounts
 	 */
 
@@ -48487,6 +48506,7 @@
 	        if (callback) {
 	            callback()
 	        }
+	        exports.refreshCurrencies({ dispatch, state })
 	    }, function (response) {
 	        console.log(response)
 	    })
@@ -48530,6 +48550,7 @@
 	 */
 
 	exports.refreshEnvelopes = function ({ dispatch, state }, callback) {
+	    exports.refreshCurrencies({ dispatch, state })
 	    Vue.resource('envelopes').get().then(function (response) {
 	        dispatch('SET_ENVELOPES', response.data)
 	        if (callback) {
@@ -48623,6 +48644,17 @@
 	exports.getAvailableLanguages = function (state) {
 	    return Object.keys(state.lang)
 	}
+
+
+
+	/**
+	 * Remote store : currencies
+	 */
+
+	exports.getCurrencies = function (state) {
+	    return state.remote.currencies
+	}
+
 
 
 
@@ -53325,6 +53357,12 @@
 	                title: 'Home',
 	            },
 	        },
+	        currencies: {
+	            form: {
+	                add: 'New currency',
+	                name: 'New currency name',
+	            },
+	        },
 	        accounts: {
 	            page: {
 	                title: 'Accounts',
@@ -53342,6 +53380,7 @@
 	                title: 'Details',
 	                name: 'Name',
 	                currency: 'Currency',
+	                currencyHelper: 'Currency can not be changed.',
 	            },
 	            situation: {
 	                title: 'Situation',
@@ -53399,6 +53438,12 @@
 	                title: 'Accueil',
 	            },
 	        },
+	        currencies: {
+	            form: {
+	                add: 'Nouvelle devise',
+	                name: 'Nom de la nouvelle devise',
+	            },
+	        },
 	        accounts: {
 	            page: {
 	                title: 'Comptes',
@@ -53416,6 +53461,7 @@
 	                title: 'Informations',
 	                name: 'Nom',
 	                currency: 'Devise',
+	                currencyHelper: 'La devise n\'est plus modifiable.',
 	            },
 	            situation: {
 	                title: 'Situation',
@@ -53470,6 +53516,7 @@
 
 	/* WEBPACK VAR INJECTION */(function(Vue) {
 	exports.state = {
+	    currencies: [],
 	    accounts: [],
 	    accountDevelopment: {
 	        monthly: {
@@ -53505,6 +53552,10 @@
 	}
 
 	exports.mutations = {
+
+	    SET_CURRENCIES(state, currencies) {
+	        state.currencies = Vue.options.filters.orderBy(currencies, 'name')
+	    },
 
 	    SET_ACCOUNTS(state, accounts) {
 	        state.accounts = Vue.options.filters.orderBy(accounts, 'name')
@@ -53593,12 +53644,15 @@
 	                title: this.text.accounts.enabled.title,
 	                route: '/accounts/all',
 	                entries: this.enabledAccounts.map(function (account) {
+	                    var currency = this.currencies.filter(function (currency) {
+	                        return account.currency_id == currency.id;
+	                    })[0];
 	                    return {
 	                        title: account.name,
 	                        route: '/accounts/one/' + account.id,
-	                        badge: account.currency
+	                        badge: currency ? currency.name : null
 	                    };
-	                })
+	                }, this)
 	            };
 	        },
 
@@ -53609,12 +53663,15 @@
 	            return {
 	                title: this.text.accounts.disabled.title,
 	                entries: this.disabledAccounts.map(function (account) {
+	                    var currency = this.currencies.filter(function (currency) {
+	                        return account.currency_id == currency.id;
+	                    })[0];
 	                    return {
 	                        title: account.name,
 	                        route: '/accounts/one/' + account.id,
-	                        badge: account.currency
+	                        badge: currency ? currency.name : null
 	                    };
-	                })
+	                }, this)
 	            };
 	        },
 
@@ -53976,7 +54033,8 @@
 	        return {
 	            id: null,
 	            name: null,
-	            currency: null,
+	            currency_id: null,
+	            currency_name: null,
 	            deleted_at: null
 	        };
 	    },
@@ -53985,7 +54043,8 @@
 	        account: function account() {
 	            this.id = this.account.id;
 	            this.name = this.account.name;
-	            this.currency = this.account.currency;
+	            this.currency_id = this.account.currency_id;
+	            this.currency_name = null;
 	            this.deleted_at = this.account.deleted_at;
 	        }
 	    },
@@ -53995,7 +54054,8 @@
 	        onSubmit: function onSubmit() {
 	            var attributes = {
 	                name: this.name,
-	                currency: this.currency
+	                currency_id: this.currency_id != -1 ? this.currency_id : null,
+	                currency_name: this.currency_name
 	            };
 	            if (this.account.id) {
 	                this.updateAccount(this.account.id, attributes);
@@ -54027,7 +54087,7 @@
 /* 349 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-currency\" v-model=\"currency\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+	module.exports = "\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency_id\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\">\n                <select type=\"text\" class=\"form-control\" id=\"input-account-currency_id\" v-model=\"currency_id\" lazy :disabled=\"id != null\">\n                    <option v-for=\"currency in currencies\" :value=\"currency.id\">\n                        {{ currency.name }}\n                    </option>\n                    <option :value=\"-1\">\n                        {{ text.currencies.form.add }}\n                    </option>\n                </select>\n                <span v-if=\"id != null && ! deleted_at\" class=\"help-block\">\n                    {{ text.accounts.form.currencyHelper }}\n                </span>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-offset-3 col-xs-9\">\n                <input v-if=\"currency_id == -1\" type=\"text\" class=\"form-control\" id=\"input-account-currency_name\" v-model=\"currency_name\" :placeholder=\"text.currencies.form.name\" lazy>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
 /* 350 */
@@ -54080,6 +54140,10 @@
 	exports.default = {
 
 	    mixins: [mixins.vuex],
+
+	    ready: function ready() {
+	        this.setCurrentAccount(null);
+	    },
 
 	    components: {
 	        AccountsForm: AccountsForm
@@ -54629,6 +54693,10 @@
 	exports.default = {
 
 	    mixins: [mixins.vuex],
+
+	    ready: function ready() {
+	        this.setCurrentEnvelope(null);
+	    },
 
 	    components: {
 	        EnvelopesForm: EnvelopesForm
