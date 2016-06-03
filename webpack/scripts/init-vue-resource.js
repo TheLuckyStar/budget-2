@@ -3,4 +3,4 @@
 Vue.use(VueResource)
 
 // Set root endpoint
-// Vue.http.options.root = '/api';
+// Vue.http.options.root = '/api'

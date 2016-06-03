@@ -48636,13 +48636,13 @@
 
 	exports.getEnabledAccounts = function (state) {
 	    return state.remote.accounts.filter(function (account) {
-	        return account.deleted_at === null;
+	        return account.deleted_at === null
 	    })
 	}
 
 	exports.getDisabledAccounts = function (state) {
 	    return state.remote.accounts.filter(function (account) {
-	        return account.deleted_at !== null;
+	        return account.deleted_at !== null
 	    })
 	}
 
@@ -48662,13 +48662,13 @@
 
 	exports.getEnabledEnvelopes = function (state) {
 	    return state.remote.envelopes.filter(function (envelope) {
-	        return envelope.deleted_at === null;
+	        return envelope.deleted_at === null
 	    })
 	}
 
 	exports.getDisabledEnvelopes = function (state) {
 	    return state.remote.envelopes.filter(function (envelope) {
-	        return envelope.deleted_at !== null;
+	        return envelope.deleted_at !== null
 	    })
 	}
 
@@ -48792,7 +48792,7 @@
 	Vue.use(VueResource)
 
 	// Set root endpoint
-	// Vue.http.options.root = '/api';
+	// Vue.http.options.root = '/api'
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(301)))
 

@@ -33,7 +33,7 @@
                     this.disabledAccountsMenu,
                     this.newAccountMenu
                 ].filter(function(val) {
-                    return val !== null;
+                    return val !== null
                 })
             },
 

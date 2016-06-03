@@ -57,13 +57,13 @@ exports.getAllAccounts = function (state) {
 
 exports.getEnabledAccounts = function (state) {
     return state.remote.accounts.filter(function (account) {
-        return account.deleted_at === null;
+        return account.deleted_at === null
     })
 }
 
 exports.getDisabledAccounts = function (state) {
     return state.remote.accounts.filter(function (account) {
-        return account.deleted_at !== null;
+        return account.deleted_at !== null
     })
 }
 
@@ -83,13 +83,13 @@ exports.getAllEnvelopes = function (state) {
 
 exports.getEnabledEnvelopes = function (state) {
     return state.remote.envelopes.filter(function (envelope) {
-        return envelope.deleted_at === null;
+        return envelope.deleted_at === null
     })
 }
 
 exports.getDisabledEnvelopes = function (state) {
     return state.remote.envelopes.filter(function (envelope) {
-        return envelope.deleted_at !== null;
+        return envelope.deleted_at !== null
     })
 }
 

@@ -33,7 +33,7 @@
                     this.disabledEnvelopesMenu,
                     this.newEnvelopeMenu
                 ].filter(function(val) {
-                    return val !== null;
+                    return val !== null
                 })
             },
 
