@@ -18,7 +18,7 @@ class AddAccountIdToOutcomesTable extends Migration
 
         DB::table('outcomes')
             ->join('envelopes', 'outcomes.envelope_id', '=', 'envelopes.id')
-            ->update(['outcomes.account_id' => app('db')->raw('envelopes.account_id')]);
+            ->update(['outcomes.account_id' => DB::raw('envelopes.account_id')]);
     }
 
     /**

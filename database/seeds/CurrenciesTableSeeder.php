@@ -1,9 +1,9 @@
 <?php
 
-use App\Account;
+use App\Currency;
 use Illuminate\Database\Seeder;
 
-class AccountsTableSeeder extends Seeder
+class CurrenciesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,9 +12,9 @@ class AccountsTableSeeder extends Seeder
      */
     public function run()
     {
-        Account::create([
-            'name' => 'Checkkonto',
-            'currency_id' => 2,
+        Currency::create([
+            'id' => 2,
+            'name' => 'SEK',
         ]);
     }
 }

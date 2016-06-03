@@ -13,7 +13,7 @@ class DropDeletedAtFieldFromTransfersTable extends Migration
     public function up()
     {
         Schema::table('transfers', function (Blueprint $table) {
-            app('db')->table($table->getTable())->whereNotNull('deleted_at')->delete();
+            DB::table($table->getTable())->whereNotNull('deleted_at')->delete();
             $table->dropColumn('deleted_at');
         });
     }

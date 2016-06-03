@@ -11,7 +11,15 @@ class Account extends Container
      *
      * @var array
      */
-    protected $fillable = ['name', 'currency', 'deleted_at'];
+    protected $fillable = ['name', 'deleted_at'];
+
+    /**
+     * Get the currency for the account.
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 
     /**
      * Get the revenues for the account.
