@@ -48365,6 +48365,7 @@
 	            enabledAccounts: getters.getEnabledAccounts,
 	            disabledAccounts: getters.getDisabledAccounts,
 	            accountDevelopment: getters.getAccountDevelopment,
+	            enabledAccountsBalance: getters.getEnabledAccountsBalance,
 	            envelope: getters.getCurrentEnvelope,
 	            envelopes: getters.getAllEnvelopes,
 	            enabledEnvelopes: getters.getEnabledEnvelopes,
@@ -48680,6 +48681,16 @@
 
 	exports.getAccountDevelopment = function (state) {
 	    return state.remote.accountDevelopment
+	}
+
+	exports.getEnabledAccountsBalance = function (state) {
+	    var balance = 0
+
+	    exports.getEnabledAccounts(state).forEach(function (envelope) {
+	        balance += envelope.balance
+	    })
+
+	    return balance
 	}
 
 
@@ -53385,6 +53396,10 @@
 	            situation: {
 	                title: 'Situation',
 	            },
+	            balances: {
+	                title: 'Situation in details',
+	                labels: ['Balance'],
+	            },
 	            development: {
 	                title: 'Development',
 	                labels: ['Balance', 'Revenues', 'Incoming transfers', 'Outgoing transfers', 'Outcomes'],
@@ -53465,6 +53480,10 @@
 	            },
 	            situation: {
 	                title: 'Situation',
+	            },
+	            balances: {
+	                title: 'Détail de la situation',
+	                labels: ['Solde'],
 	            },
 	            development: {
 	                title: 'Évolution',
@@ -53738,14 +53757,31 @@
 	var mixins = __webpack_require__(291);
 
 	exports.default = {
-	    mixins: [mixins.vuex]
+
+	    mixins: [mixins.vuex],
+
+	    computed: {
+	        balancesData: function balancesData() {
+	            return [{
+	                data: this.enabledAccounts.map(function (account) {
+	                    return account.balance;
+	                })
+	            }];
+	        },
+	        balancesLabels: function balancesLabels() {
+	            return this.enabledAccounts.map(function (account) {
+	                return account.name;
+	            });
+	        }
+	    }
+
 	};
 
 /***/ },
 /* 339 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.accounts.enabled.title }}\n    </h1>\n\n    <hr>\n\n    {{ accounts }}\n\n</div>\n\n";
+	module.exports = "\n\n<div>\n\n    <h1>\n        {{ text.accounts.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\" :title=\"text.accounts.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.accounts.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 340 */

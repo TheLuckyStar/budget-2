@@ -30,6 +30,7 @@ exports.vuex = {
             enabledAccounts: getters.getEnabledAccounts,
             disabledAccounts: getters.getDisabledAccounts,
             accountDevelopment: getters.getAccountDevelopment,
+            enabledAccountsBalance: getters.getEnabledAccountsBalance,
             envelope: getters.getCurrentEnvelope,
             envelopes: getters.getAllEnvelopes,
             enabledEnvelopes: getters.getEnabledEnvelopes,

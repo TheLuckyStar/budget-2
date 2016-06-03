@@ -82,6 +82,16 @@ exports.getAccountDevelopment = function (state) {
     return state.remote.accountDevelopment
 }
 
+exports.getEnabledAccountsBalance = function (state) {
+    var balance = 0
+
+    exports.getEnabledAccounts(state).forEach(function (envelope) {
+        balance += envelope.balance
+    })
+
+    return balance
+}
+
 
 
 /**
