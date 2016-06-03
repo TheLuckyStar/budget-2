@@ -44,9 +44,11 @@
                 return {
                     title: this.text.envelopes.enabled.title,
                     route: '/envelopes/all',
+                    badge: this.enabledEnvelopesBalance,
+                    badgeColor: this.enabledEnvelopesBalance < 0 ? 'danger' : 'success',
                     entries: this.enabledEnvelopes.map(function (envelope) {
                         return {
-                            text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
+                            title: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
                             badge: envelope.balance,
                             badgeColor: envelope.balance < 0 ? 'danger' : 'success',
@@ -63,7 +65,7 @@
                     title: this.text.envelopes.disabled.title,
                     entries: this.disabledEnvelopes.map(function (envelope) {
                         return {
-                            text: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
+                            title: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
                             badge: envelope.balance,
                             badgeColor: envelope.balance < 0 ? 'danger' : 'success',

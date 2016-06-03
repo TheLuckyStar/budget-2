@@ -46,7 +46,7 @@
                     route: '/accounts/all',
                     entries: this.enabledAccounts.map(function (account) {
                         return {
-                            text: account.name,
+                            title: account.name,
                             route: '/accounts/one/' + account.id,
                             badge: account.currency,
                         }
@@ -62,7 +62,7 @@
                     title: this.text.accounts.disabled.title,
                     entries: this.disabledAccounts.map(function (account) {
                         return {
-                            text: account.name,
+                            title: account.name,
                             route: '/accounts/one/' + account.id,
                             badge: account.currency,
                         }

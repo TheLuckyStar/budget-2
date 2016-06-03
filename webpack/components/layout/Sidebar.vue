@@ -10,6 +10,9 @@
                     <a v-if="entryGroup.route"
                         v-link="{ path: entryGroup.route, activeClass: 'active' }">
                         {{ entryGroup.title }}
+                        <span class="badge badge-{{ entryGroup.badgeColor }} pull-right" v-if="entryGroup.badge">
+                            {{ entryGroup.badge }}
+                        </span>
                     </a>
                     <template v-else>
                         {{ entryGroup.title }}
@@ -21,7 +24,7 @@
                 <a v-for="entry in entryGroup.entries"
                     v-link="{ path: entry.route, activeClass: 'active' }"
                     class="list-group-item">
-                    {{{ entry.text }}}
+                    {{{ entry.title }}}
                     <span class="badge badge-{{ entry.badgeColor }} pull-right" v-if="entry.badge">
                         {{ entry.badge }}
                     </span>
