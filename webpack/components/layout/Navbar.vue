@@ -49,10 +49,23 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+
+                    <li v-for="currency in currencies"
+                        :class="{ active: currency.id === currentCurrency.id }">
+                        <a href="#" v-on:click.prevent="setCurrentCurrency(currency.id)">
+                            {{ currency.name | uppercase }}
+                        </a>
+                    </li>
+
+                    <li class="divider-vertical"></li>
+
                     <li v-for="lang in availableLanguages"
                         :class="{ active: lang === language }">
-                        <a href="#" v-on:click.prevent="setLanguage(lang)">{{ lang | uppercase }}</a>
+                        <a href="#" v-on:click.prevent="setLanguage(lang)">
+                            {{ lang | uppercase }}
+                        </a>
                     </li>
+
                 </ul>
 
             </div>
@@ -76,3 +89,24 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .navbar .divider-vertical {
+        height: 40px;
+        margin: 0 9px;
+        border-left: 1px solid #f2f2f2;
+        border-right: 1px solid #ffffff;
+    }
+
+     @media only screen and (max-width: 800px){
+        .divider-vertical {
+            height: 0;
+            border-left: 0;
+            border-right: 0;
+        }
+    }
+
+</style>

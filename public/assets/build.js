@@ -12835,7 +12835,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process, Vue, jQuery) {/*!
-	 * Vue.js v1.0.22
+	 * Vue.js v1.0.24
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -13972,8 +13972,9 @@
 	 */
 
 	function inDoc(node) {
-	  var doc = document.documentElement;
-	  var parent = node && node.parentNode;
+	  if (!node) return false;
+	  var doc = node.ownerDocument.documentElement;
+	  var parent = node.parentNode;
 	  return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 	}
 
@@ -15847,19 +15848,26 @@
 	 */
 
 	function flushBatcherQueue() {
-	  runBatcherQueue(queue);
-	  queue.length = 0;
-	  runBatcherQueue(userQueue);
-	  // user watchers triggered more internal watchers
-	  if (queue.length) {
+	  var _again = true;
+
+	  _function: while (_again) {
+	    _again = false;
+
 	    runBatcherQueue(queue);
+	    runBatcherQueue(userQueue);
+	    // user watchers triggered more watchers,
+	    // keep flushing until it depletes
+	    if (queue.length) {
+	      _again = true;
+	      continue _function;
+	    }
+	    // dev tool hook
+	    /* istanbul ignore if */
+	    if (devtools && config.devtools) {
+	      devtools.emit('flush');
+	    }
+	    resetBatcherState();
 	  }
-	  // dev tool hook
-	  /* istanbul ignore if */
-	  if (devtools && config.devtools) {
-	    devtools.emit('flush');
-	  }
-	  resetBatcherState();
 	}
 
 	/**
@@ -15885,6 +15893,7 @@
 	      }
 	    }
 	  }
+	  queue.length = 0;
 	}
 
 	/**
@@ -20604,7 +20613,7 @@
 	    var node = nodes[i];
 	    if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
 	      parent.removeChild(node);
-	      node = parseTemplate(node);
+	      node = parseTemplate(node, true);
 	    }
 	    frag.appendChild(node);
 	  }
@@ -22840,7 +22849,7 @@
 
 	installGlobalAPI(Vue);
 
-	Vue.version = '1.0.22';
+	Vue.version = '1.0.24';
 
 	// devtools global hook
 	/* istanbul ignore next */
@@ -22870,9 +22879,6 @@
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -48116,7 +48122,7 @@
 /* 275 */
 /***/ function(module, exports) {
 
-	var core = module.exports = {version: '2.4.0'};
+	var core = module.exports = {version: '2.3.0'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
@@ -48287,12 +48293,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
+	__webpack_require__(376)
 	__vue_script__ = __webpack_require__(290)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(294)
+	__vue_template__ = __webpack_require__(378)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -48731,12 +48738,7 @@
 
 
 /***/ },
-/* 294 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n<nav class=\"navbar navbar-default\">\n\n    <div class=\"container\">\n\n        <div class=\"navbar-header\">\n\n            <button type=\"button\"\n                class=\"navbar-toggle collapsed\"\n                data-toggle=\"collapse\"\n                data-target=\"#navbar-collapse\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active' }\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\">\n\n            <ul class=\"nav navbar-nav\">\n                <li v-link-active>\n                    <a v-link=\"{ path: '/home', activeClass: 'active' }\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active' }\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active' }\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active>\n                    <a v-link=\"{ path: '/operations', activeClass: 'active' }\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\">\n                <li v-for=\"lang in availableLanguages\"\n                    :class=\"{ active: lang === language }\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\">{{ lang | uppercase }}</a>\n                </li>\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
-
-/***/ },
+/* 294 */,
 /* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -54785,6 +54787,52 @@
 
 	// exports
 
+
+/***/ },
+/* 376 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(377);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-f56a82c8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-f56a82c8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n.navbar .divider-vertical[_v-f56a82c8] {\n    height: 40px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-f56a82c8] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 378 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n<nav class=\"navbar navbar-default\" _v-f56a82c8=\"\">\n\n    <div class=\"container\" _v-f56a82c8=\"\">\n\n        <div class=\"navbar-header\" _v-f56a82c8=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-f56a82c8=\"\">\n                <span class=\"sr-only\" _v-f56a82c8=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-f56a82c8=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-f56a82c8=\"\">\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-f56a82c8=\"\">\n\n                <li v-for=\"currency in currencies\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-f56a82c8=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-f56a82c8=\"\">\n                        {{ currency.name | uppercase }}\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-f56a82c8=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-f56a82c8=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-f56a82c8=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ }
 /******/ ]);
