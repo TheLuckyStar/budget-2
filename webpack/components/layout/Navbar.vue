@@ -95,7 +95,7 @@
 <style scoped>
 
     .navbar .divider-vertical {
-        height: 40px;
+        height: 50px;
         margin: 0 9px;
         border-left: 1px solid #f2f2f2;
         border-right: 1px solid #ffffff;

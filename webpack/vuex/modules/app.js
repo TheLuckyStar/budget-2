@@ -1,6 +1,7 @@
 
 exports.state = {
     language: null,
+    currency_id: 1,
     account_id: null,
     envelope_id: null,
     developmentDate: moment(),
@@ -10,6 +11,10 @@ exports.mutations = {
 
     SET_LANGUAGE(state, language) {
         state.language = language
+    },
+
+    SET_CURRENT_CURRENCY(state, currency_id) {
+        state.currency_id = currency_id
     },
 
     SET_CURRENT_ACCOUNT(state, account_id) {

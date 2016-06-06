@@ -7,6 +7,16 @@ exports.getCurrentLanguage = function (state) {
     return state.app.language
 }
 
+exports.getCurrentCurrency = function (state) {
+    var currencies = state.remote.currencies.filter(function (currency) {
+        return currency.id == state.app.currency_id
+    })
+    if (currencies.length === 0) {
+        return {}
+    }
+    return currencies[0]
+}
+
 exports.getCurrentAccount = function (state) {
     var accounts = state.remote.accounts.filter(function (account) {
         return account.id == state.app.account_id

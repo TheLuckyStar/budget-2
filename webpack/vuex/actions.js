@@ -16,6 +16,10 @@ exports.setLanguage = function ({ dispatch, state }, language) {
     document.title = state.lang[language].app.title
 }
 
+exports.setCurrentCurrency = function ({ dispatch, state }, currency_id) {
+    dispatch('SET_CURRENT_CURRENCY', currency_id)
+}
+
 exports.setCurrentAccount = function ({ dispatch, state }, account_id) {
     dispatch('SET_CURRENT_ACCOUNT', account_id)
     exports.refreshAccountDevelopment({ dispatch, state })

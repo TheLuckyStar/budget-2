@@ -8,6 +8,7 @@ exports.vuex = {
 
         actions: {
             setLanguage: actions.setLanguage,
+            setCurrentCurrency: actions.setCurrentCurrency,
             refreshCurrencies: actions.refreshCurrencies,
             refreshAccounts: actions.refreshAccounts,
             setCurrentAccount: actions.setCurrentAccount,
@@ -24,6 +25,7 @@ exports.vuex = {
             language: getters.getCurrentLanguage,
             availableLanguages: getters.getAvailableLanguages,
             text: getters.getText,
+            currentCurrency: getters.getCurrentCurrency,
             currencies: getters.getCurrencies,
             account: getters.getCurrentAccount,
             accounts: getters.getAllAccounts,
