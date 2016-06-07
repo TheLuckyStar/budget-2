@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call('AccountsTableSeeder');
         $this->call('CurrenciesTableSeeder');
+        $this->call('CurrencyRatesTableSeeder');
 
         Model::reguard();
     }

@@ -26,7 +26,9 @@ abstract class Container extends Model
     {
         $output = parent::toArray();
 
-        $output['balance'] = $this->balance;
+        $output['balance'] = Currency::all()->map(function ($currency) {
+            return $this->getBalanceAttribute($currency);
+        });
 
         return $output;
     }
@@ -35,7 +37,7 @@ abstract class Container extends Model
      * Calculate container balance for the given date
      * @return float Container balance
      */
-    abstract public function getBalanceAttribute($date = null);
+    abstract public function getBalanceAttribute(Currency $currency, $date = null);
 
     /**
      * Generate metric development for the given month

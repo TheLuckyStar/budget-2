@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Revenue extends Model
+class Revenue extends Operation
 {
     /**
      * The attributes that should be mutated to dates.

@@ -57,12 +57,12 @@ class Account extends Container
      * Calculate account balance at the given date
      * @return float Account balance
      */
-    public function getBalanceAttribute($date = null)
+    public function getBalanceAttribute(Currency $currency, $date = null)
     {
-        $revenues = $this->getRevenuesAttribute(null, $date);
-        $outcomes = $this->getOutcomesAttribute(null, $date);
-        $incomingTransfers = $this->getIncomingTransfersAttribute(null, $date);
-        $outgoingTransfers = $this->getOutgoingTransfersAttribute(null, $date);
+        $revenues = $this->getRevenuesAttribute($currency, null, $date);
+        $outcomes = $this->getOutcomesAttribute($currency, null, $date);
+        $incomingTransfers = $this->getIncomingTransfersAttribute($currency, null, $date);
+        $outgoingTransfers = $this->getOutgoingTransfersAttribute($currency, null, $date);
 
         return round($revenues + $incomingTransfers - $outcomes - $outgoingTransfers, 2);
     }
@@ -71,10 +71,9 @@ class Account extends Container
      * Calculate account revenues for the given period
      * @return float Account revenues
      */
-    public function getRevenuesAttribute($dateFrom = null, $dateTo = null)
+    public function getRevenuesAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->revenues()
-            ->select(app('db')->raw('SUM(amount) as total'));
+        $query = $this->revenues();
 
         if ($dateFrom && $dateTo) {
             $query->whereBetween('date', [$dateFrom, $dateTo]);
@@ -87,14 +86,14 @@ class Account extends Container
             });
         }
 
-        return floatval($query->get()[0]['total']);
+        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
     }
 
     /**
      * Calculate account outcomes for the given period
      * @return float Account outcomes
      */
-    public function getOutcomesAttribute($dateFrom = null, $dateTo = null)
+    public function getOutcomesAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
     {
         $query = $this->outcomes()
             ->select(app('db')->raw('SUM(amount) as total'));
@@ -114,7 +113,7 @@ class Account extends Container
      * Calculate account incoming tranfers for the given period
      * @return float Account incoming transfers
      */
-    public function getIncomingTransfersAttribute($dateFrom = null, $dateTo = null)
+    public function getIncomingTransfersAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
     {
         $query = $this->incomingTransfers()
             ->select(app('db')->raw('SUM(amount) as total'));
@@ -134,7 +133,7 @@ class Account extends Container
      * Calculate account outgoing tranfers for the given period
      * @return float Account outgoing transfers
      */
-    public function getOutgoingTransfersAttribute($dateFrom = null, $dateTo = null)
+    public function getOutgoingTransfersAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
     {
         $query = $this->outgoingTransfers()
             ->select(app('db')->raw('SUM(amount) as total'));
