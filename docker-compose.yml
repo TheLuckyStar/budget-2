@@ -1,8 +1,0 @@
-
-web:
-  image: nginx
-  ports:
-    - "80:80"
-  volumes:
-    - ./:/var/www
-    - ./vhost.conf:/etc/nginx/sites-enabled/vhost.conf
