@@ -1,0 +1,4 @@
+---
+
+- composer
+    working_dir: "playbook_dir"
