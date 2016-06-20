@@ -7,3 +7,15 @@
   - copy:
       src: "{{ playbook_dir }}/.env.example"
       dest: "{{ playbook_dir }}/.env"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_DATABASE="
+      line: "DB_DATABASE=scotchbox"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_USERNAME="
+      line: "DB_USERNAME=root"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_PASSWORD="
+      line: "DB_PASSWORD=root"
