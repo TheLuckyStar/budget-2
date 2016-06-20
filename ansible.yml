@@ -7,10 +7,6 @@
       value: false
       scope: local
       repo: "{{ playbook_dir }}"
-  - composer:
-      working_dir: "{{ playbook_dir }}"
-  - npm:
-      path: "{{ playbook_dir }}"
   - copy:
       src: "{{ playbook_dir }}/.env.example"
       dest: "{{ playbook_dir }}/.env"
@@ -26,3 +22,7 @@
       dest: "{{ playbook_dir }}/.env"
       regexp: "^DB_PASSWORD="
       line: "DB_PASSWORD=root"
+  - composer:
+      working_dir: "{{ playbook_dir }}"
+  - npm:
+      path: "{{ playbook_dir }}"
