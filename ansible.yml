@@ -1,7 +1,9 @@
 ---
 
-
 - hosts: all
   tasks:
   - composer:
       working_dir: "{{ playbook_dir }}"
+  - copy:
+      src: "{{ playbook_dir }}/.env.example"
+      dest: "{{ playbook_dir }}/.env"
