@@ -2,6 +2,11 @@
 
 - hosts: all
   tasks:
+  - git_config:
+      name: core.fileMode
+      value: false
+      scope: local
+      repo: "{{ playbook_dir }}"
   - composer:
       working_dir: "{{ playbook_dir }}"
   - npm:
