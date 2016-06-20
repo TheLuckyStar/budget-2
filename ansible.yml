@@ -4,4 +4,4 @@
 - hosts: localhost
   tasks:
   - composer:
-    working_dir: "{{ playbook_dir }}"
+      working_dir: "{{ playbook_dir }}"
