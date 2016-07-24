@@ -99,7 +99,7 @@ exports.getEnabledAccountsBalance = function (state) {
         balance += envelope.balance
     })
 
-    return balance
+    return balance.toFixed(2)
 }
 
 
@@ -135,5 +135,5 @@ exports.getEnabledEnvelopesBalance = function (state) {
         balance += envelope.balance
     })
 
-    return balance
+    return balance.toFixed(2)
 }

@@ -18,8 +18,10 @@ exports.setLanguage = function ({ dispatch, state }, language) {
 
 exports.setCurrentCurrency = function ({ dispatch, state }, currency_id) {
     dispatch('SET_CURRENT_CURRENCY', currency_id)
-    exports.refreshAccountDevelopment({ dispatch, state })
     exports.refreshAccounts({ dispatch, state })
+    exports.refreshAccountDevelopment({ dispatch, state })
+    exports.refreshEnvelopes({ dispatch, state })
+    exports.refreshEnvelopeDevelopment({ dispatch, state })
 }
 
 exports.setCurrentAccount = function ({ dispatch, state }, account_id) {

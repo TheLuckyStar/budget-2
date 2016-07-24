@@ -48996,8 +48996,10 @@
 
 	exports.setCurrentCurrency = function ({ dispatch, state }, currency_id) {
 	    dispatch('SET_CURRENT_CURRENCY', currency_id)
-	    exports.refreshAccountDevelopment({ dispatch, state })
 	    exports.refreshAccounts({ dispatch, state })
+	    exports.refreshAccountDevelopment({ dispatch, state })
+	    exports.refreshEnvelopes({ dispatch, state })
+	    exports.refreshEnvelopeDevelopment({ dispatch, state })
 	}
 
 	exports.setCurrentAccount = function ({ dispatch, state }, account_id) {
@@ -49244,7 +49246,7 @@
 	        balance += envelope.balance
 	    })
 
-	    return balance
+	    return balance.toFixed(2)
 	}
 
 
@@ -49280,7 +49282,7 @@
 	        balance += envelope.balance
 	    })
 
-	    return balance
+	    return balance.toFixed(2)
 	}
 
 
@@ -54107,12 +54109,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
+	__webpack_require__(356)
 	__vue_script__ = __webpack_require__(321)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/accounts/one.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(330)
+	__vue_template__ = __webpack_require__(358)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54445,12 +54448,7 @@
 	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-account-currency_id\" class=\"col-xs-3 control-label\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\">\n                <select type=\"text\" class=\"form-control\" id=\"input-account-currency_id\" v-model=\"currency_id\" lazy :disabled=\"id != null\">\n                    <option v-for=\"currency in currencies\" :value=\"currency.id\">\n                        {{ currency.name }}\n                    </option>\n                    <option :value=\"-1\">\n                        {{ text.currencies.form.add }}\n                    </option>\n                </select>\n                <span v-if=\"id != null && ! deleted_at\" class=\"help-block\">\n                    {{ text.accounts.form.currencyHelper }}\n                </span>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-offset-3 col-xs-9\">\n                <input v-if=\"currency_id == -1\" type=\"text\" class=\"form-control\" id=\"input-account-currency_name\" v-model=\"currency_name\" :placeholder=\"text.currencies.form.name\" lazy>\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
-/* 330 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-12\" v-if=\"account.currency_id != currentCurrency.id\">\n        <div class=\"alert alert-warning clearfix\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"balanceColor\"\n            :icon=\"balanceIcon\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
-
-/***/ },
+/* 330 */,
 /* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -55104,6 +55102,52 @@
 
 	// exports
 
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(357);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-36ef391c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./one.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-36ef391c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./one.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.alert-warning .btn[_v-36ef391c] {\n    margin-left: 15px;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 358 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div _v-36ef391c=\"\">\n\n    <h1 _v-36ef391c=\"\">\n        {{ account.name }}\n    </h1>\n\n    <hr _v-36ef391c=\"\">\n\n    <div class=\"col-md-12\" v-if=\"account.currency &amp;&amp; account.currency_id != currentCurrency.id\" _v-36ef391c=\"\">\n        <div class=\"alert alert-warning clearfix\" _v-36ef391c=\"\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\" _v-36ef391c=\"\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\" _v-36ef391c=\"\">\n        <layout-card :color=\"balanceColor\" :icon=\"balanceIcon\" :title=\"text.accounts.situation.title\" :text=\"account.balance\" :comment=\"$options.filters.formatLongDate(date)\" _v-36ef391c=\"\"></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" _v-36ef391c=\"\">\n        <accounts-form :account=\"account\" _v-36ef391c=\"\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\" _v-36ef391c=\"\">\n        <accounts-development :account=\"account\" _v-36ef391c=\"\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ }
 /******/ ]);

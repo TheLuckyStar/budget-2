@@ -41,8 +41,8 @@ class Envelopes extends Controller
         $envelope = Envelope::withTrashed()->findOrFail($id);
 
         return [
-            'monthly' => $envelope->getMonthlyDevelopmentAttribute($request->date),
-            'yearly' => $envelope->getYearlyDevelopmentAttribute($request->date),
+            'monthly' => $envelope->getMonthlyDevelopmentAttribute(null, $request->date),
+            'yearly' => $envelope->getYearlyDevelopmentAttribute(null, $request->date),
         ];
     }
 }

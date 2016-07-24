@@ -102,7 +102,7 @@ class Account extends Container
             });
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'];
+        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
     }
 
     /**
@@ -115,18 +115,15 @@ class Account extends Container
             ->select('outcomes.amount', 'accounts.currency_id')
             ->join('accounts', 'outcomes.account_id', '=', 'accounts.id');
 
-        if ($dateFrom && $dateTo) {
-            $query->whereBetween('date', [$dateFrom, $dateTo]);
-        } else if ($dateFrom) {
+        if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
-        } else if ($dateTo) {
-            $query->where(function ($query) use($dateTo) {
-                $query->where('date', '<=', $dateTo);
-                $query->orWhere('date', null);
-            });
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'];
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
+
+        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
     }
 
     /**
@@ -139,18 +136,15 @@ class Account extends Container
             ->select('transfers.amount', 'accounts.currency_id')
             ->join('accounts', 'transfers.from_account_id', '=', 'accounts.id');
 
-        if ($dateFrom && $dateTo) {
-            $query->whereBetween('date', [$dateFrom, $dateTo]);
-        } else if ($dateFrom) {
+        if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
-        } else if ($dateTo) {
-            $query->where(function ($query) use($dateTo) {
-                $query->where('date', '<=', $dateTo);
-                $query->orWhere('date', null);
-            });
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'];
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
+
+        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
     }
 
     /**
@@ -163,18 +157,15 @@ class Account extends Container
             ->select('transfers.amount', 'accounts.currency_id')
             ->join('accounts', 'transfers.from_account_id', '=', 'accounts.id');
 
-        if ($dateFrom && $dateTo) {
-            $query->whereBetween('date', [$dateFrom, $dateTo]);
-        } else if ($dateFrom) {
+        if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
-        } else if ($dateTo) {
-            $query->where(function ($query) use($dateTo) {
-                $query->where('date', '<=', $dateTo);
-                $query->orWhere('date', null);
-            });
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'];
+        if ($dateTo) {
+            $query->where('date', '<=', $dateTo);
+        }
+
+        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
     }
 
     /**

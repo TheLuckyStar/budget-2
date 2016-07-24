@@ -47,6 +47,14 @@ class Currency extends Model
     }
 
     /**
+     * Get the incomes for the currency.
+     */
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
+    }
+
+    /**
      * Get the rates for the currency.
      */
     public function rates()

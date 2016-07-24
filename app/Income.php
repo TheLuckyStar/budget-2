@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Income extends Model
+class Income extends Operation
 {
     /**
      * The attributes that should be mutated to dates.
@@ -19,5 +17,13 @@ class Income extends Model
     public function envelope()
     {
         return $this->belongsTo(Envelope::class);
+    }
+
+    /**
+     * Get the currency for the income.
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
     }
 }
