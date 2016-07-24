@@ -9,6 +9,19 @@
 
         <hr>
 
+        <div class="col-md-12" v-if="account.currency_id != currentCurrency.id">
+            <div class="alert alert-warning clearfix">
+                <a href="#" v-on:click.prevent="setCurrentCurrency(account.currency_id)" class="btn btn-default pull-right">
+                    {{{ text.accounts.page.currencyLink }}}
+                </a>
+                {{{
+                    text.accounts.page.currencyWarning
+                        .replace(':active', currentCurrency.name)
+                        .replace(':account', account.currency.name)
+                }}}
+            </div>
+        </div>
+
         <div class="col-md-6">
             <layout-card :color="balanceColor"
                 :icon="balanceIcon"

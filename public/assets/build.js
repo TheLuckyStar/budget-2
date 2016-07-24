@@ -53692,6 +53692,8 @@
 	        accounts: {
 	            page: {
 	                title: 'Accounts',
+	                currencyWarning: "The active currency (<b>:active</b>) is different from the account currency (<b>:account</b>). Amounts have been converted.",
+	                currencyLink: "Display account<br>in original currency",
 	            },
 	            enabled: {
 	                title: 'Enabled accounts',
@@ -53777,6 +53779,8 @@
 	        accounts: {
 	            page: {
 	                title: 'Comptes',
+	                currencyWarning: "La devise active (<b>:active</b>) ne correspond pas à la devise du compte (<b>:account</b>). Les montants ont été convertis.",
+	                currencyLink: "Afficher le compte <br>dans sa devise d'origine",
 	            },
 	            enabled: {
 	                title: 'Comptes activés',
@@ -54444,7 +54448,7 @@
 /* 330 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"balanceColor\"\n            :icon=\"balanceIcon\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ account.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-12\" v-if=\"account.currency_id != currentCurrency.id\">\n        <div class=\"alert alert-warning clearfix\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"balanceColor\"\n            :icon=\"balanceIcon\"\n            :title=\"text.accounts.situation.title\"\n            :text=\"account.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <accounts-form :account=\"account\"></accounts-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development :account=\"account\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 331 */

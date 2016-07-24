@@ -10,7 +10,9 @@ class Accounts extends Controller
 {
     public function index()
     {
-        return Account::withTrashed()->get();
+        return Account::withTrashed()
+            ->with('currency')
+            ->get();
     }
 
     public function store(Request $request)

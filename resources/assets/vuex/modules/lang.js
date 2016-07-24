@@ -21,6 +21,8 @@ exports.state = {
         accounts: {
             page: {
                 title: 'Accounts',
+                currencyWarning: "The active currency (<b>:active</b>) is different from the account currency (<b>:account</b>). Amounts have been converted.",
+                currencyLink: "Display account<br>in original currency",
             },
             enabled: {
                 title: 'Enabled accounts',
@@ -106,6 +108,8 @@ exports.state = {
         accounts: {
             page: {
                 title: 'Comptes',
+                currencyWarning: "La devise active (<b>:active</b>) ne correspond pas à la devise du compte (<b>:account</b>). Les montants ont été convertis.",
+                currencyLink: "Afficher le compte <br>dans sa devise d'origine",
             },
             enabled: {
                 title: 'Comptes activés',
