@@ -37471,7 +37471,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/layout/Card.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/layout/Card.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(209)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -37482,7 +37482,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-62d7eac8/Card.vue"
+	  var id = "_v-3206b660/Card.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -37506,8 +37506,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-62d7eac8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Card.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-62d7eac8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Card.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-3206b660&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Card.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-3206b660&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Card.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -37525,7 +37525,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.huge[_v-62d7eac8] {\n    font-size: 40px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.huge[_v-3206b660] {\n    font-size: 40px;\n}\n\n", ""]);
 
 	// exports
 
@@ -37769,7 +37769,7 @@
 /* 209 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-62d7eac8=\"\">\n\n    <legend _v-62d7eac8=\"\">\n        {{ title }}\n    </legend>\n\n    <div class=\"panel panel-{{ color }}\" _v-62d7eac8=\"\">\n\n        <div class=\"panel-heading\" _v-62d7eac8=\"\">\n\n            <div class=\"row\" _v-62d7eac8=\"\">\n\n                <div class=\"col-xs-3\" _v-62d7eac8=\"\">\n                    <i class=\"fa {{ icon }} fa-5x\" _v-62d7eac8=\"\"></i>\n                </div>\n\n                <div class=\"col-xs-9 text-right\" _v-62d7eac8=\"\">\n\n                    <div class=\"huge\" _v-62d7eac8=\"\">\n                        {{ text }}\n                    </div>\n\n                    <div _v-62d7eac8=\"\">\n                        {{ comment }}\n                    </div>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-3206b660=\"\">\n\n    <legend _v-3206b660=\"\">\n        {{ title }}\n    </legend>\n\n    <div class=\"panel panel-{{ color }}\" _v-3206b660=\"\">\n\n        <div class=\"panel-heading\" _v-3206b660=\"\">\n\n            <div class=\"row\" _v-3206b660=\"\">\n\n                <div class=\"col-xs-3\" _v-3206b660=\"\">\n                    <i class=\"fa {{ icon }} fa-5x\" _v-3206b660=\"\"></i>\n                </div>\n\n                <div class=\"col-xs-9 text-right\" _v-3206b660=\"\">\n\n                    <div class=\"huge\" _v-3206b660=\"\">\n                        {{ text }}\n                    </div>\n\n                    <div _v-3206b660=\"\">\n                        {{ comment }}\n                    </div>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 210 */
@@ -37780,7 +37780,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/layout/Chart.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/layout/Chart.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(289)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -37791,7 +37791,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-73692502/Chart.vue"
+	  var id = "_v-6813d14e/Chart.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -48781,7 +48781,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/layout/Navbar.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(297)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -48792,7 +48792,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-f56a82c8/Navbar.vue"
+	  var id = "_v-25f59bd0/Navbar.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -48816,8 +48816,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-f56a82c8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-f56a82c8&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-25f59bd0&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-25f59bd0&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Navbar.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -48835,7 +48835,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-f56a82c8] {\n    height: 40px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-f56a82c8] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-25f59bd0] {\n    height: 40px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-25f59bd0] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
 
 	// exports
 
@@ -49264,7 +49264,7 @@
 /* 297 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-f56a82c8=\"\">\n\n    <div class=\"container\" _v-f56a82c8=\"\">\n\n        <div class=\"navbar-header\" _v-f56a82c8=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-f56a82c8=\"\">\n                <span class=\"sr-only\" _v-f56a82c8=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n                <span class=\"icon-bar\" _v-f56a82c8=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-f56a82c8=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-f56a82c8=\"\">\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-f56a82c8=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-f56a82c8=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-f56a82c8=\"\">\n\n                <li v-for=\"currency in currencies\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-f56a82c8=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-f56a82c8=\"\">\n                        {{ currency.name | uppercase }}\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-f56a82c8=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-f56a82c8=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-f56a82c8=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-25f59bd0=\"\">\n\n    <div class=\"container\" _v-25f59bd0=\"\">\n\n        <div class=\"navbar-header\" _v-25f59bd0=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-25f59bd0=\"\">\n                <span class=\"sr-only\" _v-25f59bd0=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-25f59bd0=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-25f59bd0=\"\">\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-25f59bd0=\"\">\n\n                <li v-for=\"currency in currencies\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-25f59bd0=\"\">\n                        {{ currency.name | uppercase }}\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-25f59bd0=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-25f59bd0=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 298 */
@@ -49276,7 +49276,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/layout/Sidebar.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/layout/Sidebar.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(302)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -49287,7 +49287,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-d5b59300/Sidebar.vue"
+	  var id = "_v-09d5ffcc/Sidebar.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -49311,8 +49311,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-d5b59300&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Sidebar.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-d5b59300&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Sidebar.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-09d5ffcc&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Sidebar.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-09d5ffcc&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./Sidebar.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -49330,7 +49330,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.panel-heading.active[_v-d5b59300] {\n    color: #fff;\n    background-color: #158CBA;\n    border-color: #158CBA;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.panel-heading.active[_v-09d5ffcc] {\n    color: #fff;\n    background-color: #158CBA;\n    border-color: #158CBA;\n}\n\n", ""]);
 
 	// exports
 
@@ -49354,7 +49354,7 @@
 /* 302 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div _v-d5b59300=\"\">\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\" _v-d5b59300=\"\">\n\n        <div class=\"panel-heading\" v-link-active=\"\" _v-d5b59300=\"\">\n            <h3 class=\"panel-title\" _v-d5b59300=\"\">\n                <a v-if=\"entryGroup.route\" v-link=\"{ path: entryGroup.route, activeClass: 'active'&nbsp;}\" _v-d5b59300=\"\">\n                    {{ entryGroup.title }}\n                    <span class=\"badge badge-{{ entryGroup.badgeColor }} pull-right\" v-if=\"entryGroup.badge\" _v-d5b59300=\"\">\n                        {{ entryGroup.badge }}\n                    </span>\n                </a>\n                <template v-else=\"\">\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\" _v-d5b59300=\"\">\n            <a v-for=\"entry in entryGroup.entries\" v-link=\"{ path: entry.route, activeClass: 'active'&nbsp;}\" class=\"list-group-item\" _v-d5b59300=\"\">\n                {{{ entry.title&nbsp;}}}\n                <span class=\"badge badge-{{ entry.badgeColor }} pull-right\" v-if=\"entry.badge\" _v-d5b59300=\"\">\n                    {{ entry.badge }}\n                </span>\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div _v-09d5ffcc=\"\">\n\n    <div v-for=\"entryGroup in entries\" class=\"panel panel-default\" _v-09d5ffcc=\"\">\n\n        <div class=\"panel-heading\" v-link-active=\"\" _v-09d5ffcc=\"\">\n            <h3 class=\"panel-title\" _v-09d5ffcc=\"\">\n                <a v-if=\"entryGroup.route\" v-link=\"{ path: entryGroup.route, activeClass: 'active'&nbsp;}\" _v-09d5ffcc=\"\">\n                    {{ entryGroup.title }}\n                    <span class=\"badge badge-{{ entryGroup.badgeColor }} pull-right\" v-if=\"entryGroup.badge\" _v-09d5ffcc=\"\">\n                        {{ entryGroup.badge }}\n                    </span>\n                </a>\n                <template v-else=\"\">\n                    {{ entryGroup.title }}\n                </template>\n            </h3>\n        </div>\n\n        <div class=\"list-group\" _v-09d5ffcc=\"\">\n            <a v-for=\"entry in entryGroup.entries\" v-link=\"{ path: entry.route, activeClass: 'active'&nbsp;}\" class=\"list-group-item\" _v-09d5ffcc=\"\">\n                {{{ entry.title&nbsp;}}}\n                <span class=\"badge badge-{{ entry.badgeColor }} pull-right\" v-if=\"entry.badge\" _v-09d5ffcc=\"\">\n                    {{ entry.badge }}\n                </span>\n            </a>\n        </div>\n\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 303 */
@@ -53535,7 +53535,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/App.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/App.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(313)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -53546,7 +53546,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-18c0f6a8/App.vue"
+	  var id = "_v-759df648/App.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -53897,7 +53897,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/index.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/index.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(316)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -53908,7 +53908,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-1ea27192/index.vue"
+	  var id = "_v-d9598a44/index.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54010,7 +54010,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/all.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/all.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(319)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54021,7 +54021,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-083f6ce1/all.vue"
+	  var id = "_v-062bcda6/all.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54078,7 +54078,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/one.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/one.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(330)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54089,7 +54089,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-204491b4/one.vue"
+	  var id = "_v-36ef391c/one.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54180,7 +54180,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/development.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/development.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(326)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54191,7 +54191,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-11308b7b/development.vue"
+	  var id = "_v-8a7fa872/development.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54215,8 +54215,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-11308b7b&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-11308b7b&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -54234,7 +54234,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-11308b7b] {\n    padding: 20px;\n}\n\n.btn-link[_v-11308b7b] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-11308b7b] {\n    visibility: visible;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-8a7fa872] {\n    padding: 20px;\n}\n\n.btn-link[_v-8a7fa872] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-8a7fa872] {\n    visibility: visible;\n}\n\n", ""]);
 
 	// exports
 
@@ -54304,7 +54304,7 @@
 /* 326 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-11308b7b=\"\">\n\n    <legend _v-11308b7b=\"\">\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-11308b7b=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-11308b7b=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-11308b7b=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-11308b7b=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-11308b7b=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-11308b7b=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-11308b7b=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-11308b7b=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-11308b7b=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-11308b7b=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-11308b7b=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.accounts.development.labels\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-11308b7b=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.accounts.development.labels\" _v-11308b7b=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-8a7fa872=\"\">\n\n    <legend _v-8a7fa872=\"\">\n        {{ text.accounts.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-8a7fa872=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-8a7fa872=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-8a7fa872=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-8a7fa872=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-8a7fa872=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-8a7fa872=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-8a7fa872=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-8a7fa872=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-8a7fa872=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-8a7fa872=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-8a7fa872=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-8a7fa872=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-8a7fa872=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.accounts.development.labels\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-8a7fa872=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.accounts.development.labels\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 327 */
@@ -54315,7 +54315,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/form.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/form.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(329)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54326,7 +54326,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-994a2d98/form.vue"
+	  var id = "_v-5405c668/form.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54426,7 +54426,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/accounts/new.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/accounts/new.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(333)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54437,7 +54437,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-a6ccf540/new.vue"
+	  var id = "_v-bd779ca8/new.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54488,7 +54488,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/index.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/index.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(336)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54499,7 +54499,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-2b17ee0d/index.vue"
+	  var id = "_v-4c804e41/index.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54599,7 +54599,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/all.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/all.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(339)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54610,7 +54610,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-d16067c8/all.vue"
+	  var id = "_v-37faa950/all.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54668,7 +54668,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(350)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54679,7 +54679,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-7eee1661/one.vue"
+	  var id = "_v-1f98f395/one.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54742,7 +54742,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(346)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54753,7 +54753,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-21377fb6/development.vue"
+	  var id = "_v-acc82e2c/development.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54777,8 +54777,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-21377fb6&scoped=true!./../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -54796,7 +54796,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-21377fb6] {\n    padding: 20px;\n}\n\n.btn-link[_v-21377fb6] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-21377fb6] {\n    visibility: visible;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-acc82e2c] {\n    padding: 20px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-acc82e2c] {\n    visibility: visible;\n}\n\n", ""]);
 
 	// exports
 
@@ -54860,7 +54860,7 @@
 /* 346 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-21377fb6=\"\">\n\n    <legend _v-21377fb6=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-21377fb6=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-21377fb6=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-21377fb6=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-21377fb6=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-21377fb6=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-21377fb6=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-21377fb6=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-21377fb6=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-21377fb6=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-21377fb6=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 347 */
@@ -54871,7 +54871,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(349)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54882,7 +54882,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-06567159/form.vue"
+	  var id = "_v-7b073aa5/form.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54979,7 +54979,7 @@
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] webpack/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(353)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54990,7 +54990,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-3ba9e49b/new.vue"
+	  var id = "_v-47567c62/new.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -55048,8 +55048,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./bootstrap.less", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/less-loader/index.js!./bootstrap.less");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./bootstrap.less", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/less-loader/index.js!./bootstrap.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
