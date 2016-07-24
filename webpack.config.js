@@ -6,7 +6,7 @@ module.exports = {
 
     resolve: {
         root: [
-            path.join(__dirname, 'webpack'),
+            path.join(__dirname, 'resources', 'assets'),
         ],
     },
 

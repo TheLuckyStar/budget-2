@@ -1,0 +1,28 @@
+---
+
+- hosts: all
+  tasks:
+  - git_config:
+      name: core.fileMode
+      value: false
+      scope: local
+      repo: "{{ playbook_dir }}"
+  - copy:
+      src: "{{ playbook_dir }}/.env.example"
+      dest: "{{ playbook_dir }}/.env"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_DATABASE="
+      line: "DB_DATABASE=scotchbox"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_USERNAME="
+      line: "DB_USERNAME=root"
+  - lineinfile:
+      dest: "{{ playbook_dir }}/.env"
+      regexp: "^DB_PASSWORD="
+      line: "DB_PASSWORD=root"
+  - composer:
+      working_dir: "{{ playbook_dir }}"
+  - npm:
+      path: "{{ playbook_dir }}"

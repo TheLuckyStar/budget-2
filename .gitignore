@@ -2,3 +2,5 @@
 .env
 node_modules
 /storage/database.sql
+/ansible.retry
+/.vagrant
