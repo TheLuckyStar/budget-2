@@ -13,7 +13,8 @@ abstract class Operation extends Model
         }
 
         $currencyRate = CurrencyRate::select('rate')
-            ->where('currency_id', app('db')->raw($currency->id))
+            ->where('from_currency_id', app('db')->raw('currency_id'))
+            ->where('to_currency_id', app('db')->raw($currency->id))
             ->where(function ($query) {
                 $query->where(
                     'currency_rates.date',
@@ -38,7 +39,8 @@ abstract class Operation extends Model
         }
 
         $currencyRate = CurrencyRate::select('rate')
-            ->where('currency_id', app('db')->raw($currency->id))
+            ->where('from_currency_id', app('db')->raw('currency_id'))
+            ->where('to_currency_id', app('db')->raw($currency->id))
             ->where(function ($query) {
                 $query->where(
                     'currency_rates.date',

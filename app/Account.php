@@ -59,6 +59,20 @@ class Account extends Container
      */
     public function getBalanceAttribute(Currency $currency = null, $date = null)
     {
+        if (is_null($currency)) {
+            $currency = Currency::findOrFail(session('currency_id'));
+        }
+
+        if ($currency !== $this->currency) {
+            $balance = $this->getBalanceAttribute($this->currency, $date);
+            $rate = CurrencyRate::where('from_currency_id', $this->currency_id)
+                ->where('to_currency_id', $currency->id)
+                ->where('currency_rates.date', '<=', Carbon::startOfDay($date))
+                ->orderBy('currency_rates.date', 'desc')
+                ->first();
+            return round($balance * ($rate ? $rate->rate : 1), 2);
+        }
+// 14461.91
         $revenues = $this->getRevenuesAttribute($currency, null, $date);
         $outcomes = $this->getOutcomesAttribute($currency, null, $date);
         $incomingTransfers = $this->getIncomingTransfersAttribute($currency, null, $date);
@@ -73,7 +87,9 @@ class Account extends Container
      */
     public function getRevenuesAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->revenues();
+        $query = $this->revenues()
+            ->select('revenues.amount', 'accounts.currency_id')
+            ->join('accounts', 'revenues.account_id', '=', 'accounts.id');
 
         if ($dateFrom && $dateTo) {
             $query->whereBetween('date', [$dateFrom, $dateTo]);
@@ -86,7 +102,7 @@ class Account extends Container
             });
         }
 
-        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
+        return $query->sumConvertedTo($currency)->first()['converted_total'];
     }
 
     /**
@@ -95,7 +111,9 @@ class Account extends Container
      */
     public function getOutcomesAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->outcomes();
+        $query = $this->outcomes()
+            ->select('outcomes.amount', 'accounts.currency_id')
+            ->join('accounts', 'outcomes.account_id', '=', 'accounts.id');
 
         if ($dateFrom && $dateTo) {
             $query->whereBetween('date', [$dateFrom, $dateTo]);
@@ -108,7 +126,7 @@ class Account extends Container
             });
         }
 
-        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
+        return $query->sumConvertedTo($currency)->first()['converted_total'];
     }
 
     /**
@@ -117,7 +135,9 @@ class Account extends Container
      */
     public function getIncomingTransfersAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->incomingTransfers();
+        $query = $this->incomingTransfers()
+            ->select('transfers.amount', 'accounts.currency_id')
+            ->join('accounts', 'transfers.from_account_id', '=', 'accounts.id');
 
         if ($dateFrom && $dateTo) {
             $query->whereBetween('date', [$dateFrom, $dateTo]);
@@ -130,7 +150,7 @@ class Account extends Container
             });
         }
 
-        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
+        return $query->sumConvertedTo($currency)->first()['converted_total'];
     }
 
     /**
@@ -139,7 +159,9 @@ class Account extends Container
      */
     public function getOutgoingTransfersAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->outgoingTransfers();
+        $query = $this->outgoingTransfers()
+            ->select('transfers.amount', 'accounts.currency_id')
+            ->join('accounts', 'transfers.from_account_id', '=', 'accounts.id');
 
         if ($dateFrom && $dateTo) {
             $query->whereBetween('date', [$dateFrom, $dateTo]);
@@ -152,7 +174,7 @@ class Account extends Container
             });
         }
 
-        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
+        return $query->sumConvertedTo($currency)->first()['converted_total'];
     }
 
     /**
