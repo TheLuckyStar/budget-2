@@ -26,9 +26,7 @@ abstract class Container extends Model
     {
         $output = parent::toArray();
 
-        $output['balance'] = Currency::all()->map(function ($currency) {
-            return $this->getBalanceAttribute($currency);
-        });
+        $output['balance'] = $this->getBalanceAttribute();
 
         return $output;
     }
@@ -37,13 +35,13 @@ abstract class Container extends Model
      * Calculate container balance for the given date
      * @return float Container balance
      */
-    abstract public function getBalanceAttribute(Currency $currency, $date = null);
+    abstract public function getBalanceAttribute(Currency $currency = null, $date = null);
 
     /**
      * Generate metric development for the given month
      * @return array List of snapshots
      */
-    public function getMonthlyDevelopmentAttribute($date = null)
+    public function getMonthlyDevelopmentAttribute(Currency $currency = null, $date = null)
     {
         $output = [];
 
@@ -51,7 +49,7 @@ abstract class Container extends Model
         $end = Carbon::endOfMonth($date);
 
         while ($start->lte($end)) {
-            foreach ($this->getDailySnapshotAttribute($start) as $key => $val) {
+            foreach ($this->getDailySnapshotAttribute($currency, $start) as $key => $val) {
                 $output[$key][] = $val;
             }
             $start->addDay(1);
@@ -64,7 +62,7 @@ abstract class Container extends Model
      * Generate metric development for the given year
      * @return array List of snapshots
      */
-    public function getYearlyDevelopmentAttribute($date = null)
+    public function getYearlyDevelopmentAttribute(Currency $currency = null, $date = null)
     {
         $output = [];
 
@@ -72,7 +70,7 @@ abstract class Container extends Model
         $end = Carbon::endOfYear($date);
 
         while ($start->lte($end)) {
-            foreach ($this->getMonthlySnapshotAttribute($start) as $key => $val) {
+            foreach ($this->getMonthlySnapshotAttribute($currency, $start) as $key => $val) {
                 $output[$key][] = $val;
             }
             $start->addMonth(1);
@@ -85,11 +83,11 @@ abstract class Container extends Model
      * Calculate container main metrics for the given day
      * @return array Container metrics
      */
-    abstract public function getDailySnapshotAttribute($date = null);
+    abstract public function getDailySnapshotAttribute(Currency $currency = null, $date = null);
 
     /**
      * Calculate container main metrics for the given month
      * @return array Container metrics
      */
-    abstract public function getMonthlySnapshotAttribute($date = null);
+    abstract public function getMonthlySnapshotAttribute(Currency $currency = null, $date = null);
 }

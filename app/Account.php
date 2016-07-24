@@ -57,7 +57,7 @@ class Account extends Container
      * Calculate account balance at the given date
      * @return float Account balance
      */
-    public function getBalanceAttribute(Currency $currency, $date = null)
+    public function getBalanceAttribute(Currency $currency = null, $date = null)
     {
         $revenues = $this->getRevenuesAttribute($currency, null, $date);
         $outcomes = $this->getOutcomesAttribute($currency, null, $date);
@@ -71,7 +71,7 @@ class Account extends Container
      * Calculate account revenues for the given period
      * @return float Account revenues
      */
-    public function getRevenuesAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
+    public function getRevenuesAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
         $query = $this->revenues();
 
@@ -93,76 +93,82 @@ class Account extends Container
      * Calculate account outcomes for the given period
      * @return float Account outcomes
      */
-    public function getOutcomesAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
+    public function getOutcomesAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->outcomes()
-            ->select(app('db')->raw('SUM(amount) as total'));
+        $query = $this->outcomes();
 
-        if ($dateFrom) {
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('date', [$dateFrom, $dateTo]);
+        } else if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
+        } else if ($dateTo) {
+            $query->where(function ($query) use($dateTo) {
+                $query->where('date', '<=', $dateTo);
+                $query->orWhere('date', null);
+            });
         }
 
-        if ($dateTo) {
-            $query->where('date', '<=', $dateTo);
-        }
-
-        return floatval($query->get()[0]['total']);
+        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
     }
 
     /**
      * Calculate account incoming tranfers for the given period
      * @return float Account incoming transfers
      */
-    public function getIncomingTransfersAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
+    public function getIncomingTransfersAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->incomingTransfers()
-            ->select(app('db')->raw('SUM(amount) as total'));
+        $query = $this->incomingTransfers();
 
-        if ($dateFrom) {
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('date', [$dateFrom, $dateTo]);
+        } else if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
+        } else if ($dateTo) {
+            $query->where(function ($query) use($dateTo) {
+                $query->where('date', '<=', $dateTo);
+                $query->orWhere('date', null);
+            });
         }
 
-        if ($dateTo) {
-            $query->where('date', '<=', $dateTo);
-        }
-
-        return floatval($query->get()[0]['total']);
+        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
     }
 
     /**
      * Calculate account outgoing tranfers for the given period
      * @return float Account outgoing transfers
      */
-    public function getOutgoingTransfersAttribute(Currency $currency, $dateFrom = null, $dateTo = null)
+    public function getOutgoingTransfersAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
-        $query = $this->outgoingTransfers()
-            ->select(app('db')->raw('SUM(amount) as total'));
+        $query = $this->outgoingTransfers();
 
-        if ($dateFrom) {
+        if ($dateFrom && $dateTo) {
+            $query->whereBetween('date', [$dateFrom, $dateTo]);
+        } else if ($dateFrom) {
             $query->where('date', '>=', $dateFrom);
+        } else if ($dateTo) {
+            $query->where(function ($query) use($dateTo) {
+                $query->where('date', '<=', $dateTo);
+                $query->orWhere('date', null);
+            });
         }
 
-        if ($dateTo) {
-            $query->where('date', '<=', $dateTo);
-        }
-
-        return floatval($query->get()[0]['total']);
+        return $query->sumConvertedTo($currency)->get()[0]['converted_total'];
     }
 
     /**
      * Calculate main account metrics for the given day
      * @return array Account metrics
      */
-    public function getDailySnapshotAttribute($date = null)
+    public function getDailySnapshotAttribute(Currency $currency = null, $date = null)
     {
         $date = Carbon::startOfDay($date);
 
         return [
-            'balance' => $this->getBalanceAttribute($date),
-            'revenues' => $this->getRevenuesAttribute($date, $date),
-            'outcomes' => $this->getOutcomesAttribute($date, $date),
-            'incomingTransfers' => $this->getIncomingTransfersAttribute($date, $date),
-            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($date, $date),
+            'balance' => $this->getBalanceAttribute($currency, $date),
+            'revenues' => $this->getRevenuesAttribute($currency, $date, $date),
+            'outcomes' => $this->getOutcomesAttribute($currency, $date, $date),
+            'incomingTransfers' => $this->getIncomingTransfersAttribute($currency, $date, $date),
+            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($currency, $date, $date),
         ];
     }
 
@@ -170,17 +176,17 @@ class Account extends Container
      * Calculate account main metrics for the given month
      * @return array Account metrics
      */
-    public function getMonthlySnapshotAttribute($date = null)
+    public function getMonthlySnapshotAttribute(Currency $currency = null, $date = null)
     {
         $dateFrom = Carbon::startOfMonth($date);
         $dateTo = Carbon::endOfMonth($date);
 
         return [
-            'balance' => $this->getBalanceAttribute($dateTo),
-            'revenues' => $this->getRevenuesAttribute($dateFrom, $dateTo),
-            'outcomes' => $this->getOutcomesAttribute($dateFrom, $dateTo),
-            'incomingTransfers' => $this->getIncomingTransfersAttribute($dateFrom, $dateTo),
-            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($dateFrom, $dateTo),
+            'balance' => $this->getBalanceAttribute($currency, $dateTo),
+            'revenues' => $this->getRevenuesAttribute($currency, $dateFrom, $dateTo),
+            'outcomes' => $this->getOutcomesAttribute($currency, $dateFrom, $dateTo),
+            'incomingTransfers' => $this->getIncomingTransfersAttribute($currency, $dateFrom, $dateTo),
+            'outgoingTransfers' => $this->getOutgoingTransfersAttribute($currency, $dateFrom, $dateTo),
         ];
     }
 }

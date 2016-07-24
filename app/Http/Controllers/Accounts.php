@@ -48,8 +48,8 @@ class Accounts extends Controller
         $account = Account::withTrashed()->findOrFail($id);
 
         return [
-            'monthly' => $account->getMonthlyDevelopmentAttribute($request->date),
-            'yearly' => $account->getYearlyDevelopmentAttribute($request->date),
+            'monthly' => $account->getMonthlyDevelopmentAttribute(null, $request->date),
+            'yearly' => $account->getYearlyDevelopmentAttribute(null, $request->date),
         ];
     }
 }

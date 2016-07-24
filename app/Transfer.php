@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Transfer extends Model
+class Transfer extends Operation
 {
     /**
      * The attributes that should be mutated to dates.

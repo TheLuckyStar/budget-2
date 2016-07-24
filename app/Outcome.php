@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Outcome extends Model
+class Outcome extends Operation
 {
     /**
      * The attributes that should be mutated to dates.

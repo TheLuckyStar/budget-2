@@ -2,38 +2,56 @@
 
 namespace App;
 
-use App\Factories\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 abstract class Operation extends Model
 {
-    public function scopeConvertedTo($query, Currency $currency)
+    public function scopeConvertedTo($query, Currency $currency = null)
     {
+        if (is_null($currency)) {
+            $currency = Currency::findOrFail(session('currency_id'));
+        }
+
         $currencyRate = CurrencyRate::select('rate')
             ->where('currency_id', app('db')->raw($currency->id))
-            ->where('currency_rates.date', '>=', app('db')->raw('DATE_FORMAT(revenues.date, "%Y-%m-01")'))
-            ->orWhereNull('revenues.date')
+            ->where(function ($query) {
+                $query->where(
+                    'currency_rates.date',
+                    '>=',
+                    app('db')->raw('DATE_FORMAT('.$this->getTable().'.date, "%Y-%m-01")')
+                )
+                ->orWhereNull($this->getTable().'.date');
+            })
             ->orderBy('currency_rates.date')
             ->limit(1)
             ->toSql();
 
-        $select = app('db')->raw('amount * ('.$currencyRate.') AS converted_amount');
+        $select = app('db')->raw('amount * COALESCE(('.$currencyRate.'), 1) AS converted_amount');
 
         return $query->addSelect($select);
     }
 
-    public function scopeSumConvertedTo($query, Currency $currency)
+    public function scopeSumConvertedTo($query, Currency $currency = null)
     {
+        if (is_null($currency)) {
+            $currency = Currency::findOrFail(session('currency_id'));
+        }
+
         $currencyRate = CurrencyRate::select('rate')
             ->where('currency_id', app('db')->raw($currency->id))
-            ->where('currency_rates.date', '>=', app('db')->raw('DATE_FORMAT(revenues.date, "%Y-%m-01")'))
-            ->orWhereNull('revenues.date')
+            ->where(function ($query) {
+                $query->where(
+                    'currency_rates.date',
+                    '>=',
+                    app('db')->raw('DATE_FORMAT('.$this->getTable().'.date, "%Y-%m-01")')
+                )
+                ->orWhereNull($this->getTable().'.date');
+            })
             ->orderBy('currency_rates.date')
             ->limit(1)
             ->toSql();
 
-        $select = app('db')->raw('SUM(amount * ('.$currencyRate.')) AS converted_total');
+        $select = app('db')->raw('SUM(amount * COALESCE(('.$currencyRate.'), 1)) AS converted_total');
 
         return $query->addSelect($select);
     }

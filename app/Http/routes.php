@@ -15,14 +15,18 @@ $app->get('/', function () use ($app) {
     return view('home');
 });
 
-$app->get('currencies', 'Currencies@index');
+$app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function ($app) {
 
-$app->get('accounts', 'Accounts@index');
-$app->post('accounts', 'Accounts@store');
-$app->put('accounts/{id}', 'Accounts@update');
-$app->get('accounts/development/{id}', 'Accounts@development');
+    $app->get('currencies', 'Currencies@index');
 
-$app->get('envelopes', 'Envelopes@index');
-$app->post('envelopes', 'Envelopes@store');
-$app->put('envelopes/{id}', 'Envelopes@update');
-$app->get('envelopes/development/{id}', 'Envelopes@development');
+    $app->get('accounts', 'Accounts@index');
+    $app->post('accounts', 'Accounts@store');
+    $app->put('accounts/{id}', 'Accounts@update');
+    $app->get('accounts/development/{id}', 'Accounts@development');
+
+    $app->get('envelopes', 'Envelopes@index');
+    $app->post('envelopes', 'Envelopes@store');
+    $app->put('envelopes/{id}', 'Envelopes@update');
+    $app->get('envelopes/development/{id}', 'Envelopes@development');
+
+});
