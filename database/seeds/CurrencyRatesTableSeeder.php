@@ -9,6 +9,7 @@ class CurrencyRatesTableSeeder extends Seeder
 
     /**
      * List of rates indexed by date
+     * Source : http://www.xe.com/currencytables/?from=EUR
      * @var array
      */
     private $ratesByDate = [
