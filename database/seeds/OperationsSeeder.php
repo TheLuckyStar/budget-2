@@ -26,7 +26,7 @@ class OperationsSeeder extends Seeder
             'envelope_id' => 1,
             'name' => 'Loyer aout',
             'amount' => '7000',
-            'date' => '2016-07-28',
+            'date' => '2016-08-01',
         ]);
 
         Outcome::create([

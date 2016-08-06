@@ -163,7 +163,7 @@ exports.getEnabledEnvelopesRelativeSavings = function (state) {
         return 0
     }
 
-    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+    return Math.floor((incomes - outcomes) * 100 / incomes)
 }
 
 exports.getCurrentEnvelopeSavings = function (state) {
@@ -193,6 +193,6 @@ exports.getCurrentEnvelopeRelativeSavings = function (state) {
         return 0
     }
 
-    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+    return Math.floor((incomes - outcomes) * 100 / incomes)
 }
 
