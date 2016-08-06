@@ -18,12 +18,12 @@ abstract class Operation extends Model
             ->where(function ($query) {
                 $query->where(
                     'currency_rates.date',
-                    '>=',
+                    '<=',
                     app('db')->raw('DATE_FORMAT('.$this->getTable().'.date, "%Y-%m-01")')
                 )
                 ->orWhereNull($this->getTable().'.date');
             })
-            ->orderBy('currency_rates.date')
+            ->orderBy('currency_rates.date', 'DESC')
             ->limit(1)
             ->toSql();
 
@@ -44,12 +44,12 @@ abstract class Operation extends Model
             ->where(function ($query) {
                 $query->where(
                     'currency_rates.date',
-                    '>=',
+                    '<=',
                     app('db')->raw('DATE_FORMAT('.$this->getTable().'.date, "%Y-%m-01")')
                 )
                 ->orWhereNull($this->getTable().'.date');
             })
-            ->orderBy('currency_rates.date')
+            ->orderBy('currency_rates.date', 'DESC')
             ->limit(1)
             ->toSql();
 
