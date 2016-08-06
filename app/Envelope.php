@@ -118,8 +118,8 @@ class Envelope extends Container
     public function getSavingsAttribute(Currency $currency = null, $date = null)
     {
         $date = Carbon::startOfMonth($date);
-        $incomes = $this->getIncomesAttribute(null, $date);
-        $outcomes = $this->getOutcomesAttribute(null, $date);
+        $incomes = $this->getIncomesAttribute($currency, $date);
+        $outcomes = $this->getOutcomesAttribute($currency, $date);
 
         return $incomes - $outcomes;
     }
@@ -131,8 +131,8 @@ class Envelope extends Container
     public function getRelativeSavingsAttribute(Currency $currency = null, $date = null)
     {
         $date = Carbon::startOfMonth($date);
-        $incomes = $this->getIncomesAttribute(null, $date);
-        $outcomes = $this->getOutcomesAttribute(null, $date);
+        $incomes = $this->getIncomesAttribute($currency, $date);
+        $outcomes = $this->getOutcomesAttribute($currency, $date);
 
         if ($incomes == 0) {
             return 0;
