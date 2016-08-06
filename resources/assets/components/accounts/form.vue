@@ -54,7 +54,7 @@
                     <button v-if="! deleted_at && id"
                         @click="onDisable"
                         type="button"
-                        class="btn btn-warning btn-sm">
+                        class="btn btn-warning btn-sm pull-left">
                         {{ text.app.disable }}
                     </button>
                     <button v-if="! deleted_at"
@@ -104,11 +104,14 @@
         methods: {
 
             onSubmit: function () {
+                jQuery('#account-form').modal('hide')
+
                 var attributes = {
                     name: this.name,
                     currency_id: this.currency_id != -1 ? this.currency_id : null,
                     currency_name: this.currency_name,
                 }
+
                 if (this.account.id) {
                     this.updateAccount(this.account.id, attributes)
                 } else {
@@ -117,16 +120,22 @@
             },
 
             onEnable: function () {
+                jQuery('#account-form').modal('hide')
+
                 var attributes = {
                     deleted_at: null
                 }
+
                 this.updateAccount(this.account.id, attributes)
             },
 
             onDisable: function () {
+                jQuery('#account-form').modal('hide')
+
                 var attributes = {
                     deleted_at: moment().format("YYYY-MM-DD HH:mm:ss"),
                 }
+
                 this.updateAccount(this.account.id, attributes)
             },
 
@@ -135,3 +144,13 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .modal-body legend {
+        display: none;
+    }
+
+</style>

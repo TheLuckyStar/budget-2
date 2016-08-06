@@ -38,7 +38,7 @@
                     <button v-if="! deleted_at && id"
                         @click="onDisable"
                         type="button"
-                        class="btn btn-warning btn-sm">
+                        class="btn btn-warning btn-sm pull-left">
                         {{ text.app.disable }}
                     </button>
                     <button v-if="! deleted_at"

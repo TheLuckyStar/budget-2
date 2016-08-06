@@ -39,7 +39,7 @@ class Accounts extends Controller
         ]);
 
         $account = Account::withTrashed()->findOrFail($id);
-        $account->fill($request->only('name'));
+        $account->fill($request->all());
         $account->save();
 
         return $account;

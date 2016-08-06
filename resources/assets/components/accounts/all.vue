@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <layout-card :color="enabledAccountsBalance < 0 ? 'danger' : 'success'"
                 :icon="enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
-                :title="text.accounts.situation.title"
+                :title="text.accounts.balance.title"
                 :text="enabledAccountsBalance"
                 :comment="$options.filters.formatLongDate(date)"
             ></layout-card>
