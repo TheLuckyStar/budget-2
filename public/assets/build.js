@@ -54824,7 +54824,7 @@
 /* 344 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.savings\"\n            :comment=\"envelope.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.savings\"\n            :comment=\"envelope.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 345 */
@@ -54887,12 +54887,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
+	__webpack_require__(358)
 	__vue_script__ = __webpack_require__(348)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(349)
+	__vue_template__ = __webpack_require__(360)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54914,7 +54915,7 @@
 /* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(moment) {"use strict";
+	/* WEBPACK VAR INJECTION */(function(jQuery, moment) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -54948,10 +54949,13 @@
 	    methods: {
 
 	        onSubmit: function onSubmit() {
+	            jQuery('#envelope-form').modal('hide');
+
 	            var attributes = {
 	                name: this.name,
 	                icon: this.icon
 	            };
+
 	            if (this.envelope.id) {
 	                this.updateEnvelope(this.envelope.id, attributes);
 	            } else {
@@ -54960,31 +54964,32 @@
 	        },
 
 	        onEnable: function onEnable() {
+	            jQuery('#envelope-form').modal('hide');
+
 	            var attributes = {
 	                deleted_at: null
 	            };
+
 	            this.updateEnvelope(this.envelope.id, attributes);
 	        },
 
 	        onDisable: function onDisable() {
+	            jQuery('#envelope-form').modal('hide');
+
 	            var attributes = {
 	                deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
 	            };
+
 	            this.updateEnvelope(this.envelope.id, attributes);
 	        }
 
 	    }
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73), __webpack_require__(98)))
 
 /***/ },
-/* 349 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\">\n\n    <fieldset>\n\n        <legend>\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy :disabled=\"deleted_at\">\n            </div>\n        </div>\n\n        <div class=\"form-group\">\n            <div class=\"col-xs-12 text-right\">\n                <button v-if=\"deleted_at && id\"\n                    @click=\"onEnable\"\n                    type=\"button\"\n                    class=\"btn btn-success btn-sm\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at && id\"\n                    @click=\"onDisable\"\n                    type=\"button\"\n                    class=\"btn btn-warning btn-sm\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\"\n                    type=\"submit\"\n                    class=\"btn btn-primary btn-sm\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
-
-/***/ },
+/* 349 */,
 /* 350 */
 /***/ function(module, exports) {
 
@@ -55159,6 +55164,52 @@
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(359);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal-body legend[_v-7b073aa5] {\n    display: none;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 360 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-7b073aa5=\"\">\n\n    <fieldset _v-7b073aa5=\"\">\n\n        <legend _v-7b073aa5=\"\">\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <div class=\"col-xs-12 text-right\" _v-7b073aa5=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ }
 /******/ ]);

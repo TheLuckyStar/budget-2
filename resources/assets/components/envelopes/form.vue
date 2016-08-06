@@ -86,10 +86,13 @@
         methods: {
 
             onSubmit: function () {
+                jQuery('#envelope-form').modal('hide')
+
                 var attributes = {
                     name: this.name,
                     icon: this.icon,
                 }
+
                 if (this.envelope.id) {
                     this.updateEnvelope(this.envelope.id, attributes)
                 } else {
@@ -98,16 +101,22 @@
             },
 
             onEnable: function () {
+                jQuery('#envelope-form').modal('hide')
+
                 var attributes = {
                     deleted_at: null
                 }
+
                 this.updateEnvelope(this.envelope.id, attributes)
             },
 
             onDisable: function () {
+                jQuery('#envelope-form').modal('hide')
+
                 var attributes = {
                     deleted_at: moment().format("YYYY-MM-DD HH:mm:ss"),
                 }
+
                 this.updateEnvelope(this.envelope.id, attributes)
             },
 
@@ -116,3 +125,13 @@
     }
 
 </script>
+
+
+
+<style scoped>
+
+    .modal-body legend {
+        display: none;
+    }
+
+</style>
