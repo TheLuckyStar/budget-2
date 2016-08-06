@@ -121,7 +121,7 @@ class Envelope extends Container
         $incomes = $this->getIncomesAttribute($currency, $date);
         $outcomes = $this->getOutcomesAttribute($currency, $date);
 
-        return $incomes - $outcomes;
+        return round($incomes - $outcomes, 2);
     }
 
     /**
