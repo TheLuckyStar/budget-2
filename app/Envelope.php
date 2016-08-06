@@ -43,9 +43,9 @@ class Envelope extends Container
      */
     public function getBalanceAttribute(Currency $currency = null, $date = null)
     {
-        $revenues = $this->getRevenuesAttribute(null, $date);
-        $incomes = $this->getIncomesAttribute(null, $date);
-        $outcomes = $this->getOutcomesAttribute(null, $date);
+        $revenues = $this->getRevenuesAttribute($currency, null, $date);
+        $incomes = $this->getIncomesAttribute($currency, null, $date);
+        $outcomes = $this->getOutcomesAttribute($currency, null, $date);
 
         return round($revenues + $incomes - $outcomes, 2);
     }
@@ -68,7 +68,7 @@ class Envelope extends Container
             $query->where('date', '<=', $dateTo);
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
+        return floatval($query->sumConvertedTo($currency)->first()['converted_total'] ?: 0);
     }
 
     /**
@@ -89,7 +89,7 @@ class Envelope extends Container
             $query->where('date', '<=', $dateTo);
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
+        return floatval($query->sumConvertedTo($currency)->first()['converted_total'] ?: 0);
     }
 
     /**
@@ -108,37 +108,7 @@ class Envelope extends Container
             $query->where('date', '<=', $dateTo);
         }
 
-        return $query->sumConvertedTo($currency)->first()['converted_total'] ?: 0;
-    }
-
-    /**
-     * Calculate container absolute savings for the given date
-     * @return float Container savings
-     */
-    public function getSavingsAttribute(Currency $currency = null, $date = null)
-    {
-        $date = Carbon::startOfMonth($date);
-        $incomes = $this->getIncomesAttribute($currency, $date);
-        $outcomes = $this->getOutcomesAttribute($currency, $date);
-
-        return round($incomes - $outcomes, 2);
-    }
-
-    /**
-     * Calculate container relative savings for the given date
-     * @return float Container relative savings
-     */
-    public function getRelativeSavingsAttribute(Currency $currency = null, $date = null)
-    {
-        $date = Carbon::startOfMonth($date);
-        $incomes = $this->getIncomesAttribute($currency, $date);
-        $outcomes = $this->getOutcomesAttribute($currency, $date);
-
-        if ($incomes == 0) {
-            return 0;
-        }
-
-        return round(($incomes - $outcomes) * 100 / $incomes);
+        return floatval($query->sumConvertedTo($currency)->first()['converted_total']);
     }
 
     /**

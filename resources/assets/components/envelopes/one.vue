@@ -43,11 +43,11 @@
         </div>
 
         <div class="col-md-6">
-            <layout-card :color="envelope.relative_savings < 0 ? 'danger' : 'success'"
-                :icon="'fa-battery-' + batteryValue(envelope.relative_savings)"
+            <layout-card :color="envelopeRelativeSavings < 0 ? 'danger' : 'success'"
+                :icon="'fa-battery-' + batteryValue(envelopeRelativeSavings)"
                 :title="text.envelopes.savings.title"
-                :text="envelope.savings"
-                :comment="envelope.relative_savings + '%'"
+                :text="envelopeSavings"
+                :comment="envelopeRelativeSavings + '%'"
             ></layout-card>
         </div>
 

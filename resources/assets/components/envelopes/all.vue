@@ -18,6 +18,15 @@
             ></layout-card>
         </div>
 
+        <div class="col-md-6">
+            <layout-card :color="enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'"
+                :icon="'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)"
+                :title="text.envelopes.savings.title"
+                :text="enabledEnvelopesSavings"
+                :comment="enabledEnvelopesRelativeSavings + '%'"
+            ></layout-card>
+        </div>
+
         <div class="col-md-12">
             <layout-chart type="radar" :title="text.envelopes.balances.title" :chart-labels="balancesLabels" :data="balancesData" :data-labels="text.envelopes.balances.labels"></layout-chart>
         </div>
@@ -37,6 +46,7 @@
         mixins: [mixins.vuex],
 
         computed: {
+
             balancesData: function () {
                 return [
                     {
@@ -47,10 +57,18 @@
                     },
                 ]
             },
+
             balancesLabels: function () {
                 return this.enabledEnvelopes.map(function (envelope) {
                     return envelope.name
                 })
+            },
+
+        },
+
+        methods: {
+            batteryValue: function (percentage) {
+                return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)))
             },
         },
 

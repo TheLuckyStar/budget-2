@@ -137,3 +137,62 @@ exports.getEnabledEnvelopesBalance = function (state) {
 
     return balance.toFixed(2)
 }
+
+exports.getEnabledEnvelopesSavings = function (state) {
+    var incomes = 0
+    var outcomes = 0
+
+    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+        incomes += envelope.monthly.incomes;
+        outcomes += envelope.monthly.outcomes;
+    })
+
+    return (incomes - outcomes).toFixed(2)
+}
+
+exports.getEnabledEnvelopesRelativeSavings = function (state) {
+    var incomes = 0
+    var outcomes = 0
+
+    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+        incomes += envelope.monthly.incomes;
+        outcomes += envelope.monthly.outcomes;
+    })
+
+    if (incomes == 0) {
+        return 0
+    }
+
+    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+}
+
+exports.getCurrentEnvelopeSavings = function (state) {
+    var envelope = exports.getCurrentEnvelope(state)
+
+    if (envelope.monthly === undefined) {
+        return 0
+    }
+
+    incomes = envelope.monthly.incomes;
+    outcomes = envelope.monthly.outcomes;
+
+    return (incomes - outcomes).toFixed(2)
+}
+
+exports.getCurrentEnvelopeRelativeSavings = function (state) {
+    var envelope = exports.getCurrentEnvelope(state)
+
+    if (envelope.monthly === undefined) {
+        return 0
+    }
+
+    incomes = envelope.monthly.incomes;
+    outcomes = envelope.monthly.outcomes;
+
+    if (incomes == 0) {
+        return 0
+    }
+
+    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+}
+

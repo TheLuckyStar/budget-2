@@ -48899,11 +48899,15 @@
 	            accountDevelopment: getters.getAccountDevelopment,
 	            enabledAccountsBalance: getters.getEnabledAccountsBalance,
 	            envelope: getters.getCurrentEnvelope,
+	            envelopeSavings: getters.getCurrentEnvelopeSavings,
+	            envelopeRelativeSavings: getters.getCurrentEnvelopeRelativeSavings,
 	            envelopes: getters.getAllEnvelopes,
 	            enabledEnvelopes: getters.getEnabledEnvelopes,
 	            disabledEnvelopes: getters.getDisabledEnvelopes,
 	            envelopeDevelopment: getters.getEnvelopeDevelopment,
 	            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
+	            enabledEnvelopesSavings: getters.getEnabledEnvelopesSavings,
+	            enabledEnvelopesRelativeSavings: getters.getEnabledEnvelopesRelativeSavings,
 	            developmentDate: getters.getDevelopmentDate,
 	        },
 
@@ -49284,6 +49288,65 @@
 
 	    return balance.toFixed(2)
 	}
+
+	exports.getEnabledEnvelopesSavings = function (state) {
+	    var incomes = 0
+	    var outcomes = 0
+
+	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+	        incomes += envelope.monthly.incomes;
+	        outcomes += envelope.monthly.outcomes;
+	    })
+
+	    return (incomes - outcomes).toFixed(2)
+	}
+
+	exports.getEnabledEnvelopesRelativeSavings = function (state) {
+	    var incomes = 0
+	    var outcomes = 0
+
+	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+	        incomes += envelope.monthly.incomes;
+	        outcomes += envelope.monthly.outcomes;
+	    })
+
+	    if (incomes == 0) {
+	        return 0
+	    }
+
+	    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+	}
+
+	exports.getCurrentEnvelopeSavings = function (state) {
+	    var envelope = exports.getCurrentEnvelope(state)
+
+	    if (envelope.monthly === undefined) {
+	        return 0
+	    }
+
+	    incomes = envelope.monthly.incomes;
+	    outcomes = envelope.monthly.outcomes;
+
+	    return (incomes - outcomes).toFixed(2)
+	}
+
+	exports.getCurrentEnvelopeRelativeSavings = function (state) {
+	    var envelope = exports.getCurrentEnvelope(state)
+
+	    if (envelope.monthly === undefined) {
+	        return 0
+	    }
+
+	    incomes = envelope.monthly.incomes;
+	    outcomes = envelope.monthly.outcomes;
+
+	    if (incomes == 0) {
+	        return 0
+	    }
+
+	    return ((incomes - outcomes) * 100 / incomes).toFixed(2)
+	}
+
 
 
 /***/ },
@@ -54718,6 +54781,7 @@
 	    mixins: [mixins.vuex],
 
 	    computed: {
+
 	        balancesData: function balancesData() {
 	            return [{
 	                color: 'primary',
@@ -54726,10 +54790,18 @@
 	                })
 	            }];
 	        },
+
 	        balancesLabels: function balancesLabels() {
 	            return this.enabledEnvelopes.map(function (envelope) {
 	                return envelope.name;
 	            });
+	        }
+
+	    },
+
+	    methods: {
+	        batteryValue: function batteryValue(percentage) {
+	            return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)));
 	        }
 	    }
 
@@ -54739,7 +54811,7 @@
 /* 341 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"enabledEnvelopesSavings\"\n            :comment=\"enabledEnvelopesRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 342 */
@@ -54824,7 +54896,7 @@
 /* 344 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.savings\"\n            :comment=\"envelope.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelopeRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeSavings\"\n            :comment=\"envelopeRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 345 */
