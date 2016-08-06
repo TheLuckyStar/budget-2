@@ -13,9 +13,18 @@
         <div class="col-md-6">
             <layout-card :color="envelope.balance < 0 ? 'danger' : 'success'"
                 :icon="envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
-                :title="text.envelopes.situation.title"
+                :title="text.envelopes.balance.title"
                 :text="envelope.balance"
                 :comment="$options.filters.formatLongDate(date)"
+            ></layout-card>
+        </div>
+
+        <div class="col-md-6">
+            <layout-card :color="envelope.relative_savings < 0 ? 'danger' : 'success'"
+                :icon="'fa-battery-' + batteryValue(envelope.relative_savings)"
+                :title="text.envelopes.savings.title"
+                :text="envelope.savings"
+                :comment="envelope.relative_savings + '%'"
             ></layout-card>
         </div>
 
@@ -58,6 +67,12 @@
         watch: {
             language: function() {
                 this.date = moment.unix(this.date.unix())
+            },
+        },
+
+        methods: {
+            batteryValue: function (percentage) {
+                return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)))
             },
         },
 

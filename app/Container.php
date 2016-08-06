@@ -26,7 +26,9 @@ abstract class Container extends Model
     {
         $output = parent::toArray();
 
-        $output['balance'] = $this->getBalanceAttribute();
+        $output['balance'] = $this->balance;
+        $output['savings'] = $this->savings;
+        $output['relative_savings'] = $this->relative_savings;
 
         return $output;
     }
@@ -36,6 +38,18 @@ abstract class Container extends Model
      * @return float Container balance
      */
     abstract public function getBalanceAttribute(Currency $currency = null, $date = null);
+
+    /**
+     * Calculate container absolute savings for the given date
+     * @return float Container asbolute savings
+     */
+    abstract public function getSavingsAttribute(Currency $currency = null, $date = null);
+
+    /**
+     * Calculate container relative savings for the given date
+     * @return float Container relative savings
+     */
+    abstract public function getRelativeSavingsAttribute(Currency $currency = null, $date = null);
 
     /**
      * Generate metric development for the given month

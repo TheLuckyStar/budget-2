@@ -25,7 +25,7 @@
         <div class="col-md-6">
             <layout-card :color="balanceColor"
                 :icon="balanceIcon"
-                :title="text.accounts.situation.title"
+                :title="text.accounts.balance.title"
                 :text="account.balance"
                 :comment="$options.filters.formatLongDate(date)"
             ></layout-card>

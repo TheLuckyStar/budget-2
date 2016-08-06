@@ -12,7 +12,7 @@
         <div class="col-md-6">
             <layout-card :color="enabledEnvelopesBalance < 0 ? 'danger' : 'success'"
                 :icon="enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
-                :title="text.envelopes.situation.title"
+                :title="text.envelopes.balance.title"
                 :text="enabledEnvelopesBalance"
                 :comment="$options.filters.formatLongDate(date)"
             ></layout-card>

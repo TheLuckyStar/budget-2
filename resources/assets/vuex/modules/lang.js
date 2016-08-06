@@ -39,8 +39,8 @@ exports.state = {
                 currency: 'Currency',
                 currencyHelper: 'Currency can not be changed.',
             },
-            situation: {
-                title: 'Situation',
+            balance: {
+                title: 'Balance',
             },
             balances: {
                 title: 'Situation in details',
@@ -69,8 +69,11 @@ exports.state = {
                 name: 'Name',
                 icon: 'Icon',
             },
-            situation: {
-                title: 'Situation',
+            balance: {
+                title: 'Balance',
+            },
+            savings: {
+                title: 'Monthly savings',
             },
             balances: {
                 title: 'Situation in details',
@@ -126,8 +129,8 @@ exports.state = {
                 currency: 'Devise',
                 currencyHelper: 'La devise n\'est plus modifiable.',
             },
-            situation: {
-                title: 'Situation',
+            balance: {
+                title: 'Solde',
             },
             balances: {
                 title: 'Détail de la situation',
@@ -156,8 +159,11 @@ exports.state = {
                 name: 'Nom',
                 icon: 'Icône',
             },
-            situation: {
-                title: 'Situation',
+            balance: {
+                title: 'Solde',
+            },
+            savings: {
+                title: 'Économies mensuelles',
             },
             balances: {
                 title: 'Détail de la situation',

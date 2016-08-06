@@ -112,6 +112,36 @@ class Envelope extends Container
     }
 
     /**
+     * Calculate container absolute savings for the given date
+     * @return float Container savings
+     */
+    public function getSavingsAttribute(Currency $currency = null, $date = null)
+    {
+        $date = Carbon::startOfMonth($date);
+        $incomes = $this->getIncomesAttribute(null, $date);
+        $outcomes = $this->getOutcomesAttribute(null, $date);
+
+        return $incomes - $outcomes;
+    }
+
+    /**
+     * Calculate container relative savings for the given date
+     * @return float Container relative savings
+     */
+    public function getRelativeSavingsAttribute(Currency $currency = null, $date = null)
+    {
+        $date = Carbon::startOfMonth($date);
+        $incomes = $this->getIncomesAttribute(null, $date);
+        $outcomes = $this->getOutcomesAttribute(null, $date);
+
+        if ($incomes == 0) {
+            return 0;
+        }
+
+        return round(($incomes - $outcomes) * 100 / $incomes);
+    }
+
+    /**
      * Calculate main envelope metrics for the given day
      * @return array Envelope metrics
      */
