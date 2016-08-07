@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call('AccountsTableSeeder');
+        $this->call('EnvelopesTableSeeder');
         $this->call('CurrenciesTableSeeder');
         $this->call('CurrencyRatesTableSeeder');
         $this->call('OperationsSeeder');
