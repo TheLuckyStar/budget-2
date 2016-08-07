@@ -55035,7 +55035,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-acc82e2c] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-acc82e2c] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n", ""]);
 
 	// exports
 
@@ -55064,12 +55064,36 @@
 	                type: 'line',
 	                data: this.envelopeDevelopment.balance,
 	                label: this.text.envelopes.development.balanceLabel,
-	                color: 'warning'
+	                color: 'default'
 	            }, {
 	                type: 'bar',
 	                data: this.envelopeDevelopment.savings,
 	                label: this.text.envelopes.development.savingsLabel,
-	                color: 'danger'
+	                color: 'primary'
+	            }];
+	        },
+
+	        operationsData: function operationsData() {
+	            return [{
+	                type: 'line',
+	                data: this.envelopeDevelopment.balance,
+	                label: this.text.envelopes.development.balanceLabel,
+	                color: 'default'
+	            }, {
+	                type: 'line',
+	                data: this.envelopeDevelopment.revenues,
+	                label: this.text.envelopes.development.revenuesLabel,
+	                color: 'success'
+	            }, {
+	                type: 'line',
+	                data: this.envelopeDevelopment.incomes,
+	                label: this.text.envelopes.development.incomesLabel,
+	                color: 'info'
+	            }, {
+	                type: 'line',
+	                data: this.envelopeDevelopment.outcomes,
+	                label: this.text.envelopes.development.outcomesLabel,
+	                color: 'warning'
 	            }];
 	        }
 
@@ -55084,7 +55108,7 @@
 /* 353 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n\n        {{ text.envelopes.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-acc82e2c=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n\n        {{ text.envelopes.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-acc82e2c=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"operations\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"operationsData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 354 */

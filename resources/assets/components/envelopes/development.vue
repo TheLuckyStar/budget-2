@@ -46,6 +46,11 @@
                     :datasets="stateData"></layout-chart>
             </div>
 
+            <div role="tabpanel" class="tab-pane" id="operations">
+                <layout-chart :labels="listMonthsInYear(this.developmentDate)"
+                    :datasets="operationsData"></layout-chart>
+            </div>
+
         </div>
 
     </fieldset>
@@ -70,13 +75,42 @@
                         type: 'line',
                         data: this.envelopeDevelopment.balance,
                         label: this.text.envelopes.development.balanceLabel,
-                        color: 'warning',
+                        color: 'default',
                     },
                     {
                         type: 'bar',
                         data: this.envelopeDevelopment.savings,
                         label: this.text.envelopes.development.savingsLabel,
-                        color: 'danger',
+                        color: 'primary',
+                    },
+                ]
+            },
+
+            operationsData: function () {
+                return [
+                    {
+                        type: 'line',
+                        data: this.envelopeDevelopment.balance,
+                        label: this.text.envelopes.development.balanceLabel,
+                        color: 'default',
+                    },
+                    {
+                        type: 'line',
+                        data: this.envelopeDevelopment.revenues,
+                        label: this.text.envelopes.development.revenuesLabel,
+                        color: 'success',
+                    },
+                    {
+                        type: 'line',
+                        data: this.envelopeDevelopment.incomes,
+                        label: this.text.envelopes.development.incomesLabel,
+                        color: 'info',
+                    },
+                    {
+                        type: 'line',
+                        data: this.envelopeDevelopment.outcomes,
+                        label: this.text.envelopes.development.outcomesLabel,
+                        color: 'warning',
                     },
                 ]
             },
