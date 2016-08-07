@@ -22,7 +22,7 @@
             <layout-card :color="enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'"
                 :icon="'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)"
                 :title="text.envelopes.savings.title"
-                :text="enabledEnvelopesSavings"
+                :text="enabledEnvelopesSavings + '/' + (enabledEnvelopesRevenues + enabledEnvelopesIncomes)"
                 :comment="enabledEnvelopesRelativeSavings + '%'"
             ></layout-card>
         </div>

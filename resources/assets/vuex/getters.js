@@ -32,7 +32,13 @@ exports.getCurrentEnvelope = function (state) {
         return envelope.id == state.app.envelope_id
     })
     if (envelopes.length === 0) {
-        return {}
+        return {
+            monthly: {
+                revenues: 0,
+                incomes: 0,
+                outcomes: 0,
+            },
+        }
     }
     return envelopes[0]
 }
@@ -138,61 +144,77 @@ exports.getEnabledEnvelopesBalance = function (state) {
     return balance.toFixed(2)
 }
 
-exports.getEnabledEnvelopesSavings = function (state) {
+exports.getEnabledEnvelopesRevenues = function (state) {
+    var revenues = 0
+
+    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+        revenues += envelope.monthly.revenues;
+    })
+
+    return revenues
+}
+
+exports.getEnabledEnvelopesIncomes = function (state) {
     var incomes = 0
-    var outcomes = 0
 
     exports.getEnabledEnvelopes(state).forEach(function (envelope) {
         incomes += envelope.monthly.incomes;
+    })
+
+    return incomes
+}
+
+exports.getEnabledEnvelopesOutcomes = function (state) {
+    var outcomes = 0
+
+    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
         outcomes += envelope.monthly.outcomes;
     })
 
-    return (incomes - outcomes).toFixed(2)
+    return outcomes
+}
+
+exports.getEnabledEnvelopesSavings = function (state) {
+    var revenues = exports.getEnabledEnvelopesRevenues(state)
+    var incomes = exports.getEnabledEnvelopesIncomes(state)
+    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
+
+    return (revenues + incomes - outcomes).toFixed(2)
 }
 
 exports.getEnabledEnvelopesRelativeSavings = function (state) {
-    var incomes = 0
-    var outcomes = 0
-
-    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-        incomes += envelope.monthly.incomes;
-        outcomes += envelope.monthly.outcomes;
-    })
+    var revenues = exports.getEnabledEnvelopesRevenues(state)
+    var incomes = exports.getEnabledEnvelopesIncomes(state)
+    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
 
     if (incomes == 0) {
         return 0
     }
 
-    return Math.floor((incomes - outcomes) * 100 / incomes)
+    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 }
 
 exports.getCurrentEnvelopeSavings = function (state) {
     var envelope = exports.getCurrentEnvelope(state)
 
-    if (envelope.monthly === undefined) {
-        return 0
-    }
+    var revenues = envelope.monthly.revenues;
+    var incomes = envelope.monthly.incomes;
+    var outcomes = envelope.monthly.outcomes;
 
-    incomes = envelope.monthly.incomes;
-    outcomes = envelope.monthly.outcomes;
-
-    return (incomes - outcomes).toFixed(2)
+    return (revenues + incomes - outcomes).toFixed(2)
 }
 
 exports.getCurrentEnvelopeRelativeSavings = function (state) {
     var envelope = exports.getCurrentEnvelope(state)
 
-    if (envelope.monthly === undefined) {
-        return 0
-    }
-
-    incomes = envelope.monthly.incomes;
-    outcomes = envelope.monthly.outcomes;
+    var revenues = envelope.monthly.revenues;
+    var incomes = envelope.monthly.incomes;
+    var outcomes = envelope.monthly.outcomes;
 
     if (incomes == 0) {
         return 0
     }
 
-    return Math.floor((incomes - outcomes) * 100 / incomes)
+    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 }
 

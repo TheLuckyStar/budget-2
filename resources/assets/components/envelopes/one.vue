@@ -46,7 +46,7 @@
             <layout-card :color="envelopeRelativeSavings < 0 ? 'danger' : 'success'"
                 :icon="'fa-battery-' + batteryValue(envelopeRelativeSavings)"
                 :title="text.envelopes.savings.title"
-                :text="envelopeSavings"
+                :text="envelopeSavings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)"
                 :comment="envelopeRelativeSavings + '%'"
             ></layout-card>
         </div>

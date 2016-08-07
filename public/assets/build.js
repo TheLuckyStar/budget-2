@@ -51,7 +51,7 @@
 	__webpack_require__(203);
 	__webpack_require__(303);
 	__webpack_require__(305);
-	module.exports = __webpack_require__(351);
+	module.exports = __webpack_require__(360);
 
 
 /***/ },
@@ -48906,6 +48906,9 @@
 	            disabledEnvelopes: getters.getDisabledEnvelopes,
 	            envelopeDevelopment: getters.getEnvelopeDevelopment,
 	            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
+	            enabledEnvelopesRevenues: getters.getEnabledEnvelopesRevenues,
+	            enabledEnvelopesIncomes: getters.getEnabledEnvelopesIncomes,
+	            enabledEnvelopesOutomes: getters.getEnabledEnvelopesOutcomes,
 	            enabledEnvelopesSavings: getters.getEnabledEnvelopesSavings,
 	            enabledEnvelopesRelativeSavings: getters.getEnabledEnvelopesRelativeSavings,
 	            developmentDate: getters.getDevelopmentDate,
@@ -49183,7 +49186,13 @@
 	        return envelope.id == state.app.envelope_id
 	    })
 	    if (envelopes.length === 0) {
-	        return {}
+	        return {
+	            monthly: {
+	                revenues: 0,
+	                incomes: 0,
+	                outcomes: 0,
+	            },
+	        }
 	    }
 	    return envelopes[0]
 	}
@@ -49289,62 +49298,78 @@
 	    return balance.toFixed(2)
 	}
 
-	exports.getEnabledEnvelopesSavings = function (state) {
+	exports.getEnabledEnvelopesRevenues = function (state) {
+	    var revenues = 0
+
+	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
+	        revenues += envelope.monthly.revenues;
+	    })
+
+	    return revenues
+	}
+
+	exports.getEnabledEnvelopesIncomes = function (state) {
 	    var incomes = 0
-	    var outcomes = 0
 
 	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
 	        incomes += envelope.monthly.incomes;
+	    })
+
+	    return incomes
+	}
+
+	exports.getEnabledEnvelopesOutcomes = function (state) {
+	    var outcomes = 0
+
+	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
 	        outcomes += envelope.monthly.outcomes;
 	    })
 
-	    return (incomes - outcomes).toFixed(2)
+	    return outcomes
+	}
+
+	exports.getEnabledEnvelopesSavings = function (state) {
+	    var revenues = exports.getEnabledEnvelopesRevenues(state)
+	    var incomes = exports.getEnabledEnvelopesIncomes(state)
+	    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
+
+	    return (revenues + incomes - outcomes).toFixed(2)
 	}
 
 	exports.getEnabledEnvelopesRelativeSavings = function (state) {
-	    var incomes = 0
-	    var outcomes = 0
-
-	    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-	        incomes += envelope.monthly.incomes;
-	        outcomes += envelope.monthly.outcomes;
-	    })
+	    var revenues = exports.getEnabledEnvelopesRevenues(state)
+	    var incomes = exports.getEnabledEnvelopesIncomes(state)
+	    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
 
 	    if (incomes == 0) {
 	        return 0
 	    }
 
-	    return Math.floor((incomes - outcomes) * 100 / incomes)
+	    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 	}
 
 	exports.getCurrentEnvelopeSavings = function (state) {
 	    var envelope = exports.getCurrentEnvelope(state)
 
-	    if (envelope.monthly === undefined) {
-	        return 0
-	    }
+	    var revenues = envelope.monthly.revenues;
+	    var incomes = envelope.monthly.incomes;
+	    var outcomes = envelope.monthly.outcomes;
 
-	    incomes = envelope.monthly.incomes;
-	    outcomes = envelope.monthly.outcomes;
-
-	    return (incomes - outcomes).toFixed(2)
+	    return (revenues + incomes - outcomes).toFixed(2)
 	}
 
 	exports.getCurrentEnvelopeRelativeSavings = function (state) {
 	    var envelope = exports.getCurrentEnvelope(state)
 
-	    if (envelope.monthly === undefined) {
-	        return 0
-	    }
-
-	    incomes = envelope.monthly.incomes;
-	    outcomes = envelope.monthly.outcomes;
+	    var revenues = envelope.monthly.revenues;
+	    var incomes = envelope.monthly.incomes;
+	    var outcomes = envelope.monthly.outcomes;
 
 	    if (incomes == 0) {
 	        return 0
 	    }
 
-	    return Math.floor((incomes - outcomes) * 100 / incomes)
+	    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 	}
 
 
@@ -50869,21 +50894,21 @@
 	                component: __webpack_require__(320),
 	            },
 	            '/new': {
-	                component: __webpack_require__(333),
+	                component: __webpack_require__(335),
 	            },
 	        },
 	    },
 	    '/envelopes': {
-	        component: __webpack_require__(336),
+	        component: __webpack_require__(338),
 	        subRoutes: {
 	            '/all': {
-	                component: __webpack_require__(339),
+	                component: __webpack_require__(341),
 	            },
 	            '/one/:envelope_id': {
-	                component: __webpack_require__(342),
+	                component: __webpack_require__(344),
 	            },
 	            '/new': {
-	                component: __webpack_require__(345),
+	                component: __webpack_require__(357),
 	            },
 	        },
 	    },
@@ -53809,7 +53834,7 @@
 	                title: 'Balance',
 	            },
 	            savings: {
-	                title: 'Monthly savings',
+	                title: 'Saved this month',
 	            },
 	            balances: {
 	                title: 'Situation in details',
@@ -53899,7 +53924,7 @@
 	                title: 'Solde',
 	            },
 	            savings: {
-	                title: 'Économies mensuelles',
+	                title: 'Économisé ce mois',
 	            },
 	            balances: {
 	                title: 'Détail de la situation',
@@ -54184,7 +54209,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/accounts/one.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(332)
+	__vue_template__ = __webpack_require__(334)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54456,13 +54481,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(361)
-	__vue_script__ = __webpack_require__(330)
+	__webpack_require__(330)
+	__vue_script__ = __webpack_require__(332)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/accounts/form.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(363)
+	__vue_template__ = __webpack_require__(333)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54482,6 +54507,46 @@
 
 /***/ },
 /* 330 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(331);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-5405c668&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-5405c668&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 331 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal-body legend[_v-5405c668] {\n    display: none;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, moment) {'use strict';
@@ -54561,23 +54626,28 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73), __webpack_require__(98)))
 
 /***/ },
-/* 331 */,
-/* 332 */
+/* 333 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-5405c668=\"\">\n\n    <fieldset _v-5405c668=\"\">\n\n        <legend _v-5405c668=\"\">\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\" _v-5405c668=\"\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-5405c668=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-5405c668=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <label for=\"input-account-currency_id\" class=\"col-xs-3 control-label\" _v-5405c668=\"\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\" _v-5405c668=\"\">\n                <select type=\"text\" class=\"form-control\" id=\"input-account-currency_id\" v-model=\"currency_id\" lazy=\"\" :disabled=\"id != null\" _v-5405c668=\"\">\n                    <option v-for=\"currency in currencies\" :value=\"currency.id\" _v-5405c668=\"\">\n                        {{ currency.name }}\n                    </option>\n                    <option :value=\"-1\" _v-5405c668=\"\">\n                        {{ text.currencies.form.add }}\n                    </option>\n                </select>\n                <span v-if=\"id != null &amp;&amp; ! deleted_at\" class=\"help-block\" _v-5405c668=\"\">\n                    {{ text.accounts.form.currencyHelper }}\n                </span>\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <div class=\"col-xs-offset-3 col-xs-9\" _v-5405c668=\"\">\n                <input v-if=\"currency_id == -1\" type=\"text\" class=\"form-control\" id=\"input-account-currency_name\" v-model=\"currency_name\" :placeholder=\"text.currencies.form.name\" lazy=\"\" _v-5405c668=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <div class=\"col-xs-12 text-right\" _v-5405c668=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-5405c668=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm pull-left\" _v-5405c668=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-5405c668=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+
+/***/ },
+/* 334 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div _v-36ef391c=\"\">\n\n    <div class=\"pull-right\" _v-36ef391c=\"\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#account-form\" _v-36ef391c=\"\">\n            {{ text.accounts.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"account-form\" tabindex=\"-1\" role=\"dialog\" _v-36ef391c=\"\">\n            <div class=\"modal-dialog\" role=\"document\" _v-36ef391c=\"\">\n                <div class=\"modal-content\" _v-36ef391c=\"\">\n                    <div class=\"modal-header\" _v-36ef391c=\"\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-36ef391c=\"\">\n                            <span aria-hidden=\"true\" _v-36ef391c=\"\">×</span>\n                        </button>\n                        <h4 class=\"modal-title\" _v-36ef391c=\"\">\n                            {{ text.accounts.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\" _v-36ef391c=\"\">\n                        <accounts-form :account=\"account\" _v-36ef391c=\"\"></accounts-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1 _v-36ef391c=\"\">\n        {{ account.name }}\n    </h1>\n\n    <hr _v-36ef391c=\"\">\n\n    <div class=\"col-md-12\" v-if=\"account.currency &amp;&amp; account.currency_id != currentCurrency.id\" _v-36ef391c=\"\">\n        <div class=\"alert alert-warning clearfix\" _v-36ef391c=\"\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\" _v-36ef391c=\"\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\" _v-36ef391c=\"\">\n        <layout-card :color=\"balanceColor\" :icon=\"balanceIcon\" :title=\"text.accounts.balance.title\" :text=\"account.balance\" :comment=\"$options.filters.formatLongDate(date)\" _v-36ef391c=\"\"></layout-card>\n    </div>\n\n    <div class=\"col-md-12\" _v-36ef391c=\"\">\n        <accounts-development :account=\"account\" _v-36ef391c=\"\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(334)
+	__vue_script__ = __webpack_require__(336)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/accounts/new.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(335)
+	__vue_template__ = __webpack_require__(337)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54596,7 +54666,7 @@
 	})()}
 
 /***/ },
-/* 334 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54624,22 +54694,22 @@
 	};
 
 /***/ },
-/* 335 */
+/* 337 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.accounts.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <accounts-form :account=\"{}\"></accounts-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 336 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(337)
+	__vue_script__ = __webpack_require__(339)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(338)
+	__vue_template__ = __webpack_require__(340)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54658,7 +54728,7 @@
 	})()}
 
 /***/ },
-/* 337 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54735,22 +54805,22 @@
 	};
 
 /***/ },
-/* 338 */
+/* 340 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-3 col-sm-4\">\n        <layout-sidebar :entries=\"entries\"></layout-sidebar>\n    </div>\n\n    <div class=\"col-md-9 col-sm-8\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 339 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(340)
+	__vue_script__ = __webpack_require__(342)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/all.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(341)
+	__vue_template__ = __webpack_require__(343)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54769,7 +54839,7 @@
 	})()}
 
 /***/ },
-/* 340 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54813,22 +54883,22 @@
 	};
 
 /***/ },
-/* 341 */
+/* 343 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"enabledEnvelopesSavings\"\n            :comment=\"enabledEnvelopesRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"enabledEnvelopesSavings + '/' + (enabledEnvelopesRevenues + enabledEnvelopesIncomes)\"\n            :comment=\"enabledEnvelopesRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 342 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(343)
+	__vue_script__ = __webpack_require__(345)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(344)
+	__vue_template__ = __webpack_require__(356)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54847,7 +54917,7 @@
 	})()}
 
 /***/ },
-/* 343 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
@@ -54858,8 +54928,8 @@
 
 
 	var mixins = __webpack_require__(294);
-	var EnvelopesDevelopment = __webpack_require__(353);
-	var EnvelopesForm = __webpack_require__(347);
+	var EnvelopesDevelopment = __webpack_require__(346);
+	var EnvelopesForm = __webpack_require__(351);
 
 	exports.default = {
 
@@ -54898,21 +54968,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
 
 /***/ },
-/* 344 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelopeRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeSavings\"\n            :comment=\"envelopeRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
-
-/***/ },
-/* 345 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(346)
+	__webpack_require__(347)
+	__vue_script__ = __webpack_require__(349)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
+	  console.warn("[vue-loader] resources/assets/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
 	__vue_template__ = __webpack_require__(350)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
@@ -54923,7 +54988,7 @@
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-47567c62/new.vue"
+	  var id = "_v-acc82e2c/development.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -54932,7 +54997,47 @@
 	})()}
 
 /***/ },
-/* 346 */
+/* 347 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(348);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 348 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-acc82e2c] {\n    padding: 20px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-acc82e2c] {\n    visibility: visible;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54943,34 +55048,67 @@
 
 
 	var mixins = __webpack_require__(294);
-	var EnvelopesForm = __webpack_require__(347);
 
 	exports.default = {
 
-	    mixins: [mixins.vuex],
+	    mixins: [mixins.vuex, mixins.moment, mixins.development],
 
-	    ready: function ready() {
-	        this.setCurrentEnvelope(null);
-	    },
+	    computed: {
 
-	    components: {
-	        EnvelopesForm: EnvelopesForm
+	        monthlyData: function monthlyData() {
+	            return [{
+	                data: this.envelopeDevelopment.monthly.balance,
+	                color: 'default'
+	            }, {
+	                data: this.envelopeDevelopment.monthly.revenues,
+	                color: 'success'
+	            }, {
+	                data: this.envelopeDevelopment.monthly.incomes,
+	                color: 'info'
+	            }, {
+	                data: this.envelopeDevelopment.monthly.outcomes,
+	                color: 'danger'
+	            }];
+	        },
+
+	        yearlyData: function yearlyData() {
+	            return [{
+	                data: this.envelopeDevelopment.yearly.balance,
+	                color: 'default'
+	            }, {
+	                data: this.envelopeDevelopment.yearly.revenues,
+	                color: 'success'
+	            }, {
+	                data: this.envelopeDevelopment.yearly.incomes,
+	                color: 'info'
+	            }, {
+	                data: this.envelopeDevelopment.yearly.outcomes,
+	                color: 'danger'
+	            }];
+	        }
+
 	    }
 
 	};
 
 /***/ },
-/* 347 */
+/* 350 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+
+/***/ },
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(358)
-	__vue_script__ = __webpack_require__(348)
+	__webpack_require__(352)
+	__vue_script__ = __webpack_require__(354)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(360)
+	__vue_template__ = __webpack_require__(355)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54989,7 +55127,47 @@
 	})()}
 
 /***/ },
-/* 348 */
+/* 352 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(353);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 353 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal-body legend[_v-7b073aa5] {\n    display: none;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, moment) {'use strict';
@@ -55066,20 +55244,87 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73), __webpack_require__(98)))
 
 /***/ },
-/* 349 */,
-/* 350 */
+/* 355 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-7b073aa5=\"\">\n\n    <fieldset _v-7b073aa5=\"\">\n\n        <legend _v-7b073aa5=\"\">\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <div class=\"col-xs-12 text-right\" _v-7b073aa5=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm pull-left\" _v-7b073aa5=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
+
+/***/ },
+/* 356 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelopeRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeSavings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelopeRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 357 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(358)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(359)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-47567c62/new.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(294);
+	var EnvelopesForm = __webpack_require__(351);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    ready: function ready() {
+	        this.setCurrentEnvelope(null);
+	    },
+
+	    components: {
+	        EnvelopesForm: EnvelopesForm
+	    }
+
+	};
+
+/***/ },
+/* 359 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <envelopes-form :envelope=\"{}\"></envelopes-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 351 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(352);
+	var content = __webpack_require__(361);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -55099,7 +55344,7 @@
 	}
 
 /***/ },
-/* 352 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -55111,228 +55356,6 @@
 
 	// exports
 
-
-/***/ },
-/* 353 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__webpack_require__(354)
-	__vue_script__ = __webpack_require__(356)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(357)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-acc82e2c/development.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 354 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(355);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(207)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-acc82e2c&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 355 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-acc82e2c] {\n    padding: 20px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-acc82e2c] {\n    visibility: visible;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 356 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(294);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex, mixins.moment, mixins.development],
-
-	    computed: {
-
-	        monthlyData: function monthlyData() {
-	            return [{
-	                data: this.envelopeDevelopment.monthly.balance,
-	                color: 'default'
-	            }, {
-	                data: this.envelopeDevelopment.monthly.revenues,
-	                color: 'success'
-	            }, {
-	                data: this.envelopeDevelopment.monthly.incomes,
-	                color: 'info'
-	            }, {
-	                data: this.envelopeDevelopment.monthly.outcomes,
-	                color: 'danger'
-	            }];
-	        },
-
-	        yearlyData: function yearlyData() {
-	            return [{
-	                data: this.envelopeDevelopment.yearly.balance,
-	                color: 'default'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.revenues,
-	                color: 'success'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.incomes,
-	                color: 'info'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.outcomes,
-	                color: 'danger'
-	            }];
-	        }
-
-	    }
-
-	};
-
-/***/ },
-/* 357 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
-
-/***/ },
-/* 358 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(359);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(207)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-7b073aa5&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 359 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal-body legend[_v-7b073aa5] {\n    display: none;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 360 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-7b073aa5=\"\">\n\n    <fieldset _v-7b073aa5=\"\">\n\n        <legend _v-7b073aa5=\"\">\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <div class=\"col-xs-12 text-right\" _v-7b073aa5=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm pull-left\" _v-7b073aa5=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
-
-/***/ },
-/* 361 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(362);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(207)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-5405c668&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-5405c668&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./form.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 362 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal-body legend[_v-5405c668] {\n    display: none;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 363 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-5405c668=\"\">\n\n    <fieldset _v-5405c668=\"\">\n\n        <legend _v-5405c668=\"\">\n            {{ text.accounts.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <label for=\"input-account-name\" class=\"col-xs-3 control-label\" _v-5405c668=\"\">\n                {{ text.accounts.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-5405c668=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-account-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-5405c668=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <label for=\"input-account-currency_id\" class=\"col-xs-3 control-label\" _v-5405c668=\"\">\n                {{ text.accounts.form.currency }}\n            </label>\n            <div class=\"col-xs-9\" _v-5405c668=\"\">\n                <select type=\"text\" class=\"form-control\" id=\"input-account-currency_id\" v-model=\"currency_id\" lazy=\"\" :disabled=\"id != null\" _v-5405c668=\"\">\n                    <option v-for=\"currency in currencies\" :value=\"currency.id\" _v-5405c668=\"\">\n                        {{ currency.name }}\n                    </option>\n                    <option :value=\"-1\" _v-5405c668=\"\">\n                        {{ text.currencies.form.add }}\n                    </option>\n                </select>\n                <span v-if=\"id != null &amp;&amp; ! deleted_at\" class=\"help-block\" _v-5405c668=\"\">\n                    {{ text.accounts.form.currencyHelper }}\n                </span>\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <div class=\"col-xs-offset-3 col-xs-9\" _v-5405c668=\"\">\n                <input v-if=\"currency_id == -1\" type=\"text\" class=\"form-control\" id=\"input-account-currency_name\" v-model=\"currency_name\" :placeholder=\"text.currencies.form.name\" lazy=\"\" _v-5405c668=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-5405c668=\"\">\n            <div class=\"col-xs-12 text-right\" _v-5405c668=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-5405c668=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm pull-left\" _v-5405c668=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-5405c668=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ }
 /******/ ]);
