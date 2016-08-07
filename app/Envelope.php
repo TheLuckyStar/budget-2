@@ -51,6 +51,36 @@ class Envelope extends Container
     }
 
     /**
+     * Calculate envelope savings for the given period
+     * @return float Envelope savings
+     */
+    public function getSavingsAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
+    {
+        $revenues = $this->getRevenuesAttribute($currency, $dateFrom, $dateTo);
+        $incomes = $this->getIncomesAttribute($currency, $dateFrom, $dateTo);
+        $outcomes = $this->getOutcomesAttribute($currency, $dateFrom, $dateTo);
+
+        return round($revenues + $incomes - $outcomes, 2);
+    }
+
+    /**
+     * Calculate envelope relative savings for the given period
+     * @return float Envelope relative savings
+     */
+    public function getRelativeSavingsAttribute(Currency $currency = null, $dateFrom = null, $dateTo = null)
+    {
+        $revenues = $this->getRevenuesAttribute($currency, $dateFrom, $dateTo);
+        $incomes = $this->getIncomesAttribute($currency, $dateFrom, $dateTo);
+        $outcomes = $this->getOutcomesAttribute($currency, $dateFrom, $dateTo);
+
+        if ($revenues + $incomes == 0) {
+            return 0;
+        }
+
+        return round(($revenues + $incomes - $outcomes) * 100  / ($revenues + $incomes), 2);
+    }
+
+    /**
      * Calculate envelope revenues for the given period
      * @return float Envelope revenues
      */
@@ -141,6 +171,8 @@ class Envelope extends Container
             'revenues' => $this->getRevenuesAttribute($currency, $dateFrom, $dateTo),
             'incomes' => $this->getIncomesAttribute($currency, $dateFrom, $dateTo),
             'outcomes' => $this->getOutcomesAttribute($currency, $dateFrom, $dateTo),
+            'savings' => $this->getSavingsAttribute($currency, $dateFrom, $dateTo),
+            'relative_savings' => $this->getRelativeSavingsAttribute($currency, $dateFrom, $dateTo),
         ];
     }
 }

@@ -33,10 +33,13 @@ exports.getCurrentEnvelope = function (state) {
     })
     if (envelopes.length === 0) {
         return {
+            balance: 0,
             monthly: {
                 revenues: 0,
                 incomes: 0,
                 outcomes: 0,
+                savings: 0,
+                relative_savings: 0,
             },
         }
     }
@@ -193,28 +196,3 @@ exports.getEnabledEnvelopesRelativeSavings = function (state) {
 
     return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 }
-
-exports.getCurrentEnvelopeSavings = function (state) {
-    var envelope = exports.getCurrentEnvelope(state)
-
-    var revenues = envelope.monthly.revenues;
-    var incomes = envelope.monthly.incomes;
-    var outcomes = envelope.monthly.outcomes;
-
-    return (revenues + incomes - outcomes).toFixed(2)
-}
-
-exports.getCurrentEnvelopeRelativeSavings = function (state) {
-    var envelope = exports.getCurrentEnvelope(state)
-
-    var revenues = envelope.monthly.revenues;
-    var incomes = envelope.monthly.incomes;
-    var outcomes = envelope.monthly.outcomes;
-
-    if (incomes == 0) {
-        return 0
-    }
-
-    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
-}
-

@@ -48899,8 +48899,6 @@
 	            accountDevelopment: getters.getAccountDevelopment,
 	            enabledAccountsBalance: getters.getEnabledAccountsBalance,
 	            envelope: getters.getCurrentEnvelope,
-	            envelopeSavings: getters.getCurrentEnvelopeSavings,
-	            envelopeRelativeSavings: getters.getCurrentEnvelopeRelativeSavings,
 	            envelopes: getters.getAllEnvelopes,
 	            enabledEnvelopes: getters.getEnabledEnvelopes,
 	            disabledEnvelopes: getters.getDisabledEnvelopes,
@@ -49187,10 +49185,13 @@
 	    })
 	    if (envelopes.length === 0) {
 	        return {
+	            balance: 0,
 	            monthly: {
 	                revenues: 0,
 	                incomes: 0,
 	                outcomes: 0,
+	                savings: 0,
+	                relative_savings: 0,
 	            },
 	        }
 	    }
@@ -49347,31 +49348,6 @@
 
 	    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 	}
-
-	exports.getCurrentEnvelopeSavings = function (state) {
-	    var envelope = exports.getCurrentEnvelope(state)
-
-	    var revenues = envelope.monthly.revenues;
-	    var incomes = envelope.monthly.incomes;
-	    var outcomes = envelope.monthly.outcomes;
-
-	    return (revenues + incomes - outcomes).toFixed(2)
-	}
-
-	exports.getCurrentEnvelopeRelativeSavings = function (state) {
-	    var envelope = exports.getCurrentEnvelope(state)
-
-	    var revenues = envelope.monthly.revenues;
-	    var incomes = envelope.monthly.incomes;
-	    var outcomes = envelope.monthly.outcomes;
-
-	    if (incomes == 0) {
-	        return 0
-	    }
-
-	    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
-	}
-
 
 
 /***/ },
@@ -55253,7 +55229,7 @@
 /* 356 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelopeRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeSavings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelopeRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.monthly.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.monthly.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.monthly.savings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelope.monthly.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 357 */
