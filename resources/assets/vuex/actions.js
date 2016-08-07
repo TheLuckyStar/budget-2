@@ -146,9 +146,6 @@ exports.updateEnvelope = function ({ dispatch, state }, id, attributes) {
 }
 
 exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
-    if (state.app.envelope_id === null) {
-        return
-    }
     var attributes = {
         envelope_id: state.app.envelope_id,
         default_currency_id: state.app.currency_id,

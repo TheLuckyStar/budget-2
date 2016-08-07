@@ -28,5 +28,6 @@ $app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], func
     $app->post('envelopes', 'Envelopes@store');
     $app->put('envelopes/{id}', 'Envelopes@update');
     $app->get('envelopes/development/{id}', 'Envelopes@development');
+    $app->get('envelopes/development', 'Envelopes@development');
 
 });

@@ -42,12 +42,12 @@
         <div class="tab-content">
 
             <div role="tabpanel" class="tab-pane active" id="state">
-                <layout-chart :labels="listMonthsInYear(this.developmentDate)"
+                <layout-chart type="bar" :labels="listMonthsInYear(this.developmentDate)"
                     :datasets="stateData"></layout-chart>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="operations">
-                <layout-chart :labels="listMonthsInYear(this.developmentDate)"
+                <layout-chart type="bar" :labels="listMonthsInYear(this.developmentDate)"
                     :datasets="operationsData"></layout-chart>
             </div>
 

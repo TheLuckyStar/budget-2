@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Factories\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -57,6 +58,27 @@ abstract class Container extends Model
         }
 
         return $output;
+    }
+
+    /**
+     * Combine metric development for the given envelopes
+     * @param  Collection $envelopes Envelopes to coombine the development
+     * @return array Combined snapshots
+     */
+    static public function combineDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
+    {
+        return $envelopes->map(function (Envelope $envelope) use ($currency, $date) {
+            return $envelope->getYearlyDevelopmentAttribute($currency, $date);
+        })->reduce(function ($combinedEnvelopes, $envelopeValues) {
+            if (is_null($combinedEnvelopes)) {
+                return $envelopeValues;
+            }
+            return collect($envelopeValues)->map(function ($yearValues, $type) use ($combinedEnvelopes) {
+                return collect($yearValues)->map(function ($monthValue, $monthIndex) use ($combinedEnvelopes, $type) {
+                    return $combinedEnvelopes[$type][$monthIndex] + $monthValue;
+                });
+            });
+        });
     }
 
     /**

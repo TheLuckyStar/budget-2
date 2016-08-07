@@ -1,7 +1,15 @@
 
 <template>
 
-    <canvas></canvas>
+    <fieldset>
+
+        <legend v-if="legend">
+            {{ legend }}
+        </legend>
+
+        <canvas></canvas>
+
+    </fieldset>
 
 </template>
 
@@ -15,7 +23,7 @@
 
         mixins: [mixins.vuex, mixins.moment, mixins.development],
 
-        props: ['labels', 'datasets'],
+        props: ['type', 'legend', 'labels', 'datasets'],
 
         data: function () {
             return {
@@ -61,10 +69,13 @@
         },
 
         ready: function () {
+            if (this.type === 'radar') {
+                this.$el.lastElementChild.setAttribute('height', this.$el.lastElementChild.offsetWidth)
+            }
             this.chart = new Chart(
-                this.$el,
+                this.$el.lastElementChild,
                 {
-                    type: 'bar',
+                    type: this.type,
                     data: {
                         labels: this.labels,
                         datasets: this.formatedDatasets
@@ -103,6 +114,18 @@
                     borderColor: this.frontColors[color],
                     hoverBackgroundColor: this.backColors[color],
                     hoverBorderColor: this.frontColors[color],
+                    borderWidth: 2,
+                }
+            },
+
+            radarColors: function (color) {
+                return {
+                    backgroundColor: this.backColors[color],
+                    borderColor: this.frontColors[color],
+                    pointBorderColor: this.frontColors[color],
+                    pointBackgroundColor: this.frontColors[color],
+                    pointHoverBackgroundColor: this.frontColors[color],
+                    pointHoverBorderColor: this.frontColors[color],
                     borderWidth: 2,
                 }
             },

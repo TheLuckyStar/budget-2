@@ -52,7 +52,7 @@
         </div>
 
         <div class="col-md-12">
-            <envelopes-development :envelope="envelope"></envelopes-development>
+            <envelopes-development></envelopes-development>
         </div>
 
     </div>

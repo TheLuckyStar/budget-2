@@ -28,7 +28,14 @@
         </div>
 
         <div class="col-md-12">
-            <layout-chart type="radar" :title="text.envelopes.balances.title" :chart-labels="balancesLabels" :data="balancesData" :data-labels="text.envelopes.balances.labels"></layout-chart>
+            <layout-chart type="radar"
+                :legend="text.envelopes.balances.title"
+                :labels="balancesLabels"
+                :datasets="balancesData"></layout-chart>
+        </div>
+
+        <div class="col-md-12">
+            <envelopes-development></envelopes-development>
         </div>
 
     </div>
@@ -40,6 +47,7 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
+    var EnvelopesDevelopment = require('components/envelopes/development.vue')
 
     export default {
 
@@ -50,10 +58,20 @@
             balancesData: function () {
                 return [
                     {
-                        color: 'primary',
+                        type: 'radar',
                         data: this.enabledEnvelopes.map(function (envelope) {
                             return envelope.balance
                         }),
+                        label: this.text.envelopes.development.balanceLabel,
+                        color: 'default',
+                    },
+                    {
+                        type: 'radar',
+                        data: this.enabledEnvelopes.map(function (envelope) {
+                            return envelope.monthly.savings
+                        }),
+                        label: this.text.envelopes.development.savingsLabel,
+                        color: 'primary',
                     },
                 ]
             },
@@ -66,10 +84,20 @@
 
         },
 
+        route: {
+            data: function () {
+                this.setCurrentEnvelope(null)
+            },
+        },
+
         methods: {
             batteryValue: function (percentage) {
                 return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)))
             },
+        },
+
+        components: {
+            EnvelopesDevelopment,
         },
 
     }

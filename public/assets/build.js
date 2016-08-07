@@ -37829,7 +37829,7 @@
 
 	    mixins: [mixins.vuex, mixins.moment, mixins.development],
 
-	    props: ['labels', 'datasets'],
+	    props: ['type', 'legend', 'labels', 'datasets'],
 
 	    data: function data() {
 	        return {
@@ -37875,8 +37875,11 @@
 	    },
 
 	    ready: function ready() {
-	        this.chart = new Chart(this.$el, {
-	            type: 'bar',
+	        if (this.type === 'radar') {
+	            this.$el.lastElementChild.setAttribute('height', this.$el.lastElementChild.offsetWidth);
+	        }
+	        this.chart = new Chart(this.$el.lastElementChild, {
+	            type: this.type,
 	            data: {
 	                labels: this.labels,
 	                datasets: this.formatedDatasets
@@ -37914,6 +37917,18 @@
 	                borderColor: this.frontColors[color],
 	                hoverBackgroundColor: this.backColors[color],
 	                hoverBorderColor: this.frontColors[color],
+	                borderWidth: 2
+	            };
+	        },
+
+	        radarColors: function radarColors(color) {
+	            return {
+	                backgroundColor: this.backColors[color],
+	                borderColor: this.frontColors[color],
+	                pointBorderColor: this.frontColors[color],
+	                pointBackgroundColor: this.frontColors[color],
+	                pointHoverBackgroundColor: this.frontColors[color],
+	                pointHoverBorderColor: this.frontColors[color],
 	                borderWidth: 2
 	            };
 	        }
@@ -48800,7 +48815,7 @@
 /* 289 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<canvas></canvas>\n\n";
+	module.exports = "\n\n\n<fieldset>\n\n    <legend v-if=\"legend\">\n        {{ legend }}\n    </legend>\n\n    <canvas></canvas>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 290 */
@@ -49152,9 +49167,6 @@
 	}
 
 	exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
-	    if (state.app.envelope_id === null) {
-	        return
-	    }
 	    var attributes = {
 	        envelope_id: state.app.envelope_id,
 	        default_currency_id: state.app.currency_id,
@@ -54854,6 +54866,7 @@
 
 
 	var mixins = __webpack_require__(294);
+	var EnvelopesDevelopment = __webpack_require__(346);
 
 	exports.default = {
 
@@ -54863,10 +54876,19 @@
 
 	        balancesData: function balancesData() {
 	            return [{
-	                color: 'primary',
+	                type: 'radar',
 	                data: this.enabledEnvelopes.map(function (envelope) {
 	                    return envelope.balance;
-	                })
+	                }),
+	                label: this.text.envelopes.development.balanceLabel,
+	                color: 'default'
+	            }, {
+	                type: 'radar',
+	                data: this.enabledEnvelopes.map(function (envelope) {
+	                    return envelope.monthly.savings;
+	                }),
+	                label: this.text.envelopes.development.savingsLabel,
+	                color: 'primary'
 	            }];
 	        },
 
@@ -54878,10 +54900,20 @@
 
 	    },
 
+	    route: {
+	        data: function data() {
+	            this.setCurrentEnvelope(null);
+	        }
+	    },
+
 	    methods: {
 	        batteryValue: function batteryValue(percentage) {
 	            return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)));
 	        }
+	    },
+
+	    components: {
+	        EnvelopesDevelopment: EnvelopesDevelopment
 	    }
 
 	};
@@ -54890,7 +54922,7 @@
 /* 343 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"enabledEnvelopesSavings + '/' + (enabledEnvelopesRevenues + enabledEnvelopesIncomes)\"\n            :comment=\"enabledEnvelopesRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\" :title=\"text.envelopes.balances.title\" :chart-labels=\"balancesLabels\" :data=\"balancesData\" :data-labels=\"text.envelopes.balances.labels\"></layout-chart>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"enabledEnvelopesSavings + '/' + (enabledEnvelopesRevenues + enabledEnvelopesIncomes)\"\n            :comment=\"enabledEnvelopesRelativeSavings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\"\n            :legend=\"text.envelopes.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 344 */
@@ -55108,7 +55140,7 @@
 /* 353 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n\n        {{ text.envelopes.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-acc82e2c=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"operations\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"operationsData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n\n        {{ text.envelopes.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-acc82e2c=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" _v-acc82e2c=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"operations\" _v-acc82e2c=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"operationsData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 354 */
@@ -55266,7 +55298,7 @@
 /* 359 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.monthly.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.monthly.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.monthly.savings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelope.monthly.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.monthly.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.monthly.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.monthly.savings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelope.monthly.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 360 */

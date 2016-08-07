@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Envelope;
+use App\Currency;
 use Illuminate\Http\Request;
 
 class Envelopes extends Controller
@@ -36,8 +37,16 @@ class Envelopes extends Controller
         return $envelope;
     }
 
-    public function development(Request $request, $id)
+    public function development(Request $request, $id = null)
     {
+        if (is_null($id)) {
+            return Envelope::combineDevelopment(
+                Envelope::all(),
+                Currency::findOrFail(session('currency_id')),
+                $request->date
+            );
+        }
+
         return Envelope::withTrashed()
             ->findOrFail($id)
             ->getYearlyDevelopmentAttribute(null, $request->date);
