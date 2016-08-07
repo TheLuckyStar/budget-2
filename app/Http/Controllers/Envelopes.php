@@ -38,11 +38,8 @@ class Envelopes extends Controller
 
     public function development(Request $request, $id)
     {
-        $envelope = Envelope::withTrashed()->findOrFail($id);
-
-        return [
-            'monthly' => $envelope->getMonthlyDevelopmentAttribute(null, $request->date),
-            'yearly' => $envelope->getYearlyDevelopmentAttribute(null, $request->date),
-        ];
+        return Envelope::withTrashed()
+            ->findOrFail($id)
+            ->getYearlyDevelopmentAttribute(null, $request->date);
     }
 }

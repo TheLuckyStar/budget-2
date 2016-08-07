@@ -16,6 +16,14 @@ Vue.filter('formatLongDay', function (date) {
     return day + ' ' + date
 })
 
+// Format date to localized month
+Vue.filter('formatShortMonth', function (date) {
+    var date = moment(date)
+    var month = moment.localeData().months(date)
+    month = month.charAt(0).toUpperCase() + month.slice(1)
+    return month
+})
+
 // Format date to localized month and year
 Vue.filter('formatLongMonth', function (date) {
     var date = moment(date)

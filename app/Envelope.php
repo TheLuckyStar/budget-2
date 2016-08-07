@@ -142,22 +142,6 @@ class Envelope extends Container
     }
 
     /**
-     * Calculate main envelope metrics for the given day
-     * @return array Envelope metrics
-     */
-    public function getDailySnapshotAttribute(Currency $currency = null, $date = null)
-    {
-        $date = Carbon::startOfDay($date);
-
-        return [
-            'balance' => $this->getBalanceAttribute($currency, $date),
-            'revenues' => $this->getRevenuesAttribute($currency, $date, $date),
-            'incomes' => $this->getIncomesAttribute($currency, $date, $date),
-            'outcomes' => $this->getOutcomesAttribute($currency, $date, $date),
-        ];
-    }
-
-    /**
      * Calculate envelope main metrics for the given month
      * @return array Envelope metrics
      */

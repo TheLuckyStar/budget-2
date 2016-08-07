@@ -51,7 +51,7 @@
 	__webpack_require__(203);
 	__webpack_require__(303);
 	__webpack_require__(305);
-	module.exports = __webpack_require__(360);
+	module.exports = __webpack_require__(363);
 
 
 /***/ },
@@ -12784,6 +12784,14 @@
 	    day = day.charAt(0).toUpperCase() + day.slice(1)
 	    var date = date.date()
 	    return day + ' ' + date
+	})
+
+	// Format date to localized month
+	Vue.filter('formatShortMonth', function (date) {
+	    var date = moment(date)
+	    var month = moment.localeData().months(date)
+	    month = month.charAt(0).toUpperCase() + month.slice(1)
+	    return month
 	})
 
 	// Format date to localized month and year
@@ -37815,9 +37823,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var mixins = __webpack_require__(294);
+
 	exports.default = {
 
-	    props: ['title', 'chartLabels', 'data', 'dataLabels', 'type'],
+	    mixins: [mixins.vuex, mixins.moment, mixins.development],
+
+	    props: ['labels', 'datasets'],
 
 	    data: function data() {
 	        return {
@@ -37841,50 +37853,69 @@
 	        };
 	    },
 
-	    ready: function ready() {
-	        this.chart = new Chart(this.$el.lastElementChild, {
-	            type: this.type,
-	            data: {
-	                labels: this.chartLabels,
-	                datasets: this.formatDatasets(this.data)
-	            }
-	        });
+	    computed: {
+	        formatedDatasets: function formatedDatasets() {
+	            return this.datasets.map(function (dataset) {
+	                this.colorDataset(dataset);
+	                return dataset;
+	            }, this);
+	        }
 	    },
 
 	    watch: {
-	        data: function data() {
-	            this.chart.data.labels = this.chartLabels;
-	            this.chart.data.datasets = this.formatDatasets(this.data);
+	        formatedDatasets: function formatedDatasets() {
+	            this.chart.data.labels = this.labels;
+	            this.chart.data.datasets = this.formatedDatasets;
 	            this.chart.update();
 	        },
 	        chartLabels: function chartLabels() {
-	            this.chart.data.labels = this.chartLabels;
+	            this.chart.data.labels = this.labels;
 	            this.chart.update();
 	        }
 	    },
 
+	    ready: function ready() {
+	        this.chart = new Chart(this.$el, {
+	            type: 'bar',
+	            data: {
+	                labels: this.labels,
+	                datasets: this.formatedDatasets
+	            }
+	        });
+	    },
+
 	    methods: {
 
-	        formatDatasets: function formatDatasets(datasets) {
-	            return datasets.map(this.formatDataset, this);
-	        },
+	        colorDataset: function colorDataset(dataset) {
+	            var colors = this[dataset.type + 'Colors'](dataset.color);
 
-	        formatDataset: function formatDataset(input, index) {
-	            var output = {
-	                label: this.dataLabels[index]
-	            };
-
-	            (0, _keys2.default)(input).forEach(function (key) {
-	                output[key] = input[key];
+	            (0, _keys2.default)(colors).forEach(function (key) {
+	                dataset[key] = colors[key];
 	            });
 
-	            output.backgroundColor = this.backColors[output.color];
-	            output.borderColor = this.frontColors[output.color];
-	            output.pointBorderColor = this.frontColors[output.color];
-	            output.pointBackgroundColor = this.backColors[output.color];
-	            output.pointHoverBackgroundColor = this.frontColors[output.color];
+	            delete dataset.color;
+	        },
 
-	            return output;
+	        lineColors: function lineColors(color) {
+	            return {
+	                backgroundColor: this.backColors[color],
+	                borderColor: this.frontColors[color],
+	                pointBorderColor: this.frontColors[color],
+	                pointBackgroundColor: this.frontColors[color],
+	                pointHoverBackgroundColor: this.frontColors[color],
+	                pointHoverBorderColor: this.frontColors[color],
+	                borderWidth: 2
+	            };
+	        },
+
+	        barColors: function barColors(color) {
+	            return {
+	                backgroundColor: this.backColors[color],
+	                borderColor: this.frontColors[color],
+	                hoverBackgroundColor: this.backColors[color],
+	                hoverBorderColor: this.frontColors[color],
+	                borderWidth: 2
+	            };
 	        }
 
 	    }
@@ -48769,7 +48800,7 @@
 /* 289 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset>\n\n    <legend v-if=\"title\">\n        {{ title }}\n    </legend>\n\n    <canvas></canvas>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<canvas></canvas>\n\n";
 
 /***/ },
 /* 290 */
@@ -48941,7 +48972,7 @@
 	            var end = moment(start).endOf('year')
 
 	            while (start.isSameOrBefore(end)) {
-	                list.push(this.$options.filters.formatLongMonth(start))
+	                list.push(this.$options.filters.formatShortMonth(start))
 	                start.add(1, 'month')
 	            }
 
@@ -48955,14 +48986,6 @@
 	exports.development = {
 
 	    computed: {
-
-	        prevMonth: function () {
-	            return moment(this.developmentDate).subtract(1, 'month')
-	        },
-
-	        nextMonth: function () {
-	            return moment(this.developmentDate).add(1, 'month')
-	        },
 
 	        prevYear: function () {
 	            return moment(this.developmentDate).subtract(1, 'year')
@@ -50884,7 +50907,7 @@
 	                component: __webpack_require__(344),
 	            },
 	            '/new': {
-	                component: __webpack_require__(357),
+	                component: __webpack_require__(360),
 	            },
 	        },
 	    },
@@ -53818,7 +53841,13 @@
 	            },
 	            development: {
 	                title: 'Development',
-	                labels: ['Balance', 'Direct revenues', 'Allocated revenues', 'Outcomes'],
+	                stateTitle: 'State',
+	                operationsTitle: 'Operations',
+	                balanceLabel: 'Balance',
+	                savingsLabel: 'Saved',
+	                revenuesLabel: 'Direct revenues',
+	                incomesLabel: 'Allocated revenues',
+	                outcomesLabel: 'Outcomes',
 	            },
 	        },
 	        operations: {
@@ -53908,7 +53937,13 @@
 	            },
 	            development: {
 	                title: 'Évolution',
-	                labels: ['Solde', 'Revenus directs', 'Revenus alloués', 'Dépenses'],
+	                stateTitle: 'État',
+	                operationsTitle: 'Operations',
+	                balanceLabel: 'Solde',
+	                savingsLabel: 'Économisé',
+	                revenuesLabel: 'Revenus directs',
+	                incomesLabel: 'Revenus alloués',
+	                outcomesLabel: 'Dépenses',
 	            },
 	        },
 	        operations: {
@@ -53946,18 +53981,11 @@
 	    },
 	    envelopes: [],
 	    envelopeDevelopment: {
-	        monthly: {
-	            balance: [],
-	            revenues: [],
-	            incomes: [],
-	            outcomes: [],
-	        },
-	        yearly: {
-	            balance: [],
-	            revenues: [],
-	            incomes: [],
-	            outcomes: [],
-	        },
+	        balance: [],
+	        savings: [],
+	        revenues: [],
+	        incomes: [],
+	        outcomes: [],
 	    },
 	}
 
@@ -54874,7 +54902,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/one.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(356)
+	__vue_template__ = __webpack_require__(359)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54905,7 +54933,7 @@
 
 	var mixins = __webpack_require__(294);
 	var EnvelopesDevelopment = __webpack_require__(346);
-	var EnvelopesForm = __webpack_require__(351);
+	var EnvelopesForm = __webpack_require__(354);
 
 	exports.default = {
 
@@ -54954,7 +54982,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/development.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(350)
+	__vue_template__ = __webpack_require__(353)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -55007,7 +55035,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.tab-pane[_v-acc82e2c] {\n    padding: 20px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n    visibility: hidden;\n}\n\n.active .btn-link[_v-acc82e2c] {\n    visibility: visible;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-acc82e2c] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n", ""]);
 
 	// exports
 
@@ -55031,34 +55059,16 @@
 
 	    computed: {
 
-	        monthlyData: function monthlyData() {
+	        stateData: function stateData() {
 	            return [{
-	                data: this.envelopeDevelopment.monthly.balance,
-	                color: 'default'
+	                type: 'line',
+	                data: this.envelopeDevelopment.balance,
+	                label: this.text.envelopes.development.balanceLabel,
+	                color: 'warning'
 	            }, {
-	                data: this.envelopeDevelopment.monthly.revenues,
-	                color: 'success'
-	            }, {
-	                data: this.envelopeDevelopment.monthly.incomes,
-	                color: 'info'
-	            }, {
-	                data: this.envelopeDevelopment.monthly.outcomes,
-	                color: 'danger'
-	            }];
-	        },
-
-	        yearlyData: function yearlyData() {
-	            return [{
-	                data: this.envelopeDevelopment.yearly.balance,
-	                color: 'default'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.revenues,
-	                color: 'success'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.incomes,
-	                color: 'info'
-	            }, {
-	                data: this.envelopeDevelopment.yearly.outcomes,
+	                type: 'bar',
+	                data: this.envelopeDevelopment.savings,
+	                label: this.text.envelopes.development.savingsLabel,
 	                color: 'danger'
 	            }];
 	        }
@@ -55068,23 +55078,26 @@
 	};
 
 /***/ },
-/* 350 */
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n        {{ text.envelopes.development.title }}\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#monthly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevMonth)\" class=\"btn-link\" :title=\"prevMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatLongMonth }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextMonth)\" class=\"btn-link\" :title=\"nextMonth | formatLongMonth\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#yearly\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                <span v-on:click.prevent=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n                </span>\n                {{ developmentDate | formatYear }}\n                <span v-on:click.prevent=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                    <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n                </span>\n            </a>\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"monthly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listDaysInMonth(developmentDate)\" :data=\"monthlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane\" id=\"yearly\" _v-acc82e2c=\"\">\n            <layout-chart type=\"line\" :chart-labels=\"listMonthsInYear(developmentDate)\" :data=\"yearlyData\" :data-labels=\"text.envelopes.development.labels\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-acc82e2c=\"\">\n\n    <legend _v-acc82e2c=\"\">\n\n        {{ text.envelopes.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-acc82e2c=\"\">\n\n        <li role=\"presentation\" class=\"active\" _v-acc82e2c=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" _v-acc82e2c=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-acc82e2c=\"\">\n                {{ text.envelopes.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-acc82e2c=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-left\" _v-acc82e2c=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-acc82e2c=\"\">\n                <i class=\"fa fa-chevron-right\" _v-acc82e2c=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-acc82e2c=\"\">\n\n        <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" _v-acc82e2c=\"\">\n            <layout-chart :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-acc82e2c=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
-/* 351 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__webpack_require__(352)
-	__vue_script__ = __webpack_require__(354)
+	__webpack_require__(355)
+	__vue_script__ = __webpack_require__(357)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/form.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(355)
+	__vue_template__ = __webpack_require__(358)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -55103,13 +55116,13 @@
 	})()}
 
 /***/ },
-/* 352 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(353);
+	var content = __webpack_require__(356);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(207)(content, {});
@@ -55129,7 +55142,7 @@
 	}
 
 /***/ },
-/* 353 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -55143,7 +55156,7 @@
 
 
 /***/ },
-/* 354 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, moment) {'use strict';
@@ -55220,28 +55233,28 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73), __webpack_require__(98)))
 
 /***/ },
-/* 355 */
+/* 358 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<form v-on:submit.prevent=\"onSubmit\" class=\"form-horizontal\" _v-7b073aa5=\"\">\n\n    <fieldset _v-7b073aa5=\"\">\n\n        <legend _v-7b073aa5=\"\">\n            {{ text.envelopes.form.title }}\n        </legend>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-name\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.name }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-name\" v-model=\"name\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <label for=\"input-envelope-icon\" class=\"col-xs-3 control-label\" _v-7b073aa5=\"\">\n                {{ text.envelopes.form.icon }}\n            </label>\n            <div class=\"col-xs-9\" _v-7b073aa5=\"\">\n                <input type=\"text\" class=\"form-control\" id=\"input-envelope-icon\" v-model=\"icon\" lazy=\"\" :disabled=\"deleted_at\" _v-7b073aa5=\"\">\n            </div>\n        </div>\n\n        <div class=\"form-group\" _v-7b073aa5=\"\">\n            <div class=\"col-xs-12 text-right\" _v-7b073aa5=\"\">\n                <button v-if=\"deleted_at &amp;&amp; id\" @click=\"onEnable\" type=\"button\" class=\"btn btn-success btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.enable }}\n                </button>\n                <button v-if=\"! deleted_at &amp;&amp; id\" @click=\"onDisable\" type=\"button\" class=\"btn btn-warning btn-sm pull-left\" _v-7b073aa5=\"\">\n                    {{ text.app.disable }}\n                </button>\n                <button v-if=\"! deleted_at\" type=\"submit\" class=\"btn btn-primary btn-sm\" _v-7b073aa5=\"\">\n                    {{ text.app.submit }}\n                </button>\n            </div>\n        </div>\n\n    </fieldset>\n\n</form>\n\n";
 
 /***/ },
-/* 356 */
+/* 359 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"envelope.monthly.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.monthly.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.monthly.savings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)\"\n            :comment=\"envelope.monthly.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development :envelope=\"envelope\"></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 357 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(358)
+	__vue_script__ = __webpack_require__(361)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/envelopes/new.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(359)
+	__vue_template__ = __webpack_require__(362)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -55260,7 +55273,7 @@
 	})()}
 
 /***/ },
-/* 358 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55271,7 +55284,7 @@
 
 
 	var mixins = __webpack_require__(294);
-	var EnvelopesForm = __webpack_require__(351);
+	var EnvelopesForm = __webpack_require__(354);
 
 	exports.default = {
 
@@ -55288,19 +55301,19 @@
 	};
 
 /***/ },
-/* 359 */
+/* 362 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <envelopes-form :envelope=\"{}\"></envelopes-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 360 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(361);
+	var content = __webpack_require__(364);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -55320,7 +55333,7 @@
 	}
 
 /***/ },
-/* 361 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();

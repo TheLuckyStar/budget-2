@@ -81,7 +81,13 @@ exports.state = {
             },
             development: {
                 title: 'Development',
-                labels: ['Balance', 'Direct revenues', 'Allocated revenues', 'Outcomes'],
+                stateTitle: 'State',
+                operationsTitle: 'Operations',
+                balanceLabel: 'Balance',
+                savingsLabel: 'Saved',
+                revenuesLabel: 'Direct revenues',
+                incomesLabel: 'Allocated revenues',
+                outcomesLabel: 'Outcomes',
             },
         },
         operations: {
@@ -171,7 +177,13 @@ exports.state = {
             },
             development: {
                 title: 'Évolution',
-                labels: ['Solde', 'Revenus directs', 'Revenus alloués', 'Dépenses'],
+                stateTitle: 'État',
+                operationsTitle: 'Operations',
+                balanceLabel: 'Solde',
+                savingsLabel: 'Économisé',
+                revenuesLabel: 'Revenus directs',
+                incomesLabel: 'Revenus alloués',
+                outcomesLabel: 'Dépenses',
             },
         },
         operations: {

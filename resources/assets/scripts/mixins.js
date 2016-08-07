@@ -76,7 +76,7 @@ exports.moment = {
             var end = moment(start).endOf('year')
 
             while (start.isSameOrBefore(end)) {
-                list.push(this.$options.filters.formatLongMonth(start))
+                list.push(this.$options.filters.formatShortMonth(start))
                 start.add(1, 'month')
             }
 
@@ -90,14 +90,6 @@ exports.moment = {
 exports.development = {
 
     computed: {
-
-        prevMonth: function () {
-            return moment(this.developmentDate).subtract(1, 'month')
-        },
-
-        nextMonth: function () {
-            return moment(this.developmentDate).add(1, 'month')
-        },
 
         prevYear: function () {
             return moment(this.developmentDate).subtract(1, 'year')

@@ -20,18 +20,11 @@ exports.state = {
     },
     envelopes: [],
     envelopeDevelopment: {
-        monthly: {
-            balance: [],
-            revenues: [],
-            incomes: [],
-            outcomes: [],
-        },
-        yearly: {
-            balance: [],
-            revenues: [],
-            incomes: [],
-            outcomes: [],
-        },
+        balance: [],
+        savings: [],
+        revenues: [],
+        incomes: [],
+        outcomes: [],
     },
 }
 

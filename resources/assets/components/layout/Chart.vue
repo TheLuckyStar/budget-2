@@ -1,15 +1,7 @@
 
 <template>
 
-    <fieldset>
-
-        <legend v-if="title">
-            {{ title }}
-        </legend>
-
-        <canvas></canvas>
-
-    </fieldset>
+    <canvas></canvas>
 
 </template>
 
@@ -17,9 +9,13 @@
 
 <script>
 
+    var mixins = require('scripts/mixins.js')
+
     export default {
 
-        props: ['title', 'chartLabels', 'data', 'dataLabels', 'type'],
+        mixins: [mixins.vuex, mixins.moment, mixins.development],
+
+        props: ['labels', 'datasets'],
 
         data: function () {
             return {
@@ -43,50 +39,72 @@
             }
         },
 
-        ready: function () {
-            this.chart = new Chart(this.$el.lastElementChild, {
-                type: this.type,
-                data: {
-                    labels: this.chartLabels,
-                    datasets: this.formatDatasets(this.data),
-                },
-            })
+        computed: {
+            formatedDatasets: function () {
+                return this.datasets.map(function (dataset) {
+                    this.colorDataset(dataset)
+                    return dataset
+                }, this)
+            },
         },
 
         watch: {
-            data: function () {
-                this.chart.data.labels = this.chartLabels
-                this.chart.data.datasets = this.formatDatasets(this.data)
+            formatedDatasets: function () {
+                this.chart.data.labels = this.labels
+                this.chart.data.datasets = this.formatedDatasets
                 this.chart.update()
             },
             chartLabels: function () {
-                this.chart.data.labels = this.chartLabels
+                this.chart.data.labels = this.labels
                 this.chart.update()
             },
+        },
+
+        ready: function () {
+            this.chart = new Chart(
+                this.$el,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: this.labels,
+                        datasets: this.formatedDatasets
+                    },
+                }
+            )
         },
 
         methods: {
 
-            formatDatasets: function (datasets) {
-                return datasets.map(this.formatDataset, this)
-            },
+            colorDataset: function (dataset) {
+                var colors = this[dataset.type+'Colors'](dataset.color)
 
-            formatDataset: function (input, index) {
-                var output = {
-                    label: this.dataLabels[index],
-                }
-
-                Object.keys(input).forEach(function (key) {
-                    output[key] = input[key]
+                Object.keys(colors).forEach(function (key) {
+                    dataset[key] = colors[key]
                 })
 
-                output.backgroundColor = this.backColors[output.color]
-                output.borderColor = this.frontColors[output.color]
-                output.pointBorderColor = this.frontColors[output.color]
-                output.pointBackgroundColor = this.backColors[output.color]
-                output.pointHoverBackgroundColor = this.frontColors[output.color]
+                delete dataset.color
+            },
 
-                return output
+            lineColors: function (color) {
+                return {
+                    backgroundColor: this.backColors[color],
+                    borderColor: this.frontColors[color],
+                    pointBorderColor: this.frontColors[color],
+                    pointBackgroundColor: this.frontColors[color],
+                    pointHoverBackgroundColor: this.frontColors[color],
+                    pointHoverBorderColor:  this.frontColors[color],
+                    borderWidth: 2,
+                }
+            },
+
+            barColors: function (color) {
+                return {
+                    backgroundColor: this.backColors[color],
+                    borderColor: this.frontColors[color],
+                    hoverBackgroundColor: this.backColors[color],
+                    hoverBorderColor: this.frontColors[color],
+                    borderWidth: 2,
+                }
             },
 
         },

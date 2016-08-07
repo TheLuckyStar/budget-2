@@ -39,27 +39,6 @@ abstract class Container extends Model
     abstract public function getBalanceAttribute(Currency $currency = null, $date = null);
 
     /**
-     * Generate metric development for the given month
-     * @return array List of snapshots
-     */
-    public function getMonthlyDevelopmentAttribute(Currency $currency = null, $date = null)
-    {
-        $output = [];
-
-        $start = Carbon::startOfMonth($date);
-        $end = Carbon::endOfMonth($date);
-
-        while ($start->lte($end)) {
-            foreach ($this->getDailySnapshotAttribute($currency, $start) as $key => $val) {
-                $output[$key][] = $val;
-            }
-            $start->addDay(1);
-        }
-
-        return $output;
-    }
-
-    /**
      * Generate metric development for the given year
      * @return array List of snapshots
      */
@@ -79,12 +58,6 @@ abstract class Container extends Model
 
         return $output;
     }
-
-    /**
-     * Calculate container main metrics for the given day
-     * @return array Container metrics
-     */
-    abstract public function getDailySnapshotAttribute(Currency $currency = null, $date = null);
 
     /**
      * Calculate container main metrics for the given month
