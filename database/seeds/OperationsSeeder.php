@@ -23,18 +23,42 @@ class OperationsSeeder extends Seeder
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA + liquide',
+            'amount' => '3000',
+            'date' => '2016-07-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 1,
             'name' => 'Loyer aout',
             'amount' => '7000',
             'date' => '2016-08-01',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Avance sur salaire',
+            'amount' => '5000',
+            'date' => '2016-08-08',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA + liquide',
-            'amount' => '3000',
-            'date' => '2016-07-28',
+            'amount' => '5000',
+            'date' => '2016-08-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Lekoseum',
+            'amount' => '450',
+            'date' => '2016-08-09',
         ]);
     }
 }
