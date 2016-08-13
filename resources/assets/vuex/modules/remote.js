@@ -2,30 +2,9 @@
 exports.state = {
     currencies: [],
     accounts: [],
-    accountDevelopment: {
-        monthly: {
-            balance: [],
-            revenues: [],
-            outcomes: [],
-            incomingTransfers: [],
-            outgoingTransfers: [],
-        },
-        yearly: {
-            balance: [],
-            revenues: [],
-            outcomes: [],
-            incomingTransfers: [],
-            outgoingTransfers: [],
-        },
-    },
+    accountDevelopment: {},
     envelopes: [],
-    envelopeDevelopment: {
-        balance: [],
-        savings: [],
-        revenues: [],
-        incomes: [],
-        outcomes: [],
-    },
+    envelopeDevelopment: {},
 }
 
 exports.mutations = {

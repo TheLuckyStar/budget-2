@@ -33,25 +33,25 @@
 
         <hr>
 
-        <div class="col-md-6">
-            <layout-card :color="envelope.balance < 0 ? 'danger' : 'success'"
-                :icon="envelope.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
+        <div class="col-md-6" v-if="envelope.state">
+            <layout-card :color="envelope.state.balance < 0 ? 'danger' : 'success'"
+                :icon="envelope.state.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
                 :title="text.envelopes.balance.title"
-                :text="envelope.balance"
+                :text="envelope.state.balance"
                 :comment="$options.filters.formatLongDate(date)"
             ></layout-card>
         </div>
 
-        <div class="col-md-6">
-            <layout-card :color="envelope.monthly.relative_savings < 0 ? 'danger' : 'success'"
-                :icon="'fa-battery-' + batteryValue(envelope.monthly.relative_savings)"
+        <div class="col-md-6" v-if="envelope.state">
+            <layout-card :color="envelope.state.relative_savings < 0 ? 'danger' : 'success'"
+                :icon="'fa-battery-' + batteryValue(envelope.state.relative_savings)"
                 :title="text.envelopes.savings.title"
-                :text="envelope.monthly.savings + '/' + (envelope.monthly.revenues + envelope.monthly.incomes)"
-                :comment="envelope.monthly.relative_savings + '%'"
+                :text="envelope.state.savings + '/' + (envelope.state.revenues + envelope.state.incomes)"
+                :comment="envelope.state.relative_savings + '%'"
             ></layout-card>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-12" v-if="envelopeDevelopment.yearly">
             <envelopes-development></envelopes-development>
         </div>
 

@@ -18,12 +18,12 @@
             ></layout-card>
         </div>
 
-        <div class="col-md-6">
-            <layout-card :color="enabledEnvelopesRelativeSavings < 0 ? 'danger' : 'success'"
-                :icon="'fa-battery-' + batteryValue(enabledEnvelopesRelativeSavings)"
+        <div class="col-md-6" v-if="envelopeDevelopment.state">
+            <layout-card :color="envelopeDevelopment.state.relative_savings < 0 ? 'danger' : 'success'"
+                :icon="'fa-battery-' + batteryValue(envelopeDevelopment.state.relative_savings)"
                 :title="text.envelopes.savings.title"
-                :text="enabledEnvelopesSavings + '/' + (enabledEnvelopesRevenues + enabledEnvelopesIncomes)"
-                :comment="enabledEnvelopesRelativeSavings + '%'"
+                :text="envelopeDevelopment.state.savings + '/' + (envelopeDevelopment.state.revenues + envelopeDevelopment.state.incomes)"
+                :comment="envelopeDevelopment.state.relative_savings + '%'"
             ></layout-card>
         </div>
 
@@ -34,7 +34,7 @@
                 :datasets="balancesData"></layout-chart>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-12" v-if="envelopeDevelopment.yearly">
             <envelopes-development></envelopes-development>
         </div>
 
@@ -68,7 +68,7 @@
                     {
                         type: 'radar',
                         data: this.enabledEnvelopes.map(function (envelope) {
-                            return envelope.monthly.savings
+                            return envelope.state.savings
                         }),
                         label: this.text.envelopes.development.savingsLabel,
                         color: 'primary',

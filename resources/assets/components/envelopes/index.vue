@@ -50,8 +50,8 @@
                         return {
                             title: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
-                            badge: envelope.balance,
-                            badgeColor: envelope.balance < 0 ? 'danger' : 'success',
+                            badge: envelope.state.balance,
+                            badgeColor: envelope.state.balance < 0 ? 'danger' : 'success',
                         }
                     }),
                 }
@@ -67,8 +67,8 @@
                         return {
                             title: '<i class="fa fa-fw ' + envelope.icon + '"></i> ' +  envelope.name,
                             route: '/envelopes/one/' + envelope.id,
-                            badge: envelope.balance,
-                            badgeColor: envelope.balance < 0 ? 'danger' : 'success',
+                            badge: envelope.state.balance,
+                            badgeColor: envelope.state.balance < 0 ? 'danger' : 'success',
                         }
                     }),
                 }

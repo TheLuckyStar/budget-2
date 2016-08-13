@@ -64,6 +64,7 @@ exports.refreshCurrencies = function ({ dispatch, state }, callback) {
  */
 
 exports.refreshAccounts = function ({ dispatch, state }, callback) {
+    dispatch('SET_ACCOUNTS', [])
     Vue.resource('accounts').get({ default_currency_id: state.app.currency_id }).then(function (response) {
         dispatch('SET_ACCOUNTS', response.data)
         if (callback) {
@@ -94,6 +95,7 @@ exports.updateAccount = function ({ dispatch, state }, id, attributes) {
 }
 
 exports.refreshAccountDevelopment = function ({ dispatch, state }) {
+    dispatch('SET_ACCOUNT_DEVELOPMENT', {})
     if (state.app.account_id === null) {
         return
     }
@@ -116,6 +118,7 @@ exports.refreshAccountDevelopment = function ({ dispatch, state }) {
  */
 
 exports.refreshEnvelopes = function ({ dispatch, state }, callback) {
+    dispatch('SET_ENVELOPES', [])
     exports.refreshCurrencies({ dispatch, state })
     Vue.resource('envelopes').get({ default_currency_id: state.app.currency_id }).then(function (response) {
         dispatch('SET_ENVELOPES', response.data)
@@ -146,6 +149,7 @@ exports.updateEnvelope = function ({ dispatch, state }, id, attributes) {
 }
 
 exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
+    dispatch('SET_ENVELOPE_DEVELOPMENT', {})
     var attributes = {
         envelope_id: state.app.envelope_id,
         default_currency_id: state.app.currency_id,

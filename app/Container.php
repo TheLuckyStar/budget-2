@@ -27,8 +27,7 @@ abstract class Container extends Model
     {
         $output = parent::toArray();
 
-        $output['balance'] = $this->balance;
-        $output['monthly'] = $this->monthly_snapshot;
+        $output['state'] = $this->monthly_snapshot;
 
         return $output;
     }
@@ -61,12 +60,26 @@ abstract class Container extends Model
     }
 
     /**
-     * Combine metric development for the given envelopes
+     * Combine yearly metric development for the given envelopes
      * @param  Collection $envelopes Envelopes to coombine the development
      * @return array Combined snapshots
      */
-    static public function combineDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
+    static public function combineYearlyDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
     {
+        $output = [];
+
+        $start = Carbon::startOfYear($date);
+        $end = Carbon::endOfYear($date);
+
+        while ($start->lte($end)) {
+            foreach (static::combineMonthlyDevelopment($envelopes, $currency, $start) as $key => $val) {
+                $output[$key][] = $val;
+            }
+            $start->addMonth(1);
+        }
+
+        return $output;
+
         return $envelopes->map(function (Envelope $envelope) use ($currency, $date) {
             return $envelope->getYearlyDevelopmentAttribute($currency, $date);
         })->reduce(function ($combinedEnvelopes, $envelopeValues) {
@@ -77,6 +90,25 @@ abstract class Container extends Model
                 return collect($yearValues)->map(function ($monthValue, $monthIndex) use ($combinedEnvelopes, $type) {
                     return $combinedEnvelopes[$type][$monthIndex] + $monthValue;
                 });
+            });
+        });
+    }
+
+    /**
+     * Combine monthly metric development for the given envelopes
+     * @param  Collection $envelopes Envelopes to coombine the development
+     * @return array Combined snapshots
+     */
+    static public function combineMonthlyDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
+    {
+        return $envelopes->map(function (Envelope $envelope) use ($currency, $date) {
+            return $envelope->getMonthlySnapshotAttribute($currency, $date);
+        })->reduce(function ($combinedEnvelopes, $envelopeValues) {
+            if (is_null($combinedEnvelopes)) {
+                return $envelopeValues;
+            }
+            return collect($envelopeValues)->map(function ($monthValue, $type) use ($combinedEnvelopes) {
+                return $combinedEnvelopes[$type] + $monthValue;
             });
         });
     }

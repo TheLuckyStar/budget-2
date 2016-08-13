@@ -32,16 +32,7 @@ exports.getCurrentEnvelope = function (state) {
         return envelope.id == state.app.envelope_id
     })
     if (envelopes.length === 0) {
-        return {
-            balance: 0,
-            monthly: {
-                revenues: 0,
-                incomes: 0,
-                outcomes: 0,
-                savings: 0,
-                relative_savings: 0,
-            },
-        }
+        return {}
     }
     return envelopes[0]
 }
@@ -141,58 +132,8 @@ exports.getEnabledEnvelopesBalance = function (state) {
     var balance = 0
 
     exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-        balance += envelope.balance
+        balance += envelope.state.balance
     })
 
     return balance.toFixed(2)
-}
-
-exports.getEnabledEnvelopesRevenues = function (state) {
-    var revenues = 0
-
-    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-        revenues += envelope.monthly.revenues;
-    })
-
-    return revenues
-}
-
-exports.getEnabledEnvelopesIncomes = function (state) {
-    var incomes = 0
-
-    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-        incomes += envelope.monthly.incomes;
-    })
-
-    return incomes
-}
-
-exports.getEnabledEnvelopesOutcomes = function (state) {
-    var outcomes = 0
-
-    exports.getEnabledEnvelopes(state).forEach(function (envelope) {
-        outcomes += envelope.monthly.outcomes;
-    })
-
-    return outcomes
-}
-
-exports.getEnabledEnvelopesSavings = function (state) {
-    var revenues = exports.getEnabledEnvelopesRevenues(state)
-    var incomes = exports.getEnabledEnvelopesIncomes(state)
-    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
-
-    return (revenues + incomes - outcomes).toFixed(2)
-}
-
-exports.getEnabledEnvelopesRelativeSavings = function (state) {
-    var revenues = exports.getEnabledEnvelopesRevenues(state)
-    var incomes = exports.getEnabledEnvelopesIncomes(state)
-    var outcomes = exports.getEnabledEnvelopesOutcomes(state)
-
-    if (incomes == 0) {
-        return 0
-    }
-
-    return Math.floor((revenues + incomes - outcomes) * 100 / (revenues + incomes))
 }

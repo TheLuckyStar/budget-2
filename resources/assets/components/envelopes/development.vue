@@ -73,13 +73,13 @@
                 return [
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.balance,
+                        data: this.envelopeDevelopment.yearly.balance,
                         label: this.text.envelopes.development.balanceLabel,
                         color: 'default',
                     },
                     {
                         type: 'bar',
-                        data: this.envelopeDevelopment.savings,
+                        data: this.envelopeDevelopment.yearly.savings,
                         label: this.text.envelopes.development.savingsLabel,
                         color: 'primary',
                     },
@@ -90,25 +90,25 @@
                 return [
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.balance,
+                        data: this.envelopeDevelopment.yearly.balance,
                         label: this.text.envelopes.development.balanceLabel,
                         color: 'default',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.revenues,
+                        data: this.envelopeDevelopment.yearly.revenues,
                         label: this.text.envelopes.development.revenuesLabel,
                         color: 'success',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.incomes,
+                        data: this.envelopeDevelopment.yearly.incomes,
                         label: this.text.envelopes.development.incomesLabel,
                         color: 'info',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.outcomes,
+                        data: this.envelopeDevelopment.yearly.outcomes,
                         label: this.text.envelopes.development.outcomesLabel,
                         color: 'warning',
                     },

@@ -40,15 +40,23 @@ class Envelopes extends Controller
     public function development(Request $request, $id = null)
     {
         if (is_null($id)) {
-            return Envelope::combineDevelopment(
-                Envelope::all(),
-                Currency::findOrFail(session('currency_id')),
-                $request->date
-            );
+            return [
+                'state' => Envelope::combineMonthlyDevelopment(
+                    Envelope::all(),
+                    Currency::findOrFail(session('currency_id'))
+                ),
+                'yearly' => Envelope::combineYearlyDevelopment(
+                    Envelope::all(),
+                    Currency::findOrFail(session('currency_id')),
+                    $request->date
+                ),
+            ];
         }
 
-        return Envelope::withTrashed()
-            ->findOrFail($id)
-            ->getYearlyDevelopmentAttribute(null, $request->date);
+        return [
+            'yearly' => Envelope::withTrashed()
+                ->findOrFail($id)
+                ->getYearlyDevelopmentAttribute(null, $request->date),
+        ];
     }
 }
