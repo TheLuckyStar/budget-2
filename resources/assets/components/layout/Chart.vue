@@ -30,19 +30,19 @@
                 chart: null,
                 frontColors: {
                     primary: 'rgb(21, 140, 186, 1)',
-                    default: 'rgba(231, 233, 237, 1)',
                     success: 'rgba(75, 192, 192, 1)',
                     info: 'rgba(54, 162, 235, 1)',
                     warning: 'rgba(255, 206, 86, 1)',
                     danger: 'rgba(255, 99, 132, 1)',
+                    default: 'rgba(231, 233, 237, 1)',
                 },
                 backColors: {
                     primary: 'rgba(21, 140, 186, 0.2)',
-                    default: 'rgba(231, 233, 237, 0.2)',
                     success: 'rgba(75, 192, 192, 0.2)',
                     info: 'rgba(54, 162, 235, 0.2)',
                     warning: 'rgba(255, 206, 86, 0.2)',
                     danger: 'rgba(255, 99, 132, 0.2)',
+                    default: 'rgba(231, 233, 237, 0.2)',
                 },
             }
         },
@@ -72,6 +72,7 @@
             if (this.type === 'radar') {
                 this.$el.lastElementChild.setAttribute('height', this.$el.lastElementChild.offsetWidth)
             }
+            console.log(this.$el.offsetParent === null);
             this.chart = new Chart(
                 this.$el.lastElementChild,
                 {
@@ -126,6 +127,16 @@
                     pointBackgroundColor: this.frontColors[color],
                     pointHoverBackgroundColor: this.frontColors[color],
                     pointHoverBorderColor: this.frontColors[color],
+                    borderWidth: 2,
+                }
+            },
+
+            pieColors: function (color) {
+                return {
+                    backgroundColor: Object.keys(this.backColors).map(function (k) { return this.backColors[k] }, this),
+                    borderColor: Object.keys(this.frontColors).map(function (k) { return this.frontColors[k] }, this),
+                    hoverBackgroundColor: Object.keys(this.frontColors).map(function (k) { return this.frontColors[k] }, this),
+                    hoverBorderColor: Object.keys(this.backColors).map(function (k) { return this.backColors[k] }, this),
                     borderWidth: 2,
                 }
             },

@@ -4,45 +4,51 @@
     <fieldset>
 
         <legend>
+
             {{ text.accounts.development.title }}
+
         </legend>
 
         <ul class="nav nav-tabs" role="tablist">
 
-            <li role="presentation" class="active">
-                <a href="#monthly" role="tab" data-toggle="tab">
-                    <span v-on:click.prevent="setDevelopmentDate(prevMonth)" class="btn-link" :title="prevMonth | formatLongMonth">
-                        <i class="fa fa-chevron-left"></i>
-                    </span>
-                    {{ developmentDate | formatLongMonth }}
-                    <span v-on:click.prevent="setDevelopmentDate(nextMonth)" class="btn-link" :title="nextMonth | formatLongMonth">
-                        <i class="fa fa-chevron-right"></i>
-                    </span>
+            <li role="presentation" class="active" v-if="account.id === undefined">
+                <a href="#state" role="tab" data-toggle="tab">
+                    {{ text.accounts.development.stateTitle }}
                 </a>
             </li>
 
-            <li role="presentation">
-                <a href="#yearly" role="tab" data-toggle="tab">
-                    <span v-on:click.prevent="setDevelopmentDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
-                        <i class="fa fa-chevron-left"></i>
-                    </span>
-                    {{ developmentDate | formatYear }}
-                    <span v-on:click.prevent="setDevelopmentDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
-                        <i class="fa fa-chevron-right"></i>
-                    </span>
+            <li role="presentation" class="{{ account.id ? 'active' : '' }}">
+                <a href="#operations" role="tab" data-toggle="tab">
+                    {{ text.accounts.development.operationsTitle }}
                 </a>
+            </li>
+
+            <li role="presentation" class="pull-right">
+
+                <span v-on:click="setDevelopmentDate(prevYear)" class="btn-link" :title="prevYear | formatYear">
+                    <i class="fa fa-chevron-left"></i>
+                </span>
+
+                {{ developmentDate | formatYear }}
+
+                <span v-on:click="setDevelopmentDate(nextYear)" class="btn-link" :title="nextYear | formatYear">
+                    <i class="fa fa-chevron-right"></i>
+                </span>
+
             </li>
 
         </ul>
 
         <div class="tab-content">
 
-            <div role="tabpanel" class="tab-pane active" id="monthly">
-                <layout-chart type="line" :chart-labels="listDaysInMonth(developmentDate)" :data="monthlyData" :data-labels="text.accounts.development.labels"></layout-chart>
+             <div role="tabpanel" class="tab-pane active" id="state" v-if="account.id === undefined">
+                <layout-chart type="bar" :labels="listMonthsInYear(this.developmentDate)"
+                    :datasets="stateData"></layout-chart>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="yearly">
-                <layout-chart type="line" :chart-labels="listMonthsInYear(developmentDate)" :data="yearlyData" :data-labels="text.accounts.development.labels"></layout-chart>
+            <div role="tabpanel" class="tab-pane {{ account.id ? 'active' : '' }}" id="operations">
+                <layout-chart type="bar" :labels="listMonthsInYear(this.developmentDate)"
+                    :datasets="operationsData"></layout-chart>
             </div>
 
         </div>
@@ -63,43 +69,50 @@
 
         computed: {
 
-            monthlyData: function () {
-                return  [
+            stateData: function () {
+                return [
                     {
-                        data: this.accountDevelopment.monthly.balance,
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
+                        label: this.text.accounts.development.balanceLabel,
                         color: 'default',
-                    }, {
-                        data: this.accountDevelopment.monthly.revenues,
-                        color: 'success',
-                    }, {
-                        data: this.accountDevelopment.monthly.incomingTransfers,
-                        color: 'info',
-                    }, {
-                        data: this.accountDevelopment.monthly.outgoingTransfers,
-                        color: 'warning',
-                    }, {
-                        data: this.accountDevelopment.monthly.outcomes,
-                        color: 'danger',
+                    },
+                    {
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.savings : [],
+                        label: this.text.accounts.development.savingsLabel,
+                        color: 'primary',
                     },
                 ]
             },
 
-            yearlyData: function () {
-                return  [
+            operationsData: function () {
+                return [
                     {
-                        data: this.accountDevelopment.yearly.balance,
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
+                        label: this.text.accounts.development.balanceLabel,
                         color: 'default',
-                    }, {
-                        data: this.accountDevelopment.yearly.revenues,
+                    },
+                    {
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.revenues : [],
+                        label: this.text.accounts.development.revenuesLabel,
                         color: 'success',
                     }, {
-                        data: this.accountDevelopment.yearly.incomingTransfers,
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.incomingTransfers : [],
+                        label: this.text.accounts.development.incomingTransfersLabel,
                         color: 'info',
                     }, {
-                        data: this.accountDevelopment.yearly.outgoingTransfers,
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outgoingTransfers : [],
+                        label: this.text.accounts.development.outgoingTransfersLabel,
                         color: 'warning',
                     }, {
-                        data: this.accountDevelopment.yearly.outcomes,
+                        type: 'line',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outcomes : [],
+                        label: this.text.accounts.development.outcomesLabel,
                         color: 'danger',
                     },
                 ]
@@ -115,18 +128,13 @@
 
 <style scoped>
 
-    .tab-pane {
-        padding: 20px;
+    li.pull-right {
+        margin-top: 14px;
     }
 
     .btn-link {
         cursor: pointer;
         padding: 0px 5px;
-        visibility: hidden;
-    }
-
-    .active .btn-link {
-        visibility: visible;
     }
 
 </style>

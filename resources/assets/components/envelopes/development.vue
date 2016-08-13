@@ -73,13 +73,13 @@
                 return [
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.yearly.balance,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.balance : [],
                         label: this.text.envelopes.development.balanceLabel,
                         color: 'default',
                     },
                     {
                         type: 'bar',
-                        data: this.envelopeDevelopment.yearly.savings,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.savings : [],
                         label: this.text.envelopes.development.savingsLabel,
                         color: 'primary',
                     },
@@ -90,27 +90,27 @@
                 return [
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.yearly.balance,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.balance : [],
                         label: this.text.envelopes.development.balanceLabel,
                         color: 'default',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.yearly.revenues,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.revenues : [],
                         label: this.text.envelopes.development.revenuesLabel,
                         color: 'success',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.yearly.incomes,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.incomes : [],
                         label: this.text.envelopes.development.incomesLabel,
                         color: 'info',
                     },
                     {
                         type: 'line',
-                        data: this.envelopeDevelopment.yearly.outcomes,
+                        data: this.envelopeDevelopment.yearly ? this.envelopeDevelopment.yearly.outcomes : [],
                         label: this.text.envelopes.development.outcomesLabel,
-                        color: 'warning',
+                        color: 'danger',
                     },
                 ]
             },

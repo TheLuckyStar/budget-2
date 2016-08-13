@@ -96,7 +96,7 @@ exports.getEnabledAccountsBalance = function (state) {
     var balance = 0
 
     exports.getEnabledAccounts(state).forEach(function (envelope) {
-        balance += envelope.balance
+        balance += envelope.state.balance
     })
 
     return balance.toFixed(2)

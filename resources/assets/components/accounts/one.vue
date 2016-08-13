@@ -45,11 +45,11 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" v-if="account.state">
             <layout-card :color="balanceColor"
                 :icon="balanceIcon"
                 :title="text.accounts.balance.title"
-                :text="account.balance"
+                :text="account.state.balance"
                 :comment="$options.filters.formatLongDate(date)"
             ></layout-card>
         </div>

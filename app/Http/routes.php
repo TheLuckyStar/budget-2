@@ -23,6 +23,7 @@ $app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], func
     $app->post('accounts', 'Accounts@store');
     $app->put('accounts/{id}', 'Accounts@update');
     $app->get('accounts/development/{id}', 'Accounts@development');
+    $app->get('accounts/development', 'Accounts@development');
 
     $app->get('envelopes', 'Envelopes@index');
     $app->post('envelopes', 'Envelopes@store');

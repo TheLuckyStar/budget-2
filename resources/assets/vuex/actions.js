@@ -96,9 +96,6 @@ exports.updateAccount = function ({ dispatch, state }, id, attributes) {
 
 exports.refreshAccountDevelopment = function ({ dispatch, state }) {
     dispatch('SET_ACCOUNT_DEVELOPMENT', {})
-    if (state.app.account_id === null) {
-        return
-    }
     var attributes = {
         account_id: state.app.account_id,
         default_currency_id: state.app.currency_id,

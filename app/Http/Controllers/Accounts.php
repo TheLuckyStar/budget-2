@@ -45,13 +45,21 @@ class Accounts extends Controller
         return $account;
     }
 
-    public function development(Request $request, $id)
+    public function development(Request $request, $id = null)
     {
-        $account = Account::withTrashed()->findOrFail($id);
+        if (is_null($id)) {
+            $accounts = Account::all();
+            $currency = Currency::findOrFail(session('currency_id'));
+            return [
+                'state' => Account::combineMonthlyDevelopment($accounts, $currency),
+                'yearly' => Account::combineYearlyDevelopment($accounts, $currency, $request->date),
+            ];
+        }
 
         return [
-            'monthly' => $account->getMonthlyDevelopmentAttribute(null, $request->date),
-            'yearly' => $account->getYearlyDevelopmentAttribute(null, $request->date),
+            'yearly' => Account::withTrashed()
+                ->findOrFail($id)
+                ->getYearlyDevelopmentAttribute(null, $request->date),
         ];
     }
 }

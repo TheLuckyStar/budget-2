@@ -49,7 +49,7 @@ class OperationsSeeder extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA + liquide',
-            'amount' => '5000',
+            'amount' => '4550',
             'date' => '2016-08-08',
         ]);
 

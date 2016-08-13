@@ -19,7 +19,14 @@
         </div>
 
         <div class="col-md-12">
-            <layout-chart type="pie" :title="text.accounts.balances.title" :chart-labels="balancesLabels" :data="balancesData" :data-labels="text.accounts.balances.labels"></layout-chart>
+            <layout-chart type="pie"
+                :legend="text.accounts.balances.title"
+                :labels="balancesLabels"
+                :datasets="balancesData"></layout-chart>
+        </div>
+
+        <div class="col-md-12">
+            <accounts-development></accounts-development>
         </div>
 
     </div>
@@ -31,26 +38,41 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
+    var AccountsDevelopment = require('components/accounts/development.vue')
 
     export default {
 
         mixins: [mixins.vuex],
 
         computed: {
+
             balancesData: function () {
                 return [
                     {
+                        type: 'pie',
                         data: this.enabledAccounts.map(function (account) {
-                            return account.balance
+                            return account.state.balance
                         }),
                     },
                 ]
             },
+
             balancesLabels: function () {
                 return this.enabledAccounts.map(function (account) {
                     return account.name
                 })
             },
+
+        },
+
+        route: {
+            data: function () {
+                this.setCurrentAccount(null)
+            },
+        },
+
+        components: {
+            AccountsDevelopment,
         },
 
     }

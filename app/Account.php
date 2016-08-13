@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Factories\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class Account extends Container
 {
@@ -72,13 +73,35 @@ class Account extends Container
                 ->first();
             return round($balance * ($rate ? $rate->rate : 1), 2);
         }
-// 14461.91
+
         $revenues = $this->getRevenuesAttribute($currency, null, $date);
         $outcomes = $this->getOutcomesAttribute($currency, null, $date);
         $incomingTransfers = $this->getIncomingTransfersAttribute($currency, null, $date);
         $outgoingTransfers = $this->getOutgoingTransfersAttribute($currency, null, $date);
 
         return round($revenues + $incomingTransfers - $outcomes - $outgoingTransfers, 2);
+    }
+
+    /**
+     * Calculate savings at the given date
+     * @return float Global savings
+     */
+    static public function calculateSavings(Currency $currency = null, $date = null)
+    {
+        $revenues = Revenue::select('revenues.amount', 'accounts.currency_id')
+            ->join('accounts', 'revenues.account_id', '=', 'accounts.id')
+            ->where('envelope_id', null)
+            ->where(function ($query) use($date) {
+                $query->where('date', '<=', $date);
+                $query->orWhere('date', null);
+            })->sumConvertedTo($currency)
+            ->first()['converted_total'] ?: 0;
+
+        $incomes = Income::where('date', '<=', $date)
+            ->sumConvertedTo($currency)
+            ->first()['converted_total'] ?: 0;
+
+        return round($revenues - $incomes, 2);
     }
 
     /**
@@ -201,5 +224,16 @@ class Account extends Container
             'incomingTransfers' => $this->getIncomingTransfersAttribute($currency, $dateFrom, $dateTo),
             'outgoingTransfers' => $this->getOutgoingTransfersAttribute($currency, $dateFrom, $dateTo),
         ];
+    }
+
+    /**
+     * Combine monthly metric development for the given containers
+     * @param  Collection $containers Containers to coombine the development
+     * @return array Combined snapshots
+     */
+    static public function combineMonthlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
+    {
+        return parent::combineMonthlyDevelopment($containers, $currency, $date)
+            ->put('savings', static::calculateSavings($currency, Carbon::endOfMonth($date)));
     }
 }

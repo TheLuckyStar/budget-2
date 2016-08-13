@@ -48,7 +48,14 @@ exports.state = {
             },
             development: {
                 title: 'Development',
-                labels: ['Balance', 'Revenues', 'Incoming transfers', 'Outgoing transfers', 'Outcomes'],
+                stateTitle: 'State',
+                operationsTitle: 'Operations',
+                balanceLabel: 'Balance',
+                savingsLabel: 'Saved',
+                revenuesLabel: 'Direct revenues',
+                incomingTransfersLabel: 'Incoming transfers',
+                outgoingTransfersLabel: 'Outgoing transfers',
+                outcomesLabel: 'Outcomes',
             },
         },
         envelopes: {
@@ -144,7 +151,14 @@ exports.state = {
             },
             development: {
                 title: 'Évolution',
-                labels: ['Solde', 'Revenus', 'Virements entrants', 'Virement sortants', 'Dépenses'],
+                stateTitle: 'État',
+                operationsTitle: 'Operations',
+                balanceLabel: 'Solde',
+                savingsLabel: 'Épargne',
+                revenuesLabel: 'Revenus directs',
+                incomingTransfersLabel: 'Transferts entrants',
+                outgoingTransfersLabel: 'Transferts sortants',
+                outcomesLabel: 'Dépenses',
             },
         },
         envelopes: {

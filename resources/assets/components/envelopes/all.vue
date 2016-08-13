@@ -34,7 +34,7 @@
                 :datasets="balancesData"></layout-chart>
         </div>
 
-        <div class="col-md-12" v-if="envelopeDevelopment.yearly">
+        <div class="col-md-12">
             <envelopes-development></envelopes-development>
         </div>
 

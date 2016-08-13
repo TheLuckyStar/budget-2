@@ -60,11 +60,11 @@ abstract class Container extends Model
     }
 
     /**
-     * Combine yearly metric development for the given envelopes
-     * @param  Collection $envelopes Envelopes to coombine the development
+     * Combine yearly metric development for the given containers
+     * @param  Collection $containers Containerss to combine the development
      * @return array Combined snapshots
      */
-    static public function combineYearlyDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
+    static public function combineYearlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
     {
         $output = [];
 
@@ -72,43 +72,30 @@ abstract class Container extends Model
         $end = Carbon::endOfYear($date);
 
         while ($start->lte($end)) {
-            foreach (static::combineMonthlyDevelopment($envelopes, $currency, $start) as $key => $val) {
+            foreach (static::combineMonthlyDevelopment($containers, $currency, $start) as $key => $val) {
                 $output[$key][] = $val;
             }
             $start->addMonth(1);
         }
 
         return $output;
-
-        return $envelopes->map(function (Envelope $envelope) use ($currency, $date) {
-            return $envelope->getYearlyDevelopmentAttribute($currency, $date);
-        })->reduce(function ($combinedEnvelopes, $envelopeValues) {
-            if (is_null($combinedEnvelopes)) {
-                return $envelopeValues;
-            }
-            return collect($envelopeValues)->map(function ($yearValues, $type) use ($combinedEnvelopes) {
-                return collect($yearValues)->map(function ($monthValue, $monthIndex) use ($combinedEnvelopes, $type) {
-                    return $combinedEnvelopes[$type][$monthIndex] + $monthValue;
-                });
-            });
-        });
     }
 
     /**
-     * Combine monthly metric development for the given envelopes
-     * @param  Collection $envelopes Envelopes to coombine the development
+     * Combine monthly metric development for the given containers
+     * @param  Collection $containers Containers to coombine the development
      * @return array Combined snapshots
      */
-    static public function combineMonthlyDevelopment(Collection $envelopes, Currency $currency = null, $date = null)
+    static public function combineMonthlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
     {
-        return $envelopes->map(function (Envelope $envelope) use ($currency, $date) {
-            return $envelope->getMonthlySnapshotAttribute($currency, $date);
-        })->reduce(function ($combinedEnvelopes, $envelopeValues) {
-            if (is_null($combinedEnvelopes)) {
-                return $envelopeValues;
+        return $containers->map(function (Container $container) use ($currency, $date) {
+            return $container->getMonthlySnapshotAttribute($currency, $date);
+        })->reduce(function ($combinedContainers, $containerValues) {
+            if (is_null($combinedContainers)) {
+                return $containerValues;
             }
-            return collect($envelopeValues)->map(function ($monthValue, $type) use ($combinedEnvelopes) {
-                return $combinedEnvelopes[$type] + $monthValue;
+            return collect($containerValues)->map(function ($monthValue, $type) use ($combinedContainers) {
+                return $combinedContainers[$type] + $monthValue;
             });
         });
     }
