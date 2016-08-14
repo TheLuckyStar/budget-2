@@ -37777,7 +37777,7 @@
 /* 209 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<fieldset _v-3206b660=\"\">\n\n    <legend _v-3206b660=\"\">\n        {{ title }}\n    </legend>\n\n    <div class=\"panel panel-{{ color }}\" _v-3206b660=\"\">\n\n        <div class=\"panel-heading\" _v-3206b660=\"\">\n\n            <div class=\"row\" _v-3206b660=\"\">\n\n                <div class=\"col-xs-3\" _v-3206b660=\"\">\n                    <i class=\"fa {{ icon }} fa-5x\" _v-3206b660=\"\"></i>\n                </div>\n\n                <div class=\"col-xs-9 text-right\" _v-3206b660=\"\">\n\n                    <div class=\"huge\" _v-3206b660=\"\">\n                        {{ text }}\n                    </div>\n\n                    <div _v-3206b660=\"\">\n                        {{ comment }}\n                    </div>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+	module.exports = "\n\n\n<fieldset _v-3206b660=\"\">\n\n    <legend v-if=\"title\" _v-3206b660=\"\">\n        {{ title }}\n    </legend>\n\n    <div class=\"panel panel-{{ color }}\" _v-3206b660=\"\">\n\n        <div class=\"panel-heading\" _v-3206b660=\"\">\n\n            <div class=\"row\" _v-3206b660=\"\">\n\n                <div class=\"col-xs-3\" _v-3206b660=\"\">\n                    <i class=\"fa {{ icon }} fa-5x\" _v-3206b660=\"\"></i>\n                </div>\n\n                <div class=\"col-xs-9 text-right\" _v-3206b660=\"\">\n\n                    <div class=\"huge\" _v-3206b660=\"\">\n                        {{ text }}\n                    </div>\n\n                    <div _v-3206b660=\"\">\n                        {{ comment }}\n                    </div>\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 210 */
@@ -50858,7 +50858,7 @@
 	// Map routes
 	router.map({
 	    '/home': {
-	        component: { template: '<div>Home</div>' },
+	        component: __webpack_require__(362),
 	    },
 	    '/accounts': {
 	        component: __webpack_require__(314),
@@ -53748,6 +53748,26 @@
 	            page: {
 	                title: 'Home',
 	            },
+	            accountSavings: {
+	                title: 'Account savings',
+	                monthlyTitle: 'This month',
+	                quarterlyTitle: 'Last 3 months',
+	                biannuallyTitle: 'Last 6 months',
+	                yearlyTitle: 'Last 12 months',
+	            },
+	            envelopeSavings: {
+	                title: 'Envelope savings',
+	                monthlyTitle: 'This month',
+	                quarterlyTitle: 'Last 3 months',
+	                biannuallyTitle: 'Last 6 months',
+	                yearlyTitle: 'Last 12 months',
+	            },
+	            bestEnvelopes: {
+	                title: 'Most profitable envelopes',
+	            },
+	            worstEnvelopes: {
+	                title: 'Less profitable envelopes',
+	            },
 	        },
 	        currencies: {
 	            form: {
@@ -53854,6 +53874,26 @@
 	        home: {
 	            page: {
 	                title: 'Accueil',
+	            },
+	            accountSavings: {
+	                title: 'Épargne bancaire',
+	                monthlyTitle: 'Ce mois',
+	                quarterlyTitle: '3 derniers mois',
+	                biannuallyTitle: '6 derniers mois',
+	                yearlyTitle: '12 derniers mois',
+	            },
+	            envelopeSavings: {
+	                title: 'Économisé dans les envelopes',
+	                monthlyTitle: 'Ce mois',
+	                quarterlyTitle: '3 derniers mois',
+	                biannuallyTitle: '6 derniers mois',
+	                yearlyTitle: '12 derniers mois',
+	            },
+	            bestEnvelopes: {
+	                title: 'Envelopes les plus profitables',
+	            },
+	            worstEnvelopes: {
+	                title: 'Envelopes les moins profitables',
 	            },
 	        },
 	        currencies: {
@@ -54347,7 +54387,7 @@
 /* 324 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n        <h1>\n            {{ text.accounts.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"accountDevelopment.state\">\n        <layout-card :color=\"accountDevelopment.state.accumulated_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"accountDevelopment.state.accumulated_savings < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.accumulatedSavings.title\"\n            :text=\"accountDevelopment.state.accumulated_savings\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.accounts.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"accountDevelopment.state\">\n        <layout-card :color=\"accountDevelopment.state.accumulated_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"accountDevelopment.state.accumulated_savings < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.accumulatedSavings.title\"\n            :text=\"accountDevelopment.state.accumulated_savings\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 325 */
@@ -55405,6 +55445,285 @@
 
 	// exports
 
+
+/***/ },
+/* 362 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(363)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/index.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(364)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-a6eaf1d2/index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 363 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var HomeAccountSavings = __webpack_require__(374);
+	var HomeEnvelopeSavings = __webpack_require__(380);
+	var HomeBestEnvelopes = __webpack_require__(377);
+	var HomeWorstEnvelopes = __webpack_require__(371);
+
+	exports.default = {
+
+	    components: {
+	        HomeAccountSavings: HomeAccountSavings,
+	        HomeEnvelopeSavings: HomeEnvelopeSavings,
+	        HomeBestEnvelopes: HomeBestEnvelopes,
+	        HomeWorstEnvelopes: HomeWorstEnvelopes
+	    }
+
+	};
+
+/***/ },
+/* 364 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div>\n    <home-account-savings></home-account-savings>\n    <home-envelope-savings></home-envelope-savings>\n    <home-best-envelopes></home-best-envelopes>\n    <home-worst-envelopes></home-worst-envelopes>\n</div>\n\n";
+
+/***/ },
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(372)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/worst-envelopes.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(373)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-23505e56/worst-envelopes.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 372 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex]
+
+	};
+
+/***/ },
+/* 373 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.worstEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 374 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(375)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/account-savings.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(376)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-1d868b9e/account-savings.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 375 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex]
+
+	};
+
+/***/ },
+/* 376 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.accountSavings.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.monthlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.quarterlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.biannuallyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.yearlyTitle\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(378)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/best-envelopes.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(379)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-cc28ecf6/best-envelopes.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 378 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex]
+
+	};
+
+/***/ },
+/* 379 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.bestEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 380 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(381)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/envelope-savings.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(382)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-83633cf2/envelope-savings.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 381 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex]
+
+	};
+
+/***/ },
+/* 382 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.envelopeSavings.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.monthlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.quarterlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.biannuallyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.yearlyTitle\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
 
 /***/ }
 /******/ ]);

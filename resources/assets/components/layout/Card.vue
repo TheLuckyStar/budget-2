@@ -3,7 +3,7 @@
 
     <fieldset>
 
-        <legend>
+        <legend v-if="title">
             {{ title }}
         </legend>
 
