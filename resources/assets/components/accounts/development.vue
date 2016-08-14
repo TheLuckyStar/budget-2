@@ -79,9 +79,15 @@
                     },
                     {
                         type: 'line',
-                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.savings : [],
-                        label: this.text.accounts.development.savingsLabel,
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.accumulated_savings : [],
+                        label: this.text.accounts.development.accumulatedSavingsLabel,
                         color: 'primary',
+                    },
+                    {
+                        type: 'bar',
+                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.monthly_savings : [],
+                        label: this.text.accounts.development.monthlySavingsLabel,
+                        color: 'info',
                     },
                 ]
             },
@@ -120,6 +126,13 @@
 
         },
 
+        ready: function () {
+            var component = this
+            jQuery(this.$el).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                component.$broadcast('resize-chart')
+            })
+        },
+
     }
 
 </script>
@@ -135,6 +148,10 @@
     .btn-link {
         cursor: pointer;
         padding: 0px 5px;
+    }
+
+    .tab-pane {
+        min-height: 400px;
     }
 
 </style>

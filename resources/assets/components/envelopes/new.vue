@@ -1,13 +1,17 @@
 
 <template>
 
-    <div>
+    <div class="row">
 
-        <h1>
-            {{ text.envelopes.new.title }}
-        </h1>
+        <div class="col-md-12">
 
-        <hr>
+            <h1>
+                {{ text.envelopes.new.title }}
+            </h1>
+
+            <hr>
+
+        </div>
 
         <div class="col-xs-12">
             <envelopes-form :envelope="{}"></envelopes-form>

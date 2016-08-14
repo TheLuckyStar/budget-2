@@ -42,6 +42,9 @@ exports.state = {
             balance: {
                 title: 'Balance',
             },
+            accumulatedSavings: {
+                title: 'Accumulated savings',
+            },
             balances: {
                 title: 'Situation in details',
                 labels: ['Balance'],
@@ -51,7 +54,8 @@ exports.state = {
                 stateTitle: 'State',
                 operationsTitle: 'Operations',
                 balanceLabel: 'Balance',
-                savingsLabel: 'Saved',
+                accumulatedSavingsLabel: 'Accumulated savings',
+                monthlySavingsLabel: 'Monthly savings',
                 revenuesLabel: 'Direct revenues',
                 incomingTransfersLabel: 'Incoming transfers',
                 outgoingTransfersLabel: 'Outgoing transfers',
@@ -145,6 +149,9 @@ exports.state = {
             balance: {
                 title: 'Solde',
             },
+            accumulatedSavings: {
+                title: 'Épargne cumulée',
+            },
             balances: {
                 title: 'Détail de la situation',
                 labels: ['Solde'],
@@ -154,7 +161,8 @@ exports.state = {
                 stateTitle: 'État',
                 operationsTitle: 'Operations',
                 balanceLabel: 'Solde',
-                savingsLabel: 'Épargne',
+                accumulatedSavingsLabel: 'Épargne cumulée',
+                monthlySavingsLabel: 'Épargne mensuelle',
                 revenuesLabel: 'Revenus directs',
                 incomingTransfersLabel: 'Transferts entrants',
                 outgoingTransfersLabel: 'Transferts sortants',

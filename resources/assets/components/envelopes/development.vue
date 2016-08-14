@@ -117,6 +117,13 @@
 
         },
 
+        ready: function () {
+            var component = this
+            jQuery(this.$el).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                component.$broadcast('resize-chart')
+            })
+        },
+
     }
 
 </script>
@@ -132,6 +139,10 @@
     .btn-link {
         cursor: pointer;
         padding: 0px 5px;
+    }
+
+    .tab-pane {
+        min-height: 400px;
     }
 
 </style>

@@ -37867,6 +37867,7 @@
 	            this.chart.data.labels = this.labels;
 	            this.chart.data.datasets = this.formatedDatasets;
 	            this.chart.update();
+	            this.$emit('resize-chart');
 	        },
 	        chartLabels: function chartLabels() {
 	            this.chart.data.labels = this.labels;
@@ -37878,7 +37879,7 @@
 	        if (this.type === 'radar') {
 	            this.$el.lastElementChild.setAttribute('height', this.$el.lastElementChild.offsetWidth);
 	        }
-	        console.log(this.$el.offsetParent === null);
+
 	        this.chart = new Chart(this.$el.lastElementChild, {
 	            type: this.type,
 	            data: {
@@ -37952,6 +37953,14 @@
 	            };
 	        }
 
+	    },
+
+	    events: {
+	        'resize-chart': function resizeChart(msg) {
+	            if (this.chart) {
+	                this.chart.resize();
+	            }
+	        }
 	    }
 
 	};
@@ -50858,7 +50867,7 @@
 	                component: __webpack_require__(317),
 	            },
 	            '/one/:account_id': {
-	                component: __webpack_require__(320),
+	                component: __webpack_require__(325),
 	            },
 	            '/new': {
 	                component: __webpack_require__(335),
@@ -53770,6 +53779,9 @@
 	            balance: {
 	                title: 'Balance',
 	            },
+	            accumulatedSavings: {
+	                title: 'Accumulated savings',
+	            },
 	            balances: {
 	                title: 'Situation in details',
 	                labels: ['Balance'],
@@ -53779,7 +53791,8 @@
 	                stateTitle: 'State',
 	                operationsTitle: 'Operations',
 	                balanceLabel: 'Balance',
-	                savingsLabel: 'Saved',
+	                accumulatedSavingsLabel: 'Accumulated savings',
+	                monthlySavingsLabel: 'Monthly savings',
 	                revenuesLabel: 'Direct revenues',
 	                incomingTransfersLabel: 'Incoming transfers',
 	                outgoingTransfersLabel: 'Outgoing transfers',
@@ -53873,6 +53886,9 @@
 	            balance: {
 	                title: 'Solde',
 	            },
+	            accumulatedSavings: {
+	                title: 'Épargne cumulée',
+	            },
 	            balances: {
 	                title: 'Détail de la situation',
 	                labels: ['Solde'],
@@ -53882,7 +53898,8 @@
 	                stateTitle: 'État',
 	                operationsTitle: 'Operations',
 	                balanceLabel: 'Solde',
-	                savingsLabel: 'Épargne',
+	                accumulatedSavingsLabel: 'Épargne cumulée',
+	                monthlySavingsLabel: 'Épargne mensuelle',
 	                revenuesLabel: 'Revenus directs',
 	                incomingTransfersLabel: 'Transferts entrants',
 	                outgoingTransfersLabel: 'Transferts sortants',
@@ -54105,7 +54122,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/accounts/all.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(319)
+	__vue_template__ = __webpack_require__(324)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -54135,7 +54152,7 @@
 
 
 	var mixins = __webpack_require__(289);
-	var AccountsDevelopment = __webpack_require__(324);
+	var AccountsDevelopment = __webpack_require__(319);
 
 	exports.default = {
 
@@ -54174,17 +54191,171 @@
 
 /***/ },
 /* 319 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.accounts.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
+	var __vue_script__, __vue_template__
+	__webpack_require__(320)
+	__vue_script__ = __webpack_require__(322)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/accounts/development.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(323)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-8a7fa872/development.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
 
 /***/ },
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(321);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 321 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-8a7fa872] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-8a7fa872] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-8a7fa872] {\n    min-height: 400px;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex, mixins.moment, mixins.development],
+
+	    computed: {
+
+	        stateData: function stateData() {
+	            return [{
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
+	                label: this.text.accounts.development.balanceLabel,
+	                color: 'default'
+	            }, {
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.accumulated_savings : [],
+	                label: this.text.accounts.development.accumulatedSavingsLabel,
+	                color: 'primary'
+	            }, {
+	                type: 'bar',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.monthly_savings : [],
+	                label: this.text.accounts.development.monthlySavingsLabel,
+	                color: 'info'
+	            }];
+	        },
+
+	        operationsData: function operationsData() {
+	            return [{
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
+	                label: this.text.accounts.development.balanceLabel,
+	                color: 'default'
+	            }, {
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.revenues : [],
+	                label: this.text.accounts.development.revenuesLabel,
+	                color: 'success'
+	            }, {
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.incomingTransfers : [],
+	                label: this.text.accounts.development.incomingTransfersLabel,
+	                color: 'info'
+	            }, {
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outgoingTransfers : [],
+	                label: this.text.accounts.development.outgoingTransfersLabel,
+	                color: 'warning'
+	            }, {
+	                type: 'line',
+	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outcomes : [],
+	                label: this.text.accounts.development.outcomesLabel,
+	                color: 'danger'
+	            }];
+	        }
+
+	    },
+
+	    ready: function ready() {
+	        var component = this;
+	        jQuery(this.$el).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	            component.$broadcast('resize-chart');
+	        });
+	    }
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73)))
+
+/***/ },
+/* 323 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<fieldset _v-8a7fa872=\"\">\n\n    <legend _v-8a7fa872=\"\">\n\n        {{ text.accounts.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-8a7fa872=\"\">\n\n        <li role=\"presentation\" class=\"active\" v-if=\"account.id === undefined\" _v-8a7fa872=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                {{ text.accounts.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"{{ account.id ? 'active' : '' }}\" _v-8a7fa872=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                {{ text.accounts.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-8a7fa872=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-8a7fa872=\"\">\n                <i class=\"fa fa-chevron-left\" _v-8a7fa872=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-8a7fa872=\"\">\n                <i class=\"fa fa-chevron-right\" _v-8a7fa872=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-8a7fa872=\"\">\n\n         <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" v-if=\"account.id === undefined\" _v-8a7fa872=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane {{ account.id ? 'active' : '' }}\" id=\"operations\" _v-8a7fa872=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"operationsData\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
+
+/***/ },
+/* 324 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n        <h1>\n            {{ text.accounts.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"accountDevelopment.state\">\n        <layout-card :color=\"accountDevelopment.state.accumulated_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"accountDevelopment.state.accumulated_savings < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.accumulatedSavings.title\"\n            :text=\"accountDevelopment.state.accumulated_savings\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __vue_script__, __vue_template__
-	__webpack_require__(321)
-	__vue_script__ = __webpack_require__(323)
+	__webpack_require__(326)
+	__vue_script__ = __webpack_require__(328)
 	if (__vue_script__ &&
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
@@ -54208,13 +54379,13 @@
 	})()}
 
 /***/ },
-/* 321 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(322);
+	var content = __webpack_require__(327);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(207)(content, {});
@@ -54234,7 +54405,7 @@
 	}
 
 /***/ },
-/* 322 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -54242,13 +54413,13 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.alert-warning .btn[_v-36ef391c] {\n    margin-left: 15px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.alert-warning .btn[_v-36ef391c] {\n    margin-left: 15px;\n}\n\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 323 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
@@ -54259,7 +54430,7 @@
 
 
 	var mixins = __webpack_require__(289);
-	var AccountsDevelopment = __webpack_require__(324);
+	var AccountsDevelopment = __webpack_require__(319);
 	var AccountsForm = __webpack_require__(329);
 
 	exports.default = {
@@ -54319,147 +54490,6 @@
 
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
-
-/***/ },
-/* 324 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__webpack_require__(325)
-	__vue_script__ = __webpack_require__(327)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/accounts/development.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(328)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-8a7fa872/development.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(326);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(207)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-8a7fa872&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./development.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-8a7fa872] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-8a7fa872] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 327 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(289);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex, mixins.moment, mixins.development],
-
-	    computed: {
-
-	        stateData: function stateData() {
-	            return [{
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
-	                label: this.text.accounts.development.balanceLabel,
-	                color: 'default'
-	            }, {
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.savings : [],
-	                label: this.text.accounts.development.savingsLabel,
-	                color: 'primary'
-	            }];
-	        },
-
-	        operationsData: function operationsData() {
-	            return [{
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
-	                label: this.text.accounts.development.balanceLabel,
-	                color: 'default'
-	            }, {
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.revenues : [],
-	                label: this.text.accounts.development.revenuesLabel,
-	                color: 'success'
-	            }, {
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.incomingTransfers : [],
-	                label: this.text.accounts.development.incomingTransfersLabel,
-	                color: 'info'
-	            }, {
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outgoingTransfers : [],
-	                label: this.text.accounts.development.outgoingTransfersLabel,
-	                color: 'warning'
-	            }, {
-	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.outcomes : [],
-	                label: this.text.accounts.development.outcomesLabel,
-	                color: 'danger'
-	            }];
-	        }
-
-	    }
-
-	};
-
-/***/ },
-/* 328 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<fieldset _v-8a7fa872=\"\">\n\n    <legend _v-8a7fa872=\"\">\n\n        {{ text.accounts.development.title }}\n\n    </legend>\n\n    <ul class=\"nav nav-tabs\" role=\"tablist\" _v-8a7fa872=\"\">\n\n        <li role=\"presentation\" class=\"active\" v-if=\"account.id === undefined\" _v-8a7fa872=\"\">\n            <a href=\"#state\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                {{ text.accounts.development.stateTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"{{ account.id ? 'active' : '' }}\" _v-8a7fa872=\"\">\n            <a href=\"#operations\" role=\"tab\" data-toggle=\"tab\" _v-8a7fa872=\"\">\n                {{ text.accounts.development.operationsTitle }}\n            </a>\n        </li>\n\n        <li role=\"presentation\" class=\"pull-right\" _v-8a7fa872=\"\">\n\n            <span v-on:click=\"setDevelopmentDate(prevYear)\" class=\"btn-link\" :title=\"prevYear | formatYear\" _v-8a7fa872=\"\">\n                <i class=\"fa fa-chevron-left\" _v-8a7fa872=\"\"></i>\n            </span>\n\n            {{ developmentDate | formatYear }}\n\n            <span v-on:click=\"setDevelopmentDate(nextYear)\" class=\"btn-link\" :title=\"nextYear | formatYear\" _v-8a7fa872=\"\">\n                <i class=\"fa fa-chevron-right\" _v-8a7fa872=\"\"></i>\n            </span>\n\n        </li>\n\n    </ul>\n\n    <div class=\"tab-content\" _v-8a7fa872=\"\">\n\n         <div role=\"tabpanel\" class=\"tab-pane active\" id=\"state\" v-if=\"account.id === undefined\" _v-8a7fa872=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"stateData\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n        <div role=\"tabpanel\" class=\"tab-pane {{ account.id ? 'active' : '' }}\" id=\"operations\" _v-8a7fa872=\"\">\n            <layout-chart type=\"bar\" :labels=\"listMonthsInYear(this.developmentDate)\" :datasets=\"operationsData\" _v-8a7fa872=\"\"></layout-chart>\n        </div>\n\n    </div>\n\n</fieldset>\n\n";
 
 /***/ },
 /* 329 */
@@ -54620,7 +54650,7 @@
 /* 334 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div _v-36ef391c=\"\">\n\n    <div class=\"pull-right\" _v-36ef391c=\"\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#account-form\" _v-36ef391c=\"\">\n            {{ text.accounts.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"account-form\" tabindex=\"-1\" role=\"dialog\" _v-36ef391c=\"\">\n            <div class=\"modal-dialog\" role=\"document\" _v-36ef391c=\"\">\n                <div class=\"modal-content\" _v-36ef391c=\"\">\n                    <div class=\"modal-header\" _v-36ef391c=\"\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-36ef391c=\"\">\n                            <span aria-hidden=\"true\" _v-36ef391c=\"\">×</span>\n                        </button>\n                        <h4 class=\"modal-title\" _v-36ef391c=\"\">\n                            {{ text.accounts.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\" _v-36ef391c=\"\">\n                        <accounts-form :account=\"account\" _v-36ef391c=\"\"></accounts-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1 _v-36ef391c=\"\">\n        {{ account.name }}\n    </h1>\n\n    <hr _v-36ef391c=\"\">\n\n    <div class=\"col-md-12\" v-if=\"account.currency &amp;&amp; account.currency_id != currentCurrency.id\" _v-36ef391c=\"\">\n        <div class=\"alert alert-warning clearfix\" _v-36ef391c=\"\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\" _v-36ef391c=\"\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"account.state\" _v-36ef391c=\"\">\n        <layout-card :color=\"balanceColor\" :icon=\"balanceIcon\" :title=\"text.accounts.balance.title\" :text=\"account.state.balance\" :comment=\"$options.filters.formatLongDate(date)\" _v-36ef391c=\"\"></layout-card>\n    </div>\n\n    <div class=\"col-md-12\" _v-36ef391c=\"\">\n        <accounts-development :account=\"account\" _v-36ef391c=\"\"></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\" _v-36ef391c=\"\">\n\n    <div class=\"col-md-12\" _v-36ef391c=\"\">\n\n        <div class=\"pull-right\" _v-36ef391c=\"\">\n            <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#account-form\" _v-36ef391c=\"\">\n                {{ text.accounts.form.title }}\n            </button>\n            <div class=\"modal fade\" id=\"account-form\" tabindex=\"-1\" role=\"dialog\" _v-36ef391c=\"\">\n                <div class=\"modal-dialog\" role=\"document\" _v-36ef391c=\"\">\n                    <div class=\"modal-content\" _v-36ef391c=\"\">\n                        <div class=\"modal-header\" _v-36ef391c=\"\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-36ef391c=\"\">\n                                <span aria-hidden=\"true\" _v-36ef391c=\"\">×</span>\n                            </button>\n                            <h4 class=\"modal-title\" _v-36ef391c=\"\">\n                                {{ text.accounts.form.title }}\n                            </h4>\n                        </div>\n                        <div class=\"modal-body\" _v-36ef391c=\"\">\n                            <accounts-form :account=\"account\" _v-36ef391c=\"\"></accounts-form>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <h1 _v-36ef391c=\"\">\n            {{ account.name }}\n        </h1>\n\n        <hr _v-36ef391c=\"\">\n\n    </div>\n\n    <div class=\"col-md-12\" v-if=\"account.currency &amp;&amp; account.currency_id != currentCurrency.id\" _v-36ef391c=\"\">\n        <div class=\"alert alert-warning clearfix\" _v-36ef391c=\"\">\n            <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(account.currency_id)\" class=\"btn btn-default pull-right\" _v-36ef391c=\"\">\n                {{{ text.accounts.page.currencyLink }}}\n            </a>\n            {{{\n                text.accounts.page.currencyWarning\n                    .replace(':active', currentCurrency.name)\n                    .replace(':account', account.currency.name)\n            }}}\n        </div>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"account.state\" _v-36ef391c=\"\">\n        <layout-card :color=\"balanceColor\" :icon=\"balanceIcon\" :title=\"text.accounts.balance.title\" :text=\"account.state.balance\" :comment=\"$options.filters.formatLongDate(date)\" _v-36ef391c=\"\"></layout-card>\n    </div>\n\n    <div class=\"col-md-12\" _v-36ef391c=\"\">\n        <accounts-development _v-36ef391c=\"\"></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 335 */
@@ -54682,7 +54712,7 @@
 /* 337 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.accounts.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <accounts-form :account=\"{}\"></accounts-form>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.accounts.new.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-xs-12\">\n        <accounts-form :account=\"{}\"></accounts-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 338 */
@@ -54951,7 +54981,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-acc82e2c] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-acc82e2c] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-acc82e2c] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-acc82e2c] {\n    min-height: 400px;\n}\n\n", ""]);
 
 	// exports
 
@@ -54960,7 +54990,7 @@
 /* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -55013,9 +55043,17 @@
 	            }];
 	        }
 
+	    },
+
+	    ready: function ready() {
+	        var component = this;
+	        jQuery(this.$el).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	            component.$broadcast('resize-chart');
+	        });
 	    }
 
 	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(73)))
 
 /***/ },
 /* 347 */
@@ -55027,7 +55065,7 @@
 /* 348 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.enabled.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelopeDevelopment.state\">\n        <layout-card :color=\"envelopeDevelopment.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeDevelopment.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeDevelopment.state.savings + '/' + (envelopeDevelopment.state.revenues + envelopeDevelopment.state.incomes)\"\n            :comment=\"envelopeDevelopment.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\"\n            :legend=\"text.envelopes.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.envelopes.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelopeDevelopment.state\">\n        <layout-card :color=\"envelopeDevelopment.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeDevelopment.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeDevelopment.state.savings + '/' + (envelopeDevelopment.state.revenues + envelopeDevelopment.state.incomes)\"\n            :comment=\"envelopeDevelopment.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\"\n            :legend=\"text.envelopes.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 349 */
@@ -55264,7 +55302,7 @@
 /* 356 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <div class=\"pull-right\">\n        <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n            {{ text.envelopes.form.title }}\n        </button>\n        <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n            <div class=\"modal-dialog\" role=\"document\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                            <span aria-hidden=\"true\">&times;</span>\n                        </button>\n                        <h4 class=\"modal-title\">\n                            {{ text.envelopes.form.title }}\n                        </h4>\n                    </div>\n                    <div class=\"modal-body\">\n                        <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <h1>\n        <i class=\"fa {{ envelope.icon }}\"></i>\n        {{ envelope.name }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.state.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.state.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.state.savings + '/' + (envelope.state.revenues + envelope.state.incomes)\"\n            :comment=\"envelope.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <div class=\"pull-right\">\n            <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n                {{ text.envelopes.form.title }}\n            </button>\n            <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n                <div class=\"modal-dialog\" role=\"document\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                                <span aria-hidden=\"true\">&times;</span>\n                            </button>\n                            <h4 class=\"modal-title\">\n                                {{ text.envelopes.form.title }}\n                            </h4>\n                        </div>\n                        <div class=\"modal-body\">\n                            <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <h1>\n            <i class=\"fa {{ envelope.icon }}\"></i>\n            {{ envelope.name }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.state.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.state.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.state.savings + '/' + (envelope.state.revenues + envelope.state.incomes)\"\n            :comment=\"envelope.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 357 */
@@ -55326,7 +55364,7 @@
 /* 359 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n\n    <h1>\n        {{ text.envelopes.new.title }}\n    </h1>\n\n    <hr>\n\n    <div class=\"col-xs-12\">\n        <envelopes-form :envelope=\"{}\"></envelopes-form>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.envelopes.new.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-xs-12\">\n        <envelopes-form :envelope=\"{}\"></envelopes-form>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 360 */

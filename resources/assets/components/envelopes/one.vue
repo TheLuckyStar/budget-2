@@ -1,37 +1,41 @@
 
 <template>
 
-    <div>
+    <div class="row">
 
-        <div class="pull-right">
-            <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#envelope-form">
-                {{ text.envelopes.form.title }}
-            </button>
-            <div class="modal fade" id="envelope-form" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">
-                                {{ text.envelopes.form.title }}
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <envelopes-form :envelope="envelope"></envelopes-form>
+        <div class="col-md-12">
+
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#envelope-form">
+                    {{ text.envelopes.form.title }}
+                </button>
+                <div class="modal fade" id="envelope-form" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">
+                                    {{ text.envelopes.form.title }}
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <envelopes-form :envelope="envelope"></envelopes-form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <h1>
+                <i class="fa {{ envelope.icon }}"></i>
+                {{ envelope.name }}
+            </h1>
+
+            <hr>
+
         </div>
-
-        <h1>
-            <i class="fa {{ envelope.icon }}"></i>
-            {{ envelope.name }}
-        </h1>
-
-        <hr>
 
         <div class="col-md-6" v-if="envelope.state">
             <layout-card :color="envelope.state.balance < 0 ? 'danger' : 'success'"

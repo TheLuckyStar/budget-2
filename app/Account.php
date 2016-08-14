@@ -86,19 +86,33 @@ class Account extends Container
      * Calculate savings at the given date
      * @return float Global savings
      */
-    static public function calculateSavings(Currency $currency = null, $date = null)
+    static public function calculateSavings(Currency $currency = null, $dateFrom = null, $dateTo = null)
     {
         $revenues = Revenue::select('revenues.amount', 'accounts.currency_id')
             ->join('accounts', 'revenues.account_id', '=', 'accounts.id')
             ->where('envelope_id', null)
-            ->where(function ($query) use($date) {
-                $query->where('date', '<=', $date);
-                $query->orWhere('date', null);
+            ->where(function ($query) use($dateFrom, $dateTo) {
+                if ($dateFrom && $dateTo) {
+                    $query->whereBetween('date', [$dateFrom, $dateTo]);
+                } else if ($dateFrom) {
+                    $query->where('date', '>=', $dateFrom);
+                } else if ($dateTo) {
+                    $query->where(function ($query) use($dateTo) {
+                        $query->where('date', '<=', $dateTo);
+                        $query->orWhere('date', null);
+                    });
+                }
             })->sumConvertedTo($currency)
             ->first()['converted_total'] ?: 0;
 
-        $incomes = Income::where('date', '<=', $date)
-            ->sumConvertedTo($currency)
+        $incomes = Income::where(function ($query) use($dateFrom, $dateTo) {
+                if ($dateFrom) {
+                    $query->where('date', '>=', $dateFrom);
+                }
+                if ($dateTo) {
+                    $query->where('date', '<=', $dateTo);
+                }
+            })->sumConvertedTo($currency)
             ->first()['converted_total'] ?: 0;
 
         return round($revenues - $incomes, 2);
@@ -234,6 +248,7 @@ class Account extends Container
     static public function combineMonthlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
     {
         return parent::combineMonthlyDevelopment($containers, $currency, $date)
-            ->put('savings', static::calculateSavings($currency, Carbon::endOfMonth($date)));
+            ->put('monthly_savings', static::calculateSavings($currency, Carbon::startOfMonth($date), Carbon::endOfMonth($date)))
+            ->put('accumulated_savings', static::calculateSavings($currency, null, Carbon::endOfMonth($date)));
     }
 }

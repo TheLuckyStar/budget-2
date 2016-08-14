@@ -61,6 +61,7 @@
                 this.chart.data.labels = this.labels
                 this.chart.data.datasets = this.formatedDatasets
                 this.chart.update()
+                this.$emit('resize-chart')
             },
             chartLabels: function () {
                 this.chart.data.labels = this.labels
@@ -72,7 +73,7 @@
             if (this.type === 'radar') {
                 this.$el.lastElementChild.setAttribute('height', this.$el.lastElementChild.offsetWidth)
             }
-            console.log(this.$el.offsetParent === null);
+
             this.chart = new Chart(
                 this.$el.lastElementChild,
                 {
@@ -141,6 +142,14 @@
                 }
             },
 
+        },
+
+        events: {
+            'resize-chart': function (msg) {
+                if (this.chart) {
+                    this.chart.resize()
+                }
+            },
         },
 
     }

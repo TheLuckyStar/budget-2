@@ -1,36 +1,40 @@
 
 <template>
 
-    <div>
+    <div class="row">
 
-        <div class="pull-right">
-            <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#account-form">
-                {{ text.accounts.form.title }}
-            </button>
-            <div class="modal fade" id="account-form" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">
-                                {{ text.accounts.form.title }}
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <accounts-form :account="account"></accounts-form>
+        <div class="col-md-12">
+
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#account-form">
+                    {{ text.accounts.form.title }}
+                </button>
+                <div class="modal fade" id="account-form" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">
+                                    {{ text.accounts.form.title }}
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <accounts-form :account="account"></accounts-form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <h1>
+                {{ account.name }}
+            </h1>
+
+            <hr>
+
         </div>
-
-        <h1>
-            {{ account.name }}
-        </h1>
-
-        <hr>
 
         <div class="col-md-12" v-if="account.currency && account.currency_id != currentCurrency.id">
             <div class="alert alert-warning clearfix">
@@ -55,7 +59,7 @@
         </div>
 
         <div class="col-md-12">
-            <accounts-development :account="account"></accounts-development>
+            <accounts-development></accounts-development>
         </div>
 
     </div>

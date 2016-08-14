@@ -1,13 +1,17 @@
 
 <template>
 
-    <div>
+    <div class="row">
 
-        <h1>
-            {{ text.envelopes.enabled.title }}
-        </h1>
+        <div class="col-md-12">
 
-        <hr>
+            <h1>
+                {{ text.envelopes.enabled.title }}
+            </h1>
+
+            <hr>
+
+        </div>
 
         <div class="col-md-6">
             <layout-card :color="enabledEnvelopesBalance < 0 ? 'danger' : 'success'"
