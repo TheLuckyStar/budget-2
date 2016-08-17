@@ -49,7 +49,7 @@ class OperationsSeeder extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA + liquide',
-            'amount' => '4550',
+            'amount' => '2863',
             'date' => '2016-08-08',
         ]);
 
@@ -59,6 +59,30 @@ class OperationsSeeder extends Seeder
             'name' => 'Lekoseum',
             'amount' => '450',
             'date' => '2016-08-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone fixe',
+            'amount' => '269',
+            'date' => '2016-08-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '659',
+            'date' => '2016-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Delphine',
+            'amount' => '759',
+            'date' => '2016-08-15',
         ]);
     }
 }
