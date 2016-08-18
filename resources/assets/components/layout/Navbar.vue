@@ -50,6 +50,14 @@
 
                 <ul class="nav navbar-nav navbar-right">
 
+                    <li>
+                        <a href="#" v-on:click.prevent="refreshData()" :title="text.app.refresh">
+                            <i :class="statusClasses"></i>
+                        </a>
+                    </li>
+
+                    <li class="divider-vertical"></li>
+
                     <li v-for="currency in currencies"
                         :class="{ active: currency.id === currentCurrency.id }">
                         <a href="#" v-on:click.prevent="setCurrentCurrency(currency.id)">
@@ -85,6 +93,24 @@
     export default {
 
         mixins: [mixins.vuex],
+
+        computed: {
+            statusClasses: function () {
+                return {
+                    fa: true,
+                    'fa-fw': true,
+                    'fa-refresh': true,
+                    'fa-spin': this.status,
+                    'text-primary': this.status,
+                }
+            },
+        },
+
+        methods: {
+            refreshData: function () {
+                this.$dispatch('refresh-data')
+            },
+        },
 
     }
 

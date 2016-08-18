@@ -83,7 +83,7 @@
 
         route: {
             data: function () {
-                this.setCurrentEnvelope(this.$route.params.envelope_id)
+                this.$emit('refresh-data')
             },
         },
 
@@ -96,6 +96,13 @@
         methods: {
             batteryValue: function (percentage) {
                 return Math.max(0, Math.min(4, Math.floor((percentage + 13) / 25)))
+            },
+        },
+
+        events: {
+            'refresh-data': function () {
+                this.setCurrentEnvelope(this.$route.params.envelope_id)
+                return true
             },
         },
 

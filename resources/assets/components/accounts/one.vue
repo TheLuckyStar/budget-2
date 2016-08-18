@@ -114,13 +114,20 @@
 
         route: {
             data: function () {
-                this.setCurrentAccount(this.$route.params.account_id)
+                this.$emit('refresh-data')
             },
         },
 
         watch: {
             language: function() {
                 this.date = moment.unix(this.date.unix())
+            },
+        },
+
+        events: {
+            'refresh-data': function () {
+                this.setCurrentAccount(this.$route.params.account_id)
+                return true
             },
         },
 

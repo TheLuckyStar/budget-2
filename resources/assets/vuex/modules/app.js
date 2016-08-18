@@ -1,5 +1,6 @@
 
 exports.state = {
+    status: 0,
     language: null,
     currency_id: 1,
     account_id: null,
@@ -8,6 +9,10 @@ exports.state = {
 }
 
 exports.mutations = {
+
+    SET_STATUS(state, status) {
+        state.status += status === 'processing' ? 1 : -1
+    },
 
     SET_LANGUAGE(state, language) {
         state.language = language

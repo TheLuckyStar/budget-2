@@ -80,7 +80,14 @@
 
         route: {
             data: function () {
+                this.$emit('refresh-data')
+            },
+        },
+
+        events: {
+            'refresh-data': function () {
                 this.setCurrentAccount(null)
+                return true
             },
         },
 

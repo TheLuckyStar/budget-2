@@ -30,6 +30,12 @@
             this.setLanguage(navigator.language || navigator.userLanguage)
         },
 
+        events: {
+            'refresh-data': function () {
+                this.$broadcast('refresh-data')
+            },
+        },
+
     }
 
 </script>

@@ -3,6 +3,10 @@
  * App store
  */
 
+exports.getStatus = function (state) {
+    return state.app.status
+}
+
 exports.getCurrentLanguage = function (state) {
     return state.app.language
 }

@@ -22,6 +22,7 @@ exports.vuex = {
         },
 
         getters: {
+            status: getters.getStatus,
             language: getters.getCurrentLanguage,
             availableLanguages: getters.getAvailableLanguages,
             text: getters.getText,

@@ -6,6 +6,7 @@ exports.state = {
             enable: 'Enable',
             disable: 'Disable',
             submit: 'Save',
+            refresh: 'Refresh data',
         },
         home: {
             page: {
@@ -133,6 +134,7 @@ exports.state = {
             enable: 'Activer',
             disable: 'Désactiver',
             submit: 'Enregistrer',
+            refresh: 'Actualiser les données',
         },
         home: {
             page: {

@@ -47,7 +47,9 @@ exports.setDevelopmentDate = function ({ dispatch, state }, developmentDate) {
  */
 
 exports.refreshCurrencies = function ({ dispatch, state }, callback) {
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('currencies').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         dispatch('SET_CURRENCIES', response.data)
         if (callback) {
             callback()
@@ -65,7 +67,9 @@ exports.refreshCurrencies = function ({ dispatch, state }, callback) {
 
 exports.refreshAccounts = function ({ dispatch, state }, callback) {
     dispatch('SET_ACCOUNTS', [])
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('accounts').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         dispatch('SET_ACCOUNTS', response.data)
         if (callback) {
             callback()
@@ -77,7 +81,9 @@ exports.refreshAccounts = function ({ dispatch, state }, callback) {
 }
 
 exports.saveAccount = function ({ dispatch, state }, attributes) {
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('accounts').save({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         exports.refreshAccounts({ dispatch, state }, function() {
             location.hash = '#accounts/one/'+response.data.id
         })
@@ -87,7 +93,9 @@ exports.saveAccount = function ({ dispatch, state }, attributes) {
 }
 
 exports.updateAccount = function ({ dispatch, state }, id, attributes) {
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('accounts/'+id).update({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         exports.refreshAccounts({ dispatch, state })
     }, function (response) {
         console.log(response)
@@ -101,7 +109,9 @@ exports.refreshAccountDevelopment = function ({ dispatch, state }) {
         default_currency_id: state.app.currency_id,
     }
     var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('accounts/development{/account_id}').get(attributes, item).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         dispatch('SET_ACCOUNT_DEVELOPMENT', response.data)
     }, function (response) {
         console.log(response)
@@ -117,7 +127,9 @@ exports.refreshAccountDevelopment = function ({ dispatch, state }) {
 exports.refreshEnvelopes = function ({ dispatch, state }, callback) {
     dispatch('SET_ENVELOPES', [])
     exports.refreshCurrencies({ dispatch, state })
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('envelopes').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         dispatch('SET_ENVELOPES', response.data)
         if (callback) {
             callback()
@@ -128,7 +140,9 @@ exports.refreshEnvelopes = function ({ dispatch, state }, callback) {
 }
 
 exports.saveEnvelope = function ({ dispatch, state }, attributes) {
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('envelopes').save({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         exports.refreshEnvelopes({ dispatch, state }, function() {
             location.hash = '#envelopes/one/'+response.data.id
         })
@@ -138,7 +152,9 @@ exports.saveEnvelope = function ({ dispatch, state }, attributes) {
 }
 
 exports.updateEnvelope = function ({ dispatch, state }, id, attributes) {
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('envelopes/'+id).update({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         exports.refreshEnvelopes({ dispatch, state })
     }, function (response) {
         console.log(response)
@@ -152,7 +168,9 @@ exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
         default_currency_id: state.app.currency_id,
     }
     var item = { date: state.app.developmentDate.format('YYYY-MM-DD') }
+    dispatch('SET_STATUS', 'processing')
     Vue.resource('envelopes/development{/envelope_id}').get(attributes, item).then(function (response) {
+        dispatch('SET_STATUS', 'done')
         dispatch('SET_ENVELOPE_DEVELOPMENT', response.data)
     }, function (response) {
         console.log(response)

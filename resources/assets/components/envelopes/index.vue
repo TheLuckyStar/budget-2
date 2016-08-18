@@ -84,7 +84,14 @@
         },
 
         created: function () {
-            this.refreshEnvelopes()
+            this.$emit('refresh-data')
+        },
+
+        events: {
+            'refresh-data': function () {
+                this.refreshEnvelopes()
+                return true
+            },
         },
 
     }

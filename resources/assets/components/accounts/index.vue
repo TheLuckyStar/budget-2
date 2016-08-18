@@ -82,7 +82,14 @@
         },
 
         created: function () {
-            this.refreshAccounts()
+            this.$emit('refresh-data')
+        },
+
+        events: {
+            'refresh-data': function () {
+                this.refreshAccounts()
+                return true
+            },
         },
 
     }
