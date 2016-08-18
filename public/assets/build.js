@@ -53824,10 +53824,6 @@
 	            },
 	            envelopeSavings: {
 	                title: 'Envelope savings',
-	                monthlyTitle: 'This month',
-	                quarterlyTitle: 'Last 3 months',
-	                biannuallyTitle: 'Last 6 months',
-	                yearlyTitle: 'Last 12 months',
 	            },
 	            bestEnvelopes: {
 	                title: 'Most profitable envelopes',
@@ -53952,10 +53948,6 @@
 	            },
 	            envelopeSavings: {
 	                title: 'Économisé dans les envelopes',
-	                monthlyTitle: 'Ce mois',
-	                quarterlyTitle: '3 derniers mois',
-	                biannuallyTitle: '6 derniers mois',
-	                yearlyTitle: '12 derniers mois',
 	            },
 	            bestEnvelopes: {
 	                title: 'Envelopes les plus profitables',
@@ -54147,20 +54139,16 @@
 
 
 	var mixins = __webpack_require__(289);
-	var HomeAccountSavings = __webpack_require__(316);
-	var HomeEnvelopeSavings = __webpack_require__(319);
-	var HomeWorstEnvelopes = __webpack_require__(325);
-	var HomeBestEnvelopes = __webpack_require__(322);
+	var HomeSavings = __webpack_require__(377);
+	var HomeEnvelopes = __webpack_require__(380);
 
 	exports.default = {
 
 	    mixins: [mixins.vuex],
 
 	    components: {
-	        HomeAccountSavings: HomeAccountSavings,
-	        HomeEnvelopeSavings: HomeEnvelopeSavings,
-	        HomeWorstEnvelopes: HomeWorstEnvelopes,
-	        HomeBestEnvelopes: HomeBestEnvelopes
+	        HomeSavings: HomeSavings,
+	        HomeEnvelopes: HomeEnvelopes
 	    },
 
 	    created: function created() {
@@ -54170,6 +54158,8 @@
 	    events: {
 	        'refresh-data': function refreshData() {
 	            this.refreshEnvelopes();
+	            this.setCurrentEnvelope(null);
+	            this.setCurrentAccount(null);
 	            return true;
 	        }
 	    }
@@ -54177,222 +54167,22 @@
 	};
 
 /***/ },
-/* 316 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(317)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/account-savings.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(318)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-1d868b9e/account-savings.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 317 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(289);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex]
-
-	};
-
-/***/ },
-/* 318 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.accountSavings.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.monthlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.quarterlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.biannuallyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.accountSavings.yearlyTitle\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
-
-/***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(320)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/envelope-savings.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(321)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-83633cf2/envelope-savings.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(289);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex]
-
-	};
-
-/***/ },
-/* 321 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.envelopeSavings.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.monthlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.quarterlyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.biannuallyTitle\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"0 < 0 ? 'danger' : 'success'\"\n            :icon=\"0 < 0 ? 'fa-level-down' : 'fa-level-up'\"\n            :text=\"0\"\n            :comment=\"text.home.envelopeSavings.yearlyTitle\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
-
-/***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(323)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/best-envelopes.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(324)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-cc28ecf6/best-envelopes.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 323 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(289);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex]
-
-	};
-
-/***/ },
-/* 324 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.bestEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in bestEnvelopes\">\n\n        <div v-if=\"index % 4 === 0\" class=\"clearfix visible-md visible-lg\"></div>\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	__vue_script__ = __webpack_require__(326)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/worst-envelopes.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(327)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	if (__vue_template__) {
-	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
-	}
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-23505e56/worst-envelopes.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(289);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex]
-
-	};
-
-/***/ },
-/* 327 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.worstEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in worstEnvelopes\">\n\n        <div v-if=\"index % 4 === 0\" class=\"clearfix visible-md visible-lg\"></div>\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
-
-/***/ },
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
 /* 328 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n    <home-account-savings></home-account-savings>\n    <home-envelope-savings></home-envelope-savings>\n    <home-worst-envelopes></home-worst-envelopes>\n    <home-best-envelopes></home-best-envelopes>\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n    <home-savings :title=\"text.home.accountSavings.title\" :data=\"accountDevelopment\"></home-savings>\n    <home-savings :title=\"text.home.envelopeSavings.title\" :data=\"envelopeDevelopment\"></home-savings>\n    <home-envelopes :title=\"text.home.bestEnvelopes.title\" :data=\"bestEnvelopes\"></home-envelopes>\n    <home-envelopes :title=\"text.home.worstEnvelopes.title\" :data=\"worstEnvelopes\"></home-envelopes>\n</div>\n\n";
 
 /***/ },
 /* 329 */
@@ -55842,6 +55632,144 @@
 
 	// exports
 
+
+/***/ },
+/* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(378)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/savings.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(379)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-7989883e/savings.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 378 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+
+	    props: ['title', 'data'],
+
+	    data: function data() {
+	        return {
+	            date: moment()
+	        };
+	    },
+
+	    computed: {
+	        dates: function dates() {
+	            return [{
+	                key: 'monthly',
+	                date: this.date.clone().date(1)
+	            }, {
+	                key: 'quarterly',
+	                from: this.date.clone().date(1).subtract(3, 'months'),
+	                to: this.date.clone().date(31).subtract(1, 'months')
+	            }, {
+	                key: 'biannually',
+	                from: this.date.clone().date(1).subtract(6, 'months'),
+	                to: this.date.clone().date(31).subtract(1, 'months')
+	            }, {
+	                key: 'yearly',
+	                from: this.date.clone().date(1).subtract(12, 'months'),
+	                to: this.date.clone().date(31).subtract(1, 'months')
+	            }];
+	        }
+	    },
+
+	    watch: {
+	        language: function language() {
+	            this.date = moment.unix(this.date.unix());
+	        }
+	    }
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
+
+/***/ },
+/* 379 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-if=\"data.recent_savings\" v-for=\"(index, period) in dates\">\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"data.recent_savings[period.key] < 0 ? 'danger' : 'success'\"\n                :icon=\"data.recent_savings[period.key] < 0 ? 'fa-level-down' : 'fa-level-up'\"\n                :text=\"data.recent_savings[period.key]\"\n                :comment=\"period.date\n                    ? $options.filters.formatShortMonth(period.date)\n                    : $options.filters.formatShortMonth(period.from)\n                        + ' - '\n                        + $options.filters.formatShortMonth(period.to)\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
+
+/***/ },
+/* 380 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(381)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/home/envelopes.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(382)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-cb484c30/envelopes.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 381 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    props: ['title', 'data']
+
+	};
+
+/***/ },
+/* 382 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in data\">\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
 
 /***/ }
 /******/ ]);

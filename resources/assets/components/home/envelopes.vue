@@ -6,16 +6,14 @@
         <div class="col-md-12">
 
             <h1>
-                {{ text.home.bestEnvelopes.title }}
+                {{ title }}
             </h1>
 
             <hr>
 
         </div>
 
-        <template v-for="(index, envelope) in bestEnvelopes">
-
-            <div v-if="index % 4 === 0" class="clearfix visible-md visible-lg"></div>
+        <template v-for="(index, envelope) in data">
 
             <div v-if="index % 2 === 0" class="clearfix visible-sm"></div>
 
@@ -42,6 +40,8 @@
     export default {
 
         mixins: [mixins.vuex],
+
+        props: ['title', 'data'],
 
     }
 

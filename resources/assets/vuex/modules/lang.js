@@ -21,10 +21,6 @@ exports.state = {
             },
             envelopeSavings: {
                 title: 'Envelope savings',
-                monthlyTitle: 'This month',
-                quarterlyTitle: 'Last 3 months',
-                biannuallyTitle: 'Last 6 months',
-                yearlyTitle: 'Last 12 months',
             },
             bestEnvelopes: {
                 title: 'Most profitable envelopes',
@@ -149,10 +145,6 @@ exports.state = {
             },
             envelopeSavings: {
                 title: 'Économisé dans les envelopes',
-                monthlyTitle: 'Ce mois',
-                quarterlyTitle: '3 derniers mois',
-                biannuallyTitle: '6 derniers mois',
-                yearlyTitle: '12 derniers mois',
             },
             bestEnvelopes: {
                 title: 'Envelopes les plus profitables',

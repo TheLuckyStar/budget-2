@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Factories\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class Envelope extends Container
 {
@@ -158,5 +159,26 @@ class Envelope extends Container
             'savings' => $this->getSavingsAttribute($currency, $dateFrom, $dateTo),
             'relative_savings' => $this->getRelativeSavingsAttribute($currency, $dateFrom, $dateTo),
         ];
+    }
+
+    /**
+     * Combine savings metric for the recent periods
+     * @param  Collection $envelopes Envelopes to combine the development
+     * @return array Combined savings
+     */
+    static public function combineRecentSavings(Collection $containers, Currency $currency = null)
+    {
+        return collect([
+            'monthly' => ['from' => Carbon::startOfMonth(), 'to' => Carbon::endOfMonth()],
+            'quarterly' => ['from' => Carbon::startOfMonth()->subMonths(3), 'to' => Carbon::endOfMonth()->subMonths(1)],
+            'biannually' => ['from' => Carbon::startOfMonth()->subMonths(6), 'to' => Carbon::endOfMonth()->subMonths(1)],
+            'yearly' => ['from' => Carbon::startOfMonth()->subMonths(12), 'to' => Carbon::endOfMonth()->subMonths(1)],
+        ])->map(function ($dates) use ($currency, $containers) {
+            return $containers->map(function (Container $container) use ($currency, $dates) {
+                return $container->getSavingsAttribute($currency, $dates['from'], $dates['to']);
+            })->reduce(function ($sum, $saving) {
+                return is_null($sum) ? $saving : $sum + $saving;
+            });
+        });
     }
 }

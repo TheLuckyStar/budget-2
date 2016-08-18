@@ -44,7 +44,8 @@ class Envelopes extends Controller
             $currency = Currency::findOrFail(session('currency_id'));
             return [
                 'state' => Envelope::combineMonthlyDevelopment($envelopes, $currency),
-                'yearly' => Envelope::combineYearlyDevelopment($envelopes, $currency, $request->date),
+                //'yearly' => Envelope::combineYearlyDevelopment($envelopes, $currency, $request->date),
+                'recent_savings' => Envelope::combineRecentSavings($envelopes, $currency),
             ];
         }
 

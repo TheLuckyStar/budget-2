@@ -53,6 +53,7 @@ class Accounts extends Controller
             return [
                 'state' => Account::combineMonthlyDevelopment($accounts, $currency),
                 'yearly' => Account::combineYearlyDevelopment($accounts, $currency, $request->date),
+                'recent_savings' => Account::combineRecentSavings($currency),
             ];
         }
 

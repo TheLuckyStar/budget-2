@@ -2,10 +2,10 @@
 <template>
 
     <div>
-        <home-account-savings></home-account-savings>
-        <home-envelope-savings></home-envelope-savings>
-        <home-worst-envelopes></home-worst-envelopes>
-        <home-best-envelopes></home-best-envelopes>
+        <home-savings :title="text.home.accountSavings.title" :data="accountDevelopment"></home-savings>
+        <home-savings :title="text.home.envelopeSavings.title" :data="envelopeDevelopment"></home-savings>
+        <home-envelopes :title="text.home.bestEnvelopes.title" :data="bestEnvelopes"></home-envelopes>
+        <home-envelopes :title="text.home.worstEnvelopes.title" :data="worstEnvelopes"></home-envelopes>
     </div>
 
 </template>
@@ -15,20 +15,16 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
-    var HomeAccountSavings = require('components/home/account-savings.vue')
-    var HomeEnvelopeSavings = require('components/home/envelope-savings.vue')
-    var HomeWorstEnvelopes = require('components/home/worst-envelopes.vue')
-    var HomeBestEnvelopes = require('components/home/best-envelopes.vue')
+    var HomeSavings = require('components/home/savings.vue')
+    var HomeEnvelopes = require('components/home/envelopes.vue')
 
     export default {
 
         mixins: [mixins.vuex],
 
         components: {
-            HomeAccountSavings,
-            HomeEnvelopeSavings,
-            HomeWorstEnvelopes,
-            HomeBestEnvelopes,
+            HomeSavings,
+            HomeEnvelopes,
         },
 
         created: function () {
@@ -38,6 +34,8 @@
         events: {
             'refresh-data': function () {
                 this.refreshEnvelopes()
+                this.setCurrentEnvelope(null)
+                this.setCurrentAccount(null)
                 return true
             },
         },
