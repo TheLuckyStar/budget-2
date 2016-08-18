@@ -1,11 +1,20 @@
 
 <template>
 
-    <div>
-        <home-savings :title="text.home.accountSavings.title" :data="accountDevelopment"></home-savings>
-        <home-savings :title="text.home.envelopeSavings.title" :data="envelopeDevelopment"></home-savings>
-        <home-envelopes :title="text.home.bestEnvelopes.title" :data="bestEnvelopes"></home-envelopes>
-        <home-envelopes :title="text.home.worstEnvelopes.title" :data="worstEnvelopes"></home-envelopes>
+    <div class="row">
+        <div class="col-md-6">
+            <home-savings :title="text.home.accountSavings.title" :data="accountDevelopment"></home-savings>
+        </div>
+        <div class="col-md-6">
+            <home-savings :title="text.home.envelopeSavings.title" :data="envelopeDevelopment"></home-savings>
+        </div>
+        <div class="clearfix visible-md visible-lg"></div>
+        <div class="col-md-6">
+            <home-envelopes :title="text.home.bestEnvelopes.title" :data="bestEnvelopes"></home-envelopes>
+        </div>
+        <div class="col-md-6">
+            <home-envelopes :title="text.home.worstEnvelopes.title" :data="worstEnvelopes"></home-envelopes>
+        </div>
     </div>
 
 </template>

@@ -15,9 +15,9 @@
 
         <template v-if="data.recent_savings" v-for="(index, period) in dates">
 
-            <div v-if="index % 2 === 0" class="clearfix visible-sm"></div>
+            <div v-if="index % 2 === 0" class="clearfix hidden-xs"></div>
 
-            <div class="col-md-3 col-sm-6">
+            <div class="col-sm-6">
                 <layout-card :color="data.recent_savings[period.key] < 0 ? 'danger' : 'success'"
                     :icon="data.recent_savings[period.key] < 0 ? 'fa-level-down' : 'fa-level-up'"
                     :text="data.recent_savings[period.key]"

@@ -15,9 +15,9 @@
 
         <template v-for="(index, envelope) in data">
 
-            <div v-if="index % 2 === 0" class="clearfix visible-sm"></div>
+            <div v-if="index % 2 === 0" class="clearfix hidden-xs"></div>
 
-            <div class="col-md-3 col-sm-6">
+            <div class="col-sm-6">
                 <layout-card :color="envelope.state.balance < 0 ? 'danger' : 'success'"
                     :icon="envelope.icon"
                     :text="envelope.state.balance"
