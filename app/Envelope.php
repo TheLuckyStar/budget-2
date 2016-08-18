@@ -181,4 +181,22 @@ class Envelope extends Container
             });
         });
     }
+
+    /**
+     * Combine monthly metric development for the given containers
+     * @param  Collection $containers Containers to coombine the development
+     * @return array Combined snapshots
+     */
+    static public function combineMonthlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
+    {
+        $development = parent::combineMonthlyDevelopment($containers, $currency, $date);
+
+        if ($development->get('revenues') + $development->get('incomes') == 0) {
+            $relativeSavings = 0;
+        } else {
+            $relativeSavings = round(($development->get('revenues') + $development->get('incomes') - $development->get('outcomes')) * 100  / ($development->get('revenues') + $development->get('incomes')), 2);
+        }
+
+        return $development->put('relative_savings', $relativeSavings);
+    }
 }
