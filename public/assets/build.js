@@ -48886,6 +48886,8 @@
 	            envelopeDevelopment: getters.getEnvelopeDevelopment,
 	            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
 	            developmentDate: getters.getDevelopmentDate,
+	            worstEnvelopes : getters.getWorstEnvelopes,
+	            bestEnvelopes : getters.getBestEnvelopes,
 	        },
 
 	    },
@@ -49276,6 +49278,18 @@
 	    })
 
 	    return balance.toFixed(2)
+	}
+
+	exports.getWorstEnvelopes = function (state) {
+	    return exports.getEnabledEnvelopes(state).sort(function(a, b) {
+	        return a.state.balance - b.state.balance
+	    }).slice(0, 4)
+	}
+
+	exports.getBestEnvelopes = function (state) {
+	    return exports.getEnabledEnvelopes(state).sort(function(a, b) {
+	        return b.state.balance - a.state.balance
+	    }).slice(0, 4)
 	}
 
 
@@ -54132,18 +54146,32 @@
 	});
 
 
+	var mixins = __webpack_require__(289);
 	var HomeAccountSavings = __webpack_require__(316);
 	var HomeEnvelopeSavings = __webpack_require__(319);
-	var HomeBestEnvelopes = __webpack_require__(322);
 	var HomeWorstEnvelopes = __webpack_require__(325);
+	var HomeBestEnvelopes = __webpack_require__(322);
 
 	exports.default = {
+
+	    mixins: [mixins.vuex],
 
 	    components: {
 	        HomeAccountSavings: HomeAccountSavings,
 	        HomeEnvelopeSavings: HomeEnvelopeSavings,
-	        HomeBestEnvelopes: HomeBestEnvelopes,
-	        HomeWorstEnvelopes: HomeWorstEnvelopes
+	        HomeWorstEnvelopes: HomeWorstEnvelopes,
+	        HomeBestEnvelopes: HomeBestEnvelopes
+	    },
+
+	    created: function created() {
+	        this.$emit('refresh-data');
+	    },
+
+	    events: {
+	        'refresh-data': function refreshData() {
+	            this.refreshEnvelopes();
+	            return true;
+	        }
 	    }
 
 	};
@@ -54305,7 +54333,7 @@
 /* 324 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.bestEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-book\"\n            :text=\"100\"\n            comment=\"Culture & Loisirs\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.bestEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in bestEnvelopes\">\n\n        <div v-if=\"index % 4 === 0\" class=\"clearfix visible-md visible-lg\"></div>\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
 
 /***/ },
 /* 325 */
@@ -54358,13 +54386,13 @@
 /* 327 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.worstEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-3 col-sm-6\">\n        <layout-card :color=\"-100 < 0 ? 'danger' : 'success'\"\n            icon=\"fa-gift\"\n            :text=\"-100\"\n            comment=\"Cadeaux\"\n        ></layout-card>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.home.worstEnvelopes.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in worstEnvelopes\">\n\n        <div v-if=\"index % 4 === 0\" class=\"clearfix visible-md visible-lg\"></div>\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix visible-sm\"></div>\n\n        <div class=\"col-md-3 col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
 
 /***/ },
 /* 328 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div>\n    <home-account-savings></home-account-savings>\n    <home-envelope-savings></home-envelope-savings>\n    <home-best-envelopes></home-best-envelopes>\n    <home-worst-envelopes></home-worst-envelopes>\n</div>\n\n";
+	module.exports = "\n\n\n<div>\n    <home-account-savings></home-account-savings>\n    <home-envelope-savings></home-envelope-savings>\n    <home-worst-envelopes></home-worst-envelopes>\n    <home-best-envelopes></home-best-envelopes>\n</div>\n\n";
 
 /***/ },
 /* 329 */

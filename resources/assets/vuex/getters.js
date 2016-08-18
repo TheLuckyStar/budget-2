@@ -141,3 +141,15 @@ exports.getEnabledEnvelopesBalance = function (state) {
 
     return balance.toFixed(2)
 }
+
+exports.getWorstEnvelopes = function (state) {
+    return exports.getEnabledEnvelopes(state).sort(function(a, b) {
+        return a.state.balance - b.state.balance
+    }).slice(0, 4)
+}
+
+exports.getBestEnvelopes = function (state) {
+    return exports.getEnabledEnvelopes(state).sort(function(a, b) {
+        return b.state.balance - a.state.balance
+    }).slice(0, 4)
+}

@@ -41,6 +41,8 @@ exports.vuex = {
             envelopeDevelopment: getters.getEnvelopeDevelopment,
             enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
             developmentDate: getters.getDevelopmentDate,
+            worstEnvelopes : getters.getWorstEnvelopes,
+            bestEnvelopes : getters.getBestEnvelopes,
         },
 
     },

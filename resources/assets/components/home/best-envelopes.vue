@@ -13,37 +13,21 @@
 
         </div>
 
-        <div class="col-md-3 col-sm-6">
-            <layout-card :color="100 < 0 ? 'danger' : 'success'"
-                icon="fa-book"
-                :text="100"
-                comment="Culture & Loisirs"
-            ></layout-card>
-        </div>
+        <template v-for="(index, envelope) in bestEnvelopes">
 
-        <div class="col-md-3 col-sm-6">
-            <layout-card :color="100 < 0 ? 'danger' : 'success'"
-                icon="fa-book"
-                :text="100"
-                comment="Culture & Loisirs"
-            ></layout-card>
-        </div>
+            <div v-if="index % 4 === 0" class="clearfix visible-md visible-lg"></div>
 
-        <div class="col-md-3 col-sm-6">
-            <layout-card :color="100 < 0 ? 'danger' : 'success'"
-                icon="fa-book"
-                :text="100"
-                comment="Culture & Loisirs"
-            ></layout-card>
-        </div>
+            <div v-if="index % 2 === 0" class="clearfix visible-sm"></div>
 
-        <div class="col-md-3 col-sm-6">
-            <layout-card :color="100 < 0 ? 'danger' : 'success'"
-                icon="fa-book"
-                :text="100"
-                comment="Culture & Loisirs"
-            ></layout-card>
-        </div>
+            <div class="col-md-3 col-sm-6">
+                <layout-card :color="envelope.state.balance < 0 ? 'danger' : 'success'"
+                    :icon="envelope.icon"
+                    :text="envelope.state.balance"
+                    :comment="envelope.name"
+                ></layout-card>
+            </div>
+
+        </template>
 
     </div>
 
