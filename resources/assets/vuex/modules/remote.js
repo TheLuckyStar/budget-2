@@ -5,6 +5,7 @@ exports.state = {
     accountDevelopment: {},
     envelopes: [],
     envelopeDevelopment: {},
+    operations: [],
 }
 
 exports.mutations = {
@@ -27,6 +28,19 @@ exports.mutations = {
 
     SET_ENVELOPE_DEVELOPMENT(state, development) {
         state.envelopeDevelopment = development
+    },
+
+    SET_OPERATIONS(state, operations) {
+        state.operations = operations.map(function (operation) {
+            operation.created_at = moment(operation.created_at)
+            operation.date = moment(operation.date)
+            return operation
+        }).sort(function (a, b) {
+            if (a.date.isSame(b.date, 'day')) {
+                return a.created_at.isBefore(b.created_at, 'day') ? 1 : -1
+            }
+            return a.date.isBefore(b.date, 'day') ? 1 : -1
+        })
     },
 
 }

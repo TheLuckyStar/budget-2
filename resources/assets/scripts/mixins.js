@@ -19,6 +19,7 @@ exports.vuex = {
             saveEnvelope: actions.saveEnvelope,
             updateEnvelope: actions.updateEnvelope,
             setDevelopmentDate: actions.setDevelopmentDate,
+            refreshOperations : actions.refreshOperations,
         },
 
         getters: {
@@ -41,8 +42,9 @@ exports.vuex = {
             envelopeDevelopment: getters.getEnvelopeDevelopment,
             enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
             developmentDate: getters.getDevelopmentDate,
-            worstEnvelopes : getters.getWorstEnvelopes,
-            bestEnvelopes : getters.getBestEnvelopes,
+            worstEnvelopes: getters.getWorstEnvelopes,
+            bestEnvelopes: getters.getBestEnvelopes,
+            operations: getters.getOperations,
         },
 
     },

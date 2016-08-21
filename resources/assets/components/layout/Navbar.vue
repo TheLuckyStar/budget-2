@@ -56,9 +56,10 @@
                         </a>
                     </li>
 
-                    <li class="divider-vertical"></li>
+                    <li v-if="$route.path !== '/operations'" class="divider-vertical"></li>
 
-                    <li v-for="currency in currencies"
+                    <li v-if="$route.path !== '/operations'"
+                        v-for="currency in currencies"
                         :class="{ active: currency.id === currentCurrency.id }">
                         <a href="#" v-on:click.prevent="setCurrentCurrency(currency.id)">
                             {{ currency.name | uppercase }}

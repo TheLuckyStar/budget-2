@@ -153,3 +153,13 @@ exports.getBestEnvelopes = function (state) {
         return b.state.balance - a.state.balance
     }).slice(0, 4)
 }
+
+
+
+/**
+ * Remote store : operations
+ */
+
+exports.getOperations = function (state) {
+    return state.remote.operations
+}

@@ -19,6 +19,7 @@ module.exports = {
         'scripts/init-vue-resource.js',
         'scripts/init-vue-router.js',
         'styles/bootstrap.less',
+        'styles/timeline.css',
     ],
 
     output: {

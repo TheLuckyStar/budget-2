@@ -18,4 +18,10 @@ class Revenue extends Operation
     {
         return $this->belongsTo(Account::class);
     }
+
+    public function scopeSearch($query, $filters)
+    {
+        parent::scopeSearch($query, $filters);
+        $query->where('date', 'IS NOT', null);
+    }
 }

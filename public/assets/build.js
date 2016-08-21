@@ -51,7 +51,8 @@
 	__webpack_require__(203);
 	__webpack_require__(303);
 	__webpack_require__(305);
-	module.exports = __webpack_require__(369);
+	__webpack_require__(382);
+	module.exports = __webpack_require__(384);
 
 
 /***/ },
@@ -48864,6 +48865,7 @@
 	            saveEnvelope: actions.saveEnvelope,
 	            updateEnvelope: actions.updateEnvelope,
 	            setDevelopmentDate: actions.setDevelopmentDate,
+	            refreshOperations : actions.refreshOperations,
 	        },
 
 	        getters: {
@@ -48886,8 +48888,9 @@
 	            envelopeDevelopment: getters.getEnvelopeDevelopment,
 	            enabledEnvelopesBalance: getters.getEnabledEnvelopesBalance,
 	            developmentDate: getters.getDevelopmentDate,
-	            worstEnvelopes : getters.getWorstEnvelopes,
-	            bestEnvelopes : getters.getBestEnvelopes,
+	            worstEnvelopes: getters.getWorstEnvelopes,
+	            bestEnvelopes: getters.getBestEnvelopes,
+	            operations: getters.getOperations,
 	        },
 
 	    },
@@ -49130,6 +49133,27 @@
 	    })
 	}
 
+
+
+	/**
+	 * Remote store : Operations
+	 */
+
+	exports.refreshOperations = function ({ dispatch, state }, callback) {
+	    dispatch('SET_OPERATIONS', [])
+	    dispatch('SET_STATUS', 'processing')
+	    Vue.resource('operations').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+	        dispatch('SET_STATUS', 'done')
+	        dispatch('SET_OPERATIONS', response.data)
+	        if (callback) {
+	            callback()
+	        }
+	        exports.refreshCurrencies({ dispatch, state })
+	    }, function (response) {
+	        console.log(response)
+	    })
+	}
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98), __webpack_require__(96)))
 
 /***/ },
@@ -49293,6 +49317,16 @@
 	}
 
 
+
+	/**
+	 * Remote store : operations
+	 */
+
+	exports.getOperations = function (state) {
+	    return state.remote.operations
+	}
+
+
 /***/ },
 /* 292 */
 /***/ function(module, exports) {
@@ -49363,7 +49397,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-25f59bd0] {\n    height: 50px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-25f59bd0] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-25f59bd0] {\n    height: 50px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-25f59bd0] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
 
 	// exports
 
@@ -49409,7 +49443,7 @@
 /* 297 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-25f59bd0=\"\">\n\n    <div class=\"container\" _v-25f59bd0=\"\">\n\n        <div class=\"navbar-header\" _v-25f59bd0=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-25f59bd0=\"\">\n                <span class=\"sr-only\" _v-25f59bd0=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-25f59bd0=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-25f59bd0=\"\">\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-25f59bd0=\"\">\n\n                <li _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-25f59bd0=\"\">\n                        <i :class=\"statusClasses\" _v-25f59bd0=\"\"></i>\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-25f59bd0=\"\"></li>\n\n                <li v-for=\"currency in currencies\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-25f59bd0=\"\">\n                        {{ currency.name | uppercase }}\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-25f59bd0=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-25f59bd0=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-25f59bd0=\"\">\n\n    <div class=\"container\" _v-25f59bd0=\"\">\n\n        <div class=\"navbar-header\" _v-25f59bd0=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-25f59bd0=\"\">\n                <span class=\"sr-only\" _v-25f59bd0=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n                <span class=\"icon-bar\" _v-25f59bd0=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-25f59bd0=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-25f59bd0=\"\">\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-25f59bd0=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-25f59bd0=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-25f59bd0=\"\">\n\n                <li _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-25f59bd0=\"\">\n                        <i :class=\"statusClasses\" _v-25f59bd0=\"\"></i>\n                    </a>\n                </li>\n\n                <li v-if=\"$route.path !== '/operations'\" class=\"divider-vertical\" _v-25f59bd0=\"\"></li>\n\n                <li v-if=\"$route.path !== '/operations'\" v-for=\"currency in currencies\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-25f59bd0=\"\">\n                        {{ currency.name | uppercase }}\n                    </a>\n                </li>\n\n                <li class=\"divider-vertical\" _v-25f59bd0=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-25f59bd0=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-25f59bd0=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 298 */
@@ -50942,6 +50976,9 @@
 	                component: __webpack_require__(366),
 	            },
 	        },
+	    },
+	    '/operations': {
+	        component: __webpack_require__(369),
 	    },
 	})
 
@@ -53925,6 +53962,16 @@
 	            page: {
 	                title: 'Operations',
 	            },
+	            attributes: {
+	                account_name: 'Account',
+	                envelope_name: 'Envelope',
+	            },
+	            types: {
+	                income: 'Revenue allocation',
+	                outcome: 'Outcome',
+	                revenue: 'Revenue',
+	                transfer: 'Transfer',
+	            },
 	        },
 	    },
 	    fr: {
@@ -54049,6 +54096,16 @@
 	            page: {
 	                title: 'Opérations',
 	            },
+	            attributes: {
+	                account_name: 'Compte',
+	                envelope_name: 'Enveloppe',
+	            },
+	            types: {
+	                income: 'Allocation de revenu',
+	                outcome: 'Dépense',
+	                revenue: 'Revenu',
+	                transfer: 'Virement',
+	            },
 	        },
 	    },
 	}
@@ -54058,13 +54115,14 @@
 /* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(Vue) {
+	/* WEBPACK VAR INJECTION */(function(Vue, moment) {
 	exports.state = {
 	    currencies: [],
 	    accounts: [],
 	    accountDevelopment: {},
 	    envelopes: [],
 	    envelopeDevelopment: {},
+	    operations: [],
 	}
 
 	exports.mutations = {
@@ -54089,9 +54147,22 @@
 	        state.envelopeDevelopment = development
 	    },
 
+	    SET_OPERATIONS(state, operations) {
+	        state.operations = operations.map(function (operation) {
+	            operation.created_at = moment(operation.created_at)
+	            operation.date = moment(operation.date)
+	            return operation
+	        }).sort(function (a, b) {
+	            if (a.date.isSame(b.date, 'day')) {
+	                return a.created_at.isBefore(b.created_at, 'day') ? 1 : -1
+	            }
+	            return a.date.isBefore(b.date, 'day') ? 1 : -1
+	        })
+	    },
+
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96), __webpack_require__(98)))
 
 /***/ },
 /* 313 */
@@ -55723,10 +55794,281 @@
 /* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __vue_script__, __vue_template__
+	__vue_script__ = __webpack_require__(370)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/operations/index.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(381)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-0fec2424/index.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 370 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _keys = __webpack_require__(254);
+
+	var _keys2 = _interopRequireDefault(_keys);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mixins = __webpack_require__(289);
+	var OperationsTimeline = __webpack_require__(375);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    computed: {
+
+	        months: function months() {
+	            var unordered = this.operations.reduce(function (months, operation) {
+	                months[operation.date.format("YYYY-MM")] = operation.date;
+	                return months;
+	            }, {});
+
+	            var ordered = (0, _keys2.default)(unordered).map(function (key) {
+	                return unordered[key];
+	            }).sort(function (a, b) {
+	                return a.isBefore(b, 'day') ? 1 : -1;
+	            });
+
+	            return ordered;
+	        }
+
+	    },
+
+	    created: function created() {
+	        this.$emit('refresh-data');
+	    },
+
+	    methods: {
+	        monthOperations: function monthOperations(month) {
+	            return this.operations.filter(function (operation) {
+	                return operation.date.isBetween(month, month, 'month', '[]');
+	            });
+	        }
+	    },
+
+	    events: {
+	        'refresh-data': function refreshData() {
+	            this.refreshOperations();
+	            this.refreshAccounts();
+	            this.refreshEnvelopes();
+	            return true;
+	        }
+	    },
+
+	    components: {
+	        OperationsTimeline: OperationsTimeline
+	    }
+
+	};
+
+/***/ },
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(389)
+	__vue_script__ = __webpack_require__(376)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/operations/timeline.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(391)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-2fa36a5f/timeline.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 376 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+	var OperationsPanel = __webpack_require__(377);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    props: ['month', 'operationList'],
+
+	    components: {
+	        OperationsPanel: OperationsPanel
+	    }
+
+	};
+
+/***/ },
+/* 377 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	__webpack_require__(386)
+	__vue_script__ = __webpack_require__(378)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/operations/panel.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(388)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	if (__vue_template__) {
+	(typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports).template = __vue_template__
+	}
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-309dc754/panel.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 378 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(289);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    props: ['operation'],
+
+	    computed: {
+
+	        operationAccount: function operationAccount() {
+	            return this.accounts.filter(function (account) {
+	                return account.id == this.operation.account_id;
+	            }, this)[0];
+	        },
+
+	        operationEnvelope: function operationEnvelope() {
+	            return this.envelopes.filter(function (envelope) {
+	                return envelope.id == this.operation.envelope_id;
+	            }, this)[0];
+	        },
+
+	        operationCurrency: function operationCurrency() {
+	            return this.currencies.filter(function (currency) {
+	                if (this.operationAccount) {
+	                    return currency.id == this.operationAccount.currency_id;
+	                }
+	                return currency.id == this.operation.currency_id;
+	            }, this)[0];
+	        },
+
+	        alternateText: function alternateText() {
+	            return moment.localeData().months(this.operation.date) + ' ' + this.operation.date.format('YYYY');
+	        },
+
+	        liClass: function liClass() {
+	            return {
+	                'timeline-inverted': this.operation.type === 'outcome'
+	            };
+	        },
+
+	        iconClasses: function iconClasses() {
+	            return {
+	                fa: true,
+	                'fa-fw': true,
+	                'fa-plus': this.operation.type === 'income',
+	                'fa-minus': this.operation.type === 'outcome',
+	                'fa-plus-circle': this.operation.type === 'revenue',
+	                'fa-exchange': this.operation.type === 'transfer'
+	            };
+	        },
+
+	        panelClasses: function panelClasses() {
+	            return {
+	                'timeline-panel': true,
+	                'info': this.operation.type === 'income',
+	                'danger': this.operation.type === 'outcome',
+	                'success': this.operation.type === 'revenue',
+	                'warning': this.operation.type === 'transfer'
+	            };
+	        }
+
+	    }
+
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
+
+/***/ },
+/* 379 */,
+/* 380 */,
+/* 381 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <template v-for=\"month in months\">\n            <operations-timeline :month=\"month\" :operation-list=\"monthOperations(month)\"></operations-timeline>\n        </template>\n    </div>\n</div>\n\n";
+
+/***/ },
+/* 382 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(370);
+	var content = __webpack_require__(383);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -55746,7 +56088,7 @@
 	}
 
 /***/ },
-/* 370 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -55758,6 +56100,138 @@
 
 	// exports
 
+
+/***/ },
+/* 384 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(385);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(94)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./timeline.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./timeline.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 385 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".timeline {\n    list-style: none;\n    padding: 20px 0 20px;\n    position: relative;\n}\n\n    .timeline:before {\n        top: 0;\n        bottom: 0;\n        position: absolute;\n        content: \" \";\n        width: 3px;\n        background-color: #eeeeee;\n        left: 50%;\n        margin-left: -1.5px;\n    }\n\n    .timeline > li {\n        margin-bottom: 20px;\n        position: relative;\n    }\n\n        .timeline > li:before,\n        .timeline > li:after {\n            content: \" \";\n            display: table;\n        }\n\n        .timeline > li:after {\n            clear: both;\n        }\n\n        .timeline > li:before,\n        .timeline > li:after {\n            content: \" \";\n            display: table;\n        }\n\n        .timeline > li:after {\n            clear: both;\n        }\n\n        .timeline > li > .timeline-panel {\n            width: 46%;\n            float: left;\n            border: 1px solid #d4d4d4;\n            border-radius: 2px;\n            padding: 20px;\n            position: relative;\n            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);\n        }\n\n        .timeline > li > .timeline-panel.primary {\n            -webkit-box-shadow: 0 1px 6px #2e6da4;\n            box-shadow: 0 1px 6px #2e6da4;\n            border-color: #2e6da4 !important;\n        }\n\n        .timeline > li > .timeline-panel.success {\n            -webkit-box-shadow: 0 1px 6px #3f903f;\n            box-shadow: 0 1px 6px #3f903f;\n            border-color: #3f903f !important;\n        }\n\n        .timeline > li > .timeline-panel.warning {\n            -webkit-box-shadow: 0 1px 6px #f0ad4e;\n            box-shadow: 0 1px 6px #f0ad4e;\n            border-color: #f0ad4e !important;\n        }\n\n        .timeline > li > .timeline-panel.danger {\n            -webkit-box-shadow: 0 1px 6px #d9534f;\n            box-shadow: 0 1px 6px #d9534f;\n            border-color: #d9534f !important;\n        }\n\n        .timeline > li > .timeline-panel.info {\n            -webkit-box-shadow: 0 1px 6px #5bc0de;\n            box-shadow: 0 1px 6px #5bc0de;\n            border-color: #5bc0de !important;\n        }\n\n            .timeline > li > .timeline-panel:before {\n                position: absolute;\n                top: 26px;\n                right: -15px;\n                display: inline-block;\n                border-top: 15px solid transparent;\n                border-left: 15px solid #ccc;\n                border-right: 0 solid #ccc;\n                border-bottom: 15px solid transparent;\n                content: \" \";\n            }\n\n            .timeline > li > .timeline-panel.primary:before {\n                border-left-color: #2e6da4;\n                border-right-color: #2e6da4;\n            }\n\n            .timeline > li > .timeline-panel.success:before {\n                border-left-color: #3f903f;\n                border-right-color: #3f903f;\n            }\n\n            .timeline > li > .timeline-panel.warning:before {\n                border-left-color: #f0ad4e;\n                border-right-color: #f0ad4e;\n            }\n\n            .timeline > li > .timeline-panel.danger:before {\n                border-left-color: #d9534f;\n                border-right-color: #d9534f;\n            }\n\n            .timeline > li > .timeline-panel.info:before {\n                border-left-color: #5bc0de;\n                border-right-color: #5bc0de;\n            }\n\n            .timeline > li > .timeline-panel:after {\n                background-color: transparent;\n                position: absolute;\n                top: 27px;\n                right: -14px;\n                display: inline-block;\n                border-top: 14px solid transparent;\n                border-left: 14px solid #fff;\n                border-right: 0 solid #fff;\n                border-bottom: 14px solid transparent;\n                content: \" \";\n            }\n\n        .timeline > li > .timeline-badge {\n            color: #fff;\n            width: 50px;\n            height: 50px;\n            line-height: 50px;\n            font-size: 1.4em;\n            text-align: center;\n            position: absolute;\n            top: 16px;\n            left: 50%;\n            margin-left: -25px;\n            background-color: #999999;\n            z-index: 100;\n            border-top-right-radius: 50%;\n            border-top-left-radius: 50%;\n            border-bottom-right-radius: 50%;\n            border-bottom-left-radius: 50%;\n        }\n\n        .timeline > li.timeline-inverted > .timeline-panel {\n            float: right;\n        }\n\n            .timeline > li.timeline-inverted > .timeline-panel:before {\n                border-left-width: 0;\n                border-right-width: 15px;\n                left: -15px;\n                right: auto;\n            }\n\n            .timeline > li.timeline-inverted > .timeline-panel:after {\n                border-left-width: 0;\n                border-right-width: 14px;\n                left: -14px;\n                right: auto;\n            }\n\n.timeline-badge.primary {\n    background-color: #2e6da4 !important;\n}\n\n.timeline-badge.success {\n    background-color: #3f903f !important;\n}\n\n.timeline-badge.warning {\n    background-color: #f0ad4e !important;\n}\n\n.timeline-badge.danger {\n    background-color: #d9534f !important;\n}\n\n.timeline-badge.info {\n    background-color: #5bc0de !important;\n}\n\n.timeline-title {\n    margin-top: 0;\n    color: inherit;\n}\n\n.timeline-body > p,\n.timeline-body > ul {\n    margin-bottom: 0;\n}\n\n    .timeline-body > p + p {\n        margin-top: 5px;\n    }\n\n@media (max-width: 767px) {\n    ul.timeline:before {\n        left: 40px;\n    }\n\n    ul.timeline > li > .timeline-panel {\n        width: calc(100% - 90px);\n        width: -moz-calc(100% - 90px);\n        width: -webkit-calc(100% - 90px);\n    }\n\n    ul.timeline > li > .timeline-badge {\n        left: 15px;\n        margin-left: 0;\n        top: 16px;\n    }\n\n    ul.timeline > li > .timeline-panel {\n        float: right;\n    }\n\n        ul.timeline > li > .timeline-panel:before {\n            border-left-width: 0;\n            border-right-width: 15px;\n            left: -15px;\n            right: auto;\n        }\n\n            .timeline > li > .timeline-panel.primary:before {\n                border-left-color: #2e6da4;\n                border-right-right: #2e6da4;\n            }\n\n            .timeline > li > .timeline-panel.success:before {\n                border-left-color: #3f903f;\n                border-right-right: #3f903f;\n            }\n\n            .timeline > li > .timeline-panel.warning:before {\n                border-left-color: #f0ad4e;\n                border-right-right: #f0ad4e;\n            }\n\n            .timeline > li > .timeline-panel.danger:before {\n                border-left-color: #d9534f;\n                border-right-right: #d9534f;\n            }\n\n            .timeline > li > .timeline-panel.info:before {\n                border-left-color: #5bc0de;\n                border-right-right: #5bc0de;\n            }\n\n        ul.timeline > li > .timeline-panel:after {\n            border-left-width: 0;\n            border-right-width: 14px;\n            left: -14px;\n            right: auto;\n        }\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 386 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(387);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-309dc754&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./panel.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-309dc754&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./panel.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 387 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.timeline-inverted[_v-309dc754] {\n    text-align: right;\n}\n\n.timeline-title b[_v-309dc754] {\n    float: right;\n}\n\n.timeline-inverted .timeline-title b[_v-309dc754] {\n    float: left;\n}\n\n.timeline-alternate[_v-309dc754] {\n    width: 46%;\n    float: right;\n    padding: 20px;\n    color: #c3c3c3;\n    text-align: center;\n    font-weight: bold;\n    font-size: x-large;\n    text-transform: uppercase;\n}\n\n.timeline-inverted .timeline-alternate[_v-309dc754] {\n    float: left;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 388 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<li :class=\"liClass\" _v-309dc754=\"\">\n\n    <div class=\"timeline-badge primary\" _v-309dc754=\"\">\n        {{  operation.date.date() }}\n    </div>\n\n    <div :class=\"panelClasses\" _v-309dc754=\"\">\n\n        <div class=\"timeline-heading\" _v-309dc754=\"\">\n\n            <h4 class=\"timeline-title\" _v-309dc754=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-309dc754=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-309dc754=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" _v-309dc754=\"\">\n                <small class=\"text-muted\" _v-309dc754=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-309dc754=\"\">\n            <p _v-309dc754=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n    <div class=\"timeline-alternate\" _v-309dc754=\"\">\n        {{ alternateText }}\n    </div>\n\n</li>\n\n";
+
+/***/ },
+/* 389 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(390);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(207)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-2fa36a5f&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./timeline.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-2fa36a5f&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./timeline.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 390 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul[_v-2fa36a5f]:nth-child(odd){\n    background-color: #f9f9f9;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 391 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<ul class=\"timeline\" _v-2fa36a5f=\"\">\n    <operations-panel v-for=\"operation in operationList\" :operation=\"operation\" _v-2fa36a5f=\"\"></operations-panel>\n</ul>\n\n";
 
 /***/ }
 /******/ ]);

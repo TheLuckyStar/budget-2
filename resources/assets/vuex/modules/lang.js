@@ -122,6 +122,16 @@ exports.state = {
             page: {
                 title: 'Operations',
             },
+            attributes: {
+                account_name: 'Account',
+                envelope_name: 'Envelope',
+            },
+            types: {
+                income: 'Revenue allocation',
+                outcome: 'Outcome',
+                revenue: 'Revenue',
+                transfer: 'Transfer',
+            },
         },
     },
     fr: {
@@ -245,6 +255,16 @@ exports.state = {
         operations: {
             page: {
                 title: 'Opérations',
+            },
+            attributes: {
+                account_name: 'Compte',
+                envelope_name: 'Enveloppe',
+            },
+            types: {
+                income: 'Allocation de revenu',
+                outcome: 'Dépense',
+                revenue: 'Revenu',
+                transfer: 'Virement',
             },
         },
     },

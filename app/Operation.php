@@ -6,6 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Operation extends Model
 {
+    public function scopeSearch($query, $filters)
+    {
+        $query->selectType();
+    }
+
+    public function scopeSelectType($query)
+    {
+        $query->select('*')
+            ->addSelect(app('db')->raw('"'.str_singular($this->getTable()).'" AS type'));
+    }
+
+    public function scopeSelectAccount($query)
+    {
+        $query->join(app('db')->raw('(SELECT id AS account_id, name as account_name FROM `accounts`) accounts'), function($join) {
+            $join->on('accounts.account_id', '=', $this->getTable().'.account_id');
+        });
+    }
+
+    public function scopeSelectEnvelope($query)
+    {
+        $query->join(app('db')->raw('(SELECT id AS envelope_id, name as envelope_name FROM `envelopes`) envelopes'), function($join) {
+            $join->on('envelopes.envelope_id', '=', $this->getTable().'.envelope_id');
+        });
+    }
+
     public function scopeConvertedTo($query, Currency $currency = null)
     {
         if (is_null($currency)) {

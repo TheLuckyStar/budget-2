@@ -31,4 +31,6 @@ $app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], func
     $app->get('envelopes/development/{id}', 'Envelopes@development');
     $app->get('envelopes/development', 'Envelopes@development');
 
+    $app->get('operations', 'Operations@index');
+
 });

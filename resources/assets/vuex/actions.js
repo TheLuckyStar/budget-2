@@ -176,3 +176,24 @@ exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
         console.log(response)
     })
 }
+
+
+
+/**
+ * Remote store : Operations
+ */
+
+exports.refreshOperations = function ({ dispatch, state }, callback) {
+    dispatch('SET_OPERATIONS', [])
+    dispatch('SET_STATUS', 'processing')
+    Vue.resource('operations').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
+        dispatch('SET_OPERATIONS', response.data)
+        if (callback) {
+            callback()
+        }
+        exports.refreshCurrencies({ dispatch, state })
+    }, function (response) {
+        console.log(response)
+    })
+}
