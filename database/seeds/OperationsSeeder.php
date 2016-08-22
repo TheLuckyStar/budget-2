@@ -49,7 +49,7 @@ class OperationsSeeder extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA + liquide',
-            'amount' => '2863',
+            'amount' => '2733',
             'date' => '2016-08-08',
         ]);
 
@@ -83,6 +83,14 @@ class OperationsSeeder extends Seeder
             'name' => 'Skånetrafiken Delphine',
             'amount' => '759',
             'date' => '2016-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Piscine',
+            'amount' => '130',
+            'date' => '2016-08-14',
         ]);
     }
 }
