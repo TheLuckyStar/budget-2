@@ -16,6 +16,7 @@
     }
 
     .timeline > li {
+        min-height: 50px;
         margin-bottom: 20px;
         position: relative;
     }
@@ -81,7 +82,7 @@
             border-color: #5bc0de !important;
         }
 
-            .timeline > li > .timeline-panel:before {
+            .timeline > li > .timeline-panel.with-arrow:before {
                 position: absolute;
                 top: 26px;
                 right: -15px;
@@ -118,7 +119,7 @@
                 border-right-color: #5bc0de;
             }
 
-            .timeline > li > .timeline-panel:after {
+            .timeline > li > .timeline-panel.with-arrow:after {
                 background-color: transparent;
                 position: absolute;
                 top: 27px;
@@ -154,14 +155,14 @@
             float: right;
         }
 
-            .timeline > li.timeline-inverted > .timeline-panel:before {
+            .timeline > li.timeline-inverted > .timeline-panel.with-arrow:before {
                 border-left-width: 0;
                 border-right-width: 15px;
                 left: -15px;
                 right: auto;
             }
 
-            .timeline > li.timeline-inverted > .timeline-panel:after {
+            .timeline > li.timeline-inverted > .timeline-panel.with-arrow:after {
                 border-left-width: 0;
                 border-right-width: 14px;
                 left: -14px;
@@ -223,7 +224,7 @@
         float: right;
     }
 
-        ul.timeline > li > .timeline-panel:before {
+        ul.timeline > li > .timeline-panel.with-arrow:before {
             border-left-width: 0;
             border-right-width: 15px;
             left: -15px;
@@ -255,7 +256,7 @@
                 border-right-right: #5bc0de;
             }
 
-        ul.timeline > li > .timeline-panel:after {
+        ul.timeline > li > .timeline-panel.with-arrow:after {
             border-left-width: 0;
             border-right-width: 14px;
             left: -14px;

@@ -5,7 +5,7 @@ exports.state = {
     accountDevelopment: {},
     envelopes: [],
     envelopeDevelopment: {},
-    operations: [],
+    operations: {},
 }
 
 exports.mutations = {
@@ -31,7 +31,9 @@ exports.mutations = {
     },
 
     SET_OPERATIONS(state, operations) {
-        state.operations = operations.map(function (operation) {
+        state.operations = {}
+
+        operations.map(function (operation) {
             operation.created_at = moment(operation.created_at)
             operation.date = moment(operation.date)
             return operation
@@ -40,6 +42,24 @@ exports.mutations = {
                 return a.created_at.isBefore(b.created_at, 'day') ? 1 : -1
             }
             return a.date.isBefore(b.date, 'day') ? 1 : -1
+        }).forEach(function (operation) {
+            var year = operation.date.year()
+            var month = operation.date.month()
+            var date = operation.date.date()
+
+            if (state.operations.hasOwnProperty(year) === false) {
+                state.operations[year] = {}
+            }
+
+            if (state.operations[year].hasOwnProperty(month) === false) {
+                state.operations[year][month] = {}
+            }
+
+            if (state.operations[year][month].hasOwnProperty(date) === false) {
+                state.operations[year][month][date] = []
+            }
+
+            state.operations[year][month][date].push(operation)
         })
     },
 

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <template v-for="month in months">
-                <operations-timeline :month="month" :operation-list="monthOperations(month)"></operations-timeline>
+                <operations-month :month="month"></operations-month>
             </template>
         </div>
     </div>
@@ -16,7 +16,7 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
-    var OperationsTimeline = require('components/operations/timeline.vue')
+    var OperationsMonth = require('components/operations/month.vue')
 
     export default {
 
@@ -25,18 +25,17 @@
         computed: {
 
             months: function () {
-                var unordered = this.operations.reduce(function (months, operation) {
-                    months[operation.date.format("YYYY-MM")] = operation.date
-                    return months
-                }, {})
+                var months = []
 
-                var ordered = Object.keys(unordered).map(function(key) {
-                    return unordered[key]
-                }).sort(function (a, b) {
-                    return a.isBefore(b, 'day') ? 1 : -1
+                Object.keys(this.operations).map(function(year) {
+                    Object.keys(this.operations[year]).map(function(month) {
+                        months.push(moment().year(year).month(month))
+                    }, this)
+                }, this)
+
+                return months.sort(function (a, b) {
+                    return a < b ? 1 : -1
                 })
-
-                return ordered
             },
 
         },
@@ -63,7 +62,7 @@
         },
 
         components: {
-            OperationsTimeline,
+            OperationsMonth,
         },
 
     }

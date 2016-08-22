@@ -27,7 +27,7 @@ abstract class Container extends Model
     {
         $output = parent::toArray();
 
-        $output['state'] = $this->monthly_snapshot;
+//        $output['state'] = $this->monthly_snapshot;
 
         return $output;
     }

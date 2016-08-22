@@ -1,13 +1,13 @@
 
 <template>
 
-    <li :class="liClass">
+    <li :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
 
-        <div class="timeline-badge primary">
-            {{  operation.date.date() }}
+        <div v-if="withBadge" :class="badgeClass">
+            {{ date.date() }}
         </div>
 
-        <div :class="panelClasses">
+        <div v-if="operation" :class="panelClasses">
 
             <div class="timeline-heading">
 
@@ -44,10 +44,6 @@
 
         </div>
 
-        <div class="timeline-alternate">
-            {{ alternateText }}
-        </div>
-
     </li>
 
 </template>
@@ -62,9 +58,16 @@
 
         mixins: [mixins.vuex],
 
-        props: ['operation'],
+        props: ['operation', 'date', 'withBadge'],
 
         computed: {
+
+            badgeClass: function () {
+                return {
+                    'timeline-badge': true,
+                    'primary': this.operation,
+                }
+            },
 
             operationAccount: function () {
                 return this.accounts.filter(function (account) {
@@ -87,30 +90,10 @@
                 }, this)[0]
             },
 
-            alternateText: function () {
-                return moment.localeData().months(this.operation.date) + ' ' + this.operation.date.format('YYYY')
-            },
-
-            liClass: function () {
-                return {
-                    'timeline-inverted': this.operation.type === 'outcome',
-                }
-            },
-
-            iconClasses: function () {
-                return {
-                    fa: true,
-                    'fa-fw': true,
-                    'fa-plus': this.operation.type === 'income',
-                    'fa-minus': this.operation.type === 'outcome',
-                    'fa-plus-circle': this.operation.type === 'revenue',
-                    'fa-exchange': this.operation.type === 'transfer',
-                }
-            },
-
             panelClasses: function () {
                 return {
                     'timeline-panel': true,
+                    'with-arrow': this.withBadge,
                     'info': this.operation.type === 'income',
                     'danger': this.operation.type === 'outcome',
                     'success': this.operation.type === 'revenue',
@@ -137,21 +120,6 @@
     }
 
     .timeline-inverted .timeline-title b {
-        float: left;
-    }
-
-    .timeline-alternate {
-        width: 46%;
-        float: right;
-        padding: 20px;
-        color: #c3c3c3;
-        text-align: center;
-        font-weight: bold;
-        font-size: x-large;
-        text-transform: uppercase;
-    }
-
-    .timeline-inverted .timeline-alternate {
         float: left;
     }
 
