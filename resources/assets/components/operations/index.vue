@@ -2,10 +2,15 @@
 <template>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-10">
             <template v-for="month in months">
                 <operations-month :month="month"></operations-month>
             </template>
+        </div>
+        <div class="col-xs-2">
+            <a v-for="month in months"
+                v-text="month | formatLongMonth"
+                href="#/operations?{{ month.format('YYYY-MM') }}"></a>
         </div>
     </div>
 

@@ -56174,13 +56174,13 @@
 /* 385 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<ul class=\"timeline\" _v-1ad6d25c=\"\">\n    <template v-for=\"day in days\">\n        <operations-day :with-badge=\"true\" :operation=\"dayOperations(day)[0]\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n        <operations-day v-for=\"operation in dayOperations(day).slice(1)\" :operation=\"operation\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n    </template>\n</ul>\n\n";
+	module.exports = "\n\n\n<ul class=\"timeline\" id=\"/operations?{{ month.format('YYYY-MM') }}\" _v-1ad6d25c=\"\">\n    <template v-for=\"day in days\">\n        <operations-day :with-badge=\"true\" :operation=\"dayOperations(day)[0]\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n        <operations-day v-for=\"operation in dayOperations(day).slice(1)\" :operation=\"operation\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n    </template>\n</ul>\n\n";
 
 /***/ },
 /* 386 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\"></operations-month>\n        </template>\n    </div>\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n    <div class=\"col-xs-10\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\"></operations-month>\n        </template>\n    </div>\n    <div class=\"col-xs-2\">\n        <a v-for=\"month in months\"\n            v-text=\"month | formatLongMonth\"\n            href=\"#/operations?{{ month.format('YYYY-MM') }}\"></a>\n    </div>\n</div>\n\n";
 
 /***/ },
 /* 387 */

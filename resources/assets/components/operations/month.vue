@@ -1,7 +1,7 @@
 
 <template>
 
-    <ul class="timeline">
+    <ul class="timeline" id="/operations?{{ month.format('YYYY-MM') }}">
         <template v-for="day in days">
             <operations-day :with-badge="true"
                 :operation="dayOperations(day)[0]"
