@@ -16,9 +16,9 @@ class OperationsSeeder extends Seeder
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
-            'name' => 'Avance sur salaire',
-            'amount' => '10000',
-            'date' => '2016-07-28',
+            'name' => 'Salaire juillet',
+            'amount' => '7483',
+            'date' => '2016-06-30',
         ]);
 
         Outcome::create([
@@ -29,20 +29,20 @@ class OperationsSeeder extends Seeder
             'date' => '2016-07-28',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire aout',
+            'amount' => '23460',
+            'date' => '2016-07-31',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
             'name' => 'Loyer aout',
             'amount' => '7000',
             'date' => '2016-08-01',
-        ]);
-
-        Revenue::create([
-            'account_id' => 12,
-            'envelope_id' => null,
-            'name' => 'Avance sur salaire',
-            'amount' => '5000',
-            'date' => '2016-08-08',
         ]);
 
         Outcome::create([
@@ -91,6 +91,22 @@ class OperationsSeeder extends Seeder
             'name' => 'Piscine',
             'amount' => '130',
             'date' => '2016-08-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer septembre',
+            'amount' => '6800',
+            'date' => '2016-08-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Internet juillet',
+            'amount' => '676',
+            'date' => '2016-08-25',
         ]);
     }
 }

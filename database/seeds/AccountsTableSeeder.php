@@ -13,7 +13,7 @@ class AccountsTableSeeder extends Seeder
     public function run()
     {
         Account::create([
-            'name' => 'Checkkonto',
+            'name' => 'Privatkonto',
             'currency_id' => 2,
         ]);
     }
