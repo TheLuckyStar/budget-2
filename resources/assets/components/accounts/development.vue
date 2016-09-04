@@ -79,13 +79,13 @@
                     },
                     {
                         type: 'line',
-                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.accumulated_savings : [],
+                        data: this.accountDevelopment.yearly && this.accountDevelopment.yearly.accumulated_savings ? this.accountDevelopment.yearly.accumulated_savings : [],
                         label: this.text.accounts.development.accumulatedSavingsLabel,
                         color: 'primary',
                     },
                     {
                         type: 'bar',
-                        data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.monthly_savings : [],
+                        data: this.accountDevelopment.yearly && this.accountDevelopment.yearly.monthly_savings ? this.accountDevelopment.yearly.monthly_savings : [],
                         label: this.text.accounts.development.monthlySavingsLabel,
                         color: 'info',
                     },

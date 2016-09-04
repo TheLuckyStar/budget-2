@@ -54669,7 +54669,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-8a7fa872] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-8a7fa872] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-8a7fa872] {\n    min-height: 400px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-8a7fa872] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-8a7fa872] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-8a7fa872] {\n    min-height: 400px;\n}\n\n", ""]);
 
 	// exports
 
@@ -54694,6 +54694,7 @@
 	    computed: {
 
 	        stateData: function stateData() {
+	            console.log(this.accountDevelopment.yearly);
 	            return [{
 	                type: 'line',
 	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
@@ -54701,12 +54702,12 @@
 	                color: 'default'
 	            }, {
 	                type: 'line',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.accumulated_savings : [],
+	                data: this.accountDevelopment.yearly && this.accountDevelopment.yearly.accumulated_savings ? this.accountDevelopment.yearly.accumulated_savings : [],
 	                label: this.text.accounts.development.accumulatedSavingsLabel,
 	                color: 'primary'
 	            }, {
 	                type: 'bar',
-	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.monthly_savings : [],
+	                data: this.accountDevelopment.yearly && this.accountDevelopment.yearly.monthly_savings ? this.accountDevelopment.yearly.monthly_savings : [],
 	                label: this.text.accounts.development.monthlySavingsLabel,
 	                color: 'info'
 	            }];
