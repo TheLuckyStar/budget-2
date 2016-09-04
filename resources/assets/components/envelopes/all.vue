@@ -64,7 +64,7 @@
                     {
                         type: 'radar',
                         data: this.enabledEnvelopes.map(function (envelope) {
-                            return envelope.balance
+                            return envelope.state.balance
                         }),
                         label: this.text.envelopes.development.balanceLabel,
                         color: 'default',

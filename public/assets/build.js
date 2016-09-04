@@ -51,8 +51,8 @@
 	__webpack_require__(203);
 	__webpack_require__(303);
 	__webpack_require__(305);
-	__webpack_require__(387);
-	module.exports = __webpack_require__(389);
+	__webpack_require__(382);
+	module.exports = __webpack_require__(384);
 
 
 /***/ },
@@ -55307,7 +55307,7 @@
 	            return [{
 	                type: 'radar',
 	                data: this.enabledEnvelopes.map(function (envelope) {
-	                    return envelope.balance;
+	                    return envelope.state.balance;
 	                }),
 	                label: this.text.envelopes.development.balanceLabel,
 	                color: 'default'
@@ -55820,7 +55820,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/operations/index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(386)
+	__vue_template__ = __webpack_require__(381)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -55918,7 +55918,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/operations/month.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(385)
+	__vue_template__ = __webpack_require__(380)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -56037,7 +56037,7 @@
 	    __vue_script__.__esModule &&
 	    Object.keys(__vue_script__).length > 1) {
 	  console.warn("[vue-loader] resources/assets/components/operations/day.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(384)
+	__vue_template__ = __webpack_require__(379)
 	module.exports = __vue_script__ || {}
 	if (module.exports.__esModule) module.exports = module.exports.default
 	if (__vue_template__) {
@@ -56160,36 +56160,31 @@
 	};
 
 /***/ },
-/* 379 */,
-/* 380 */,
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */
+/* 379 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<li :class=\"{'timeline-inverted': operation &amp;&amp; operation.type === 'outcome'}\" _v-50859f24=\"\">\n\n    <div v-if=\"withBadge\" :class=\"badgeClass\" _v-50859f24=\"\">\n        {{ date.date() }}\n    </div>\n\n    <div v-if=\"operation\" :class=\"panelClasses\" _v-50859f24=\"\">\n\n        <div class=\"timeline-heading\" _v-50859f24=\"\">\n\n            <h4 class=\"timeline-title\" _v-50859f24=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-50859f24=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-50859f24=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" _v-50859f24=\"\">\n                <small class=\"text-muted\" _v-50859f24=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-50859f24=\"\">\n            <p _v-50859f24=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n</li>\n\n";
 
 /***/ },
-/* 385 */
+/* 380 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<ul class=\"timeline\" id=\"/operations?{{ month.format('YYYY-MM') }}\" _v-1ad6d25c=\"\">\n    <template v-for=\"day in days\">\n        <operations-day :with-badge=\"true\" :operation=\"dayOperations(day)[0]\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n        <operations-day v-for=\"operation in dayOperations(day).slice(1)\" :operation=\"operation\" :date=\"day\" _v-1ad6d25c=\"\"></operations-day>\n    </template>\n</ul>\n\n";
 
 /***/ },
-/* 386 */
+/* 381 */
 /***/ function(module, exports) {
 
 	module.exports = "\n\n\n<div class=\"row\">\n    <div class=\"col-xs-10\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\"></operations-month>\n        </template>\n    </div>\n    <div class=\"col-xs-2\">\n        <a v-for=\"month in months\"\n            v-text=\"month | formatLongMonth\"\n            href=\"#/operations?{{ month.format('YYYY-MM') }}\"></a>\n    </div>\n</div>\n\n";
 
 /***/ },
-/* 387 */
+/* 382 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(388);
+	var content = __webpack_require__(383);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -56209,7 +56204,7 @@
 	}
 
 /***/ },
-/* 388 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
@@ -56223,13 +56218,13 @@
 
 
 /***/ },
-/* 389 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(390);
+	var content = __webpack_require__(385);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(94)(content, {});
@@ -56249,7 +56244,7 @@
 	}
 
 /***/ },
-/* 390 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(87)();
