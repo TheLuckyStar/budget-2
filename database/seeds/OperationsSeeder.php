@@ -13,6 +13,13 @@ class OperationsSeeder extends Seeder
      */
     public function run()
     {
+        $this->july();
+        $this->august();
+        // $this->september();
+    }
+
+    public function july()
+    {
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
@@ -36,7 +43,10 @@ class OperationsSeeder extends Seeder
             'amount' => '23460',
             'date' => '2016-07-31',
         ]);
+    }
 
+    public function august()
+    {
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -49,7 +59,7 @@ class OperationsSeeder extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA + liquide',
-            'amount' => '2733',
+            'amount' => '2548',
             'date' => '2016-08-08',
         ]);
 
@@ -96,17 +106,60 @@ class OperationsSeeder extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
-            'name' => 'Loyer septembre',
-            'amount' => '6800',
+            'name' => 'Internet juillet',
+            'amount' => '676',
             'date' => '2016-08-25',
         ]);
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Piscine',
+            'amount' => '65',
+            'date' => '2016-08-30',
+        ]);
+    }
+
+    public function september()
+    {
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 1,
-            'name' => 'Internet juillet',
-            'amount' => '676',
-            'date' => '2016-08-25',
+            'name' => 'Loyer septembre',
+            'amount' => '6800',
+            'date' => '2016-09-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '99',
+            'date' => '2016-09-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Décoration céramique',
+            'amount' => '80',
+            'date' => '2016-09-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Loppis Puzzles',
+            'amount' => '40',
+            'date' => '2016-09-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Marche bio : fruits',
+            'amount' => '169',
+            'date' => '2016-09-03',
         ]);
     }
 }
