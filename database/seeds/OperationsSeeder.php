@@ -15,7 +15,7 @@ class OperationsSeeder extends Seeder
     {
         $this->july();
         $this->august();
-        // $this->september();
+        $this->september();
     }
 
     public function july()
@@ -160,6 +160,22 @@ class OperationsSeeder extends Seeder
             'name' => 'Marche bio : fruits',
             'amount' => '169',
             'date' => '2016-09-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Meubles Hanaskog',
+            'amount' => '4000',
+            'date' => '2016-09-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Tele2',
+            'amount' => '721',
+            'date' => '2016-09-09',
         ]);
     }
 }
