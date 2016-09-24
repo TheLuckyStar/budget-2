@@ -35,18 +35,18 @@ class OperationsSeeder extends Seeder
             'amount' => '3000',
             'date' => '2016-07-28',
         ]);
+    }
 
+    public function august()
+    {
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
             'name' => 'Salaire aout',
             'amount' => '23460',
-            'date' => '2016-07-31',
+            'date' => '2016-08-01',
         ]);
-    }
 
-    public function august()
-    {
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -122,6 +122,14 @@ class OperationsSeeder extends Seeder
 
     public function september()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire septembre',
+            'amount' => '27037',
+            'date' => '2016-09-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -176,6 +184,78 @@ class OperationsSeeder extends Seeder
             'name' => 'Tele2',
             'amount' => '721',
             'date' => '2016-09-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '79',
+            'date' => '2016-09-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Loppis : jeux Elie',
+            'amount' => '545',
+            'date' => '2016-09-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Loppis : vetements Elie',
+            'amount' => '630',
+            'date' => '2016-09-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-09-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Afterwork Simon',
+            'amount' => '198',
+            'date' => '2016-09-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '95',
+            'date' => '2016-09-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Loppis : vetements Elie',
+            'amount' => '425',
+            'date' => '2016-09-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1695.12',
+            'date' => '2016-09-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 53,
+            'name' => 'Floradix',
+            'amount' => '109',
+            'date' => '2016-09-24',
         ]);
     }
 }
