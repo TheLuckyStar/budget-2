@@ -16,6 +16,7 @@ class OperationsSeeder extends Seeder
         $this->july();
         $this->august();
         $this->september();
+        // $this->octobre();
     }
 
     public function july()
@@ -256,6 +257,113 @@ class OperationsSeeder extends Seeder
             'name' => 'Floradix',
             'amount' => '109',
             'date' => '2016-09-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'IKEA',
+            'amount' => '3232.07',
+            'date' => '2016-09-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Brunch IKEA',
+            'amount' => '117',
+            'date' => '2016-09-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '530.51',
+            'date' => '2016-09-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2016-09-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Parcmètre',
+            'amount' => '5',
+            'date' => '2016-09-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-09-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Timbres',
+            'amount' => '130',
+            'date' => '2016-09-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Timbres',
+            'amount' => '39',
+            'date' => '2016-09-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Ceinture Delphine',
+            'amount' => '330',
+            'date' => '2016-09-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '95',
+            'date' => '2016-09-30',
+        ]);
+    }
+
+    public function octobre()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer octobre',
+            'amount' => '6800',
+            'date' => '2016-10-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '49',
+            'date' => '2016-10-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Quete Knislinge',
+            'amount' => '40',
+            'date' => '2016-10-02',
         ]);
     }
 }
