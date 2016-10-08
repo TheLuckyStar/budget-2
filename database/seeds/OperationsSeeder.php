@@ -16,7 +16,7 @@ class OperationsSeeder extends Seeder
         $this->july();
         $this->august();
         $this->september();
-        // $this->octobre();
+        $this->octobre();
     }
 
     public function july()
@@ -364,6 +364,30 @@ class OperationsSeeder extends Seeder
             'name' => 'Quete Knislinge',
             'amount' => '40',
             'date' => '2016-10-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Timbres',
+            'amount' => '25',
+            'date' => '2016-10-04',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1085.63',
+            'date' => '2016-10-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '40',
+            'date' => '2016-10-07',
         ]);
     }
 }
