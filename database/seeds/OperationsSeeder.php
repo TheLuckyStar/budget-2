@@ -376,10 +376,18 @@ class OperationsSeeder extends Seeder
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Tele2',
+            'amount' => '603',
+            'date' => '2016-10-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'ICA',
             'amount' => '1085.63',
-            'date' => '2016-10-06',
+            'date' => '2016-10-08',
         ]);
 
         Outcome::create([
@@ -387,7 +395,63 @@ class OperationsSeeder extends Seeder
             'envelope_id' => 3,
             'name' => 'Gouter Lekoseum',
             'amount' => '40',
-            'date' => '2016-10-07',
+            'date' => '2016-10-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Commande bodystore',
+            'amount' => '1280',
+            'date' => '2016-10-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Commande bodystore',
+            'amount' => '380',
+            'date' => '2016-10-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 53,
+            'name' => 'Commande bodystore',
+            'amount' => '338',
+            'date' => '2016-10-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Jumelles',
+            'amount' => '695',
+            'date' => '2016-10-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '639',
+            'date' => '2016-10-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Retrait liquide',
+            'amount' => '600',
+            'date' => '2016-10-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '694.79',
+            'date' => '2016-10-14',
         ]);
     }
 }
