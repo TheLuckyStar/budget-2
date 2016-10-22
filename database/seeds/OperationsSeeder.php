@@ -453,5 +453,109 @@ class OperationsSeeder extends Seeder
             'amount' => '694.79',
             'date' => '2016-10-14',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement Kalmar',
+            'amount' => '15',
+            'date' => '2016-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Fil dentaire',
+            'amount' => '90',
+            'date' => '2016-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '62.70',
+            'date' => '2016-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Kalmar',
+            'amount' => '225',
+            'date' => '2016-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Brunch Kalmar',
+            'amount' => '318',
+            'date' => '2016-10-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 8,
+            'name' => 'Logement Öland',
+            'amount' => '2000',
+            'date' => '2016-10-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Essence',
+            'amount' => '401.13',
+            'date' => '2016-10-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 8,
+            'name' => 'Essence',
+            'amount' => '474.18',
+            'date' => '2016-10-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Train Copenhagen',
+            'amount' => '400',
+            'date' => '2016-10-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '10',
+            'date' => '2016-10-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '70',
+            'date' => '2016-10-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '725.07',
+            'date' => '2016-10-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '95',
+            'date' => '2016-10-19',
+        ]);
     }
 }
