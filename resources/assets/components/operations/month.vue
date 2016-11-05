@@ -63,7 +63,7 @@
 
 <style scoped>
 
-    ul:nth-child(odd){
+    ul:nth-child(odd) {
         background-color: #f9f9f9;
     }
 

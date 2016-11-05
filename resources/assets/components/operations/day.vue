@@ -1,13 +1,13 @@
 
 <template>
 
-    <li :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
+    <li v-if="operation" :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
 
         <div v-if="withBadge" :class="badgeClass">
             {{ date.date() }}
         </div>
 
-        <div v-if="operation" :class="panelClasses">
+        <div :class="panelClasses">
 
             <div class="timeline-heading">
 
@@ -17,6 +17,7 @@
                         <i class="fa fa-fw {{ operationEnvelope.icon }}"></i>
                         {{ operationEnvelope.name }}
                     </template>
+
                     <template v-else="operationEnvelope">
                         {{ text.operations.types[operation.type] }}
                     </template>
@@ -28,8 +29,8 @@
 
                 </h4>
 
-                <p v-if="operationAccount">
-                    <small class="text-muted">
+                <p v-if="operationAccount" class="text-muted">
+                    <small>
                         {{ operationAccount.name }}
                     </small>
                 </p>
@@ -111,6 +112,14 @@
 
 <style scoped>
 
+    ul .timeline-panel {
+        background-color: white;
+    }
+
+    ul:nth-child(even) .timeline-panel {
+        background-color: #f9f9f9;
+    }
+
     .timeline-inverted {
         text-align: right;
     }
@@ -119,7 +128,8 @@
         float: right;
     }
 
-    .timeline-inverted .timeline-title b {
+    .timeline-inverted .timeline-title b,
+    .timeline-inverted .text-muted  {
         float: left;
     }
 
