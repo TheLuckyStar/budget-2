@@ -32,5 +32,11 @@ $app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], func
     $app->get('envelopes/development', 'Envelopes@development');
 
     $app->get('operations', 'Operations@index');
+    $app->post('operations/revenue', 'Operations@storeRevenue');
+    $app->post('operations/outcome', 'Operations@storeOutcome');
+    $app->put('operations/revenue/{id}', 'Operations@updateRevenue');
+    $app->put('operations/outcome/{id}', 'Operations@updateOutcome');
+    $app->delete('operations/revenue/{id}', 'Operations@destroyRevenue');
+    $app->delete('operations/outcome/{id}', 'Operations@destroyOutcome');
 
 });

@@ -21,6 +21,9 @@ exports.vuex = {
             setDevelopmentDate: actions.setDevelopmentDate,
             refreshOperations : actions.refreshOperations,
             setOperationFilters : actions.setOperationFilters,
+            saveOperation : actions.saveOperation,
+            updateOperation : actions.updateOperation,
+            deleteOperation : actions.deleteOperation,
         },
 
         getters: {

@@ -12,6 +12,13 @@ class Outcome extends Operation
     protected $dates = ['date', 'created_at', 'updated_at'];
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['account_id',  'envelope_id',  'name',  'amount',  'date'];
+
+    /**
      * Get the account for the outcome.
      */
     public function account()

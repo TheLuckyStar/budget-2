@@ -3,6 +3,9 @@
 
     <div class="row">
 
+        <operations-modal :operation="{id: '', type: 'revenue'}"></operations-modal>
+        <operations-modal :operation="{id: '', type: 'outcome'}"></operations-modal>
+
         <operations-filters></operations-filters>
 
         <div class="col-sm-10">
@@ -13,6 +16,16 @@
 
         <div class="col-sm-2 hidden-xs">
             <ul class="list-unstyled" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
+                <li>
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-revenue-">
+                        {{ text.operations.modal.links.newRevenue }}
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-outcome-">
+                        {{ text.operations.modal.links.newOutcome }}
+                    </button>
+                </li>
                 <li v-for="year in years">
                     <a href="#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}" class="btn btn-link">
                         {{ year | formatYear }}
@@ -39,6 +52,7 @@
     var mixins = require('scripts/mixins.js')
     var OperationsMonth = require('components/operations/month.vue')
     var OperationsFilters = require('components/operations/filters.vue')
+    var OperationsModal = require('components/operations/modal.vue')
 
     export default {
 
@@ -123,6 +137,7 @@
         components: {
             OperationsMonth,
             OperationsFilters,
+            OperationsModal,
         },
 
     }

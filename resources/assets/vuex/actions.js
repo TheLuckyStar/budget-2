@@ -203,3 +203,33 @@ exports.setOperationFilters = function ({ dispatch, state }, accountId, envelope
     dispatch('SET_CURRENT_ENVELOPE', envelopeId)
     exports.refreshOperations({ dispatch, state })
 }
+
+exports.saveOperation = function ({ dispatch, state }, type, attributes) {
+    dispatch('SET_STATUS', 'processing')
+    Vue.resource('operations/'+type).save({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
+        exports.refreshOperations({ dispatch, state })
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+exports.updateOperation = function ({ dispatch, state }, id, type, attributes) {
+    dispatch('SET_STATUS', 'processing')
+    Vue.resource('operations/'+type+'/'+id).update({ default_currency_id: state.app.currency_id }, attributes).then(function (response) {
+        dispatch('SET_STATUS', 'done')
+        exports.refreshOperations({ dispatch, state })
+    }, function (response) {
+        console.log(response)
+    })
+}
+
+exports.deleteOperation = function ({ dispatch, state }, id, type) {
+    dispatch('SET_STATUS', 'processing')
+    Vue.resource('operations/'+type+'/'+id).delete({ default_currency_id: state.app.currency_id }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
+        exports.refreshOperations({ dispatch, state })
+    }, function (response) {
+        console.log(response)
+    })
+}

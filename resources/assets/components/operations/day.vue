@@ -9,6 +9,12 @@
 
         <div :class="panelClasses">
 
+            <div class="overlay" data-toggle="modal" data-target="#modal-{{ operation.type }}-{{ operation.id }}">
+                <i class="fa fa fa-5x fa-pencil-square-o"></i>
+            </div>
+
+            <operations-modal :operation="operation"></operations-modal>
+
             <div class="timeline-heading">
 
                 <h4 class="timeline-title">
@@ -54,6 +60,7 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
+    var OperationsModal = require('components/operations/modal.vue')
 
     export default {
 
@@ -94,14 +101,20 @@
             panelClasses: function () {
                 return {
                     'timeline-panel': true,
+                    'timeline-editable': this.operation.type !== 'income',
                     'with-arrow': this.withBadge,
                     'info': this.operation.type === 'income',
                     'danger': this.operation.type === 'outcome',
                     'success': this.operation.type === 'revenue',
                     'warning': this.operation.type === 'transfer',
                 }
+
             },
 
+        },
+
+        components: {
+            OperationsModal,
         },
 
     }
@@ -112,8 +125,27 @@
 
 <style scoped>
 
-    ul .timeline-panel {
+    .timeline-panel {
         background-color: white;
+    }
+
+    .timeline-panel .overlay {
+        display: none;
+        background-color: #eeeeee;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        padding: 20px;
+        cursor: pointer;
+        opacity: 0.75;
+        text-align: center;
+        color: white;
+    }
+
+    .timeline-editable:hover .overlay {
+        display: block;
     }
 
     ul:nth-child(even) .timeline-panel {

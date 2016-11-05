@@ -126,9 +126,25 @@ exports.state = {
                 allAccounts: 'All accounts',
                 allEnvelopes: 'All envelopes',
             },
+            modal: {
+                links: {
+                    newRevenue: "New revenue",
+                    newOutcome: "New outcome",
+                },
+                title: {
+                    revenue: "Revenue",
+                    outcome: "Outcome",
+                },
+                deleteButton: "Delete operation",
+                deleteConfirmation: "Do you really want to delete this operation ?",
+                saveButton: "Save operation",
+            },
             attributes: {
-                account_name: 'Account',
-                envelope_name: 'Envelope',
+                name: 'Title',
+                account_id: 'Account',
+                envelope_id: 'Envelope',
+                amount: 'Amount',
+                date: 'Date',
             },
             types: {
                 income: 'Revenue allocation',
@@ -264,9 +280,25 @@ exports.state = {
                 allAccounts: 'Tous les comptes',
                 allEnvelopes: 'Toutes les envelopes',
             },
+            modal: {
+                links: {
+                    newRevenue: "Nouveau revenu",
+                    newOutcome: "Nouvelle dépense",
+                },
+                title: {
+                    revenue: "Revenu",
+                    outcome: "Dépense",
+                },
+                deleteButton: "Supprimer l'opération",
+                deleteConfirmation: "Voulez-vous vraiment supprimer cette opération ?",
+                saveButton: "Enregistrer l'opération",
+            },
             attributes: {
-                account_name: 'Compte',
-                envelope_name: 'Enveloppe',
+                name: 'Titre',
+                account_id: 'Compte',
+                envelope_id: 'Enveloppe',
+                amount: 'Montant',
+                date: 'Date',
             },
             types: {
                 income: 'Allocation de revenu',

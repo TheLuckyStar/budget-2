@@ -18,6 +18,8 @@ module.exports = {
         'scripts/init-vue-components.js',
         'scripts/init-vue-resource.js',
         'scripts/init-vue-router.js',
+        'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
+        'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
         'styles/bootstrap.less',
         'styles/timeline.css',
     ],

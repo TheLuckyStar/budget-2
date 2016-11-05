@@ -169,23 +169,28 @@
                 right: auto;
             }
 
-.timeline-badge.primary {
+.timeline-badge.primary,
+.timeline-panel.primary .overlay {
     background-color: #2e6da4 !important;
 }
 
-.timeline-badge.success {
+.timeline-badge.success,
+.timeline-panel.success .overlay {
     background-color: #3f903f !important;
 }
 
-.timeline-badge.warning {
+.timeline-badge.warning,
+.timeline-panel.warning .overlay {
     background-color: #f0ad4e !important;
 }
 
-.timeline-badge.danger {
+.timeline-badge.danger,
+.timeline-panel.danger .overlay {
     background-color: #d9534f !important;
 }
 
-.timeline-badge.info {
+.timeline-badge.info,
+.timeline-panel.info .overlay {
     background-color: #5bc0de !important;
 }
 
