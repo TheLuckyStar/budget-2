@@ -22,6 +22,15 @@ class Revenue extends Operation
     public function scopeSearch($query, $filters)
     {
         parent::scopeSearch($query, $filters);
+
         $query->where('date', 'IS NOT', null);
+
+        if (array_get($filters, 'envelope_id')) {
+            $query->where('envelope_id', array_get($filters, 'envelope_id'));
+        }
+
+        if (array_get($filters, 'account_id')) {
+            $query->where('account_id', array_get($filters, 'account_id'));
+        }
     }
 }

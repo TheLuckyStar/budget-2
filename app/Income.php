@@ -26,4 +26,17 @@ class Income extends Operation
     {
         return $this->belongsTo(Currency::class);
     }
+
+    public function scopeSearch($query, $filters)
+    {
+        parent::scopeSearch($query, $filters);
+
+        if (array_get($filters, 'envelope_id')) {
+            $query->where('envelope_id', array_get($filters, 'envelope_id'));
+        }
+
+        if (array_get($filters, 'account_id')) {
+            $query->where('id', 0);
+        }
+    }
 }

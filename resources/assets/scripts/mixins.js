@@ -20,6 +20,7 @@ exports.vuex = {
             updateEnvelope: actions.updateEnvelope,
             setDevelopmentDate: actions.setDevelopmentDate,
             refreshOperations : actions.refreshOperations,
+            setOperationFilters : actions.setOperationFilters,
         },
 
         getters: {

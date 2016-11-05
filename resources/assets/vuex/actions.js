@@ -186,7 +186,7 @@ exports.refreshEnvelopeDevelopment = function ({ dispatch, state }) {
 exports.refreshOperations = function ({ dispatch, state }, callback) {
     dispatch('SET_OPERATIONS', [])
     dispatch('SET_STATUS', 'processing')
-    Vue.resource('operations').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+    Vue.resource('operations').get({ account_id: state.app.account_id, envelope_id: state.app.envelope_id, default_currency_id: state.app.currency_id }).then(function (response) {
         dispatch('SET_STATUS', 'done')
         dispatch('SET_OPERATIONS', response.data)
         if (callback) {
@@ -196,4 +196,10 @@ exports.refreshOperations = function ({ dispatch, state }, callback) {
     }, function (response) {
         console.log(response)
     })
+}
+
+exports.setOperationFilters = function ({ dispatch, state }, accountId, envelopeId) {
+    dispatch('SET_CURRENT_ACCOUNT', accountId)
+    dispatch('SET_CURRENT_ENVELOPE', envelopeId)
+    exports.refreshOperations({ dispatch, state })
 }

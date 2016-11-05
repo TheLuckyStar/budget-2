@@ -50135,6 +50135,7 @@
 	            updateEnvelope: actions.updateEnvelope,
 	            setDevelopmentDate: actions.setDevelopmentDate,
 	            refreshOperations : actions.refreshOperations,
+	            setOperationFilters : actions.setOperationFilters,
 	        },
 
 	        getters: {
@@ -50411,7 +50412,7 @@
 	exports.refreshOperations = function ({ dispatch, state }, callback) {
 	    dispatch('SET_OPERATIONS', [])
 	    dispatch('SET_STATUS', 'processing')
-	    Vue.resource('operations').get({ default_currency_id: state.app.currency_id }).then(function (response) {
+	    Vue.resource('operations').get({ account_id: state.app.account_id, envelope_id: state.app.envelope_id, default_currency_id: state.app.currency_id }).then(function (response) {
 	        dispatch('SET_STATUS', 'done')
 	        dispatch('SET_OPERATIONS', response.data)
 	        if (callback) {
@@ -50421,6 +50422,12 @@
 	    }, function (response) {
 	        console.log(response)
 	    })
+	}
+
+	exports.setOperationFilters = function ({ dispatch, state }, accountId, envelopeId) {
+	    dispatch('SET_CURRENT_ACCOUNT', accountId)
+	    dispatch('SET_CURRENT_ENVELOPE', envelopeId)
+	    exports.refreshOperations({ dispatch, state })
 	}
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98), __webpack_require__(96)))
@@ -55252,6 +55259,10 @@
 	            page: {
 	                title: 'Operations',
 	            },
+	            filters: {
+	                allAccounts: 'All accounts',
+	                allEnvelopes: 'All envelopes',
+	            },
 	            attributes: {
 	                account_name: 'Account',
 	                envelope_name: 'Envelope',
@@ -55385,6 +55396,10 @@
 	        operations: {
 	            page: {
 	                title: 'Opérations',
+	            },
+	            filters: {
+	                allAccounts: 'Tous les comptes',
+	                allEnvelopes: 'Toutes les envelopes',
 	            },
 	            attributes: {
 	                account_name: 'Compte',
@@ -57259,6 +57274,7 @@
 
 	var mixins = __webpack_require__(294);
 	var OperationsMonth = __webpack_require__(376);
+	var OperationsFilters = __webpack_require__(398);
 
 	exports.default = {
 
@@ -57339,7 +57355,8 @@
 	    },
 
 	    components: {
-	        OperationsMonth: OperationsMonth
+	        OperationsMonth: OperationsMonth,
+	        OperationsFilters: OperationsFilters
 	    }
 
 	};
@@ -57743,7 +57760,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n    display: none;\n}\n\nli.active ul[_v-43945c29] {\n    display: block;\n}\n\nli .btn-link[_v-43945c29] {\n    font-weight: normal;;\n}\n\nli.active > .btn-link[_v-43945c29] {\n    font-weight: bold;\n}\n\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n    display: none;\n}\n\nli.active ul[_v-43945c29] {\n    display: block;\n}\n\nli .btn-link[_v-43945c29] {\n    font-weight: normal;;\n}\n\nli.active > .btn-link[_v-43945c29] {\n    font-weight: bold;\n}\n\n\n", ""]);
 
 	// exports
 
@@ -57752,7 +57769,86 @@
 /* 397 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <div class=\"col-sm-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-sm-2 hidden-xs\" _v-43945c29=\"\">\n        <ul class=\"list-unstyled\" data-spy=\"affix\" data-offset-top=\"0\" data-offset-bottom=\"0\" _v-43945c29=\"\">\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <operations-filters _v-43945c29=\"\"></operations-filters>\n\n    <div class=\"col-sm-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-sm-2 hidden-xs\" _v-43945c29=\"\">\n        <ul class=\"list-unstyled\" data-spy=\"affix\" data-offset-top=\"0\" data-offset-bottom=\"0\" _v-43945c29=\"\">\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
+
+/***/ },
+/* 398 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	var __vue_styles__ = {}
+	__vue_script__ = __webpack_require__(399)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/operations/filters.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(400)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
+	if (__vue_template__) {
+	__vue_options__.template = __vue_template__
+	}
+	if (!__vue_options__.computed) __vue_options__.computed = {}
+	Object.keys(__vue_styles__).forEach(function (key) {
+	var module = __vue_styles__[key]
+	__vue_options__.computed[key] = function () { return module }
+	})
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-6acea712/filters.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 399 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(294);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    computed: {
+	        accountId: {
+	            get: function get() {
+	                return this.account.id;
+	            },
+	            set: function set(accountId) {
+	                this.setOperationFilters(accountId, this.envelopeId);
+	            }
+	        },
+	        envelopeId: {
+	            get: function get() {
+	                return this.envelope.id;
+	            },
+	            set: function set(envelopeId) {
+	                this.setOperationFilters(this.accountId, envelopeId);
+	            }
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 400 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<div class=\"col-sm-6 form-group\">\n    <select v-model=\"accountId\" class=\"form-control\">\n        <option :value=\"null\">\n            {{ text.operations.filters.allAccounts }}\n        </option>\n        <option v-for=\"account in accounts\" value=\"{{ account.id }}\">\n            {{ account.name }}\n        </option>\n    </select>\n</div>\n\n<div class=\"col-sm-6 form-group\">\n    <select v-model=\"envelopeId\" class=\"form-control\">\n        <option :value=\"null\">\n            {{ text.operations.filters.allEnvelopes }}\n        </option>\n        <option v-for=\"envelope in envelopes\" value=\"{{ envelope.id }}\">\n            {{ envelope.name }}\n        </option>\n    </select>\n</div>\n\n";
 
 /***/ }
 /******/ ]);

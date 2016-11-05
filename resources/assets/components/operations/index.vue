@@ -3,6 +3,8 @@
 
     <div class="row">
 
+        <operations-filters></operations-filters>
+
         <div class="col-sm-10">
             <template v-for="month in months">
                 <operations-month :month="month"></operations-month>
@@ -36,6 +38,7 @@
 
     var mixins = require('scripts/mixins.js')
     var OperationsMonth = require('components/operations/month.vue')
+    var OperationsFilters = require('components/operations/filters.vue')
 
     export default {
 
@@ -119,6 +122,7 @@
 
         components: {
             OperationsMonth,
+            OperationsFilters,
         },
 
     }

@@ -122,6 +122,10 @@ exports.state = {
             page: {
                 title: 'Operations',
             },
+            filters: {
+                allAccounts: 'All accounts',
+                allEnvelopes: 'All envelopes',
+            },
             attributes: {
                 account_name: 'Account',
                 envelope_name: 'Envelope',
@@ -255,6 +259,10 @@ exports.state = {
         operations: {
             page: {
                 title: 'Opérations',
+            },
+            filters: {
+                allAccounts: 'Tous les comptes',
+                allEnvelopes: 'Toutes les envelopes',
             },
             attributes: {
                 account_name: 'Compte',
