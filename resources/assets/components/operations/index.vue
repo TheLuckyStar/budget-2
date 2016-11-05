@@ -3,14 +3,14 @@
 
     <div class="row">
 
-        <div class="col-xs-10">
+        <div class="col-sm-10">
             <template v-for="month in months">
                 <operations-month :month="month"></operations-month>
             </template>
         </div>
 
-        <div class="col-xs-2">
-            <ul class="list-unstyled">
+        <div class="col-sm-2 hidden-xs">
+            <ul class="list-unstyled" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
                 <li v-for="year in years">
                     <a href="#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}" class="btn btn-link">
                         {{ year | formatYear }}
@@ -70,7 +70,13 @@
         },
 
         created: function () {
+            var component = this
+
             this.$emit('refresh-data')
+
+            jQuery(document).scroll(function() {
+                component.updateActiveMenu()
+            })
         },
 
         methods: {
@@ -84,6 +90,19 @@
             monthOperations: function (month) {
                 return this.operations.filter(function (operation) {
                     return operation.date.isBetween(month, month, 'month', '[]')
+                })
+            },
+
+            updateActiveMenu: function () {
+                var position = jQuery(document).scrollTop()
+                var li = jQuery('.affix ul a, .affix-top ul a')
+                li.parents('li').removeClass('active')
+                li.each(function () {
+                    var target = jQuery('[id="'+jQuery(this).attr('href').substring(1)+'"]')
+                    if (position >= target.offset().top && position <= target.offset().top + target.height()) {
+                        jQuery(this).parents('li').addClass('active')
+                        return false
+                    }
                 })
             },
 
@@ -112,6 +131,20 @@
 
     ul ul {
         padding-left: 20px;
+        display: none;
     }
+
+    li.active ul {
+        display: block;
+    }
+
+    li .btn-link {
+        font-weight: normal;;
+    }
+
+    li.active > .btn-link {
+        font-weight: bold;
+    }
+
 
 </style>

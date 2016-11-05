@@ -50719,7 +50719,7 @@
 /* 302 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-5f2ee9eb=\"\">\n\n    <div class=\"container\" _v-5f2ee9eb=\"\">\n\n        <div class=\"navbar-header\" _v-5f2ee9eb=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-5f2ee9eb=\"\">\n                <span class=\"sr-only\" _v-5f2ee9eb=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-5f2ee9eb=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-5f2ee9eb=\"\">\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-5f2ee9eb=\"\">\n\n                <li _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-5f2ee9eb=\"\">\n                        <i :class=\"statusClasses\" _v-5f2ee9eb=\"\"></i>\n                    </a>\n                </li>\n\n                <li v-if=\"$route.path !== '/operations'\" class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <template v-for=\"currency in currencies\">\n                    <li v-if=\"$route.path !== '/operations'\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-5f2ee9eb=\"\">\n                        <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-5f2ee9eb=\"\">\n                            {{ currency.name | uppercase }}\n                        </a>\n                    </li>\n                </template>\n\n                <li class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-5f2ee9eb=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-5f2ee9eb=\"\">\n\n    <div class=\"container\" _v-5f2ee9eb=\"\">\n\n        <div class=\"navbar-header\" _v-5f2ee9eb=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-5f2ee9eb=\"\">\n                <span class=\"sr-only\" _v-5f2ee9eb=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-5f2ee9eb=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-5f2ee9eb=\"\">\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-5f2ee9eb=\"\">\n\n                <li _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-5f2ee9eb=\"\">\n                        <i :class=\"statusClasses\" _v-5f2ee9eb=\"\"></i>\n                    </a>\n                </li>\n\n                <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <template v-for=\"currency in currencies\">\n                    <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-5f2ee9eb=\"\">\n                        <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-5f2ee9eb=\"\">\n                            {{ currency.name | uppercase }}\n                        </a>\n                    </li>\n                </template>\n\n                <li class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-5f2ee9eb=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 303 */
@@ -57245,7 +57245,7 @@
 /* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
+	/* WEBPACK VAR INJECTION */(function(moment, jQuery) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -57291,7 +57291,13 @@
 	    },
 
 	    created: function created() {
+	        var component = this;
+
 	        this.$emit('refresh-data');
+
+	        jQuery(document).scroll(function () {
+	            component.updateActiveMenu();
+	        });
 	    },
 
 	    methods: {
@@ -57305,6 +57311,19 @@
 	        monthOperations: function monthOperations(month) {
 	            return this.operations.filter(function (operation) {
 	                return operation.date.isBetween(month, month, 'month', '[]');
+	            });
+	        },
+
+	        updateActiveMenu: function updateActiveMenu() {
+	            var position = jQuery(document).scrollTop();
+	            var li = jQuery('.affix ul a, .affix-top ul a');
+	            li.parents('li').removeClass('active');
+	            li.each(function () {
+	                var target = jQuery('[id="' + jQuery(this).attr('href').substring(1) + '"]');
+	                if (position >= target.offset().top && position <= target.offset().top + target.height()) {
+	                    jQuery(this).parents('li').addClass('active');
+	                    return false;
+	                }
 	            });
 	        }
 
@@ -57324,7 +57343,7 @@
 	    }
 
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98), __webpack_require__(73)))
 
 /***/ },
 /* 376 */
@@ -57724,7 +57743,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n    display: none;\n}\n\nli.active ul[_v-43945c29] {\n    display: block;\n}\n\nli .btn-link[_v-43945c29] {\n    font-weight: normal;;\n}\n\nli.active > .btn-link[_v-43945c29] {\n    font-weight: bold;\n}\n\n\n", ""]);
 
 	// exports
 
@@ -57733,7 +57752,7 @@
 /* 397 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <div class=\"col-xs-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-xs-2\" _v-43945c29=\"\">\n        <ul class=\"list-unstyled\" _v-43945c29=\"\">\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <div class=\"col-sm-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-sm-2 hidden-xs\" _v-43945c29=\"\">\n        <ul class=\"list-unstyled\" data-spy=\"affix\" data-offset-top=\"0\" data-offset-bottom=\"0\" _v-43945c29=\"\">\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
 
 /***/ }
 /******/ ]);
