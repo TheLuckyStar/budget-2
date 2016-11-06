@@ -4,7 +4,7 @@
     <li :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
 
         <div v-if="withBadge" :class="badgeClass">
-            {{ date.date() }}
+            {{ date.format('D/M') }}
         </div>
 
         <div :class="panelClasses">
