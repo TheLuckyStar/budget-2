@@ -93,7 +93,7 @@
             },
 
             operationsData: function () {
-                return [
+                var data = [
                     {
                         type: 'line',
                         data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
@@ -122,6 +122,12 @@
                         color: 'danger',
                     },
                 ]
+
+                if (this.account.id === undefined) {
+                    data.splice(2, 2)
+                }
+
+                return data
             },
 
         },

@@ -55805,7 +55805,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-205a4d68] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-205a4d68] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-205a4d68] {\n    min-height: 400px;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nli.pull-right[_v-205a4d68] {\n    margin-top: 14px;\n}\n\n.btn-link[_v-205a4d68] {\n    cursor: pointer;\n    padding: 0px 5px;\n}\n\n.tab-pane[_v-205a4d68] {\n    min-height: 400px;\n}\n\n", ""]);
 
 	// exports
 
@@ -55849,7 +55849,7 @@
 	        },
 
 	        operationsData: function operationsData() {
-	            return [{
+	            var data = [{
 	                type: 'line',
 	                data: this.accountDevelopment.yearly ? this.accountDevelopment.yearly.balance : [],
 	                label: this.text.accounts.development.balanceLabel,
@@ -55875,6 +55875,12 @@
 	                label: this.text.accounts.development.outcomesLabel,
 	                color: 'danger'
 	            }];
+
+	            if (this.account.id === undefined) {
+	                data.splice(2, 2);
+	            }
+
+	            return data;
 	        }
 
 	    },
