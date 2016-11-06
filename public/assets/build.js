@@ -55207,9 +55207,6 @@
 	            balance: {
 	                title: 'Balance',
 	            },
-	            accumulatedSavings: {
-	                title: 'Accumulated savings',
-	            },
 	            balances: {
 	                title: 'Situation in details',
 	                labels: ['Balance'],
@@ -55337,9 +55334,6 @@
 	            },
 	            balance: {
 	                title: 'Solde',
-	            },
-	            accumulatedSavings: {
-	                title: 'Épargne cumulée',
 	            },
 	            balances: {
 	                title: 'Détail de la situation',
@@ -55905,7 +55899,7 @@
 /* 338 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.accounts.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"accountDevelopment.state\">\n        <layout-card :color=\"accountDevelopment.state.accumulated_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"accountDevelopment.state.accumulated_savings < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.accumulatedSavings.title\"\n            :text=\"accountDevelopment.state.accumulated_savings\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.accounts.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledAccountsBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledAccountsBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.accounts.balance.title\"\n            :text=\"enabledAccountsBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"pie\"\n            :legend=\"text.accounts.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <accounts-development></accounts-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 339 */

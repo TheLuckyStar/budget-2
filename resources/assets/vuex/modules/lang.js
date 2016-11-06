@@ -38,9 +38,6 @@ exports.state = {
             balance: {
                 title: 'Balance',
             },
-            accumulatedSavings: {
-                title: 'Accumulated savings',
-            },
             balances: {
                 title: 'Situation in details',
                 labels: ['Balance'],
@@ -168,9 +165,6 @@ exports.state = {
             },
             balance: {
                 title: 'Solde',
-            },
-            accumulatedSavings: {
-                title: 'Épargne cumulée',
             },
             balances: {
                 title: 'Détail de la situation',

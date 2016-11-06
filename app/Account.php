@@ -251,21 +251,4 @@ class Account extends Container
             ->put('monthly_savings', static::calculateSavings($currency, Carbon::startOfMonth($date), Carbon::endOfMonth($date)))
             ->put('accumulated_savings', static::calculateSavings($currency, null, Carbon::endOfMonth($date)));
     }
-
-    /**
-     * Combine savings metric for the recent periods
-     * @param  Collection $accounts Accounts to combine the development
-     * @return array Combined savings
-     */
-    static public function combineRecentSavings(Currency $currency = null)
-    {
-        return collect([
-            'monthly' => ['from' => Carbon::startOfMonth(), 'to' => Carbon::endOfMonth()],
-            'quarterly' => ['from' => Carbon::startOfMonth()->subMonths(3), 'to' => Carbon::endOfMonth()->subMonths(1)],
-            'biannually' => ['from' => Carbon::startOfMonth()->subMonths(6), 'to' => Carbon::endOfMonth()->subMonths(1)],
-            'yearly' => ['from' => Carbon::startOfMonth()->subMonths(12), 'to' => Carbon::endOfMonth()->subMonths(1)],
-        ])->map(function ($dates) use ($currency) {
-            return static::calculateSavings($currency, $dates['from'], $dates['to']);
-        });
-    }
 }

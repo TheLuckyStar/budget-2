@@ -22,15 +22,6 @@
             ></layout-card>
         </div>
 
-        <div class="col-md-6" v-if="accountDevelopment.state">
-            <layout-card :color="accountDevelopment.state.accumulated_savings < 0 ? 'danger' : 'success'"
-                :icon="accountDevelopment.state.accumulated_savings < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'"
-                :title="text.accounts.accumulatedSavings.title"
-                :text="accountDevelopment.state.accumulated_savings"
-                :comment="$options.filters.formatLongDate(date)"
-            ></layout-card>
-        </div>
-
         <div class="col-md-12">
             <layout-chart type="pie"
                 :legend="text.accounts.balances.title"
