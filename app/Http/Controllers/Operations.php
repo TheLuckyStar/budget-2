@@ -12,6 +12,10 @@ class Operations extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->type === 'incomes') {
+            return Income::all();
+        }
+
         return collect([])
             ->merge(Outcome::search($request->all())->get())
             ->merge(Revenue::search($request->all())->get())

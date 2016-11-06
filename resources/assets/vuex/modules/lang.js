@@ -131,6 +131,7 @@ exports.state = {
             page: {
                 title: 'Allocations',
                 envelopesTitle: 'Envelopes',
+                monthlySum: 'Montly sum',
             },
         },
     },
@@ -265,6 +266,7 @@ exports.state = {
             page: {
                 title: 'Allocations',
                 envelopesTitle: 'Enveloppes',
+                monthlySum: 'Total mensuel',
             },
         },
     },

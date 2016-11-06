@@ -19,6 +19,9 @@
                                 {{ envelope.state.balance }}
                             </span>
                         </li>
+                        <li class="list-group-item">
+                            {{ text.incomes.page.monthlySum }}
+                        </li>
                     </ul>
 
                 </div>
@@ -26,26 +29,7 @@
 
             <div class="incomes-invisible hidden-xs col-xs-12 col-sm-4 col-md-3 col-lg-2">&nbsp;</div>
 
-            <div v-for="month in months" class="incomes-inputs col-xs-12 col-sm-4 col-md-3 col-lg-2">
-                <div class="panel panel-default">
-
-                    <div class="panel-heading">
-                        {{ month.format('MMMM YYYY') }}
-                    </div>
-
-                    <ul class="list-group">
-                        <li v-for="envelope in envelopes" class="list-group-item">
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon" :title="envelope.name">
-                                    <i class="fa fa-fw {{ envelope.icon }}"></i>
-                                </span>
-                                <input type="text" class="form-control" :placeholder="envelope.name">
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
+            <incomes-month v-for="month in months" :month="month"></incomes-month>
 
         </div>
     </div>
@@ -57,6 +41,7 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
+    var IncomesMonth = require('components/incomes/month.vue')
 
     export default {
 
@@ -68,15 +53,32 @@
 
         computed: {
             months: function () {
-                return [moment('2016-01-01'), moment('2016-02-01'), moment('2016-03-01')]
+                var min = Object.keys(this.incomes).map(function(key) {
+                    return this.incomes[key].date.clone().startOf('month')
+                }, this).reduce(function (minimum, date) {
+                    return moment.min(minimum, date)
+                }, moment().startOf('month'))
+                console.log(min.format('LLL'))
+
+                var months = []
+                for (var date = moment().startOf('month'); date.isSameOrAfter(min); date.subtract(1, 'month')) {
+                    months.push(date.clone())
+                }
+
+                return months
             }
         },
 
         events: {
             'refresh-data': function () {
                 this.refreshEnvelopes()
+                this.refreshIncomes()
                 return true
             },
+        },
+
+        components: {
+            IncomesMonth,
         },
 
     }
@@ -100,10 +102,6 @@
     .incomes-envelopes {
         position: absolute;
         z-index: 10;
-    }
-
-    .incomes-inputs .list-group-item {
-        padding: 6px 9px;
     }
 
 </style>

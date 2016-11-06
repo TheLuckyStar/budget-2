@@ -24,6 +24,7 @@ exports.vuex = {
             saveOperation : actions.saveOperation,
             updateOperation : actions.updateOperation,
             deleteOperation : actions.deleteOperation,
+            refreshIncomes: actions.refreshIncomes,
         },
 
         getters: {
@@ -49,6 +50,7 @@ exports.vuex = {
             worstEnvelopes: getters.getWorstEnvelopes,
             bestEnvelopes: getters.getBestEnvelopes,
             operations: getters.getOperations,
+            incomes: getters.getIncomes,
         },
 
     },

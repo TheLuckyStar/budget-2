@@ -163,3 +163,13 @@ exports.getBestEnvelopes = function (state) {
 exports.getOperations = function (state) {
     return state.remote.operations
 }
+
+
+
+/**
+ * Remote store : incomes
+ */
+
+exports.getIncomes = function (state) {
+    return state.remote.incomes
+}

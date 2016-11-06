@@ -233,3 +233,23 @@ exports.deleteOperation = function ({ dispatch, state }, id, type) {
         console.log(response)
     })
 }
+
+
+
+/**
+ * Remote store : incomes
+ */
+
+exports.refreshIncomes = function ({ dispatch, state }, callback) {
+    dispatch('SET_INCOMES', [])
+    dispatch('SET_STATUS', 'processing')
+    Vue.resource('operations').get({ default_currency_id: state.app.currency_id, type: 'incomes' }).then(function (response) {
+        dispatch('SET_STATUS', 'done')
+        dispatch('SET_INCOMES', response.data)
+        if (callback) {
+            callback()
+        }
+    }, function (response) {
+        console.log(response)
+    })
+}

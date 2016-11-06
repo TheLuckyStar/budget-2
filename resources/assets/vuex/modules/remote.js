@@ -6,6 +6,7 @@ exports.state = {
     envelopes: [],
     envelopeDevelopment: {},
     operations: {},
+    incomes: {},
 }
 
 exports.mutations = {
@@ -60,6 +61,15 @@ exports.mutations = {
             }
 
             state.operations[year][month][date].push(operation)
+        })
+    },
+
+    SET_INCOMES(state, incomes) {
+        state.incomes = incomes.map(function (income) {
+            income.date = moment(income.date)
+            return income
+        }).sort(function (a, b) {
+            return a.date.isBefore(b.date, 'day') ? 1 : -1
         })
     },
 
