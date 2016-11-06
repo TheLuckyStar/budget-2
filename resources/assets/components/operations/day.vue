@@ -13,8 +13,6 @@
                 <i class="fa fa fa-5x fa-pencil-square-o"></i>
             </div>
 
-            <operations-modal :operation="operation"></operations-modal>
-
             <div class="timeline-heading">
 
                 <h4 class="timeline-title">

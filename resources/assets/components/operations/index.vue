@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-sm-2 hidden-xs">
-            <ul class="list-unstyled" data-spy="affix" data-offset-top="0" data-offset-bottom="0">
+            <ul id="operations-affix" class="list-unstyled" data-offset-top="0" data-offset-bottom="0">
                 <li>
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-revenue-">
                         {{ text.operations.modal.links.newRevenue }}
@@ -87,9 +87,13 @@
         },
 
         created: function () {
+            this.$emit('refresh-data')
+        },
+
+        ready: function () {
             var component = this
 
-            this.$emit('refresh-data')
+            jQuery('#operations-affix').affix()
 
             jQuery(document).scroll(function() {
                 component.updateActiveMenu()
