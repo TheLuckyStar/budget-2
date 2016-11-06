@@ -57293,7 +57293,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul[_v-263cced7]:nth-child(odd) {\n    background-color: #f9f9f9;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul[_v-263cced7]:nth-child(odd) {\n    background-color: #f9f9f9;\n}\n\n", ""]);
 
 	// exports
 
@@ -57310,7 +57310,7 @@
 
 
 	var mixins = __webpack_require__(294);
-	var OperationsDay = __webpack_require__(382);
+	var OperationsPanel = __webpack_require__(408);
 
 	exports.default = {
 
@@ -57324,7 +57324,10 @@
 	            var days = [];
 
 	            for (var i = this.month.daysInMonth(); i > 0; --i) {
-	                days.push(this.month.clone().date(i));
+	                var day = this.month.clone().date(i);
+	                if (this.dayOperations(day).length) {
+	                    days.push(day);
+	                }
 	            }
 
 	            return days;
@@ -57343,159 +57346,16 @@
 	    },
 
 	    components: {
-	        OperationsDay: OperationsDay
+	        OperationsPanel: OperationsPanel
 	    }
 
 	};
 
 /***/ },
-/* 382 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	var __vue_styles__ = {}
-	__webpack_require__(383)
-	__vue_script__ = __webpack_require__(385)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/operations/day.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(391)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
-	if (__vue_template__) {
-	__vue_options__.template = __vue_template__
-	}
-	if (!__vue_options__.computed) __vue_options__.computed = {}
-	Object.keys(__vue_styles__).forEach(function (key) {
-	var module = __vue_styles__[key]
-	__vue_options__.computed[key] = function () { return module }
-	})
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-74a4b49a/day.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 383 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(384);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(211)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-74a4b49a&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./day.vue", function() {
-				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-74a4b49a&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./day.vue");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 384 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(87)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.timeline-panel[_v-74a4b49a] {\n    background-color: white;\n}\n\n.timeline-panel .overlay[_v-74a4b49a] {\n    display: none;\n    background-color: #eeeeee;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    bottom: 0px;\n    left: 0px;\n    padding: 20px;\n    cursor: pointer;\n    opacity: 0.75;\n    text-align: center;\n    color: white;\n}\n\n.timeline-editable:hover .overlay[_v-74a4b49a] {\n    display: block;\n}\n\nul:nth-child(even) .timeline-panel[_v-74a4b49a] {\n    background-color: #f9f9f9;\n}\n\n.timeline-inverted[_v-74a4b49a] {\n    text-align: right;\n}\n\n.timeline-title b[_v-74a4b49a] {\n    float: right;\n}\n\n.timeline-inverted .timeline-title b[_v-74a4b49a],\n.timeline-inverted .text-muted[_v-74a4b49a]  {\n    float: left;\n}\n\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 385 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(294);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex],
-
-	    props: ['operation', 'date', 'withBadge'],
-
-	    computed: {
-
-	        badgeClass: function badgeClass() {
-	            return {
-	                'timeline-badge': true,
-	                'primary': this.operation
-	            };
-	        },
-
-	        operationAccount: function operationAccount() {
-	            return this.accounts.filter(function (account) {
-	                return account.id == this.operation.account_id;
-	            }, this)[0];
-	        },
-
-	        operationEnvelope: function operationEnvelope() {
-	            return this.envelopes.filter(function (envelope) {
-	                return envelope.id == this.operation.envelope_id;
-	            }, this)[0];
-	        },
-
-	        operationCurrency: function operationCurrency() {
-	            return this.currencies.filter(function (currency) {
-	                if (this.operationAccount) {
-	                    return currency.id == this.operationAccount.currency_id;
-	                }
-	                return currency.id == this.operation.currency_id;
-	            }, this)[0];
-	        },
-
-	        panelClasses: function panelClasses() {
-	            return {
-	                'timeline-panel': true,
-	                'timeline-editable': this.operation.type !== 'income',
-	                'with-arrow': this.withBadge,
-	                'info': this.operation.type === 'income',
-	                'danger': this.operation.type === 'outcome',
-	                'success': this.operation.type === 'revenue',
-	                'warning': this.operation.type === 'transfer'
-	            };
-	        }
-
-	    },
-
-	    methods: {
-	        onOverlayClick: function onOverlayClick() {
-	            this.$dispatch('set-current-event', this.operation);
-	        }
-	    }
-
-	};
-
-/***/ },
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
 /* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -57670,16 +57530,11 @@
 	module.exports = "\n\n\n<div class=\"modal fade\" id=\"modal-operation\" tabindex=\"-1\" role=\"dialog\" _v-15ea6ef8=\"\">\n    <div class=\"modal-dialog\" role=\"document\" _v-15ea6ef8=\"\">\n        <div class=\"modal-content\" _v-15ea6ef8=\"\">\n\n            <div class=\"modal-header\" _v-15ea6ef8=\"\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-15ea6ef8=\"\">\n                    <span _v-15ea6ef8=\"\">×</span>\n                </button>\n                <h4 class=\"modal-title\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.title[operation.type] }}\n                </h4>\n            </div>\n\n            <div class=\"modal-body row\" _v-15ea6ef8=\"\">\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.account_id }}\n                    </label>\n                    <select v-model=\"account_id\" class=\"form-control\" id=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"account in accounts\" value=\"{{ account.id }}\" _v-15ea6ef8=\"\">\n                            {{ account.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.envelope_id }}\n                    </label>\n                    <select v-model=\"envelope_id\" class=\"form-control\" id=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"envelope in envelopes\" value=\"{{ envelope.id }}\" _v-15ea6ef8=\"\">\n                            {{ envelope.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-12\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-name-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.name }}\n                    </label>\n                    <input type=\"text\" v-model=\"name\" class=\"form-control\" id=\"operation-name-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.amount }}\n                    </label>\n                    <input type=\"text\" v-model=\"amount\" class=\"form-control\" id=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-date-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.date }}\n                    </label>\n                    <input type=\"text\" v-model=\"date\" class=\"form-control\" id=\"operation-date-input\" _v-15ea6ef8=\"\">\n                </div>\n\n            </div>\n\n            <div class=\"modal-footer\" _v-15ea6ef8=\"\">\n                <button v-if=\"operation.id\" type=\"button\" class=\"btn btn-danger pull-left\" @click=\"onDelete\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.deleteButton }}\n                </button>\n                <button type=\"button\" class=\"btn btn-primary\" @click=\"onSubmit\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.saveButton }}\n                </button>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n";
 
 /***/ },
-/* 391 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<li v-if=\"operation\" :class=\"{'timeline-inverted': operation &amp;&amp; operation.type === 'outcome'}\" _v-74a4b49a=\"\">\n\n    <div v-if=\"withBadge\" :class=\"badgeClass\" _v-74a4b49a=\"\">\n        {{ date.date() }}\n    </div>\n\n    <div :class=\"panelClasses\" _v-74a4b49a=\"\">\n\n        <div class=\"overlay\" @click=\"onOverlayClick\" _v-74a4b49a=\"\">\n            <i class=\"fa fa fa-5x fa-pencil-square-o\" _v-74a4b49a=\"\"></i>\n        </div>\n\n        <div class=\"timeline-heading\" _v-74a4b49a=\"\">\n\n            <h4 class=\"timeline-title\" _v-74a4b49a=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-74a4b49a=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-74a4b49a=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" class=\"text-muted\" _v-74a4b49a=\"\">\n                <small _v-74a4b49a=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-74a4b49a=\"\">\n            <p _v-74a4b49a=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n</li>\n\n";
-
-/***/ },
+/* 391 */,
 /* 392 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<ul class=\"timeline\" id=\"/operations?{{ month.format('YYYY-MM') }}\" _v-263cced7=\"\">\n    <template v-for=\"day in days\">\n        <operations-day :with-badge=\"true\" :operation=\"dayOperations(day)[0]\" :date=\"day\" _v-263cced7=\"\"></operations-day>\n        <operations-day v-for=\"operation in dayOperations(day).slice(1)\" :operation=\"operation\" :date=\"day\" _v-263cced7=\"\"></operations-day>\n    </template>\n</ul>\n\n";
+	module.exports = "\n\n\n<ul class=\"timeline\" id=\"/operations?{{ month.format('YYYY-MM') }}\" _v-263cced7=\"\">\n    <template v-for=\"day in days\">\n        <operations-panel :with-badge=\"true\" :operation=\"dayOperations(day)[0]\" :date=\"day\" _v-263cced7=\"\"></operations-panel>\n        <operations-panel v-for=\"operation in dayOperations(day).slice(1)\" :operation=\"operation\" :date=\"day\" _v-263cced7=\"\"></operations-panel>\n    </template>\n</ul>\n\n";
 
 /***/ },
 /* 393 */
@@ -58107,6 +57962,163 @@
 
 	// exports
 
+
+/***/ },
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_script__, __vue_template__
+	var __vue_styles__ = {}
+	__webpack_require__(409)
+	__vue_script__ = __webpack_require__(411)
+	if (__vue_script__ &&
+	    __vue_script__.__esModule &&
+	    Object.keys(__vue_script__).length > 1) {
+	  console.warn("[vue-loader] resources/assets/components/operations/panel.vue: named exports in *.vue files are ignored.")}
+	__vue_template__ = __webpack_require__(412)
+	module.exports = __vue_script__ || {}
+	if (module.exports.__esModule) module.exports = module.exports.default
+	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
+	if (__vue_template__) {
+	__vue_options__.template = __vue_template__
+	}
+	if (!__vue_options__.computed) __vue_options__.computed = {}
+	Object.keys(__vue_styles__).forEach(function (key) {
+	var module = __vue_styles__[key]
+	__vue_options__.computed[key] = function () { return module }
+	})
+	if (false) {(function () {  module.hot.accept()
+	  var hotAPI = require("vue-hot-reload-api")
+	  hotAPI.install(require("vue"), false)
+	  if (!hotAPI.compatible) return
+	  var id = "_v-1b59545b/panel.vue"
+	  if (!module.hot.data) {
+	    hotAPI.createRecord(id, module.exports)
+	  } else {
+	    hotAPI.update(id, module.exports, __vue_template__)
+	  }
+	})()}
+
+/***/ },
+/* 409 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(410);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(211)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-1b59545b&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./panel.vue", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/vue-loader/lib/style-rewriter.js?id=_v-1b59545b&scoped=true!./../../../../node_modules/vue-loader/lib/selector.js?type=style&index=0!./panel.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 410 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(87)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.timeline-panel[_v-1b59545b] {\n    background-color: white;\n}\n\n.timeline-panel .overlay[_v-1b59545b] {\n    display: none;\n    background-color: #eeeeee;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    bottom: 0px;\n    left: 0px;\n    padding: 20px;\n    cursor: pointer;\n    opacity: 0.75;\n    text-align: center;\n    color: white;\n}\n\n.timeline-editable:hover .overlay[_v-1b59545b] {\n    display: block;\n}\n\nul:nth-child(even) .timeline-panel[_v-1b59545b] {\n    background-color: #f9f9f9;\n}\n\n.timeline-inverted[_v-1b59545b] {\n    text-align: right;\n}\n\n.timeline-title b[_v-1b59545b] {\n    float: right;\n}\n\n.timeline-inverted .timeline-title b[_v-1b59545b],\n.timeline-inverted .text-muted[_v-1b59545b]  {\n    float: left;\n}\n\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 411 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+
+	var mixins = __webpack_require__(294);
+
+	exports.default = {
+
+	    mixins: [mixins.vuex],
+
+	    props: ['operation', 'date', 'withBadge'],
+
+	    computed: {
+
+	        badgeClass: function badgeClass() {
+	            return {
+	                'timeline-badge': true,
+	                'primary': this.operation
+	            };
+	        },
+
+	        operationAccount: function operationAccount() {
+	            return this.accounts.filter(function (account) {
+	                return account.id == this.operation.account_id;
+	            }, this)[0];
+	        },
+
+	        operationEnvelope: function operationEnvelope() {
+	            return this.envelopes.filter(function (envelope) {
+	                return envelope.id == this.operation.envelope_id;
+	            }, this)[0];
+	        },
+
+	        operationCurrency: function operationCurrency() {
+	            return this.currencies.filter(function (currency) {
+	                if (this.operationAccount) {
+	                    return currency.id == this.operationAccount.currency_id;
+	                }
+	                return currency.id == this.operation.currency_id;
+	            }, this)[0];
+	        },
+
+	        panelClasses: function panelClasses() {
+	            return {
+	                'timeline-panel': true,
+	                'timeline-editable': this.operation.type !== 'income',
+	                'with-arrow': this.withBadge,
+	                'info': this.operation.type === 'income',
+	                'danger': this.operation.type === 'outcome',
+	                'success': this.operation.type === 'revenue',
+	                'warning': this.operation.type === 'transfer'
+	            };
+	        }
+
+	    },
+
+	    methods: {
+	        onOverlayClick: function onOverlayClick() {
+	            this.$dispatch('set-current-event', this.operation);
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 412 */
+/***/ function(module, exports) {
+
+	module.exports = "\n\n\n<li :class=\"{'timeline-inverted': operation &amp;&amp; operation.type === 'outcome'}\" _v-1b59545b=\"\">\n\n    <div v-if=\"withBadge\" :class=\"badgeClass\" _v-1b59545b=\"\">\n        {{ date.date() }}\n    </div>\n\n    <div :class=\"panelClasses\" _v-1b59545b=\"\">\n\n        <div class=\"overlay\" @click=\"onOverlayClick\" _v-1b59545b=\"\">\n            <i class=\"fa fa fa-5x fa-pencil-square-o\" _v-1b59545b=\"\"></i>\n        </div>\n\n        <div class=\"timeline-heading\" _v-1b59545b=\"\">\n\n            <h4 class=\"timeline-title\" _v-1b59545b=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-1b59545b=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-1b59545b=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" class=\"text-muted\" _v-1b59545b=\"\">\n                <small _v-1b59545b=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-1b59545b=\"\">\n            <p _v-1b59545b=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n</li>\n\n";
 
 /***/ }
 /******/ ]);

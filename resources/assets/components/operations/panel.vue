@@ -1,7 +1,7 @@
 
 <template>
 
-    <li v-if="operation" :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
+    <li :class="{'timeline-inverted': operation && operation.type === 'outcome'}">
 
         <div v-if="withBadge" :class="badgeClass">
             {{ date.date() }}

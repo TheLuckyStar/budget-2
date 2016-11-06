@@ -3,12 +3,12 @@
 
     <ul class="timeline" id="/operations?{{ month.format('YYYY-MM') }}">
         <template v-for="day in days">
-            <operations-day :with-badge="true"
+            <operations-panel :with-badge="true"
                 :operation="dayOperations(day)[0]"
-                :date="day"></operations-day>
-            <operations-day v-for="operation in dayOperations(day).slice(1)"
+                :date="day"></operations-panel>
+            <operations-panel v-for="operation in dayOperations(day).slice(1)"
                 :operation="operation"
-                :date="day"></operations-day>
+                :date="day"></operations-panel>
         </template>
     </ul>
 
@@ -19,7 +19,7 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
-    var OperationsDay = require('components/operations/day.vue')
+    var OperationsPanel = require('components/operations/panel.vue')
 
     export default {
 
@@ -33,7 +33,10 @@
                 var days = []
 
                 for (var i = this.month.daysInMonth(); i > 0; --i) {
-                    days.push(this.month.clone().date(i))
+                    var day = this.month.clone().date(i)
+                    if (this.dayOperations(day).length) {
+                        days.push(day)
+                    }
                 }
 
                 return days
@@ -52,7 +55,7 @@
         },
 
         components: {
-            OperationsDay,
+            OperationsPanel,
         },
 
     }
