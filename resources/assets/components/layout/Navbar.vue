@@ -41,6 +41,11 @@
                             {{ text.operations.page.title }}
                         </a>
                     </li>
+                    <li v-link-active>
+                        <a v-link="{ path: '/incomes', activeClass: 'active' }">
+                            {{ text.incomes.page.title }}
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

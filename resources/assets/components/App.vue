@@ -5,7 +5,7 @@
 
         <layout-navbar></layout-navbar>
 
-        <div class="container">
+        <div class="container-fluid">
             <router-view></router-view>
         </div>
 

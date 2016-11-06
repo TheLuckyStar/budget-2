@@ -1,45 +1,47 @@
 
 <template>
 
-    <div class="row">
+    <div class="container">
+        <div class="row">
 
-        <operations-modal :operation="currentOperation"></operations-modal>
+            <operations-modal :operation="currentOperation"></operations-modal>
 
-        <operations-filters></operations-filters>
+            <operations-filters></operations-filters>
 
-        <div class="col-sm-10">
-            <template v-for="month in months">
-                <operations-month :month="month"></operations-month>
-            </template>
+            <div class="col-sm-10">
+                <template v-for="month in months">
+                    <operations-month :month="month"></operations-month>
+                </template>
+            </div>
+
+            <div class="col-sm-2 hidden-xs">
+                <ul id="operations-affix" class="list-unstyled" data-offset-top="0" data-offset-bottom="0">
+                    <li>
+                        <button type="button" class="btn btn-link" @click="onNewRevenueClick">
+                            {{ text.operations.modal.links.newRevenue }}
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-link" @click="onNewOutcomeClick">
+                            {{ text.operations.modal.links.newOutcome }}
+                        </button>
+                    </li>
+                    <li v-for="year in years">
+                        <a href="#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}" class="btn btn-link">
+                            {{ year | formatYear }}
+                        </a>
+                        <ul class="list-unstyled">
+                            <li v-for="month in monthsInYear(year)">
+                                <a href="#/operations?{{ month.format('YYYY-MM') }}" class="btn btn-link">
+                                    {{ month | formatShortMonth }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
         </div>
-
-        <div class="col-sm-2 hidden-xs">
-            <ul id="operations-affix" class="list-unstyled" data-offset-top="0" data-offset-bottom="0">
-                <li>
-                    <button type="button" class="btn btn-link" @click="onNewRevenueClick">
-                        {{ text.operations.modal.links.newRevenue }}
-                    </button>
-                </li>
-                <li>
-                    <button type="button" class="btn btn-link" @click="onNewOutcomeClick">
-                        {{ text.operations.modal.links.newOutcome }}
-                    </button>
-                </li>
-                <li v-for="year in years">
-                    <a href="#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}" class="btn btn-link">
-                        {{ year | formatYear }}
-                    </a>
-                    <ul class="list-unstyled">
-                        <li v-for="month in monthsInYear(year)">
-                            <a href="#/operations?{{ month.format('YYYY-MM') }}" class="btn btn-link">
-                                {{ month | formatShortMonth }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
     </div>
 
 </template>

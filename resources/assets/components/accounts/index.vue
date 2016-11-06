@@ -1,16 +1,18 @@
 
 <template>
 
-    <div class="row">
+    <div class="container">
+        <div class="row">
 
-        <div class="col-md-3 col-sm-4">
-            <layout-sidebar :entries="entries"></layout-sidebar>
+            <div class="col-md-3 col-sm-4">
+                <layout-sidebar :entries="entries"></layout-sidebar>
+            </div>
+
+            <div class="col-md-9 col-sm-8">
+                <router-view></router-view>
+            </div>
+
         </div>
-
-        <div class="col-md-9 col-sm-8">
-            <router-view></router-view>
-        </div>
-
     </div>
 
 </template>

@@ -42,6 +42,9 @@ router.map({
     '/operations': {
         component: require('components/operations/index.vue'),
     },
+    '/incomes': {
+        component: require('components/incomes/index.vue'),
+    },
 })
 
 router.redirect({

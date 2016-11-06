@@ -127,6 +127,12 @@ exports.state = {
                 transfer: 'Transfer',
             },
         },
+        incomes: {
+            page: {
+                title: 'Allocations',
+                envelopesTitle: 'Envelopes',
+            },
+        },
     },
     fr: {
         app: {
@@ -253,6 +259,12 @@ exports.state = {
                 outcome: 'Dépense',
                 revenue: 'Revenu',
                 transfer: 'Virement',
+            },
+        },
+        incomes: {
+            page: {
+                title: 'Allocations',
+                envelopesTitle: 'Enveloppes',
             },
         },
     },
