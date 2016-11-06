@@ -27,11 +27,6 @@
 
                 <ul class="nav navbar-nav">
                     <li v-link-active>
-                        <a v-link="{ path: '/home', activeClass: 'active' }">
-                            {{ text.home.page.title }}
-                        </a>
-                    </li>
-                    <li v-link-active>
                         <a v-link="{ path: '/accounts', activeClass: 'active' }">
                             {{ text.accounts.page.title }}
                         </a>

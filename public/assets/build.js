@@ -50715,7 +50715,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-5f2ee9eb] {\n    height: 50px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-5f2ee9eb] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.navbar .divider-vertical[_v-5f2ee9eb] {\n    height: 50px;\n    margin: 0 9px;\n    border-left: 1px solid #f2f2f2;\n    border-right: 1px solid #ffffff;\n}\n\n @media only screen and (max-width: 800px){\n    .divider-vertical[_v-5f2ee9eb] {\n        height: 0;\n        border-left: 0;\n        border-right: 0;\n    }\n}\n\n", ""]);
 
 	// exports
 
@@ -50761,7 +50761,7 @@
 /* 302 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-5f2ee9eb=\"\">\n\n    <div class=\"container\" _v-5f2ee9eb=\"\">\n\n        <div class=\"navbar-header\" _v-5f2ee9eb=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-5f2ee9eb=\"\">\n                <span class=\"sr-only\" _v-5f2ee9eb=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-5f2ee9eb=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-5f2ee9eb=\"\">\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/home', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.home.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-5f2ee9eb=\"\">\n\n                <li _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-5f2ee9eb=\"\">\n                        <i :class=\"statusClasses\" _v-5f2ee9eb=\"\"></i>\n                    </a>\n                </li>\n\n                <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <template v-for=\"currency in currencies\">\n                    <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-5f2ee9eb=\"\">\n                        <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-5f2ee9eb=\"\">\n                            {{ currency.name | uppercase }}\n                        </a>\n                    </li>\n                </template>\n\n                <li class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-5f2ee9eb=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
+	module.exports = "\n\n\n<nav class=\"navbar navbar-default\" _v-5f2ee9eb=\"\">\n\n    <div class=\"container\" _v-5f2ee9eb=\"\">\n\n        <div class=\"navbar-header\" _v-5f2ee9eb=\"\">\n\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar-collapse\" _v-5f2ee9eb=\"\">\n                <span class=\"sr-only\" _v-5f2ee9eb=\"\">Toggle navigation</span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n                <span class=\"icon-bar\" _v-5f2ee9eb=\"\"></span>\n            </button>\n\n            <a class=\"navbar-brand\" v-link=\"{ path: '/', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                {{ text.app.title }}\n            </a>\n\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"navbar-collapse\" _v-5f2ee9eb=\"\">\n\n            <ul class=\"nav navbar-nav\" _v-5f2ee9eb=\"\">\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/accounts', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.accounts.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/envelopes', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.envelopes.page.title }}\n                    </a>\n                </li>\n                <li v-link-active=\"\" _v-5f2ee9eb=\"\">\n                    <a v-link=\"{ path: '/operations', activeClass: 'active'&nbsp;}\" _v-5f2ee9eb=\"\">\n                        {{ text.operations.page.title }}\n                    </a>\n                </li>\n            </ul>\n\n            <ul class=\"nav navbar-nav navbar-right\" _v-5f2ee9eb=\"\">\n\n                <li _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"refreshData()\" :title=\"text.app.refresh\" _v-5f2ee9eb=\"\">\n                        <i :class=\"statusClasses\" _v-5f2ee9eb=\"\"></i>\n                    </a>\n                </li>\n\n                <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <template v-for=\"currency in currencies\">\n                    <li v-if=\"$route.path.substring(0, 11) !== '/operations'\" :class=\"{ active: currency.id === currentCurrency.id }\" _v-5f2ee9eb=\"\">\n                        <a href=\"#\" v-on:click.prevent=\"setCurrentCurrency(currency.id)\" _v-5f2ee9eb=\"\">\n                            {{ currency.name | uppercase }}\n                        </a>\n                    </li>\n                </template>\n\n                <li class=\"divider-vertical\" _v-5f2ee9eb=\"\"></li>\n\n                <li v-for=\"lang in availableLanguages\" :class=\"{ active: lang === language }\" _v-5f2ee9eb=\"\">\n                    <a href=\"#\" v-on:click.prevent=\"setLanguage(lang)\" _v-5f2ee9eb=\"\">\n                        {{ lang | uppercase }}\n                    </a>\n                </li>\n\n            </ul>\n\n        </div>\n\n    </div>\n\n</nav>\n\n";
 
 /***/ },
 /* 303 */
@@ -52271,9 +52271,6 @@
 
 	// Map routes
 	router.map({
-	    '/home': {
-	        component: __webpack_require__(319),
-	    },
 	    '/accounts': {
 	        component: __webpack_require__(328),
 	        subRoutes: {
@@ -52309,7 +52306,7 @@
 
 	router.redirect({
 	  '*': '/',
-	  '/': '/home',
+	  '/': '/envelopes',
 	  '/accounts': '/accounts/all',
 	  '/envelopes': '/envelopes/all',
 	})
@@ -55180,27 +55177,6 @@
 	            submit: 'Save',
 	            refresh: 'Refresh data',
 	        },
-	        home: {
-	            page: {
-	                title: 'Home',
-	            },
-	            accountSavings: {
-	                title: 'Account savings',
-	                monthlyTitle: 'This month',
-	                quarterlyTitle: 'Last 3 months',
-	                biannuallyTitle: 'Last 6 months',
-	                yearlyTitle: 'Last 12 months',
-	            },
-	            envelopeSavings: {
-	                title: 'Envelope savings',
-	            },
-	            bestEnvelopes: {
-	                title: 'Most profitable envelopes',
-	            },
-	            worstEnvelopes: {
-	                title: 'Less profitable envelopes',
-	            },
-	        },
 	        currencies: {
 	            form: {
 	                add: 'New currency',
@@ -55333,27 +55309,6 @@
 	            disable: 'Désactiver',
 	            submit: 'Enregistrer',
 	            refresh: 'Actualiser les données',
-	        },
-	        home: {
-	            page: {
-	                title: 'Accueil',
-	            },
-	            accountSavings: {
-	                title: 'Épargne bancaire',
-	                monthlyTitle: 'Ce mois',
-	                quarterlyTitle: '3 derniers mois',
-	                biannuallyTitle: '6 derniers mois',
-	                yearlyTitle: '12 derniers mois',
-	            },
-	            envelopeSavings: {
-	                title: 'Économisé dans les envelopes',
-	            },
-	            bestEnvelopes: {
-	                title: 'Envelopes les plus profitables',
-	            },
-	            worstEnvelopes: {
-	                title: 'Envelopes les moins profitables',
-	            },
 	        },
 	        currencies: {
 	            form: {
@@ -55563,238 +55518,15 @@
 	module.exports = "\n\n\n<div>\n\n    <layout-navbar></layout-navbar>\n\n    <div class=\"container\">\n        <router-view></router-view>\n    </div>\n\n</div>\n\n";
 
 /***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	var __vue_styles__ = {}
-	__vue_script__ = __webpack_require__(320)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/index.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(327)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
-	if (__vue_template__) {
-	__vue_options__.template = __vue_template__
-	}
-	if (!__vue_options__.computed) __vue_options__.computed = {}
-	Object.keys(__vue_styles__).forEach(function (key) {
-	var module = __vue_styles__[key]
-	__vue_options__.computed[key] = function () { return module }
-	})
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-70aa66dc/index.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 320 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(294);
-	var HomeSavings = __webpack_require__(321);
-	var HomeEnvelopes = __webpack_require__(324);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex],
-
-	    components: {
-	        HomeSavings: HomeSavings,
-	        HomeEnvelopes: HomeEnvelopes
-	    },
-
-	    created: function created() {
-	        this.$emit('refresh-data');
-	    },
-
-	    events: {
-	        'refresh-data': function refreshData() {
-	            this.refreshEnvelopes();
-	            this.setCurrentEnvelope(null);
-	            this.setCurrentAccount(null);
-	            return true;
-	        }
-	    }
-
-	};
-
-/***/ },
-/* 321 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	var __vue_styles__ = {}
-	__vue_script__ = __webpack_require__(322)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/savings.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(323)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
-	if (__vue_template__) {
-	__vue_options__.template = __vue_template__
-	}
-	if (!__vue_options__.computed) __vue_options__.computed = {}
-	Object.keys(__vue_styles__).forEach(function (key) {
-	var module = __vue_styles__[key]
-	__vue_options__.computed[key] = function () { return module }
-	})
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-959eea7a/savings.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(moment) {'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = {
-
-	    props: ['title', 'data'],
-
-	    data: function data() {
-	        return {
-	            date: moment()
-	        };
-	    },
-
-	    computed: {
-	        dates: function dates() {
-	            return [{
-	                key: 'monthly',
-	                date: this.date.clone().date(1)
-	            }, {
-	                key: 'quarterly',
-	                from: this.date.clone().date(1).subtract(3, 'months'),
-	                to: this.date.clone().date(31).subtract(1, 'months')
-	            }, {
-	                key: 'biannually',
-	                from: this.date.clone().date(1).subtract(6, 'months'),
-	                to: this.date.clone().date(31).subtract(1, 'months')
-	            }, {
-	                key: 'yearly',
-	                from: this.date.clone().date(1).subtract(12, 'months'),
-	                to: this.date.clone().date(31).subtract(1, 'months')
-	            }];
-	        }
-	    },
-
-	    watch: {
-	        language: function language() {
-	            this.date = moment.unix(this.date.unix());
-	        }
-	    }
-
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(98)))
-
-/***/ },
-/* 323 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-if=\"data.recent_savings\" v-for=\"(index, period) in dates\">\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix hidden-xs\"></div>\n\n        <div class=\"col-sm-6\">\n            <layout-card :color=\"data.recent_savings[period.key] < 0 ? 'danger' : 'success'\"\n                :icon=\"data.recent_savings[period.key] < 0 ? 'fa-level-down' : 'fa-level-up'\"\n                :text=\"data.recent_savings[period.key]\"\n                :comment=\"period.date\n                    ? $options.filters.formatShortMonth(period.date)\n                    : $options.filters.formatShortMonth(period.from)\n                        + ' - '\n                        + $options.filters.formatShortMonth(period.to)\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
-
-/***/ },
-/* 324 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_script__, __vue_template__
-	var __vue_styles__ = {}
-	__vue_script__ = __webpack_require__(325)
-	if (__vue_script__ &&
-	    __vue_script__.__esModule &&
-	    Object.keys(__vue_script__).length > 1) {
-	  console.warn("[vue-loader] resources/assets/components/home/envelopes.vue: named exports in *.vue files are ignored.")}
-	__vue_template__ = __webpack_require__(326)
-	module.exports = __vue_script__ || {}
-	if (module.exports.__esModule) module.exports = module.exports.default
-	var __vue_options__ = typeof module.exports === "function" ? (module.exports.options || (module.exports.options = {})) : module.exports
-	if (__vue_template__) {
-	__vue_options__.template = __vue_template__
-	}
-	if (!__vue_options__.computed) __vue_options__.computed = {}
-	Object.keys(__vue_styles__).forEach(function (key) {
-	var module = __vue_styles__[key]
-	__vue_options__.computed[key] = function () { return module }
-	})
-	if (false) {(function () {  module.hot.accept()
-	  var hotAPI = require("vue-hot-reload-api")
-	  hotAPI.install(require("vue"), false)
-	  if (!hotAPI.compatible) return
-	  var id = "_v-ef6761a6/envelopes.vue"
-	  if (!module.hot.data) {
-	    hotAPI.createRecord(id, module.exports)
-	  } else {
-	    hotAPI.update(id, module.exports, __vue_template__)
-	  }
-	})()}
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-
-	var mixins = __webpack_require__(294);
-
-	exports.default = {
-
-	    mixins: [mixins.vuex],
-
-	    props: ['title', 'data']
-
-	};
-
-/***/ },
-/* 326 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <template v-for=\"(index, envelope) in data\">\n\n        <div v-if=\"index % 2 === 0\" class=\"clearfix hidden-xs\"></div>\n\n        <div class=\"col-sm-6\">\n            <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n                :icon=\"envelope.icon\"\n                :text=\"envelope.state.balance\"\n                :comment=\"envelope.name\"\n            ></layout-card>\n        </div>\n\n    </template>\n\n</div>\n\n";
-
-/***/ },
-/* 327 */
-/***/ function(module, exports) {
-
-	module.exports = "\n\n\n<div class=\"row\">\n    <div class=\"col-md-6\">\n        <home-savings :title=\"text.home.accountSavings.title\" :data=\"accountDevelopment\"></home-savings>\n    </div>\n    <div class=\"col-md-6\">\n        <home-savings :title=\"text.home.envelopeSavings.title\" :data=\"envelopeDevelopment\"></home-savings>\n    </div>\n    <div class=\"clearfix visible-md visible-lg\"></div>\n    <div class=\"col-md-6\">\n        <home-envelopes :title=\"text.home.bestEnvelopes.title\" :data=\"bestEnvelopes\"></home-envelopes>\n    </div>\n    <div class=\"col-md-6\">\n        <home-envelopes :title=\"text.home.worstEnvelopes.title\" :data=\"worstEnvelopes\"></home-envelopes>\n    </div>\n</div>\n\n";
-
-/***/ },
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
 /* 328 */
 /***/ function(module, exports, __webpack_require__) {
 

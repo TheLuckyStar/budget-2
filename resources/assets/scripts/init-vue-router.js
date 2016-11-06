@@ -11,9 +11,6 @@ var router = new VueRouter({
 
 // Map routes
 router.map({
-    '/home': {
-        component: require('components/home/index.vue'),
-    },
     '/accounts': {
         component: require('components/accounts/index.vue'),
         subRoutes: {
@@ -49,7 +46,7 @@ router.map({
 
 router.redirect({
   '*': '/',
-  '/': '/home',
+  '/': '/envelopes',
   '/accounts': '/accounts/all',
   '/envelopes': '/envelopes/all',
 })

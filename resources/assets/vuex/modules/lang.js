@@ -8,27 +8,6 @@ exports.state = {
             submit: 'Save',
             refresh: 'Refresh data',
         },
-        home: {
-            page: {
-                title: 'Home',
-            },
-            accountSavings: {
-                title: 'Account savings',
-                monthlyTitle: 'This month',
-                quarterlyTitle: 'Last 3 months',
-                biannuallyTitle: 'Last 6 months',
-                yearlyTitle: 'Last 12 months',
-            },
-            envelopeSavings: {
-                title: 'Envelope savings',
-            },
-            bestEnvelopes: {
-                title: 'Most profitable envelopes',
-            },
-            worstEnvelopes: {
-                title: 'Less profitable envelopes',
-            },
-        },
         currencies: {
             form: {
                 add: 'New currency',
@@ -161,27 +140,6 @@ exports.state = {
             disable: 'Désactiver',
             submit: 'Enregistrer',
             refresh: 'Actualiser les données',
-        },
-        home: {
-            page: {
-                title: 'Accueil',
-            },
-            accountSavings: {
-                title: 'Épargne bancaire',
-                monthlyTitle: 'Ce mois',
-                quarterlyTitle: '3 derniers mois',
-                biannuallyTitle: '6 derniers mois',
-                yearlyTitle: '12 derniers mois',
-            },
-            envelopeSavings: {
-                title: 'Économisé dans les envelopes',
-            },
-            bestEnvelopes: {
-                title: 'Envelopes les plus profitables',
-            },
-            worstEnvelopes: {
-                title: 'Envelopes les moins profitables',
-            },
         },
         currencies: {
             form: {
