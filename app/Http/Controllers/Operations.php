@@ -13,7 +13,6 @@ class Operations extends Controller
     public function index(Request $request)
     {
         return collect([])
-            ->merge(Income::search($request->all())->get())
             ->merge(Outcome::search($request->all())->get())
             ->merge(Revenue::search($request->all())->get())
 //            ->merge(Transfer::search($request->all())->get())

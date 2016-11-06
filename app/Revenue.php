@@ -30,7 +30,7 @@ class Revenue extends Operation
     {
         parent::scopeSearch($query, $filters);
 
-        $query->where('date', 'IS NOT', null);
+        $query->whereNotNull('date');
 
         if (array_get($filters, 'envelope_id')) {
             $query->where('envelope_id', array_get($filters, 'envelope_id'));

@@ -86,7 +86,7 @@ class DeleteUsers extends Command
             $query->whereNotIn('account_id', $accountQuery);
             $query->orWhere(function ($query) use ($envelopeQuery) {
                 $query->whereNotIn('envelope_id', $envelopeQuery);
-                $query->where('envelope_id', 'IS NOT', null);
+                $query->whereNotNull('envelope_id');
             });
         }
 
