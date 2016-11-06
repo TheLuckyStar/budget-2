@@ -1,7 +1,7 @@
 
 <template>
 
-    <div class="modal fade" id="modal-{{ operation.type }}-{{ operation.id }}" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modal-operation" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left" @click="onDelete">
+                    <button v-if="operation.id" type="button" class="btn btn-danger pull-left" @click="onDelete">
                         {{ text.operations.modal.deleteButton }}
                     </button>
                     <button type="button" class="btn btn-primary" @click="onSubmit">
@@ -98,18 +98,20 @@
             }
         },
 
-        created: function () {
-            this.account_id = this.operation.account_id
-            this.envelope_id = this.operation.envelope_id
-            this.name = this.operation.name
-            this.amount = this.operation.amount
-            this.date = moment(this.operation.date).format('L')
+        watch: {
+            operation: function () {
+                this.account_id = this.operation.account_id
+                this.envelope_id = this.operation.envelope_id
+                this.name = this.operation.name
+                this.amount = this.operation.amount
+                this.date = moment(this.operation.date).format('L')
+            },
         },
 
         ready: function () {
             var component = this
             jQuery(document).ready(function() {
-                jQuery('#modal-' + component.operation.type + '-' + component.operation.id + ' #operation-date-input').datetimepicker({
+                jQuery('#modal-operation #operation-date-input').datetimepicker({
                     defaultDate: false,
                     format: 'L',
                     icons: {
@@ -130,7 +132,7 @@
         methods: {
 
             onSubmit: function () {
-                jQuery('#modal-' + this.operation.type + '-' + this.operation.id).modal('hide')
+                jQuery('#modal-operation').modal('hide')
 
                 var attributes = {
                     account_id: this.account_id,
@@ -149,7 +151,7 @@
 
             onDelete: function () {
                 if (confirm(this.text.operations.modal.deleteConfirmation)) {
-                    jQuery('#modal-' + this.operation.type + '-' + this.operation.id).modal('hide')
+                    jQuery('#modal-operation').modal('hide')
                     this.deleteOperation(this.operation.id, this.operation.type)
                 }
             },

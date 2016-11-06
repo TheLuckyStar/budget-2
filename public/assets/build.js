@@ -57084,7 +57084,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n    display: none;\n}\n\nli.active ul[_v-43945c29] {\n    display: block;\n}\n\nli .btn-link[_v-43945c29] {\n    font-weight: normal;;\n}\n\nli.active > .btn-link[_v-43945c29] {\n    font-weight: bold;\n}\n\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nul ul[_v-43945c29] {\n    padding-left: 20px;\n    display: none;\n}\n\nli.active ul[_v-43945c29] {\n    display: block;\n}\n\nli .btn-link[_v-43945c29] {\n    font-weight: normal;;\n}\n\nli.active > .btn-link[_v-43945c29] {\n    font-weight: bold;\n}\n\n\n", ""]);
 
 	// exports
 
@@ -57111,6 +57111,12 @@
 	var OperationsModal = __webpack_require__(386);
 
 	exports.default = {
+
+	    data: function data() {
+	        return {
+	            currentOperation: {}
+	        };
+	    },
 
 	    mixins: [mixins.vuex],
 
@@ -57179,17 +57185,32 @@
 	                    return false;
 	                }
 	            });
+	        },
+
+	        onNewRevenueClick: function onNewRevenueClick() {
+	            this.$emit('set-current-event', { id: '', type: 'revenue' });
+	        },
+
+	        onNewOutcomeClick: function onNewOutcomeClick() {
+	            this.$emit('set-current-event', { id: '', type: 'outcome' });
 	        }
 
 	    },
 
 	    events: {
+
 	        'refresh-data': function refreshData() {
 	            this.refreshOperations();
 	            this.refreshAccounts();
 	            this.refreshEnvelopes();
 	            return true;
+	        },
+
+	        'set-current-event': function setCurrentEvent(operation) {
+	            this.currentOperation = operation;
+	            jQuery('#modal-operation').modal('show');
 	        }
+
 	    },
 
 	    components: {
@@ -57398,7 +57419,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.timeline-panel[_v-74a4b49a] {\n    background-color: white;\n}\n\n.timeline-panel .overlay[_v-74a4b49a] {\n    display: none;\n    background-color: #eeeeee;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    bottom: 0px;\n    left: 0px;\n    padding: 20px;\n    cursor: pointer;\n    opacity: 0.75;\n    text-align: center;\n    color: white;\n}\n\n.timeline-editable:hover .overlay[_v-74a4b49a] {\n    display: block;\n}\n\nul:nth-child(even) .timeline-panel[_v-74a4b49a] {\n    background-color: #f9f9f9;\n}\n\n.timeline-inverted[_v-74a4b49a] {\n    text-align: right;\n}\n\n.timeline-title b[_v-74a4b49a] {\n    float: right;\n}\n\n.timeline-inverted .timeline-title b[_v-74a4b49a],\n.timeline-inverted .text-muted[_v-74a4b49a]  {\n    float: left;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.timeline-panel[_v-74a4b49a] {\n    background-color: white;\n}\n\n.timeline-panel .overlay[_v-74a4b49a] {\n    display: none;\n    background-color: #eeeeee;\n    position: absolute;\n    top: 0px;\n    right: 0px;\n    bottom: 0px;\n    left: 0px;\n    padding: 20px;\n    cursor: pointer;\n    opacity: 0.75;\n    text-align: center;\n    color: white;\n}\n\n.timeline-editable:hover .overlay[_v-74a4b49a] {\n    display: block;\n}\n\nul:nth-child(even) .timeline-panel[_v-74a4b49a] {\n    background-color: #f9f9f9;\n}\n\n.timeline-inverted[_v-74a4b49a] {\n    text-align: right;\n}\n\n.timeline-title b[_v-74a4b49a] {\n    float: right;\n}\n\n.timeline-inverted .timeline-title b[_v-74a4b49a],\n.timeline-inverted .text-muted[_v-74a4b49a]  {\n    float: left;\n}\n\n", ""]);
 
 	// exports
 
@@ -57415,7 +57436,6 @@
 
 
 	var mixins = __webpack_require__(294);
-	var OperationsModal = __webpack_require__(386);
 
 	exports.default = {
 
@@ -57467,8 +57487,10 @@
 
 	    },
 
-	    components: {
-	        OperationsModal: OperationsModal
+	    methods: {
+	        onOverlayClick: function onOverlayClick() {
+	            this.$dispatch('set-current-event', this.operation);
+	        }
 	    }
 
 	};
@@ -57544,7 +57566,7 @@
 
 
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal[_v-15ea6ef8] {\n    text-align: initial;\n}\n\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.modal[_v-15ea6ef8] {\n    text-align: initial;\n}\n\n", ""]);
 
 	// exports
 
@@ -57578,18 +57600,20 @@
 	        };
 	    },
 
-	    created: function created() {
-	        this.account_id = this.operation.account_id;
-	        this.envelope_id = this.operation.envelope_id;
-	        this.name = this.operation.name;
-	        this.amount = this.operation.amount;
-	        this.date = moment(this.operation.date).format('L');
+	    watch: {
+	        operation: function operation() {
+	            this.account_id = this.operation.account_id;
+	            this.envelope_id = this.operation.envelope_id;
+	            this.name = this.operation.name;
+	            this.amount = this.operation.amount;
+	            this.date = moment(this.operation.date).format('L');
+	        }
 	    },
 
 	    ready: function ready() {
 	        var component = this;
 	        jQuery(document).ready(function () {
-	            jQuery('#modal-' + component.operation.type + '-' + component.operation.id + ' #operation-date-input').datetimepicker({
+	            jQuery('#modal-operation #operation-date-input').datetimepicker({
 	                defaultDate: false,
 	                format: 'L',
 	                icons: {
@@ -57610,7 +57634,7 @@
 	    methods: {
 
 	        onSubmit: function onSubmit() {
-	            jQuery('#modal-' + this.operation.type + '-' + this.operation.id).modal('hide');
+	            jQuery('#modal-operation').modal('hide');
 
 	            var attributes = {
 	                account_id: this.account_id,
@@ -57629,7 +57653,7 @@
 
 	        onDelete: function onDelete() {
 	            if (confirm(this.text.operations.modal.deleteConfirmation)) {
-	                jQuery('#modal-' + this.operation.type + '-' + this.operation.id).modal('hide');
+	                jQuery('#modal-operation').modal('hide');
 	                this.deleteOperation(this.operation.id, this.operation.type);
 	            }
 	        }
@@ -57643,13 +57667,13 @@
 /* 390 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"modal fade\" id=\"modal-{{ operation.type }}-{{ operation.id }}\" tabindex=\"-1\" role=\"dialog\" _v-15ea6ef8=\"\">\n    <div class=\"modal-dialog\" role=\"document\" _v-15ea6ef8=\"\">\n        <div class=\"modal-content\" _v-15ea6ef8=\"\">\n\n            <div class=\"modal-header\" _v-15ea6ef8=\"\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-15ea6ef8=\"\">\n                    <span _v-15ea6ef8=\"\">×</span>\n                </button>\n                <h4 class=\"modal-title\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.title[operation.type] }}\n                </h4>\n            </div>\n\n            <div class=\"modal-body row\" _v-15ea6ef8=\"\">\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.account_id }}\n                    </label>\n                    <select v-model=\"account_id\" class=\"form-control\" id=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"account in accounts\" value=\"{{ account.id }}\" _v-15ea6ef8=\"\">\n                            {{ account.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.envelope_id }}\n                    </label>\n                    <select v-model=\"envelope_id\" class=\"form-control\" id=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"envelope in envelopes\" value=\"{{ envelope.id }}\" _v-15ea6ef8=\"\">\n                            {{ envelope.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-12\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-name-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.name }}\n                    </label>\n                    <input type=\"text\" v-model=\"name\" class=\"form-control\" id=\"operation-name-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.amount }}\n                    </label>\n                    <input type=\"text\" v-model=\"amount\" class=\"form-control\" id=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-date-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.date }}\n                    </label>\n                    <input type=\"text\" v-model=\"date\" class=\"form-control\" id=\"operation-date-input\" _v-15ea6ef8=\"\">\n                </div>\n\n            </div>\n\n            <div class=\"modal-footer\" _v-15ea6ef8=\"\">\n                <button type=\"button\" class=\"btn btn-danger pull-left\" @click=\"onDelete\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.deleteButton }}\n                </button>\n                <button type=\"button\" class=\"btn btn-primary\" @click=\"onSubmit\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.saveButton }}\n                </button>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"modal fade\" id=\"modal-operation\" tabindex=\"-1\" role=\"dialog\" _v-15ea6ef8=\"\">\n    <div class=\"modal-dialog\" role=\"document\" _v-15ea6ef8=\"\">\n        <div class=\"modal-content\" _v-15ea6ef8=\"\">\n\n            <div class=\"modal-header\" _v-15ea6ef8=\"\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" _v-15ea6ef8=\"\">\n                    <span _v-15ea6ef8=\"\">×</span>\n                </button>\n                <h4 class=\"modal-title\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.title[operation.type] }}\n                </h4>\n            </div>\n\n            <div class=\"modal-body row\" _v-15ea6ef8=\"\">\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.account_id }}\n                    </label>\n                    <select v-model=\"account_id\" class=\"form-control\" id=\"operation-account_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"account in accounts\" value=\"{{ account.id }}\" _v-15ea6ef8=\"\">\n                            {{ account.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.envelope_id }}\n                    </label>\n                    <select v-model=\"envelope_id\" class=\"form-control\" id=\"operation-envelope_id-select\" _v-15ea6ef8=\"\">\n                        <option v-for=\"envelope in envelopes\" value=\"{{ envelope.id }}\" _v-15ea6ef8=\"\">\n                            {{ envelope.name }}\n                        </option>\n                    </select>\n                </div>\n\n                <div class=\"form-group col-sm-12\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-name-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.name }}\n                    </label>\n                    <input type=\"text\" v-model=\"name\" class=\"form-control\" id=\"operation-name-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.amount }}\n                    </label>\n                    <input type=\"text\" v-model=\"amount\" class=\"form-control\" id=\"operation-amount-input\" _v-15ea6ef8=\"\">\n                </div>\n\n                <div class=\"form-group col-sm-6\" _v-15ea6ef8=\"\">\n                    <label for=\"operation-date-input\" _v-15ea6ef8=\"\">\n                        {{ text.operations.attributes.date }}\n                    </label>\n                    <input type=\"text\" v-model=\"date\" class=\"form-control\" id=\"operation-date-input\" _v-15ea6ef8=\"\">\n                </div>\n\n            </div>\n\n            <div class=\"modal-footer\" _v-15ea6ef8=\"\">\n                <button v-if=\"operation.id\" type=\"button\" class=\"btn btn-danger pull-left\" @click=\"onDelete\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.deleteButton }}\n                </button>\n                <button type=\"button\" class=\"btn btn-primary\" @click=\"onSubmit\" _v-15ea6ef8=\"\">\n                    {{ text.operations.modal.saveButton }}\n                </button>\n            </div>\n\n        </div>\n    </div>\n</div>\n\n";
 
 /***/ },
 /* 391 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<li v-if=\"operation\" :class=\"{'timeline-inverted': operation &amp;&amp; operation.type === 'outcome'}\" _v-74a4b49a=\"\">\n\n    <div v-if=\"withBadge\" :class=\"badgeClass\" _v-74a4b49a=\"\">\n        {{ date.date() }}\n    </div>\n\n    <div :class=\"panelClasses\" _v-74a4b49a=\"\">\n\n        <div class=\"overlay\" data-toggle=\"modal\" data-target=\"#modal-{{ operation.type }}-{{ operation.id }}\" _v-74a4b49a=\"\">\n            <i class=\"fa fa fa-5x fa-pencil-square-o\" _v-74a4b49a=\"\"></i>\n        </div>\n\n        <div class=\"timeline-heading\" _v-74a4b49a=\"\">\n\n            <h4 class=\"timeline-title\" _v-74a4b49a=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-74a4b49a=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-74a4b49a=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" class=\"text-muted\" _v-74a4b49a=\"\">\n                <small _v-74a4b49a=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-74a4b49a=\"\">\n            <p _v-74a4b49a=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n</li>\n\n";
+	module.exports = "\n\n\n<li v-if=\"operation\" :class=\"{'timeline-inverted': operation &amp;&amp; operation.type === 'outcome'}\" _v-74a4b49a=\"\">\n\n    <div v-if=\"withBadge\" :class=\"badgeClass\" _v-74a4b49a=\"\">\n        {{ date.date() }}\n    </div>\n\n    <div :class=\"panelClasses\" _v-74a4b49a=\"\">\n\n        <div class=\"overlay\" @click=\"onOverlayClick\" _v-74a4b49a=\"\">\n            <i class=\"fa fa fa-5x fa-pencil-square-o\" _v-74a4b49a=\"\"></i>\n        </div>\n\n        <div class=\"timeline-heading\" _v-74a4b49a=\"\">\n\n            <h4 class=\"timeline-title\" _v-74a4b49a=\"\">\n\n                <template v-if=\"operationEnvelope\">\n                    <i class=\"fa fa-fw {{ operationEnvelope.icon }}\" _v-74a4b49a=\"\"></i>\n                    {{ operationEnvelope.name }}\n                </template>\n\n                <template v-else=\"operationEnvelope\">\n                    {{ text.operations.types[operation.type] }}\n                </template>\n\n                <b _v-74a4b49a=\"\">\n                    {{ operation.amount }}\n                    {{ operationCurrency.name }}\n                </b>\n\n            </h4>\n\n            <p v-if=\"operationAccount\" class=\"text-muted\" _v-74a4b49a=\"\">\n                <small _v-74a4b49a=\"\">\n                    {{ operationAccount.name }}\n                </small>\n            </p>\n\n        </div>\n\n        <div class=\"timeline-body\" _v-74a4b49a=\"\">\n            <p _v-74a4b49a=\"\">\n                {{ operation.name }}\n            </p>\n        </div>\n\n    </div>\n\n</li>\n\n";
 
 /***/ },
 /* 392 */
@@ -57740,7 +57764,7 @@
 /* 396 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <operations-modal :operation=\"{id: '', type: 'revenue'}\" _v-43945c29=\"\"></operations-modal>\n    <operations-modal :operation=\"{id: '', type: 'outcome'}\" _v-43945c29=\"\"></operations-modal>\n\n    <operations-filters _v-43945c29=\"\"></operations-filters>\n\n    <div class=\"col-sm-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-sm-2 hidden-xs\" _v-43945c29=\"\">\n        <ul id=\"operations-affix\" class=\"list-unstyled\" data-offset-top=\"0\" data-offset-bottom=\"0\" _v-43945c29=\"\">\n            <li _v-43945c29=\"\">\n                <button type=\"button\" class=\"btn btn-link\" data-toggle=\"modal\" data-target=\"#modal-revenue-\" _v-43945c29=\"\">\n                    {{ text.operations.modal.links.newRevenue }}\n                </button>\n            </li>\n            <li _v-43945c29=\"\">\n                <button type=\"button\" class=\"btn btn-link\" data-toggle=\"modal\" data-target=\"#modal-outcome-\" _v-43945c29=\"\">\n                    {{ text.operations.modal.links.newOutcome }}\n                </button>\n            </li>\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\" _v-43945c29=\"\">\n\n    <operations-modal :operation=\"currentOperation\" _v-43945c29=\"\"></operations-modal>\n\n    <operations-filters _v-43945c29=\"\"></operations-filters>\n\n    <div class=\"col-sm-10\" _v-43945c29=\"\">\n        <template v-for=\"month in months\">\n            <operations-month :month=\"month\" _v-43945c29=\"\"></operations-month>\n        </template>\n    </div>\n\n    <div class=\"col-sm-2 hidden-xs\" _v-43945c29=\"\">\n        <ul id=\"operations-affix\" class=\"list-unstyled\" data-offset-top=\"0\" data-offset-bottom=\"0\" _v-43945c29=\"\">\n            <li _v-43945c29=\"\">\n                <button type=\"button\" class=\"btn btn-link\" @click=\"onNewRevenueClick\" _v-43945c29=\"\">\n                    {{ text.operations.modal.links.newRevenue }}\n                </button>\n            </li>\n            <li _v-43945c29=\"\">\n                <button type=\"button\" class=\"btn btn-link\" @click=\"onNewOutcomeClick\" _v-43945c29=\"\">\n                    {{ text.operations.modal.links.newOutcome }}\n                </button>\n            </li>\n            <li v-for=\"year in years\" _v-43945c29=\"\">\n                <a href=\"#/operations?{{ monthsInYear(year)[0].format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                    {{ year | formatYear }}\n                </a>\n                <ul class=\"list-unstyled\" _v-43945c29=\"\">\n                    <li v-for=\"month in monthsInYear(year)\" _v-43945c29=\"\">\n                        <a href=\"#/operations?{{ month.format('YYYY-MM') }}\" class=\"btn btn-link\" _v-43945c29=\"\">\n                            {{ month | formatShortMonth }}\n                        </a>\n                    </li>\n                </ul>\n            </li>\n        </ul>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 397 */

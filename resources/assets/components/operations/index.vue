@@ -3,8 +3,7 @@
 
     <div class="row">
 
-        <operations-modal :operation="{id: '', type: 'revenue'}"></operations-modal>
-        <operations-modal :operation="{id: '', type: 'outcome'}"></operations-modal>
+        <operations-modal :operation="currentOperation"></operations-modal>
 
         <operations-filters></operations-filters>
 
@@ -17,12 +16,12 @@
         <div class="col-sm-2 hidden-xs">
             <ul id="operations-affix" class="list-unstyled" data-offset-top="0" data-offset-bottom="0">
                 <li>
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-revenue-">
+                    <button type="button" class="btn btn-link" @click="onNewRevenueClick">
                         {{ text.operations.modal.links.newRevenue }}
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-outcome-">
+                    <button type="button" class="btn btn-link" @click="onNewOutcomeClick">
                         {{ text.operations.modal.links.newOutcome }}
                     </button>
                 </li>
@@ -55,6 +54,12 @@
     var OperationsModal = require('components/operations/modal.vue')
 
     export default {
+
+        data: function () {
+            return {
+                currentOperation: {},
+            }
+        },
 
         mixins: [mixins.vuex],
 
@@ -127,15 +132,30 @@
                 })
             },
 
+            onNewRevenueClick: function () {
+                this.$emit('set-current-event', {id: '', type: 'revenue'})
+            },
+
+            onNewOutcomeClick: function () {
+                this.$emit('set-current-event', {id: '', type: 'outcome'})
+            },
+
         },
 
         events: {
+
             'refresh-data': function () {
                 this.refreshOperations()
                 this.refreshAccounts()
                 this.refreshEnvelopes()
                 return true
             },
+
+            'set-current-event': function (operation) {
+                this.currentOperation = operation
+                jQuery('#modal-operation').modal('show')
+            },
+
         },
 
         components: {

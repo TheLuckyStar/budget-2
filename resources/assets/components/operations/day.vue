@@ -9,7 +9,7 @@
 
         <div :class="panelClasses">
 
-            <div class="overlay" data-toggle="modal" data-target="#modal-{{ operation.type }}-{{ operation.id }}">
+            <div class="overlay" @click="onOverlayClick">
                 <i class="fa fa fa-5x fa-pencil-square-o"></i>
             </div>
 
@@ -58,7 +58,6 @@
 <script>
 
     var mixins = require('scripts/mixins.js')
-    var OperationsModal = require('components/operations/modal.vue')
 
     export default {
 
@@ -111,8 +110,10 @@
 
         },
 
-        components: {
-            OperationsModal,
+        methods: {
+            onOverlayClick: function () {
+                this.$dispatch('set-current-event', this.operation)
+            },
         },
 
     }
