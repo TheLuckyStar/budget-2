@@ -22,8 +22,8 @@
                         {{ operationEnvelope.name }}
                     </template>
 
-                    <template v-else="operationEnvelope">
-                        {{ text.operations.types[operation.type] }}
+                    <template v-else>
+                        {{ text.operations.attributes.no_envelope }}
                     </template>
 
                     <b>

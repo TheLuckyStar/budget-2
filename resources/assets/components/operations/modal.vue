@@ -32,6 +32,9 @@
                             {{ text.operations.attributes.envelope_id }}
                         </label>
                         <select v-model="envelope_id" class="form-control" id="operation-envelope_id-select">
+                            <option :value="null">
+                                {{ text.operations.attributes.no_envelope }}
+                            </option>
                             <option v-for="envelope in envelopes" value="{{ envelope.id }}">
                                 {{ envelope.name }}
                             </option>
