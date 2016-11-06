@@ -157,46 +157,6 @@ class Envelope extends Container
             'incomes' => $this->getIncomesAttribute($currency, $dateFrom, $dateTo),
             'outcomes' => $this->getOutcomesAttribute($currency, $dateFrom, $dateTo),
             'savings' => $this->getSavingsAttribute($currency, $dateFrom, $dateTo),
-            'relative_savings' => $this->getRelativeSavingsAttribute($currency, $dateFrom, $dateTo),
         ];
-    }
-
-    /**
-     * Combine savings metric for the recent periods
-     * @param  Collection $envelopes Envelopes to combine the development
-     * @return array Combined savings
-     */
-    static public function combineRecentSavings(Collection $containers, Currency $currency = null)
-    {
-        return collect([
-            'monthly' => ['from' => Carbon::startOfMonth(), 'to' => Carbon::endOfMonth()],
-            'quarterly' => ['from' => Carbon::startOfMonth()->subMonths(3), 'to' => Carbon::endOfMonth()->subMonths(1)],
-            'biannually' => ['from' => Carbon::startOfMonth()->subMonths(6), 'to' => Carbon::endOfMonth()->subMonths(1)],
-            'yearly' => ['from' => Carbon::startOfMonth()->subMonths(12), 'to' => Carbon::endOfMonth()->subMonths(1)],
-        ])->map(function ($dates) use ($currency, $containers) {
-            return $containers->map(function (Container $container) use ($currency, $dates) {
-                return $container->getSavingsAttribute($currency, $dates['from'], $dates['to']);
-            })->reduce(function ($sum, $saving) {
-                return is_null($sum) ? $saving : $sum + $saving;
-            });
-        });
-    }
-
-    /**
-     * Combine monthly metric development for the given containers
-     * @param  Collection $containers Containers to coombine the development
-     * @return array Combined snapshots
-     */
-    static public function combineMonthlyDevelopment(Collection $containers, Currency $currency = null, $date = null)
-    {
-        $development = parent::combineMonthlyDevelopment($containers, $currency, $date);
-
-        if ($development->get('revenues') + $development->get('incomes') == 0) {
-            $relativeSavings = 0;
-        } else {
-            $relativeSavings = round(($development->get('revenues') + $development->get('incomes') - $development->get('outcomes')) * 100  / ($development->get('revenues') + $development->get('incomes')), 2);
-        }
-
-        return $development->put('relative_savings', $relativeSavings);
     }
 }

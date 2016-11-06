@@ -45,7 +45,6 @@ class Envelopes extends Controller
             return [
                 'state' => Envelope::combineMonthlyDevelopment($envelopes, $currency),
                 'yearly' => Envelope::combineYearlyDevelopment($envelopes, $currency, $request->date),
-                'recent_savings' => Envelope::combineRecentSavings($envelopes, $currency),
             ];
         }
 

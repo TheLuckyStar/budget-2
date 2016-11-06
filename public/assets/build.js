@@ -55248,9 +55248,6 @@
 	            balance: {
 	                title: 'Balance',
 	            },
-	            savings: {
-	                title: 'Saved this month',
-	            },
 	            balances: {
 	                title: 'Situation in details',
 	                labels: ['Balance'],
@@ -55380,9 +55377,6 @@
 	            },
 	            balance: {
 	                title: 'Solde',
-	            },
-	            savings: {
-	                title: 'Économisé ce mois',
 	            },
 	            balances: {
 	                title: 'Détail de la situation',
@@ -56690,7 +56684,7 @@
 /* 362 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.envelopes.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelopeDevelopment.state\">\n        <layout-card :color=\"envelopeDevelopment.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelopeDevelopment.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelopeDevelopment.state.savings + '/' + (envelopeDevelopment.state.revenues + envelopeDevelopment.state.incomes)\"\n            :comment=\"envelopeDevelopment.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\"\n            :legend=\"text.envelopes.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <h1>\n            {{ text.envelopes.enabled.title }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\">\n        <layout-card :color=\"enabledEnvelopesBalance < 0 ? 'danger' : 'success'\"\n            :icon=\"enabledEnvelopesBalance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"enabledEnvelopesBalance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <layout-chart type=\"radar\"\n            :legend=\"text.envelopes.balances.title\"\n            :labels=\"balancesLabels\"\n            :datasets=\"balancesData\"></layout-chart>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 363 */
@@ -56948,7 +56942,7 @@
 /* 370 */
 /***/ function(module, exports) {
 
-	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <div class=\"pull-right\">\n            <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n                {{ text.envelopes.form.title }}\n            </button>\n            <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n                <div class=\"modal-dialog\" role=\"document\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                                <span aria-hidden=\"true\">&times;</span>\n                            </button>\n                            <h4 class=\"modal-title\">\n                                {{ text.envelopes.form.title }}\n                            </h4>\n                        </div>\n                        <div class=\"modal-body\">\n                            <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <h1>\n            <i class=\"fa {{ envelope.icon }}\"></i>\n            {{ envelope.name }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.state.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.state.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.relative_savings < 0 ? 'danger' : 'success'\"\n            :icon=\"'fa-battery-' + batteryValue(envelope.state.relative_savings)\"\n            :title=\"text.envelopes.savings.title\"\n            :text=\"envelope.state.savings + '/' + (envelope.state.revenues + envelope.state.incomes)\"\n            :comment=\"envelope.state.relative_savings + '%'\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
+	module.exports = "\n\n\n<div class=\"row\">\n\n    <div class=\"col-md-12\">\n\n        <div class=\"pull-right\">\n            <button type=\"button\" class=\"btn btn-default btn-lg\" data-toggle=\"modal\" data-target=\"#envelope-form\">\n                {{ text.envelopes.form.title }}\n            </button>\n            <div class=\"modal fade\" id=\"envelope-form\" tabindex=\"-1\" role=\"dialog\">\n                <div class=\"modal-dialog\" role=\"document\">\n                    <div class=\"modal-content\">\n                        <div class=\"modal-header\">\n                            <button type=\"button\" class=\"close\" data-dismiss=\"modal\">\n                                <span aria-hidden=\"true\">&times;</span>\n                            </button>\n                            <h4 class=\"modal-title\">\n                                {{ text.envelopes.form.title }}\n                            </h4>\n                        </div>\n                        <div class=\"modal-body\">\n                            <envelopes-form :envelope=\"envelope\"></envelopes-form>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <h1>\n            <i class=\"fa {{ envelope.icon }}\"></i>\n            {{ envelope.name }}\n        </h1>\n\n        <hr>\n\n    </div>\n\n    <div class=\"col-md-6\" v-if=\"envelope.state\">\n        <layout-card :color=\"envelope.state.balance < 0 ? 'danger' : 'success'\"\n            :icon=\"envelope.state.balance < 0 ? 'fa-thumbs-down' : 'fa-thumbs-up'\"\n            :title=\"text.envelopes.balance.title\"\n            :text=\"envelope.state.balance\"\n            :comment=\"$options.filters.formatLongDate(date)\"\n        ></layout-card>\n    </div>\n\n    <div class=\"col-md-12\">\n        <envelopes-development></envelopes-development>\n    </div>\n\n</div>\n\n";
 
 /***/ },
 /* 371 */

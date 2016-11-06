@@ -79,9 +79,6 @@ exports.state = {
             balance: {
                 title: 'Balance',
             },
-            savings: {
-                title: 'Saved this month',
-            },
             balances: {
                 title: 'Situation in details',
                 labels: ['Balance'],
@@ -211,9 +208,6 @@ exports.state = {
             },
             balance: {
                 title: 'Solde',
-            },
-            savings: {
-                title: 'Économisé ce mois',
             },
             balances: {
                 title: 'Détail de la situation',

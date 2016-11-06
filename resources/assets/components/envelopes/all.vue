@@ -22,15 +22,6 @@
             ></layout-card>
         </div>
 
-        <div class="col-md-6" v-if="envelopeDevelopment.state">
-            <layout-card :color="envelopeDevelopment.state.relative_savings < 0 ? 'danger' : 'success'"
-                :icon="'fa-battery-' + batteryValue(envelopeDevelopment.state.relative_savings)"
-                :title="text.envelopes.savings.title"
-                :text="envelopeDevelopment.state.savings + '/' + (envelopeDevelopment.state.revenues + envelopeDevelopment.state.incomes)"
-                :comment="envelopeDevelopment.state.relative_savings + '%'"
-            ></layout-card>
-        </div>
-
         <div class="col-md-12">
             <layout-chart type="radar"
                 :legend="text.envelopes.balances.title"
