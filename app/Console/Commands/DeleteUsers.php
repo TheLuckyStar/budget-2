@@ -84,10 +84,6 @@ class DeleteUsers extends Command
             $accountQuery = DB::table('account_user')->select('account_id')->where('user_id', $exceptUser);
             $envelopeQuery = DB::table('envelopes')->select('id')->whereNotIn('account_id', $accountQuery);
             $query->whereNotIn('account_id', $accountQuery);
-            $query->orWhere(function ($query) use ($envelopeQuery) {
-                $query->whereNotIn('envelope_id', $envelopeQuery);
-                $query->whereNotNull('envelope_id');
-            });
         }
 
         $count = $query->delete();
