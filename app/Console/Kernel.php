@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\ConvertAmounts::class,
         Commands\DeleteAccounts::class,
         Commands\DeleteUsers::class,
     ];
