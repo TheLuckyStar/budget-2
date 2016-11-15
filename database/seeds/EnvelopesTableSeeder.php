@@ -12,6 +12,7 @@ class EnvelopesTableSeeder extends Seeder
      */
     public function run()
     {
+        Envelope::find(1)->delete();
         Envelope::find(10)->delete();
         Envelope::find(37)->delete();
         Envelope::find(38)->delete();

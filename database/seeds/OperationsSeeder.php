@@ -673,5 +673,61 @@ class OperationsSeeder extends Seeder
             'amount' => '50',
             'date' => '2016-11-09',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '95',
+            'date' => '2016-11-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 38,
+            'name' => 'Enregistrement voiture',
+            'amount' => '1759',
+            'date' => '2016-11-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 39,
+            'name' => 'Contrôle technique',
+            'amount' => '479',
+            'date' => '2016-11-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Ikea',
+            'amount' => '4520',
+            'date' => '2016-11-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Brunch Ikea',
+            'amount' => '125',
+            'date' => '2016-11-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '505.63',
+            'date' => '2016-11-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '639',
+            'date' => '2016-11-15',
+        ]);
     }
 }
