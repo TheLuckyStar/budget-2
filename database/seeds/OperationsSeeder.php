@@ -16,8 +16,9 @@ class OperationsSeeder extends Seeder
         $this->july();
         $this->august();
         $this->september();
-        $this->octobre();
-        $this->novembre();
+        $this->october();
+        $this->november();
+        $this->december();
     }
 
     public function july()
@@ -341,7 +342,7 @@ class OperationsSeeder extends Seeder
         ]);
     }
 
-    public function octobre()
+    public function october()
     {
         Revenue::create([
             'account_id' => 12,
@@ -451,7 +452,15 @@ class OperationsSeeder extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Retrait liquide',
-            'amount' => '600',
+            'amount' => '465',
+            'date' => '2016-10-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Extension barriere + rateau a feuilles',
+            'amount' => '135',
             'date' => '2016-10-13',
         ]);
 
@@ -624,8 +633,24 @@ class OperationsSeeder extends Seeder
         ]);
     }
 
-    public function novembre()
+    public function november()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire novembre',
+            'amount' => '24807',
+            'date' => '2016-11-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Défraiement voiture C4Media',
+            'amount' => '165',
+            'date' => '2016-10-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -728,6 +753,201 @@ class OperationsSeeder extends Seeder
             'name' => 'Skånetrafiken Simon',
             'amount' => '639',
             'date' => '2016-11-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Liquide essuie-glace',
+            'amount' => '49.80',
+            'date' => '2016-11-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1136.16',
+            'date' => '2016-11-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-11-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Commode Élie',
+            'amount' => '350',
+            'date' => '2016-11-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Chandelier',
+            'amount' => '125',
+            'date' => '2016-11-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Afterwork Simon',
+            'amount' => '367',
+            'date' => '2016-11-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '40',
+            'date' => '2016-11-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Harald Nyborg',
+            'amount' => '125.5',
+            'date' => '2016-11-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1047.23',
+            'date' => '2016-11-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '518',
+            'date' => '2016-11-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '235',
+            'date' => '2016-11-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École Novembre',
+            'amount' => '600',
+            'date' => '2016-11-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Spectacle Sibbhult',
+            'amount' => '100',
+            'date' => '2016-11-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Repas retraite de Noel',
+            'amount' => '200',
+            'date' => '2016-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Glace retraite de Noel',
+            'amount' => '16.50',
+            'date' => '2016-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Encheres retraite de Noel',
+            'amount' => '420',
+            'date' => '2016-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '40',
+            'date' => '2016-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Baignoire Shantalah',
+            'amount' => '249',
+            'date' => '2016-11-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Pneus neige + vidange',
+            'amount' => '3792',
+            'date' => '2016-11-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Locomotive Élie',
+            'amount' => '249',
+            'date' => '2016-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2016-11-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Simon',
+            'amount' => '63',
+            'date' => '2016-11-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Impression photos',
+            'amount' => '119',
+            'date' => '2016-11-29',
+        ]);
+    }
+
+    public function december()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer decembre',
+            'amount' => '6800',
+            'date' => '2016-12-01',
         ]);
     }
 }
