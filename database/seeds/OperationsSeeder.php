@@ -901,7 +901,7 @@ class OperationsSeeder extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 1,
+            'envelope_id' => 39,
             'name' => 'Pneus neige + vidange',
             'amount' => '3792',
             'date' => '2016-11-28',
@@ -938,6 +938,30 @@ class OperationsSeeder extends Seeder
             'amount' => '119',
             'date' => '2016-11-29',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1714.86',
+            'date' => '2016-11-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Bodystore',
+            'amount' => '286',
+            'date' => '2016-11-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Bodystore',
+            'amount' => '571',
+            'date' => '2016-11-30',
+        ]);
     }
 
     public function december()
@@ -948,6 +972,142 @@ class OperationsSeeder extends Seeder
             'name' => 'Loyer decembre',
             'amount' => '6800',
             'date' => '2016-12-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Lopis Hanna',
+            'amount' => '130',
+            'date' => '2016-12-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '40',
+            'date' => '2016-12-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Peluche bébé',
+            'amount' => '75',
+            'date' => '2016-12-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '535.10',
+            'date' => '2016-12-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'VPN',
+            'amount' => '177',
+            'date' => '2016-12-07',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-12-07',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-12-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '45',
+            'date' => '2016-12-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '22',
+            'date' => '2016-12-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Ikea',
+            'amount' => '2586',
+            'date' => '2016-12-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Anniversaire Elie',
+            'amount' => '325',
+            'date' => '2016-12-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '450.94',
+            'date' => '2016-12-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 39,
+            'name' => "Pot d'échappement",
+            'amount' => '700',
+            'date' => '2016-12-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '5',
+            'date' => '2016-12-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2016-12-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École Decembre',
+            'amount' => '600',
+            'date' => '2016-12-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '294',
+            'date' => '2016-12-24',
         ]);
     }
 }
