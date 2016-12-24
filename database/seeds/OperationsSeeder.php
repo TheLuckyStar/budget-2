@@ -31,6 +31,14 @@ class OperationsSeeder extends Seeder
             'date' => '2016-06-30',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations juillet',
+            'amount' => '1050',
+            'date' => '2016-07-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 3,
@@ -47,6 +55,14 @@ class OperationsSeeder extends Seeder
             'envelope_id' => null,
             'name' => 'Salaire aout',
             'amount' => '23460',
+            'date' => '2016-08-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations aout',
+            'amount' => '1050',
             'date' => '2016-08-01',
         ]);
 
@@ -130,6 +146,14 @@ class OperationsSeeder extends Seeder
             'envelope_id' => null,
             'name' => 'Salaire septembre',
             'amount' => '27037',
+            'date' => '2016-09-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations septembre',
+            'amount' => '1050',
             'date' => '2016-09-01',
         ]);
 
@@ -349,6 +373,14 @@ class OperationsSeeder extends Seeder
             'envelope_id' => null,
             'name' => 'Salaire octobre',
             'amount' => '26592',
+            'date' => '2016-10-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations octobre',
+            'amount' => '1050',
             'date' => '2016-10-01',
         ]);
 
@@ -649,6 +681,14 @@ class OperationsSeeder extends Seeder
             'name' => 'Défraiement voiture C4Media',
             'amount' => '165',
             'date' => '2016-10-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations novembre',
+            'amount' => '1050',
+            'date' => '2016-11-01',
         ]);
 
         Outcome::create([
@@ -966,6 +1006,14 @@ class OperationsSeeder extends Seeder
 
     public function december()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire décembre',
+            'amount' => '28618',
+            'date' => '2016-12-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -1107,7 +1155,39 @@ class OperationsSeeder extends Seeder
             'envelope_id' => 1,
             'name' => 'Telephone portable',
             'amount' => '294',
-            'date' => '2016-12-24',
+            'date' => '2016-12-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '30',
+            'date' => '2016-12-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2016-12-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Noel Mikael',
+            'amount' => '56',
+            'date' => '2016-12-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '5250',
+            'date' => '2016-12-22',
         ]);
     }
 }
