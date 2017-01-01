@@ -19,6 +19,7 @@ class OperationsSeeder extends Seeder
         $this->october();
         $this->november();
         $this->december();
+        $this->january();
     }
 
     public function july()
@@ -1188,6 +1189,41 @@ class OperationsSeeder extends Seeder
             'name' => 'ICA',
             'amount' => '5250',
             'date' => '2016-12-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '30',
+            'date' => '2016-12-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '271.24',
+            'date' => '2016-12-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2016-12-28',
+        ]);
+    }
+
+    public function january()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer janvier',
+            'amount' => '6800',
+            'date' => '2017-01-01',
         ]);
     }
 }
