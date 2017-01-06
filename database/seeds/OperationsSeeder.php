@@ -1015,6 +1015,14 @@ class OperationsSeeder extends Seeder
             'date' => '2016-12-01',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations novembre',
+            'amount' => '1050',
+            'date' => '2016-12-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -1224,6 +1232,38 @@ class OperationsSeeder extends Seeder
             'name' => 'Loyer janvier',
             'amount' => '6800',
             'date' => '2017-01-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '10',
+            'date' => '2017-01-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA (liquide)',
+            'amount' => '1050',
+            'date' => '2017-01-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA (CB)',
+            'amount' => '956.77',
+            'date' => '2017-01-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 38,
+            'name' => 'Rosetta Stone',
+            'amount' => '1022.50',
+            'date' => '2017-01-02',
         ]);
     }
 }
