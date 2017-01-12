@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call('EnvelopesTableSeeder');
         $this->call('CurrenciesTableSeeder');
         $this->call('CurrencyRatesTableSeeder');
-        $this->call('OperationsSeeder');
+        $this->call('OperationsSeeder2016');
+        $this->call('OperationsSeeder2017');
 
         Model::reguard();
     }
