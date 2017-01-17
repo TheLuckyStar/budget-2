@@ -217,5 +217,78 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '151',
             'date' => '2017-01-12',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '518',
+            'date' => '2017-01-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Amende stationnement',
+            'amount' => '400',
+            'date' => '2017-01-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Max',
+            'amount' => '112',
+            'date' => '2017-01-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '30',
+            'date' => '2017-01-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '30',
+            'date' => '2017-01-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Commande Clearlife',
+            'amount' => '660',
+            'date' => '2017-01-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '359.20',
+            'date' => '2017-01-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Électricité 2016',
+            'amount' => '1836',
+            'date' => '2017-01-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '289',
+            'date' => '2017-01-17',
+        ]);
+
     }
 }
