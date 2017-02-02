@@ -14,10 +14,19 @@ class OperationsSeeder2017 extends Seeder
     public function run()
     {
         $this->january();
+        $this->february();
     }
 
     public function january()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire janvier',
+            'amount' => '29236',
+            'date' => '2017-01-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -47,14 +56,6 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 3,
             'name' => 'ICA (CB)',
             'amount' => '956.77',
-            'date' => '2017-01-02',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 38,
-            'name' => 'Rosetta Stone',
-            'amount' => '1022.50',
             'date' => '2017-01-02',
         ]);
 
@@ -125,7 +126,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 7,
-            'name' => 'Billets de train Philippe & Jeanne-Marie',
+            'name' => 'Train Philippe & Jeanne-Marie (remboursement faire-part)',
             'amount' => '738',
             'date' => '2017-01-10',
         ]);
@@ -141,7 +142,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 7,
-            'name' => 'Billets de train Pierre-Louis & François',
+            'name' => 'Train Pierre-Louis & François (remboursement faire-part)',
             'amount' => '820',
             'date' => '2017-01-11',
         ]);
@@ -290,5 +291,199 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-01-17',
         ]);
 
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Chaussures Simon',
+            'amount' => '600',
+            'date' => '2017-01-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Ikea : cuisine Élie',
+            'amount' => '799',
+            'date' => '2017-01-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Ikea : plante + fermoirs + lampes',
+            'amount' => '256',
+            'date' => '2017-01-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Ikea : papier cadeau + pailles',
+            'amount' => '28',
+            'date' => '2017-01-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Plastifieuse + feuilles',
+            'amount' => '499.70',
+            'date' => '2017-01-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Grille-pain',
+            'amount' => '319',
+            'date' => '2017-01-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Film occultant',
+            'amount' => '49.90',
+            'date' => '2017-01-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1765.85',
+            'date' => '2017-01-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École Janvier',
+            'amount' => '600',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau anniversaire enfants',
+            'amount' => '137',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant asiatique',
+            'amount' => '405',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Pain coop',
+            'amount' => '48',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Jus de canneberge',
+            'amount' => '89',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '25',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Impressions',
+            'amount' => '8',
+            'date' => '2017-01-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-01-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '554.61',
+            'date' => '2017-01-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Repas Église (patinoire)',
+            'amount' => '308',
+            'date' => '2017-01-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1566.94',
+            'date' => '2017-01-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-01-30',
+        ]);
+    }
+
+    public function february()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer février',
+            'amount' => '6800',
+            'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Timbres',
+            'amount' => '260',
+            'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-02-01',
+        ]);
     }
 }

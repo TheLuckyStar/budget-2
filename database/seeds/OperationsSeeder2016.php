@@ -335,7 +335,7 @@ class OperationsSeeder2016 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 3,
+            'envelope_id' => 7,
             'name' => 'Timbres',
             'amount' => '130',
             'date' => '2016-09-30',
@@ -343,7 +343,7 @@ class OperationsSeeder2016 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 3,
+            'envelope_id' => 7,
             'name' => 'Timbres',
             'amount' => '39',
             'date' => '2016-09-30',
@@ -410,7 +410,7 @@ class OperationsSeeder2016 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 3,
+            'envelope_id' => 7,
             'name' => 'Timbres',
             'amount' => '25',
             'date' => '2016-10-04',
