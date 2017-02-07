@@ -27,6 +27,14 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-01-01',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations janvier',
+            'amount' => '1050',
+            'date' => '2017-01-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -484,6 +492,54 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Knislinge pastor',
             'amount' => '50',
             'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Photos faire-part',
+            'amount' => '562',
+            'date' => '2017-02-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Patins Simon',
+            'amount' => '399',
+            'date' => '2017-02-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Alcool',
+            'amount' => '69',
+            'date' => '2017-02-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA (liquide)',
+            'amount' => '1040',
+            'date' => '2017-01-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA (CB)',
+            'amount' => '280.17',
+            'date' => '2017-02-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Patinoire Glimåkra',
+            'amount' => '10',
+            'date' => '2017-02-05',
         ]);
     }
 }
