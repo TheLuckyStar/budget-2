@@ -541,5 +541,77 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '10',
             'date' => '2017-02-05',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '65.40',
+            'date' => '2017-01-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Lekoseum season ticket',
+            'amount' => '450',
+            'date' => '2017-02-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Lekoseum',
+            'amount' => '105',
+            'date' => '2017-02-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Tapis puzzle',
+            'amount' => '145',
+            'date' => '2017-02-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture Q1',
+            'amount' => '1176',
+            'date' => '2017-02-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '732',
+            'date' => '2017-02-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Accouchement',
+            'amount' => '300',
+            'date' => '2017-02-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Max',
+            'amount' => '299',
+            'date' => '2017-02-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '524.10',
+            'date' => '2017-02-13',
+        ]);
     }
 }
