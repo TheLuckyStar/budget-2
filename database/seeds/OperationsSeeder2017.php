@@ -15,6 +15,7 @@ class OperationsSeeder2017 extends Seeder
     {
         $this->january();
         $this->february();
+        $this->march();
     }
 
     public function january()
@@ -707,7 +708,83 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 3,
             'name' => 'ICA',
             'amount' => '563',
-            'date' => '2017-02-22',
+            'date' => '2017-02-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '527.53',
+            'date' => '2017-02-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '66.80',
+            'date' => '2017-02-25',
+        ]);
+
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '30',
+            'date' => '2017-02-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Bodystore',
+            'amount' => '1163.65',
+            'date' => '2017-02-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Bodystore',
+            'amount' => '557.05',
+            'date' => '2017-02-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-02-28',
+        ]);
+    }
+
+    public function march()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer mars',
+            'amount' => '6800',
+            'date' => '2017-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Couches',
+            'amount' => '102',
+            'date' => '2017-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-03-01',
         ]);
     }
 }
