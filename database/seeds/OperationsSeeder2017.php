@@ -786,5 +786,53 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '50',
             'date' => '2017-03-01',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Lekoseum',
+            'amount' => '50',
+            'date' => '2017-03-04',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '2084.53',
+            'date' => '2017-03-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'OVPN',
+            'amount' => '177',
+            'date' => '2017-03-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Crème impetigo Élie',
+            'amount' => '129',
+            'date' => '2017-03-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Loppis Élie & Laïs',
+            'amount' => '460',
+            'date' => '2017-03-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '664.97',
+            'date' => '2017-03-11',
+        ]);
     }
 }
