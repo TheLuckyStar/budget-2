@@ -476,7 +476,15 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => null,
             'name' => 'Salaire février',
             'amount' => '20076.35',
-            'date' => '2017-02-24',
+            'date' => '2017-02-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Congé paternité',
+            'amount' => '7122',
+            'date' => '2017-02-01',
         ]);
 
         Revenue::create([
@@ -762,6 +770,14 @@ class OperationsSeeder2017 extends Seeder
 
     public function march()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire mars',
+            'amount' => '27672',
+            'date' => '2017-03-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -769,14 +785,14 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '6800',
             'date' => '2017-03-01',
         ]);
-        //
-        // Revenue::create([
-        //     'account_id' => 12,
-        //     'envelope_id' => null,
-        //     'name' => 'Allocations mars',
-        //     'amount' => '2250',
-        //     'date' => '2017-03-01',
-        // ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations mars',
+            'amount' => '2250',
+            'date' => '2017-03-01',
+        ]);
 
         Outcome::create([
             'account_id' => 12,
@@ -920,6 +936,38 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Coop',
             'amount' => '916.19',
             'date' => '2017-03-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Huile de massage',
+            'amount' => '149',
+            'date' => '2017-03-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-03-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Aller-retour Ryanair Juin 2017',
+            'amount' => '2819.21',
+            'date' => '2017-03-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-03-23',
         ]);
     }
 }

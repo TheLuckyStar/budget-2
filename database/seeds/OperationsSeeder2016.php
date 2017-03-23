@@ -24,6 +24,14 @@ class OperationsSeeder2016 extends Seeder
     public function july()
     {
         Revenue::create([
+            'account_id' => 3,
+            'envelope_id' => 1,
+            'name' => '[FAKE] Remboursement caution Hanaskog',
+            'amount' => '1466.71',
+            'date' => '2016-06-10',
+        ]);
+
+        Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
             'name' => 'Salaire juillet',

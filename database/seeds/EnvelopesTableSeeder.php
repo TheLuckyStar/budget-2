@@ -17,6 +17,6 @@ class EnvelopesTableSeeder extends Seeder
         Envelope::find(37)->delete();
         Envelope::find(38)->delete();
         Envelope::find(39)->delete();
-        Envelope::find(52)->delete();
+        Envelope::find(52)->forceDelete();
     }
 }
