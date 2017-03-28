@@ -16,6 +16,7 @@ class OperationsSeeder2017 extends Seeder
         $this->january();
         $this->february();
         $this->march();
+        $this->april();
     }
 
     public function january()
@@ -513,6 +514,14 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture février',
+            'amount' => '392',
+            'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 7,
             'name' => 'Timbres',
             'amount' => '260',
@@ -605,14 +614,6 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Tapis puzzle',
             'amount' => '145',
             'date' => '2017-02-12',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture Q1',
-            'amount' => '1176',
-            'date' => '2017-02-13',
         ]);
 
         Outcome::create([
@@ -796,6 +797,22 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture mars',
+            'amount' => '392',
+            'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture avril',
+            'amount' => '392',
+            'date' => '2017-02-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Couches',
             'amount' => '102',
@@ -968,6 +985,50 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Skånetrafiken Simon',
             'amount' => '700',
             'date' => '2017-03-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture mai-octobre',
+            'amount' => '2417',
+            'date' => '2017-03-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Pansements',
+            'amount' => '25.90',
+            'date' => '2017-01-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '2379.51',
+            'date' => '2017-03-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-03-28',
+        ]);
+
+    }
+
+    public function april()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer avril',
+            'amount' => '7000',
+            'date' => '2017-03-01',
         ]);
     }
 }
