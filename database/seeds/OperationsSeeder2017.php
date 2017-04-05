@@ -1019,6 +1019,21 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-03-28',
         ]);
 
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-03-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Envoi ambassade',
+            'amount' => '179',
+            'date' => '2017-03-31',
+        ]);
     }
 
     public function april()
@@ -1029,6 +1044,22 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Loyer avril',
             'amount' => '7000',
             'date' => '2017-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Lekoseum',
+            'amount' => '60',
+            'date' => '2017-04-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '567.05',
+            'date' => '2017-04-02',
         ]);
     }
 }
