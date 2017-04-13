@@ -989,14 +989,6 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture mai-octobre',
-            'amount' => '2417',
-            'date' => '2017-03-24',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
             'envelope_id' => 4,
             'name' => 'Pansements',
             'amount' => '25.90',
@@ -1043,7 +1035,23 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 1,
             'name' => 'Loyer avril',
             'amount' => '7000',
-            'date' => '2017-03-01',
+            'date' => '2017-04-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture mai',
+            'amount' => '402',
+            'date' => '2017-04-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture mai-octobre',
+            'amount' => '2015',
+            'date' => '2017-04-24',
         ]);
 
         Outcome::create([
@@ -1060,6 +1068,86 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Coop',
             'amount' => '567.05',
             'date' => '2017-04-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Électricité 2017 Q1',
+            'amount' => '1068',
+            'date' => '2017-04-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone fixe',
+            'amount' => '497',
+            'date' => '2017-04-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Couches Élie',
+            'amount' => '184',
+            'date' => '2017-04-07',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Fleurs Anne',
+            'amount' => '59.90',
+            'date' => '2017-04-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Gouter Lekoseum',
+            'amount' => '50',
+            'date' => '2017-04-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Mobilier occasion Hanaskog',
+            'amount' => '360',
+            'date' => '2017-04-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '1088.30',
+            'date' => '2017-04-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Bellas Place',
+            'amount' => '497',
+            'date' => '2017-04-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Bus François',
+            'amount' => '88',
+            'date' => '2017-04-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Fika François',
+            'amount' => '43',
+            'date' => '2017-04-13',
         ]);
     }
 }
