@@ -634,7 +634,7 @@ class OperationsSeeder2016 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
+            'envelope_id' => 39,
             'name' => 'Enregistrement voiture',
             'amount' => '600',
             'date' => '2016-10-23',
