@@ -1311,16 +1311,63 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-04-25',
         ]);
 
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '308.77',
+            'date' => '2017-04-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-04-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Universeum',
+            'amount' => '313',
+            'date' => '2017-04-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-04-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Commande Bodystore',
+            'amount' => '748',
+            'date' => '2017-04-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '814.24',
+            'date' => '2017-04-30',
+        ]);
     }
 
     public function may()
     {
-        // Outcome::create([
-        //     'account_id' => 12,
-        //     'envelope_id' => 1,
-        //     'name' => 'Loyer mai',
-        //     'amount' => '7000',
-        //     'date' => '2017-04-01',
-        // ]);
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer mai',
+            'amount' => '7000',
+            'date' => '2017-04-01',
+        ]);
     }
 }
