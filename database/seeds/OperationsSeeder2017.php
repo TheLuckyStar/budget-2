@@ -806,14 +806,6 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture avril',
-            'amount' => '392',
-            'date' => '2017-02-01',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Couches',
             'amount' => '102',
@@ -1058,17 +1050,9 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
-            'name' => 'Assurance voiture mai',
-            'amount' => '402',
-            'date' => '2017-04-01',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture mai-octobre',
-            'amount' => '2015',
-            'date' => '2017-04-24',
+            'name' => 'Assurance voiture avril',
+            'amount' => '392',
+            'date' => '2017-03-01',
         ]);
 
         Outcome::create([
@@ -1383,7 +1367,15 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 1,
             'name' => 'Loyer mai',
             'amount' => '7000',
-            'date' => '2017-04-01',
+            'date' => '2017-05-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture mai',
+            'amount' => '402',
+            'date' => '2017-05-01',
         ]);
 
         Outcome::create([
@@ -1688,6 +1680,62 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Skype',
             'amount' => '30',
             'date' => '2017-05-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone portable avril',
+            'amount' => '238',
+            'date' => '2017-05-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École',
+            'amount' => '900',
+            'date' => '2017-05-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Train Hässleholm',
+            'amount' => '51',
+            'date' => '2017-05-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '479.15',
+            'date' => '2017-05-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Sandalettes Élie',
+            'amount' => '244',
+            'date' => '2017-05-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Envoi passeport Laïs',
+            'amount' => '97',
+            'date' => '2017-05-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture juillet-octobre',
+            'amount' => '2015',
+            'date' => '2017-05-24',
         ]);
     }
 }
