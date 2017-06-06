@@ -18,7 +18,7 @@ class OperationsSeeder2017 extends Seeder
         $this->march();
         $this->april();
         $this->may();
-        // $this->june();
+        $this->june();
     }
 
     public function january()
@@ -1810,6 +1810,30 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '25',
             'date' => '2017-05-30',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Casquette + Bob Élie',
+            'amount' => '118',
+            'date' => '2017-05-31',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Timbres',
+            'amount' => '20',
+            'date' => '2017-05-31',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '10',
+            'date' => '2017-05-31',
+        ]);
     }
 
     public function june()
@@ -1828,6 +1852,46 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Assurance voiture juillet-octobre',
             'amount' => '2015',
             'date' => '2017-06-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-06-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '172.77',
+            'date' => '2017-06-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Ferme tomates + concombres',
+            'amount' => '130',
+            'date' => '2017-06-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1700.17',
+            'date' => '2017-06-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Films plastifieuse',
+            'amount' => '119.70',
+            'date' => '2017-06-06',
         ]);
     }
 }
