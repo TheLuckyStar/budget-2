@@ -1893,5 +1893,61 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '119.70',
             'date' => '2017-06-06',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => "Biltema : tuyau d'arrosage",
+            'amount' => '359.30',
+            'date' => '2017-06-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => "Biltema : piscine",
+            'amount' => '179',
+            'date' => '2017-06-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 39,
+            'name' => "Biltema : vélo + pares-soleil",
+            'amount' => '99.7',
+            'date' => '2017-06-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '329',
+            'date' => '2017-06-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '800.14',
+            'date' => '2017-06-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Retrait DAB',
+            'amount' => '400',
+            'date' => '2017-06-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau Fred',
+            'amount' => '100',
+            'date' => '2017-06-11',
+        ]);
     }
 }
