@@ -1838,6 +1838,22 @@ class OperationsSeeder2017 extends Seeder
 
     public function june()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire juin',
+            'amount' => '29227',
+            'date' => '2017-06-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations juin',
+            'amount' => '2250',
+            'date' => '2017-06-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -1849,8 +1865,16 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
+            'name' => 'Assurance voiture juin',
+            'amount' => '402',
+            'date' => '2017-06-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
             'name' => 'Assurance voiture juillet-octobre',
-            'amount' => '2015',
+            'amount' => '1613',
             'date' => '2017-06-01',
         ]);
 
@@ -1938,7 +1962,7 @@ class OperationsSeeder2017 extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Retrait DAB',
-            'amount' => '400',
+            'amount' => '330',
             'date' => '2017-06-11',
         ]);
 
@@ -1948,6 +1972,118 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Cadeau Fred',
             'amount' => '100',
             'date' => '2017-06-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Terreau',
+            'amount' => '70',
+            'date' => '2017-06-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Jojo Sommar',
+            'amount' => '1350',
+            'date' => '2017-06-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Train Malmö - Kopenhague',
+            'amount' => '396',
+            'date' => '2017-06-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Repas Simon',
+            'amount' => '63.22',
+            'date' => '2017-06-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Cubus Delphine',
+            'amount' => '896',
+            'date' => '2017-06-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Draisienne',
+            'amount' => '499',
+            'date' => '2017-06-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Plantes',
+            'amount' => '100',
+            'date' => '2017-06-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter Lekoseum',
+            'amount' => '55',
+            'date' => '2017-06-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau Maélie',
+            'amount' => '39',
+            'date' => '2017-06-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais de consulat',
+            'amount' => '80',
+            'date' => '2017-06-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-06-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '508.69',
+            'date' => '2017-06-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Paracétamol',
+            'amount' => '128.70',
+            'date' => '2017-06-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Brunch',
+            'amount' => '520',
+            'date' => '2017-06-20',
         ]);
     }
 }
