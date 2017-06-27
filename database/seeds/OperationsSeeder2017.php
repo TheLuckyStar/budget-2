@@ -19,6 +19,7 @@ class OperationsSeeder2017 extends Seeder
         $this->april();
         $this->may();
         $this->june();
+        // $this->jully();
     }
 
     public function january()
@@ -1702,7 +1703,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 15,
-            'name' => 'École',
+            'name' => 'École mai',
             'amount' => '900',
             'date' => '2017-05-18',
         ]);
@@ -2084,6 +2085,49 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Brunch',
             'amount' => '520',
             'date' => '2017-06-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École juin',
+            'amount' => '900',
+            'date' => '2017-06-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '37',
+            'date' => '2017-06-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '281.70',
+            'date' => '2017-06-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '690.72',
+            'date' => '2017-06-22',
+        ]);
+    }
+
+    public function jully()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer juillet',
+            'amount' => '7000',
+            'date' => '2017-07-01',
         ]);
     }
 }
