@@ -1963,7 +1963,15 @@ class OperationsSeeder2017 extends Seeder
             'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Retrait DAB',
-            'amount' => '330',
+            'amount' => '276.05',
+            'date' => '2017-06-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeaux école Élie',
+            'amount' => '53.95',
             'date' => '2017-06-11',
         ]);
 
@@ -2117,6 +2125,62 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Coop',
             'amount' => '690.72',
             'date' => '2017-06-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-06-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone portable',
+            'amount' => '199',
+            'date' => '2017-06-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Pochettes plastifieuse',
+            'amount' => '119.70',
+            'date' => '2017-06-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Valise',
+            'amount' => '299',
+            'date' => '2017-06-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau de mariage',
+            'amount' => '300',
+            'date' => '2017-06-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '82.30',
+            'date' => '2017-06-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Chocolats Henri',
+            'amount' => '75',
+            'date' => '2017-06-30',
         ]);
     }
 
