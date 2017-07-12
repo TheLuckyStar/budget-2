@@ -19,7 +19,7 @@ class OperationsSeeder2017 extends Seeder
         $this->april();
         $this->may();
         $this->june();
-        // $this->jully();
+        $this->jully();
     }
 
     public function january()
@@ -1874,14 +1874,6 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
-            'name' => 'Assurance voiture juillet-octobre',
-            'amount' => '1613',
-            'date' => '2017-06-01',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 2,
             'name' => 'Skånetrafiken Simon',
             'amount' => '700',
             'date' => '2017-06-02',
@@ -2192,6 +2184,62 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Loyer juillet',
             'amount' => '7000',
             'date' => '2017-07-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture juillet',
+            'amount' => '402',
+            'date' => '2017-07-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture août-octobre',
+            'amount' => '1211',
+            'date' => '2017-07-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '329',
+            'date' => '2017-07-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Sandwiches Copenhagen',
+            'amount' => '193.62',
+            'date' => '2017-07-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Eau Copenhagen',
+            'amount' => '54.66',
+            'date' => '2017-07-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Dentiste Delphine',
+            'amount' => '820',
+            'date' => '2017-07-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '991.91',
+            'date' => '2017-07-12',
         ]);
     }
 }
