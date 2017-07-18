@@ -2178,6 +2178,14 @@ class OperationsSeeder2017 extends Seeder
 
     public function jully()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations janvier',
+            'amount' => '2250',
+            'date' => '2017-07-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -2240,6 +2248,110 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Coop',
             'amount' => '991.91',
             'date' => '2017-07-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Électricité 2017 Q2',
+            'amount' => '1062',
+            'date' => '2017-07-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Bodystore',
+            'amount' => '435.60',
+            'date' => '2017-07-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Activités Bibelcamp',
+            'amount' => '500',
+            'date' => '2017-07-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Repas Bibelcamp',
+            'amount' => '400',
+            'date' => '2017-07-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter Lekoseum',
+            'amount' => '55',
+            'date' => '2017-07-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '1002.97',
+            'date' => '2017-07-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Timbres',
+            'amount' => '210',
+            'date' => '2017-07-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Couches Élie',
+            'amount' => '184',
+            'date' => '2017-07-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Huile de massage',
+            'amount' => '159',
+            'date' => '2017-07-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Musée Malmö',
+            'amount' => '80',
+            'date' => '2017-07-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Lessive',
+            'amount' => '357',
+            'date' => '2017-07-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-07-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '32.95',
+            'date' => '2017-07-18',
         ]);
     }
 }
