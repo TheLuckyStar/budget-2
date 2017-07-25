@@ -2181,7 +2181,16 @@ class OperationsSeeder2017 extends Seeder
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
-            'name' => 'Allocations janvier',
+            'name' => 'Salaire juillet',
+            'amount' => '28276',
+            'date' => '2017-07-01',
+        ]);
+
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations juillet',
             'amount' => '2250',
             'date' => '2017-07-01',
         ]);
@@ -2352,6 +2361,78 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Coop',
             'amount' => '32.95',
             'date' => '2017-07-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École Juillet',
+            'amount' => '1020',
+            'date' => '2017-07-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Livre Bibelcamp',
+            'amount' => '69',
+            'date' => '2017-07-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '81.75',
+            'date' => '2017-07-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '31.50',
+            'date' => '2017-07-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '574.76',
+            'date' => '2017-07-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '126.90',
+            'date' => '2017-07-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '45.90',
+            'date' => '2017-07-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '107.90',
+            'date' => '2017-07-23',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '711.10',
+            'date' => '2017-07-24',
         ]);
     }
 }
