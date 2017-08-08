@@ -2526,5 +2526,69 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '47',
             'date' => '2017-08-01',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter Kristianstad',
+            'amount' => '32',
+            'date' => '2017-08-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '77.95',
+            'date' => '2017-08-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau chocolats',
+            'amount' => '58.45',
+            'date' => '2017-08-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'Train Philippe & Jeanne-Marie',
+            'amount' => '824',
+            'date' => '2017-08-04',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Marché',
+            'amount' => '176',
+            'date' => '2017-08-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Tomates',
+            'amount' => '120',
+            'date' => '2017-08-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '932.21',
+            'date' => '2017-08-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter Lekoseum',
+            'amount' => '75',
+            'date' => '2017-08-07',
+        ]);
     }
 }
