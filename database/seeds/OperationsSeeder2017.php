@@ -21,6 +21,7 @@ class OperationsSeeder2017 extends Seeder
         $this->june();
         $this->jully();
         $this->august();
+        // $this->september();
     }
 
     public function january()
@@ -2486,6 +2487,14 @@ class OperationsSeeder2017 extends Seeder
 
     public function august()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations août',
+            'amount' => '2250',
+            'date' => '2017-08-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -2692,6 +2701,121 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Carburant',
             'amount' => '562.65',
             'date' => '2017-08-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Consultation Delphine',
+            'amount' => '250',
+            'date' => '2017-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '30',
+            'date' => '2017-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Apotea',
+            'amount' => '892',
+            'date' => '2017-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Couches Èlie',
+            'amount' => '184',
+            'date' => '2017-08-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter',
+            'amount' => '24',
+            'date' => '2017-08-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Livre autocollants',
+            'amount' => '59',
+            'date' => '2017-08-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter',
+            'amount' => '45',
+            'date' => '2017-08-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-08-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-08-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Tomates',
+            'amount' => '125',
+            'date' => '2017-08-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '760.43',
+            'date' => '2017-08-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Retrait DAB',
+            'amount' => '200',
+            'date' => '2017-08-20',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École Août',
+            'amount' => '852',
+            'date' => '2017-08-22',
+        ]);
+    }
+
+    public function september()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer septembre',
+            'amount' => '7000',
+            'date' => '2017-09-01',
         ]);
     }
 }
