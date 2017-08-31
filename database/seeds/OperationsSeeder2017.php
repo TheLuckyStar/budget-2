@@ -2490,8 +2490,24 @@ class OperationsSeeder2017 extends Seeder
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
+            'name' => 'Salaire août',
+            'amount' => '29577',
+            'date' => '2017-08-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
             'name' => 'Allocations août',
             'amount' => '2250',
+            'date' => '2017-08-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Indemnités août',
+            'amount' => '6045',
             'date' => '2017-08-01',
         ]);
 
@@ -2805,6 +2821,102 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'École Août',
             'amount' => '852',
             'date' => '2017-08-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Tomates',
+            'amount' => '150',
+            'date' => '2017-08-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loppis - Maison',
+            'amount' => '300',
+            'date' => '2017-08-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Loppis - Valise Élie',
+            'amount' => '150',
+            'date' => '2017-08-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '1290.49',
+            'date' => '2017-08-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter',
+            'amount' => '55',
+            'date' => '2017-08-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone portable',
+            'amount' => '199',
+            'date' => '2017-08-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-08-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Robe Delphine',
+            'amount' => '699.99',
+            'date' => '2017-08-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '16',
+            'date' => '2017-08-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Robot cuisine',
+            'amount' => '569',
+            'date' => '2017-08-29',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Carburant',
+            'amount' => '550.02',
+            'date' => '2017-08-30',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Restaurant Ikea',
+            'amount' => '245',
+            'date' => '2017-08-30',
         ]);
     }
 
