@@ -21,7 +21,7 @@ class OperationsSeeder2017 extends Seeder
         $this->june();
         $this->jully();
         $this->august();
-        // $this->september();
+        $this->september();
     }
 
     public function january()
@@ -2529,14 +2529,6 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture septembre-octobre',
-            'amount' => '809',
-            'date' => '2017-08-01',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Goûter Ikea',
             'amount' => '45',
@@ -2928,6 +2920,54 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Loyer septembre',
             'amount' => '7000',
             'date' => '2017-09-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture septembre',
+            'amount' => '402',
+            'date' => '2017-09-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture octobre',
+            'amount' => '407',
+            'date' => '2017-09-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Tomates',
+            'amount' => '125',
+            'date' => '2017-09-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Coop',
+            'amount' => '67.50',
+            'date' => '2017-09-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '774.73',
+            'date' => '2017-09-03',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Remboursements frais de déplacement',
+            'amount' => '131',
+            'date' => '2017-09-04',
         ]);
     }
 }
