@@ -1760,7 +1760,7 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
+            'envelope_id' => 1,
             'name' => 'Réparation tondeuse',
             'amount' => '101',
             'date' => '2017-05-28',
@@ -2889,7 +2889,7 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
+            'envelope_id' => 1,
             'name' => 'Robot cuisine',
             'amount' => '569',
             'date' => '2017-08-29',
