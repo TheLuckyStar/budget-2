@@ -1253,7 +1253,7 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 8,
+            'envelope_id' => 6,
             'name' => 'Universeum Göteborg',
             'amount' => '515',
             'date' => '2017-04-25',
