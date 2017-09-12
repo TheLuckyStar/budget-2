@@ -2969,5 +2969,77 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '131',
             'date' => '2017-09-04',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Apotek',
+            'amount' => '119',
+            'date' => '2017-09-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone fixe',
+            'amount' => '329',
+            'date' => '2017-09-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '73.45',
+            'date' => '2017-09-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter musée',
+            'amount' => '64',
+            'date' => '2017-09-07',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Bus Delphine',
+            'amount' => '200',
+            'date' => '2017-09-08',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Duplos Blocket',
+            'amount' => '900',
+            'date' => '2017-09-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Legos Blocket',
+            'amount' => '1500',
+            'date' => '2017-09-09',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Dagersättning Simon',
+            'amount' => '572',
+            'date' => '2017-09-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Vêtements Cubus',
+            'amount' => '937.10',
+            'date' => '2017-09-12',
+        ]);
     }
 }
