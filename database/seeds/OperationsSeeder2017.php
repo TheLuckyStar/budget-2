@@ -3037,8 +3037,32 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 5,
-            'name' => 'Vêtements Cubus',
-            'amount' => '937.10',
+            'name' => 'Vêtements Cubus (Delphine & Laïs)',
+            'amount' => '739.10',
+            'date' => '2017-09-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Vêtements Cubus (cadeaux)',
+            'amount' => '198',
+            'date' => '2017-09-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Laine pour panier',
+            'amount' => '64.90',
+            'date' => '2017-09-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'RDV médical',
+            'amount' => '250',
             'date' => '2017-09-12',
         ]);
     }
