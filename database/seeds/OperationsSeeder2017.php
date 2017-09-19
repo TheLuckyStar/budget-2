@@ -2922,6 +2922,14 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-09-01',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations septembre',
+            'amount' => '2250',
+            'date' => '2017-09-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
@@ -3064,6 +3072,70 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'RDV médical',
             'amount' => '250',
             'date' => '2017-09-12',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '51',
+            'date' => '2017-09-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Veste réflechissante Élie',
+            'amount' => '39.90',
+            'date' => '2017-09-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '73.51',
+            'date' => '2017-09-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeaux',
+            'amount' => '372.20',
+            'date' => '2017-09-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '7',
+            'date' => '2017-09-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Massage Delphine',
+            'amount' => '620',
+            'date' => '2017-09-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-09-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-09-19',
         ]);
     }
 }
