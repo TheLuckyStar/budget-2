@@ -3205,5 +3205,37 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '7000',
             'date' => '2017-10-01',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Lessive',
+            'amount' => '595',
+            'date' => '2017-10-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Apotea',
+            'amount' => '361',
+            'date' => '2017-10-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone fixe',
+            'amount' => '329',
+            'date' => '2017-10-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 55,
+            'name' => 'iTunes',
+            'amount' => '30',
+            'date' => '2017-10-06',
+        ]);
     }
 }
