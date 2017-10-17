@@ -3237,5 +3237,29 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '30',
             'date' => '2017-10-06',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Petits déjeuners Ängelholm',
+            'amount' => '420',
+            'date' => '2017-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'ICA',
+            'amount' => '124.86',
+            'date' => '2017-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Goûter Ängelholm',
+            'amount' => '20',
+            'date' => '2017-10-15',
+        ]);
     }
 }
