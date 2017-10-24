@@ -23,6 +23,7 @@ class OperationsSeeder2017 extends Seeder
         $this->august();
         $this->september();
         $this->october();
+        // $this->november();
     }
 
     public function january()
@@ -3198,6 +3199,22 @@ class OperationsSeeder2017 extends Seeder
 
     public function october()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire octobre',
+            'amount' => '26082',
+            'date' => '2017-10-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations octobre',
+            'amount' => '2250',
+            'date' => '2017-10-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -3259,6 +3276,41 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 3,
             'name' => 'Goûter Ängelholm',
             'amount' => '20',
+            'date' => '2017-10-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-10-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Skånetrafiken Simon',
+            'amount' => '700',
+            'date' => '2017-10-19',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Électricité',
+            'amount' => '1062',
+            'date' => '2017-10-24',
+        ]);
+    }
+
+    public function november()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer novembre',
+            'amount' => '7000',
             'date' => '2017-10-15',
         ]);
     }
