@@ -3203,7 +3203,15 @@ class OperationsSeeder2017 extends Seeder
             'account_id' => 12,
             'envelope_id' => null,
             'name' => 'Salaire octobre',
-            'amount' => '26082',
+            'amount' => '25944',
+            'date' => '2017-10-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Indemnités',
+            'amount' => '5850',
             'date' => '2017-10-01',
         ]);
 
@@ -3220,6 +3228,14 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 1,
             'name' => 'Loyer octobre',
             'amount' => '7000',
+            'date' => '2017-10-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Remboursements frais de déplacement',
+            'amount' => '138',
             'date' => '2017-10-01',
         ]);
 
@@ -3301,6 +3317,38 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Électricité',
             'amount' => '1062',
             'date' => '2017-10-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => '8 sidor',
+            'amount' => '850',
+            'date' => '2017-10-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Annonce Blocket',
+            'amount' => '60',
+            'date' => '2017-10-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-10-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '199',
+            'date' => '2017-10-30',
         ]);
     }
 
