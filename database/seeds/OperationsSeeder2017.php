@@ -3393,5 +3393,29 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '1849',
             'date' => '2017-11-07',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Kristianstad ishållen',
+            'amount' => '135',
+            'date' => '2017-11-11',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Porridge',
+            'amount' => '179',
+            'date' => '2017-11-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Bois tipi',
+            'amount' => '1612',
+            'date' => '2017-11-14',
+        ]);
     }
 }
