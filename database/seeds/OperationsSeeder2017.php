@@ -3354,6 +3354,14 @@ class OperationsSeeder2017 extends Seeder
 
     public function november()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations novembre',
+            'amount' => '2250',
+            'date' => '2017-11-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -3416,6 +3424,38 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Bois tipi',
             'amount' => '1612',
             'date' => '2017-11-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-11-15',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-04-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 50,
+            'name' => 'Crème nettoyante',
+            'amount' => '116',
+            'date' => '2017-04-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Commande apotea',
+            'amount' => '519',
+            'date' => '2017-04-21',
         ]);
     }
 }
