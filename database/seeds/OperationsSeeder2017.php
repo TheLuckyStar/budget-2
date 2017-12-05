@@ -24,7 +24,7 @@ class OperationsSeeder2017 extends Seeder
         $this->september();
         $this->october();
         $this->november();
-        // $this->december();
+        $this->december();
     }
 
     public function january()
@@ -2951,14 +2951,6 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
-            'envelope_id' => 2,
-            'name' => 'Assurance voiture octobre',
-            'amount' => '407',
-            'date' => '2017-09-01',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Tomates',
             'amount' => '125',
@@ -3242,6 +3234,14 @@ class OperationsSeeder2017 extends Seeder
 
         Outcome::create([
             'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance voiture octobre',
+            'amount' => '407',
+            'date' => '2017-10-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
             'envelope_id' => 3,
             'name' => 'Lessive',
             'amount' => '595',
@@ -3390,7 +3390,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
-            'name' => 'Assurance voiture',
+            'name' => 'Assurance voiture novembre',
             'amount' => '380',
             'date' => '2017-11-01',
         ]);
@@ -3562,6 +3562,14 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '200',
             'date' => '2017-11-28',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-11-29',
+        ]);
     }
 
     public function december()
@@ -3571,7 +3579,71 @@ class OperationsSeeder2017 extends Seeder
             'envelope_id' => 1,
             'name' => 'Loyer décembre',
             'amount' => '7000',
-            'date' => '2017-11-01',
+            'date' => '2017-12-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance décembre',
+            'amount' => '394',
+            'date' => '2017-12-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Cubusse',
+            'amount' => '592.5',
+            'date' => '2017-12-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Repas Breänas',
+            'amount' => '350',
+            'date' => '2017-12-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Enchêres Breänas',
+            'amount' => '480',
+            'date' => '2017-12-02',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Machine à laver',
+            'amount' => '5428',
+            'date' => '2017-12-03',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Peluches',
+            'amount' => '318',
+            'date' => '2017-12-04',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Brio builder',
+            'amount' => '500',
+            'date' => '2017-12-04',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 55,
+            'name' => 'App owncloud news',
+            'amount' => '24',
+            'date' => '2017-12-04',
         ]);
     }
 }
