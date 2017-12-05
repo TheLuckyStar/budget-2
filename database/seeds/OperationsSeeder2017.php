@@ -24,6 +24,7 @@ class OperationsSeeder2017 extends Seeder
         $this->september();
         $this->october();
         $this->november();
+        // $this->december();
     }
 
     public function january()
@@ -3357,6 +3358,22 @@ class OperationsSeeder2017 extends Seeder
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
+            'name' => 'Salaire novembre',
+            'amount' => '25458',
+            'date' => '2017-11-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Indemnités',
+            'amount' => '6045',
+            'date' => '2017-11-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
             'name' => 'Allocations novembre',
             'amount' => '2250',
             'date' => '2017-11-01',
@@ -3456,6 +3473,105 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Commande apotea',
             'amount' => '519',
             'date' => '2017-04-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-11-22',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Pharmacie P',
+            'amount' => '65',
+            'date' => '2017-11-24',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loppis Décorations',
+            'amount' => '40',
+            'date' => '2017-11-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Loppis Fika',
+            'amount' => '40',
+            'date' => '2017-11-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Loppis Cadeau',
+            'amount' => '25',
+            'date' => '2017-11-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Patinoire',
+            'amount' => '50',
+            'date' => '2017-11-26',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau David',
+            'amount' => '300',
+            'date' => '2017-11-25',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau Exakta',
+            'amount' => '50',
+            'date' => '2017-11-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Biltema activités manuelles',
+            'amount' => '39.90',
+            'date' => '2017-11-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-11-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '200',
+            'date' => '2017-11-28',
+        ]);
+    }
+
+    public function december()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer décembre',
+            'amount' => '7000',
+            'date' => '2017-11-01',
         ]);
     }
 }
