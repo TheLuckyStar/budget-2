@@ -3645,5 +3645,21 @@ class OperationsSeeder2017 extends Seeder
             'amount' => '24',
             'date' => '2017-12-04',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone fixe',
+            'amount' => '329',
+            'date' => '2017-12-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2017-12-06',
+        ]);
     }
 }
