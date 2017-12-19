@@ -3582,6 +3582,14 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-12-01',
         ]);
 
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations décembre',
+            'amount' => '2250',
+            'date' => '2017-12-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 2,
@@ -3660,6 +3668,14 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Knislinge pastor',
             'amount' => '50',
             'date' => '2017-12-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2017-12-18',
         ]);
     }
 }
