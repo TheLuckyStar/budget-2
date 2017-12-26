@@ -3574,6 +3574,22 @@ class OperationsSeeder2017 extends Seeder
 
     public function december()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Salaire décembre',
+            'amount' => '26712',
+            'date' => '2017-12-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Indemnités',
+            'amount' => '5850',
+            'date' => '2017-12-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
