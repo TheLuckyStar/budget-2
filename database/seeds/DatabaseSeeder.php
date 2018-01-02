@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call('CurrencyRatesTableSeeder');
         $this->call('OperationsSeeder2016');
         $this->call('OperationsSeeder2017');
+        $this->call('OperationsSeeder2018');
 
         Model::reguard();
     }

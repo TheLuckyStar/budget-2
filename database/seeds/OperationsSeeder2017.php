@@ -3590,19 +3590,19 @@ class OperationsSeeder2017 extends Seeder
             'date' => '2017-12-01',
         ]);
 
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 1,
-            'name' => 'Loyer décembre',
-            'amount' => '7000',
-            'date' => '2017-12-01',
-        ]);
-
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
             'name' => 'Allocations décembre',
             'amount' => '2250',
+            'date' => '2017-12-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer décembre',
+            'amount' => '7000',
             'date' => '2017-12-01',
         ]);
 
@@ -3692,6 +3692,22 @@ class OperationsSeeder2017 extends Seeder
             'name' => 'Skype',
             'amount' => '30',
             'date' => '2017-12-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2017-12-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone portable',
+            'amount' => '199',
+            'date' => '2017-12-28',
         ]);
     }
 }
