@@ -334,6 +334,14 @@ class OperationsSeeder2018 extends Seeder
 
     public function february()
     {
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations Février',
+            'amount' => '2250',
+            'date' => '2018-02-01',
+        ]);
+
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
@@ -412,6 +420,54 @@ class OperationsSeeder2018 extends Seeder
             'name' => 'GW LSDA : Nazgûls',
             'amount' => '896.70',
             'date' => '2018-02-13',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2018-02-14',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Timbres',
+            'amount' => '21',
+            'date' => '2018-02-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Retrait liquide',
+            'amount' => '200',
+            'date' => '2018-02-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 6,
+            'name' => 'Stylo',
+            'amount' => '39',
+            'date' => '2018-02-16',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Skype',
+            'amount' => '30',
+            'date' => '2018-02-17',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 15,
+            'name' => 'École février',
+            'amount' => '640',
+            'date' => '2018-02-18',
         ]);
     }
 }
