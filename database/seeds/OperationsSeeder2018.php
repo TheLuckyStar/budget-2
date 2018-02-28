@@ -15,6 +15,7 @@ class OperationsSeeder2018 extends Seeder
     {
         $this->january();
         $this->february();
+        // $this->mars();
     }
 
     public function january()
@@ -160,14 +161,6 @@ class OperationsSeeder2018 extends Seeder
             'envelope_id' => 6,
             'name' => 'Cadeau Simon Jeu',
             'amount' => '317',
-            'date' => '2018-01-15',
-        ]);
-
-        Outcome::create([
-            'account_id' => 12,
-            'envelope_id' => 55,
-            'name' => 'GW LSDA: Rangers',
-            'amount' => '273.92',
             'date' => '2018-01-15',
         ]);
 
@@ -337,6 +330,14 @@ class OperationsSeeder2018 extends Seeder
         Revenue::create([
             'account_id' => 12,
             'envelope_id' => null,
+            'name' => 'Salaire février',
+            'amount' => '31856',
+            'date' => '2018-02-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
             'name' => 'Allocations Février',
             'amount' => '2250',
             'date' => '2018-02-01',
@@ -468,6 +469,57 @@ class OperationsSeeder2018 extends Seeder
             'name' => 'École février',
             'amount' => '640',
             'date' => '2018-02-18',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Fika',
+            'amount' => '21',
+            'date' => '2018-02-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2018-02-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Fika',
+            'amount' => '106',
+            'date' => '2018-02-21',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 54,
+            'name' => 'Ryanair',
+            'amount' => '2119.61',
+            'date' => '2018-02-27',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Fika',
+            'amount' => '20',
+            'date' => '2018-02-27',
+        ]);
+    }
+
+    public function mars()
+    {
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Loyer mars',
+            'amount' => '7000',
+            'date' => '2018-03-01',
         ]);
     }
 }
