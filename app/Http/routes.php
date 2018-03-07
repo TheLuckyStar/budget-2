@@ -15,6 +15,8 @@ $app->get('/', function () use ($app) {
     return view('home');
 });
 
+$app->get('simon', 'Simon@index');
+
 $app->group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers'], function ($app) {
 
     $app->get('currencies', 'Currencies@index');
