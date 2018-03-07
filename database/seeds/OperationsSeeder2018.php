@@ -15,7 +15,7 @@ class OperationsSeeder2018 extends Seeder
     {
         $this->january();
         $this->february();
-        // $this->mars();
+        $this->mars();
     }
 
     public function january()
@@ -71,7 +71,7 @@ class OperationsSeeder2018 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'Logiciels: Steam',
+            'name' => 'Logiciels : Steam',
             'amount' => '123.02',
             'date' => '2018-01-03',
         ]);
@@ -167,7 +167,7 @@ class OperationsSeeder2018 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'GW LSDA: Les deux tours',
+            'name' => 'SDA GW : Les deux tours',
             'amount' => '118.01',
             'date' => '2018-01-16',
         ]);
@@ -175,7 +175,7 @@ class OperationsSeeder2018 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'GW LSDA: Guerriers Minas Tirith',
+            'name' => 'SDA GW : Guerriers Minas Tirith',
             'amount' => '297.58',
             'date' => '2018-01-16',
         ]);
@@ -418,7 +418,7 @@ class OperationsSeeder2018 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'GW LSDA : Nazgûls',
+            'name' => 'SDA GW : Nazgûls',
             'amount' => '896.70',
             'date' => '2018-02-13',
         ]);
@@ -510,6 +510,30 @@ class OperationsSeeder2018 extends Seeder
             'amount' => '20',
             'date' => '2018-02-27',
         ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 9,
+            'name' => 'Frais bancaires',
+            'amount' => '39',
+            'date' => '2018-02-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Telephone portable',
+            'amount' => '207',
+            'date' => '2018-02-28',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Knislinge pastor',
+            'amount' => '50',
+            'date' => '2018-02-28',
+        ]);
     }
 
     public function mars()
@@ -520,6 +544,46 @@ class OperationsSeeder2018 extends Seeder
             'name' => 'Loyer mars',
             'amount' => '7000',
             'date' => '2018-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Assurance février',
+            'amount' => '394',
+            'date' => '2018-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Loppis vêtements',
+            'amount' => '60',
+            'date' => '2018-03-01',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Deus Ex pour François',
+            'amount' => '31.59',
+            'date' => '2018-03-05',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 4,
+            'name' => 'Pharmacie',
+            'amount' => '89.90',
+            'date' => '2018-03-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 1,
+            'name' => 'Téléphone fixe',
+            'amount' => '329',
+            'date' => '2018-03-06',
         ]);
     }
 }

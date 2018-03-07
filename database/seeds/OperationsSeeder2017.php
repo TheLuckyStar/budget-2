@@ -3267,7 +3267,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'iTunes',
+            'name' => 'Logiciels : iTunes',
             'amount' => '30',
             'date' => '2017-10-06',
         ]);
@@ -3665,7 +3665,7 @@ class OperationsSeeder2017 extends Seeder
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 55,
-            'name' => 'App owncloud news',
+            'name' => 'Logiciels : App owncloud news',
             'amount' => '24',
             'date' => '2017-12-04',
         ]);
