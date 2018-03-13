@@ -15,7 +15,7 @@ class OperationsSeeder2018 extends Seeder
     {
         $this->january();
         $this->february();
-        $this->mars();
+        $this->march();
     }
 
     public function january()
@@ -536,13 +536,21 @@ class OperationsSeeder2018 extends Seeder
         ]);
     }
 
-    public function mars()
+    public function march()
     {
         Outcome::create([
             'account_id' => 12,
             'envelope_id' => 1,
             'name' => 'Loyer mars',
             'amount' => '7000',
+            'date' => '2018-03-01',
+        ]);
+
+        Revenue::create([
+            'account_id' => 12,
+            'envelope_id' => null,
+            'name' => 'Allocations Mars',
+            'amount' => '390',
             'date' => '2018-03-01',
         ]);
 
@@ -584,6 +592,54 @@ class OperationsSeeder2018 extends Seeder
             'name' => 'Téléphone fixe',
             'amount' => '329',
             'date' => '2018-03-06',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Quête',
+            'amount' => '20',
+            'date' => '2018-03-07',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 3,
+            'name' => 'Coop',
+            'amount' => '1108.85',
+            'date' => '2018-03-09',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 5,
+            'name' => 'Boxers Élie',
+            'amount' => '198',
+            'date' => '2018-03-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau de la part de Philippe & Jeanne-Marie',
+            'amount' => '80',
+            'date' => '2018-03-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 2,
+            'name' => 'Stationnement',
+            'amount' => '10',
+            'date' => '2018-03-10',
+        ]);
+
+        Outcome::create([
+            'account_id' => 12,
+            'envelope_id' => 7,
+            'name' => 'Cadeau Nöel Philippe & Jeanne-Marie',
+            'amount' => '380',
+            'date' => '2018-03-12',
         ]);
     }
 }
